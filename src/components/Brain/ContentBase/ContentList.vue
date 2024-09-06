@@ -142,8 +142,8 @@ export default {
     },
     canEditItem: Boolean,
     columns: {
-      type: Number,
-      default: 2,
+      type: String,
+      default: 'auto-fill, minmax(18rem, 1fr)',
     },
     isOverLap: {
       type: Boolean,
@@ -293,7 +293,7 @@ export default {
     margin-top: $unnnic-spacing-sm;
     display: grid;
     gap: $unnnic-spacing-sm;
-    grid-template-columns: repeat(v-bind(columns), 1fr);
+    grid-template-columns: repeat(v-bind(columns));
 
     &--shape-accordion {
       column-gap: $unnnic-spacing-ant;
