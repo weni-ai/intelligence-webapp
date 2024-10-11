@@ -1494,7 +1494,7 @@
       },
       "media": {
         "title": "Media and location",
-        "description": "Actions initiated from image, video, audio and user"
+        "description": "Actions initiated from image, video, audio and user location"
       },
       "custom": {
         "title": "Customized",
