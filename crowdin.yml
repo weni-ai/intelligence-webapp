@@ -10,6 +10,6 @@
 files: [
   {
     "source": "src/locales/en.json",
-    "translation": "src/locales/%locale%",
+    "translation": "src/locales/%locale%.json",
   }
 ]
