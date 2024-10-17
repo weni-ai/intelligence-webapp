@@ -124,23 +124,10 @@ export default {
     },
 
     isOrgCanCreateContentAI() {
-      console.log({
-        orgsEnv: runtimeVariables.get('VITE_ORGS_CAN_CREATE_CONTENT_AI'),
-        orgsSplited: runtimeVariables
-          .get('VITE_ORGS_CAN_CREATE_CONTENT_AI')
-          ?.split(', '),
-        includesOrgSelected: runtimeVariables
-          .get('VITE_ORGS_CAN_CREATE_CONTENT_AI')
-          ?.split(', ')
-          .includes(this.getOrgSelected),
-        orgSelected: this.getOrgSelected,
-        orgConnect: this.$store.state.Auth.connectOrgUuid,
-      });
-
       return runtimeVariables
         .get('VITE_ORGS_CAN_CREATE_CONTENT_AI')
         ?.split(', ')
-        .includes(this.getOrgSelected);
+        .includes(this.$store.state.Auth.connectOrgUuid);
     },
 
     disabledSubmit() {
@@ -177,7 +164,7 @@ export default {
       try {
         if (this.data.repository_type === 'content') {
           const response = await nexusaiAPI.createIntelligence({
-            orgUuid: this.getOrgSelected,
+            orgUuid: this.$store.state.Auth.connectOrgUuid,
             name: this.data.name,
             description: this.data.description,
           });
