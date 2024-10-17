@@ -124,6 +124,19 @@ export default {
     },
 
     isOrgCanCreateContentAI() {
+      console.log({
+        orgsEnv: runtimeVariables.get('VITE_ORGS_CAN_CREATE_CONTENT_AI'),
+        orgsSplited: runtimeVariables
+          .get('VITE_ORGS_CAN_CREATE_CONTENT_AI')
+          ?.split(', '),
+        includesOrgSelected: runtimeVariables
+          .get('VITE_ORGS_CAN_CREATE_CONTENT_AI')
+          ?.split(', ')
+          .includes(this.getOrgSelected),
+        orgSelected: this.getOrgSelected,
+        orgConnect: this.$store.state.Auth.connectOrgUuid,
+      });
+
       return runtimeVariables
         .get('VITE_ORGS_CAN_CREATE_CONTENT_AI')
         ?.split(', ')
