@@ -36,31 +36,47 @@
     >
       {{ $t('router.monitoring.no_message_received') }}
     </UnnnicIntelligenceText>
-    <UnnnicTableNext
+    <section
       v-else
-      v-model:pagination="pagination"
-      hideHeaders
-      class="received-messages__table"
-      data-test="messages-table"
-      :headers="table.headers"
-      :rows="formattedMessagesRows"
-      :paginationTotal="monitoringStore.messages.count"
-      :paginationInterval="paginationInterval"
-      :isLoading="isTableLoading"
-    />
+      :class="{
+        'received-messages__table': true,
+        'received-messages__table--with-results':
+          !isTableLoading && formattedMessagesRows.length,
+      }"
+    >
+      <UnnnicTableNext
+        v-model:pagination="pagination"
+        hideHeaders
+        :class="{
+          table__list: true,
+          'table__list--history-opened': inspectedAnswerId,
+        }"
+        data-test="messages-table"
+        :headers="table.headers"
+        :rows="formattedMessagesRows"
+        :paginationTotal="monitoringStore.messages.count"
+        :paginationInterval="paginationInterval"
+        :isLoading="isTableLoading"
+        @row-click="handleRowClick"
+      />
+
+      <ReceivedMessagesHistory class="table__history" />
+    </section>
   </section>
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import Unnnic from '@weni/unnnic-system';
 import { format } from 'date-fns';
+import { useRoute } from 'vue-router';
+import { debounce } from 'lodash';
 
 import { useMonitoringStore } from '@/store/Monitoring';
 
+import ReceivedMessagesHistory from './RouterMonitoringReceivedMessagesHistory/index.vue';
+
 import i18n from '@/utils/plugins/i18n';
-import { useRoute } from 'vue-router';
-import { debounce } from 'lodash';
 
 const route = useRoute();
 const monitoringStore = useMonitoringStore();
@@ -140,7 +156,7 @@ const formattedMessagesRows = computed(() => {
   };
 
   return monitoringStore.messages.data.map(
-    ({ created_at, text, tag, action_name }) => ({
+    ({ created_at, text, tag, action_name, id }) => ({
       content: [
         format(created_at, 'HH:mm'),
         text,
@@ -153,6 +169,7 @@ const formattedMessagesRows = computed(() => {
           events: {},
         },
       ],
+      id,
     }),
   );
 });
@@ -160,12 +177,23 @@ const formattedMessagesRows = computed(() => {
 function getReceivedMessages() {
   const { tag, text } = filters.value;
   const tagString = tag[0].value;
+
+  monitoringStore.messages.inspectedAnswer = {};
+
   monitoringStore.loadMessages({
     page: pagination.value,
     pageInterval: paginationInterval.value,
     tag: tagString === 'all' ? '' : tagString,
     text,
   });
+}
+
+const inspectedAnswerId = computed(
+  () => monitoringStore.messages.inspectedAnswer.id,
+);
+
+function handleRowClick(row) {
+  monitoringStore.messages.inspectedAnswer.id = row.id;
 }
 
 watch(
@@ -204,6 +232,9 @@ watch(
   }
 
   .received-messages__table {
+    height: 100%;
+    position: relative;
+
     :deep(.unnnic-table-next__body-row) {
       $body-cell: '.unnnic-table-next__body-cell';
 
@@ -226,6 +257,62 @@ watch(
         white-space: nowrap;
         text-overflow: ellipsis;
       }
+    }
+
+    &--with-results {
+      :deep(.unnnic-table-next__body-row):hover {
+        background-color: $unnnic-color-weni-100;
+
+        cursor: pointer;
+      }
+    }
+
+    .table__list {
+      :deep(.unnnic-table-next__body) {
+        > * {
+          border-color: $unnnic-color-neutral-cleanest;
+        }
+      }
+
+      &--history-opened {
+        height: 100%;
+
+        overflow: hidden;
+
+        :deep(.unnnic-table-next__body) {
+          height: 100%;
+
+          border: $unnnic-border-width-thinner solid
+            $unnnic-color-neutral-cleanest;
+          border-radius: $unnnic-border-radius-sm;
+        }
+        :deep(.unnnic-table-next__body-row) {
+          width: 50%;
+          border: 0;
+          border-radius: 0;
+
+          border-bottom: $unnnic-border-width-thinner solid
+            $unnnic-color-neutral-cleanest;
+
+          &:last-of-type {
+            margin-bottom: -$unnnic-border-width-thinner;
+          }
+        }
+      }
+    }
+
+    .table__history {
+      $paginationButtonHeight: 38px;
+
+      border-left: $unnnic-border-width-thinner solid
+        $unnnic-color-neutral-cleanest;
+
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 50%;
+
+      height: calc(100% - $unnnic-spacing-lg - $paginationButtonHeight);
     }
   }
 }
