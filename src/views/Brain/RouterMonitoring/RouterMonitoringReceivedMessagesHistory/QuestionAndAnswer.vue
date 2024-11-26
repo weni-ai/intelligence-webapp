@@ -17,18 +17,17 @@
       />
     </template>
     <template v-else>
-      <p
+      <Markdown
         data-testid="question"
         :class="[
           'question-and-answer__message',
           'question-and-answer__question',
         ]"
-      >
-        {{ inspectionData.text }}
-      </p>
+        :content="inspectedAnswer.text"
+      />
 
       <section
-        v-if="inspectionData.llm.status === 'action'"
+        v-if="inspectedAnswer.llm.status === 'action'"
         class="question-and-answer__action-started"
         data-testid="action"
       >
@@ -48,7 +47,7 @@
           >
             {{
               $t('router.monitoring.activated_the_action', {
-                action: inspectionData.action?.name,
+                action: inspectedAnswer.action?.name,
               })
             }}
           </UnnnicIntelligenceText>
@@ -66,16 +65,16 @@
         v-else
         class="question-and-answer__answer"
       >
-        <p
+        <Markdown
           data-testid="answer"
           :class="[
             'question-and-answer__message',
             'question-and-answer__answer-text',
-            `question-and-answer__answer-text--${inspectionData.llm.status}`,
+            `question-and-answer__answer-text--${inspectedAnswer.llm.status}`,
           ]"
-        >
-          {{ inspectionData.llm.response }}
-        </p>
+          :content="inspectedAnswer.llm.response"
+        />
+
         <UnnnicButton
           size="small"
           :text="$t('router.monitoring.inspect_response.title')"
@@ -86,30 +85,33 @@
       </section>
       <DrawerInspectAnswer
         v-model="isDrawerInspectAnswerOpen"
-        :inspectionData="inspectionData"
+        :inspectionData="inspectedAnswer"
       />
     </template>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
-import DrawerInspectAnswer from '@/components/Brain/Monitoring/DrawerInspectResponse.vue';
+import DrawerInspectAnswer from '@/components/Brain/Monitoring/DrawerInspectResponse/index.vue';
+import Markdown from '@/components/Markdown.vue';
+import { useMonitoringStore } from '@/store/Monitoring';
 
 const props = defineProps({
   isLoading: {
     type: Boolean,
     default: true,
   },
-
-  inspectionData: {
-    type: Object,
-    default: () => {},
-  },
 });
 
 const isDrawerInspectAnswerOpen = ref(false);
+
+const monitoringStore = useMonitoringStore();
+
+const inspectedAnswer = computed(
+  () => monitoringStore.messages.inspectedAnswer,
+);
 </script>
 
 <style lang="scss" scoped>

@@ -1,11 +1,13 @@
 <template>
   <section class="response-evaluator">
     <UnnnicDivider
+      data-testid="divider"
       class="response-evaluator__divider"
       ySpacing="md"
     />
 
     <UnnnicIntelligenceText
+      data-testid="rate-the-answer"
       class="response-evaluator__rate-the-answer"
       color="neutral-dark"
       family="secondary"
@@ -17,6 +19,7 @@
 
     <section class="response-evaluator__actions">
       <button
+        data-testid="like-button"
         :class="['actions__button', { 'actions__button--bold': isApproved }]"
         @click="setIsApproved(true)"
       >
@@ -28,6 +31,7 @@
         />{{ $t('router.monitoring.inspect_response.i_liked') }}
       </button>
       <button
+        data-testid="dislike-button"
         :class="[
           'actions__button',
           { 'actions__button--bold': isApproved === false },
@@ -42,12 +46,20 @@
         />{{ $t('router.monitoring.inspect_response.i_didnt_like') }}
       </button>
     </section>
+
+    <ImproveResponse
+      v-if="isApproved === false"
+      class="response-evaluator__improve-response"
+      type="action"
+    />
   </section>
 </template>
 
 <script setup>
-import { useMonitoringStore } from '@/store/Monitoring';
 import { ref } from 'vue';
+import { useMonitoringStore } from '@/store/Monitoring';
+
+import ImproveResponse from './ImproveResponse.vue';
 
 const props = defineProps({
   isApproved: {
@@ -112,6 +124,10 @@ async function setIsApproved(boolean) {
         font-weight: $unnnic-font-weight-bold;
       }
     }
+  }
+
+  &__improve-response {
+    margin-top: $unnnic-spacing-sm;
   }
 }
 </style>
