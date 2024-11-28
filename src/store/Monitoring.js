@@ -6,6 +6,51 @@ import nexusaiAPI from '@/api/nexusaiAPI.js';
 import globalStore from '.';
 import i18n from '@/utils/plugins/i18n';
 
+function normalizeGroundednessScores(groundedness) {
+  return groundedness?.map((item) => ({
+    ...item,
+    score: Number(item.score) * 10,
+  }));
+}
+
+function transformMessageData(message) {
+  const {
+    uuid,
+    text,
+    status,
+    actions_started,
+    actions_uuid,
+    actions_type,
+    llm_response,
+    is_approved,
+    contact_urn,
+    groundedness,
+  } = message;
+
+  const llmStatusMap = {
+    s: 'success',
+    f: 'failed',
+  };
+
+  return {
+    uuid,
+    text,
+    action: actions_started
+      ? {
+          name: actions_type,
+          uuid: actions_uuid,
+        }
+      : null,
+    llm: {
+      response: llm_response,
+      status: actions_started ? 'action' : llmStatusMap[status.toLowerCase()],
+    },
+    contact_urn,
+    is_approved,
+    groundedness: normalizeGroundednessScores(groundedness),
+  };
+}
+
 export const useMonitoringStore = defineStore('monitoring', () => {
   const connectProjectUuid = computed(
     () => globalStore.state.Auth.connectProjectUuid,
@@ -29,7 +74,7 @@ export const useMonitoringStore = defineStore('monitoring', () => {
 
   async function loadMessages({ page, pageInterval, tag, text }) {
     const { started_day, ended_day } = route.query;
-    const currentNewMessages =  [...messages.newMessages]
+    const currentNewMessages = [...messages.newMessages];
 
     try {
       messages.status = 'loading';
@@ -54,6 +99,36 @@ export const useMonitoringStore = defineStore('monitoring', () => {
     }
   }
 
+  async function loadMessageContext({ id }) {
+    messages.inspectedAnswer.context = {};
+    const setStatus = (status) =>
+      (messages.inspectedAnswer.context.status = status);
+
+    try {
+      setStatus('loading');
+
+      const response =
+        await nexusaiAPI.router.monitoring.messages.getMessageContext({
+          projectUuid: connectProjectUuid.value,
+          id: id,
+        });
+
+      messages.inspectedAnswer.context = response?.map(transformMessageData);
+      setStatus('complete');
+    } catch (error) {
+      console.log('error', error);
+
+      setStatus('error');
+
+      globalStore.state.alert = {
+        type: 'error',
+        text: i18n.global.t(
+          'router.monitoring.error_loading_previous_messages',
+        ),
+      };
+    }
+  }
+
   async function loadMessageDetails({ id }) {
     try {
       messages.inspectedAnswer.status = 'loading';
@@ -63,47 +138,9 @@ export const useMonitoringStore = defineStore('monitoring', () => {
         id,
       });
 
-      const {
-        uuid,
-        text,
-        status,
-        actions_started,
-        actions_uuid,
-        actions_type,
-        llm_response,
-        is_approved,
-        contact_urn,
-        groundedness,
-      } = response;
-
-      const llmStatusMap = {
-        s: 'success',
-        f: 'failed',
-      };
-
       messages.inspectedAnswer = {
         id,
-        uuid,
-        text,
-        action: actions_started
-          ? {
-              name: actions_type,
-              uuid: actions_uuid,
-            }
-          : null,
-        llm: {
-          response: llm_response,
-          status: actions_started
-            ? 'action'
-            : llmStatusMap[status.toLowerCase()],
-        },
-        contact_urn,
-        is_approved,
-        groundedness: groundedness?.map((item) => ({
-          ...item,
-          score: Number(item.score) * 10,
-        })), // To turn into a hundred
-
+        ...transformMessageData(response),
         status: 'complete',
       };
     } catch (error) {
@@ -151,13 +188,14 @@ export const useMonitoringStore = defineStore('monitoring', () => {
     }
   }
 
-  function createNewMessage({message}) {
-    messages.newMessages.push(message)
+  function createNewMessage({ message }) {
+    messages.newMessages.push(message);
   }
 
   return {
     messages,
     loadMessages,
+    loadMessageContext,
     loadMessageDetails,
     loadMessagesPerformance,
     rateAnswer,
