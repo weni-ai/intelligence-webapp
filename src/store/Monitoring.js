@@ -72,6 +72,8 @@ export const useMonitoringStore = defineStore('monitoring', () => {
     inspectedAnswer: {},
   });
 
+  const ws = reactive(null);
+
   async function loadMessages({ page, pageInterval, tag, text }) {
     const { started_day, ended_day } = route.query;
     const currentNewMessages = [...messages.newMessages];
@@ -130,6 +132,8 @@ export const useMonitoringStore = defineStore('monitoring', () => {
   }
 
   async function loadMessageDetails({ id }) {
+    if (messages.inspectedAnswer.status === 'loading') return;
+
     try {
       messages.inspectedAnswer.status = 'loading';
 
@@ -194,6 +198,7 @@ export const useMonitoringStore = defineStore('monitoring', () => {
 
   return {
     messages,
+    ws,
     loadMessages,
     loadMessageContext,
     loadMessageDetails,
