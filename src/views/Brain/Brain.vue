@@ -25,6 +25,7 @@
               @update:files="(v) => (files = v)"
             />
             <RouterMonitoring v-else-if="route.name === 'router-monitoring'" />
+            <RouterAgentsTeam v-else-if="route.name === 'router-agents-team'" />
             <RouterActions v-else-if="route.name === 'router-actions'" />
             <RouterCustomization
               v-else-if="route.name === 'router-personalization'"
@@ -80,6 +81,7 @@ import nexusaiAPI from '../../api/nexusaiAPI';
 import PageContainer from '../../components/PageContainer.vue';
 import Tests from '../repository/content/Tests.vue';
 import RouterMonitoring from './RouterMonitoring/index.vue';
+import RouterAgentsTeam from './RouterAgentsTeam/index.vue';
 import RouterActions from './RouterActions.vue';
 import RouterContentBase from './RouterContentBase.vue';
 import RouterCustomization from './RouterCustomization.vue';
@@ -102,6 +104,7 @@ export default {
     PageContainer,
     RouterMonitoring,
     RouterActions,
+    RouterAgentsTeam,
     RouterContentBase,
     RouterCustomization,
     RouterTunings,

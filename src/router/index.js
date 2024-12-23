@@ -99,6 +99,11 @@ const router = createRouter({
           component: () => import('../views/Brain/RouterCustomization.vue'),
         },
         {
+          path: 'agents-team',
+          name: 'router-agents-team',
+          component: () => import('../views/Brain/RouterAgentsTeam/index.vue'),
+        },
+        {
           path: 'content',
           name: 'router-content',
           component: () => import('../views/Brain/RouterCustomization.vue'),

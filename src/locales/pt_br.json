@@ -66,6 +66,7 @@
     "tabs": {
       "monitoring": "Supervisor",
       "personalization": "Personalidade",
+      "agents-team": "Minha equipe de agentes",
       "content": "Conhecimento",
       "actions": "Ações",
       "tunings": "Ajustes"
@@ -134,6 +135,9 @@
       "router_activated": "Agent Builder ativado em {name}",
       "router_removed": "Agent Builder removido de {name}",
       "router_edited": "Descrição de {name} atualizada"
+    },
+    "agents_team": {
+      "description": "Crie a equipe de agentes perfeita."
     },
     "content": {
       "fields": {
