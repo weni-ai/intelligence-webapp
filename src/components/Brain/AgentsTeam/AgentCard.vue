@@ -73,7 +73,7 @@ const props = defineProps({
   },
   title: {
     type: String,
-    required: true,
+    default: '',
   },
   description: {
     type: String,
@@ -86,7 +86,7 @@ const props = defineProps({
    */
   skills: {
     type: Array,
-    required: true,
+    default: () => [],
     validator(skills) {
       return skills.every((skill) => 'name' in skill && 'icon' in skill);
     },
@@ -101,7 +101,7 @@ const props = defineProps({
   },
   uuid: {
     type: String,
-    required: true,
+    default: '',
   },
 });
 

@@ -64,7 +64,7 @@ const officialAgentsMock = [
 
 const myAgentsMock = [
   {
-    uuid: '776004f3-c784-4762-85f4-a93ca329a7f7',
+    uuid: '34536bda-0bab-4a47-967e-5719e9e792e3',
     name: 'Credit card agent',
     description:
       'Manages credit card services, such as issuing cards, cancellations, and checking balances',
@@ -76,7 +76,7 @@ const myAgentsMock = [
     assigned: false,
   },
   {
-    uuid: '22687b66-8da9-49df-be5e-191a4f4f3a3a',
+    uuid: '765004f3-c784-4762-85f4-a93ca329a7f7',
     name: 'Tracking agent',
     description:
       'Assists customers with product tracking and streamlines the checkout process',
@@ -90,7 +90,7 @@ const myAgentsMock = [
 
 const activeTeamMock = [
   {
-    uuid: '66bda93c-0bab-4a47-967e-5719e9e792e3',
+    uuid: '987bda93c-0bab-4a47-967e-5719e9e792e3',
     name: 'Order Analyst',
     skills: [
       { name: 'Get order', icon: '🛒' },
@@ -99,7 +99,7 @@ const activeTeamMock = [
     ],
   },
   {
-    uuid: '776004f3-c784-4762-85f4-a93ca329a7f7',
+    uuid: '13436bda-0bab-4a47-967e-5719e9e792e3',
     name: 'Credit card agent',
     skills: [
       { name: 'Issue credit card', icon: '💳' },
@@ -108,7 +108,7 @@ const activeTeamMock = [
     ],
   },
   {
-    uuid: '22687b66-8da9-49df-be5e-191a4f4f3a3a',
+    uuid: '076504f3-c784-4762-85f4-a93ca329a7f7',
     name: 'Tracking agent',
     skills: [
       { name: 'Search catalogue', icon: '🛒' },

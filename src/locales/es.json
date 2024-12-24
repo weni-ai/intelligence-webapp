@@ -144,7 +144,9 @@
       },
       "gallery": {
         "title": "Galería de agentes",
-        "search_placeholder": "Buscar por agente o habilidad"
+        "search_placeholder": "Buscar por agente o habilidad",
+        "official": "Oficial",
+        "my-agents": "Mis agentes"
       }
     },
     "content": {

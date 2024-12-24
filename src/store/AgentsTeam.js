@@ -7,25 +7,44 @@ export const useAgentsTeamStore = defineStore('agents-team', () => {
   const officialAgents = reactive({
     status: null,
     data: [],
-    next: 0,
+  });
+
+  const myAgents = reactive({
+    status: null,
+    data: [],
   });
 
   async function loadOfficialAgents({ search = '' } = {}) {
     try {
       officialAgents.status = 'loading';
 
-      const { data, next } =
-        await nexusaiAPI.router.agents_team.listOfficialAgents({
-          search,
-        });
+      const { data } = await nexusaiAPI.router.agents_team.listOfficialAgents({
+        search,
+      });
 
       officialAgents.data = data;
-      officialAgents.next = next;
       officialAgents.status = 'complete';
     } catch (error) {
       console.error('error', error);
 
       officialAgents.status = 'error';
+    }
+  }
+
+  async function loadMyAgents({ search = '' } = {}) {
+    try {
+      myAgents.status = 'loading';
+
+      const { data } = await nexusaiAPI.router.agents_team.listMyAgents({
+        search,
+      });
+
+      myAgents.data = data;
+      myAgents.status = 'complete';
+    } catch (error) {
+      console.error('error', error);
+
+      myAgents.status = 'error';
     }
   }
 
@@ -41,8 +60,13 @@ export const useAgentsTeamStore = defineStore('agents-team', () => {
           is_assigned,
         });
 
-      const agent = officialAgents.data.find((agent) => agent.uuid === uuid);
-      agent.assigned = data.assigned;
+      const agent =
+        officialAgents.data.find((agent) => agent.uuid === uuid) ||
+        myAgents.data.find((agent) => agent.uuid === uuid);
+
+      if (agent) {
+        agent.assigned = data.assigned;
+      }
     } catch (error) {
       console.error('error', error);
     }
@@ -50,7 +74,9 @@ export const useAgentsTeamStore = defineStore('agents-team', () => {
 
   return {
     officialAgents,
+    myAgents,
     loadOfficialAgents,
+    loadMyAgents,
     toggleAgentAssignment,
   };
 });

@@ -144,7 +144,9 @@
       },
       "gallery": {
         "title": "Agents gallery",
-        "search_placeholder": "Search by agent or skill"
+        "search_placeholder": "Search by agent or skill",
+        "official": "Official",
+        "my-agents": "My agents"
       }
     },
     "content": {
