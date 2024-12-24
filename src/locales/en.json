@@ -67,6 +67,7 @@
     "tabs": {
       "monitoring": "Supervisor",
       "personalization": "Personality",
+      "agents-team": "My agents team",
       "content": "Knowledge",
       "actions": "Actions",
       "tunings": "Tunings"
@@ -135,6 +136,26 @@
       "router_activated": "Agent Builder activated in {name}",
       "router_removed": "Agent Builder removed from {name}",
       "router_edited": "Description of {name} updated"
+    },
+    "agents_team": {
+      "description": "Build the perfect agent team.",
+      "card": {
+        "assign": "Assign to team",
+        "assigned": "Assigned"
+      },
+      "active_team": {
+        "title": "Active team",
+        "no_team": "No agents in your team",
+        "no_team_description": "Add agents from the gallery below or {link}",
+        "create_agent": "create agent"
+      },
+      "gallery": {
+        "title": "Agents gallery",
+        "search_placeholder": "Search by agent or skill",
+        "official": "Official",
+        "my-agents": "My agents"
+      },
+      "create_agent": "Create agent"
     },
     "content": {
       "fields": {

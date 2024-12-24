@@ -2,6 +2,7 @@ import request from '@/api/nexusaiRequest';
 import forceHttps from '@/api/utils/forceHttps';
 import { Actions } from './nexus/Actions';
 import { Monitoring } from './nexus/Monitoring';
+import { AgentsTeam } from './nexus/AgentsTeam';
 
 export default {
   question: {
@@ -128,6 +129,8 @@ export default {
     monitoring: Monitoring,
 
     actions: Actions,
+
+    agents_team: AgentsTeam,
 
     tunings: {
       read({ projectUuid }) {
