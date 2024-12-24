@@ -137,7 +137,14 @@
       "router_edited": "Descripción de {name} actualizada"
     },
     "agents_team": {
-      "description": "Construye el equipo de agentes perfecto."
+      "description": "Construye el equipo de agentes perfecto.",
+      "card": {
+        "assign": "Asignar al equipo"
+      },
+      "gallery": {
+        "title": "Galería de agentes",
+        "search_placeholder": "Buscar por agente o habilidad"
+      }
     },
     "content": {
       "fields": {
