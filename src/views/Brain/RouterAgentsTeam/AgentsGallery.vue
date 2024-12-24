@@ -26,6 +26,7 @@
     </UnnnicTab>
 
     <UnnnicInput
+      v-model="search[activeTab]"
       iconLeft="search"
       :placeholder="$t('router.agents_team.gallery.search_placeholder')"
     />
@@ -55,11 +56,12 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
-
-import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import { computed, onMounted, ref, watch } from 'vue';
+import { debounce } from 'lodash';
 
 import AgentCard from '@/components/Brain/AgentsTeam/AgentCard.vue';
+
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 const agentsTeamStore = useAgentsTeamStore();
 const officialAgents = agentsTeamStore.officialAgents;
@@ -70,13 +72,10 @@ const contentTabs = ref([
   { title: 'my-agents', page: 'my-agents' },
 ]);
 const activeTab = ref(contentTabs.value[0].page);
-const onTabChange = (newTab) => {
-  activeTab.value = newTab;
-
-  if (agentsTeamStore.myAgents.status === null && newTab === 'my-agents') {
-    agentsTeamStore.loadMyAgents();
-  }
-};
+const search = ref({
+  official: '',
+  'my-agents': '',
+});
 
 const agentsData = computed(() =>
   activeTab.value === 'official' ? officialAgents.data : myAgents.data,
@@ -85,13 +84,31 @@ const isLoadingAgents = computed(
   () => officialAgents.status === 'loading' || myAgents.status === 'loading',
 );
 
-function loadOfficialAgents() {
-  agentsTeamStore.loadOfficialAgents();
+function onTabChange(newTab) {
+  activeTab.value = newTab;
+
+  if (agentsTeamStore.myAgents.status === null && newTab === 'my-agents') {
+    agentsTeamStore.loadMyAgents();
+  }
 }
 
 onMounted(() => {
-  loadOfficialAgents();
+  agentsTeamStore.loadOfficialAgents();
 });
+
+const debouncedSearch = (callback) => debounce(callback, 300);
+watch(
+  () => search.value['my-agents'],
+  debouncedSearch((search) => {
+    agentsTeamStore.loadMyAgents({ search });
+  }),
+);
+watch(
+  () => search.value['official'],
+  debouncedSearch((search) => {
+    agentsTeamStore.loadOfficialAgents({ search });
+  }),
+);
 </script>
 
 <style lang="scss" scoped>
