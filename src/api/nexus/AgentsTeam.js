@@ -180,9 +180,9 @@ export const AgentsTeam = {
   },
 
   async toggleAgentAssignment({ agentUuid, is_assigned }) {
-    const params = cleanParams({
-      search,
-    });
+    // const params = cleanParams({
+    //   search,
+    // });
     // const { data } = await request.$http.patch(`api/agents/${agentUuid}`, {
     //   assigned: is_assigned,
     // });

@@ -17,6 +17,7 @@
       </UnnnicIntelligenceText>
 
       <UnnnicIntelligenceText
+        v-if="description"
         tag="p"
         family="secondary"
         size="body-gt"
@@ -37,15 +38,29 @@
 
     <UnnnicButton
       v-if="!loading && assignment"
-      :text="$t('router.agents_team.card.assign')"
-      type="primary"
+      :class="[
+        'agent-card__button',
+        { 'agent-card__button--assigned': assigned },
+      ]"
+      :text="
+        assigned
+          ? $t('router.agents_team.card.assigned')
+          : $t('router.agents_team.card.assign')
+      "
+      :type="assigned ? 'tertiary' : 'primary'"
+      :iconLeft="assigned ? 'check' : ''"
       size="small"
-      @click="$emit('assign')"
+      :loading="isAssigning"
+      @click="toggleAgentAssignment"
     />
   </section>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
+
 import AgentCardSkeleton from './AgentCardSkeleton.vue';
 import Skill from './Skill.vue';
 
@@ -62,7 +77,7 @@ const props = defineProps({
   },
   description: {
     type: String,
-    required: true,
+    default: '',
   },
   /**
    * An array of skills where each skill is an object with the following properties:
@@ -80,7 +95,33 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  assigned: {
+    type: Boolean,
+    default: false,
+  },
+  uuid: {
+    type: String,
+    required: true,
+  },
 });
+
+const isAssigning = ref(false);
+const agentsTeamStore = useAgentsTeamStore();
+
+async function toggleAgentAssignment() {
+  isAssigning.value = true;
+
+  try {
+    await agentsTeamStore.toggleAgentAssignment({
+      uuid: props.uuid,
+      is_assigned: !props.assigned,
+    });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isAssigning.value = false;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -104,6 +145,16 @@ const props = defineProps({
       display: flex;
       gap: $unnnic-spacing-nano;
       flex-wrap: wrap;
+    }
+  }
+
+  :deep(.unnnic-button).agent-card__button {
+    &--assigned {
+      color: $unnnic-color-weni-600;
+    }
+
+    [class*='icon'] {
+      color: $unnnic-color-weni-600;
     }
   }
 }

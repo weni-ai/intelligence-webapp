@@ -30,10 +30,12 @@
       <template v-else>
         <AgentCard
           v-for="agent in officialAgents.data"
-          :key="agent.name"
+          :key="agent.uuid"
           :title="agent.name"
           :description="agent.description"
           :skills="agent.skills"
+          :uuid="agent.uuid"
+          :assigned="agent.assigned"
         />
       </template>
     </section>

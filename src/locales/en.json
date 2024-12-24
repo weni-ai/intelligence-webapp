@@ -139,7 +139,8 @@
     "agents_team": {
       "description": "Build the perfect agent team.",
       "card": {
-        "assign": "Assign to team"
+        "assign": "Assign to team",
+        "assigned": "Assigned"
       },
       "gallery": {
         "title": "Agents gallery",
