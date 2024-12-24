@@ -153,7 +153,8 @@
         "search_placeholder": "Search by agent or skill",
         "official": "Official",
         "my-agents": "My agents"
-      }
+      },
+      "create_agent": "Create agent"
     },
     "content": {
       "fields": {

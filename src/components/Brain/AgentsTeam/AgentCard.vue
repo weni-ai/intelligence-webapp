@@ -1,6 +1,8 @@
 <template>
-  <section class="agent-card">
+  <section :class="['agent-card', { 'agent-card--empty': empty }]">
     <AgentCardSkeleton v-if="loading" />
+
+    <AgentCardEmpty v-else-if="empty" />
 
     <section
       v-else
@@ -37,7 +39,7 @@
     </section>
 
     <UnnnicButton
-      v-if="!loading && assignment"
+      v-if="!loading && !empty && assignment"
       :class="[
         'agent-card__button',
         { 'agent-card__button--assigned': assigned },
@@ -62,6 +64,7 @@ import { ref } from 'vue';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 import AgentCardSkeleton from './AgentCardSkeleton.vue';
+import AgentCardEmpty from './AgentCardEmpty.vue';
 import Skill from './Skill.vue';
 
 defineEmits(['assign']);
@@ -103,6 +106,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  empty: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const isAssigning = ref(false);
@@ -135,8 +142,13 @@ async function toggleAgentAssignment() {
   gap: $unnnic-spacing-sm;
   align-content: space-between;
 
-  &__content,
-  &__content-loading {
+  &--empty {
+    display: flex;
+
+    cursor: pointer;
+  }
+
+  &__content {
     display: flex;
     flex-direction: column;
     gap: $unnnic-spacing-xs;

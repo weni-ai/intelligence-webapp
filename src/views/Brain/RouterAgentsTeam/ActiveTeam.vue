@@ -57,7 +57,7 @@
         >
           <template #link>
             <a
-              href="#"
+              :href="agentsTeamStore.linkToCreateAgent"
               class="description__link"
               >{{ $t('router.agents_team.active_team.create_agent') }}</a
             >

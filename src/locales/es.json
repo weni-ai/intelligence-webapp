@@ -153,7 +153,8 @@
         "search_placeholder": "Buscar por agente o habilidad",
         "official": "Oficial",
         "my-agents": "Mis agentes"
-      }
+      },
+      "create_agent": "Crear agente"
     },
     "content": {
       "fields": {
