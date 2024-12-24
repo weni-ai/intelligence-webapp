@@ -1,9 +1,6 @@
 <template>
   <section class="skill">
-    <img
-      class="skill__icon"
-      :src="icons[icon]"
-    />
+    <p class="skill__icon">{{ icon }}</p>
 
     <UnnnicIntelligenceText
       class="skill__title"
@@ -18,13 +15,6 @@
 </template>
 
 <script setup>
-import VtexIcon from '@/assets/icons/vtex.svg';
-import UpsIcon from '@/assets/icons/ups.svg';
-import CreditCardIcon from '@/assets/icons/credit-card.png';
-import CancelIcon from '@/assets/icons/cancel.png';
-import GiftIcon from '@/assets/icons/gift.png';
-import BalanceIcon from '@/assets/icons/balance.png';
-
 const props = defineProps({
   title: {
     type: String,
@@ -35,15 +25,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-const icons = {
-  vtex: VtexIcon,
-  ups: UpsIcon,
-  credit_card: CreditCardIcon,
-  cancel: CancelIcon,
-  gift: GiftIcon,
-  balance: BalanceIcon,
-};
 </script>
 
 <style lang="scss" scoped>
@@ -58,8 +39,8 @@ const icons = {
   gap: $unnnic-spacing-nano;
 
   &__icon {
-    width: $unnnic-icon-size-xs;
-    height: $unnnic-icon-size-xs;
+    font-size: $unnnic-icon-size-xs;
+    line-height: 0;
   }
 
   &__title {
