@@ -146,6 +146,11 @@ const router = createRouter({
           component: () => import('@/views/Brain/RouterCustomization.vue'),
         },
         {
+          path: 'agents-team',
+          name: 'router-agents-team',
+          component: () => import('@/views/Brain/RouterAgentsTeam/index.vue'),
+        },
+        {
           path: 'content',
           name: 'router-content',
           component: () => import('@/views/Brain/RouterCustomization.vue'),
@@ -318,23 +323,23 @@ describe('Brain integration', () => {
 
     const navigation = wrapper.findAll('[data-test="nav-router"]');
 
-    expect(navigation.length).eq(5);
+    expect(navigation.length).eq(6);
 
-    await navigation.at(2).trigger('click');
+    await navigation.at(3).trigger('click');
 
     await flushPromises();
 
     const contentComponent = wrapper.findComponent(RouterContentBase);
     expect(contentComponent.exists()).toBe(true);
 
-    await navigation.at(3).trigger('click');
+    await navigation.at(4).trigger('click');
 
     await flushPromises();
 
     const actionsComponent = wrapper.findComponent(RouterActions);
     expect(actionsComponent.exists()).toBe(true);
 
-    await navigation.at(4).trigger('click');
+    await navigation.at(5).trigger('click');
 
     await flushPromises();
 
@@ -345,7 +350,7 @@ describe('Brain integration', () => {
   test('checking that the content base tab is saving the entries provided and performing the save', async () => {
     const navigation = wrapper.findAll('[data-test="nav-router"]');
 
-    await navigation.at(2).trigger('click');
+    await navigation.at(3).trigger('click');
 
     await flushPromises();
 
@@ -357,7 +362,7 @@ describe('Brain integration', () => {
   test('checking that the actions tab is saving the entries provided and performing the save', async () => {
     const navigation = wrapper.findAll('[data-test="nav-router"]');
 
-    await navigation.at(3).trigger('click');
+    await navigation.at(4).trigger('click');
 
     await flushPromises();
 
