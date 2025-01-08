@@ -3,7 +3,7 @@ import { reactive } from 'vue';
 
 import nexusaiAPI from '@/api/nexusaiAPI.js';
 
-export const useAgentsTeamStore = defineStore('agents-team', () => {
+export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
   const officialAgents = reactive({
     status: null,
     data: [],

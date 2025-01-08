@@ -1,11 +1,10 @@
+import { beforeEach, it } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import { createTestingPinia } from '@pinia/testing';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 import AgentCard from '../AgentCard.vue';
-import { nextTick } from 'vue';
-import { beforeEach, it } from 'vitest';
 
 const pinia = createTestingPinia({
   initialState: {
