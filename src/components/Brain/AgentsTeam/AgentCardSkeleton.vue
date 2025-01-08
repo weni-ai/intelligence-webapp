@@ -1,27 +1,37 @@
 <template>
-  <section class="agent-card-skeleton">
+  <section
+    class="agent-card-skeleton"
+    data-testid="agent-card-skeleton"
+  >
     <UnnnicSkeletonLoading
       tag="div"
       width="30%"
       height="22px"
+      data-testid="skeleton-loading"
     />
 
     <UnnnicSkeletonLoading
       tag="div"
       width="100%"
       height="44px"
+      data-testid="skeleton-loading"
     />
 
-    <section class="agent-card-skeleton__skills">
+    <section
+      class="agent-card-skeleton__skills"
+      data-testid="skills-section"
+    >
       <UnnnicSkeletonLoading
         tag="div"
         width="100px"
         height="30px"
+        data-testid="skills-skeleton-loading"
       />
       <UnnnicSkeletonLoading
         tag="div"
         width="150px"
         height="30px"
+        data-testid="skills-skeleton-loading"
       />
     </section>
 
@@ -29,6 +39,7 @@
       tag="div"
       width="100%"
       height="38px"
+      data-testid="skeleton-loading"
     />
   </section>
 </template>
