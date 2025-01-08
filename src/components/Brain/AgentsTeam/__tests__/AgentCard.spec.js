@@ -93,7 +93,10 @@ describe('AgentCard.vue', () => {
         .findComponent('[data-testid="assign-button"]')
         .trigger('click');
 
-      expect(agentsTeamStore.toggleAgentAssignment).toHaveBeenCalled();
+      expect(agentsTeamStore.toggleAgentAssignment).toHaveBeenCalledWith({
+        uuid: wrapper.props('uuid'),
+        is_assigned: !wrapper.props('assigned'),
+      });
     });
 
     it('should log error when toggleAgentAssignment throws an error', async () => {
@@ -102,7 +105,7 @@ describe('AgentCard.vue', () => {
         .mockImplementation(() => {});
       agentsTeamStore.toggleAgentAssignment = vi
         .fn()
-        .mockRejectedValue(new Error('API Error'));
+        .mockRejectedValue(new Error(''));
 
       await wrapper.vm.toggleAgentAssignment();
 

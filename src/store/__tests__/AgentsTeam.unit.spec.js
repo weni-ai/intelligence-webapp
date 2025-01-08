@@ -1,0 +1,136 @@
+import { setActivePinia, createPinia } from 'pinia';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import nexusaiAPI from '@/api/nexusaiAPI.js';
+
+vi.mock('@/api/nexusaiAPI.js');
+
+describe('AgentsTeamStore', () => {
+  let store;
+
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    store = useAgentsTeamStore();
+  });
+
+  describe('loadOfficialAgents', () => {
+    it('should load official agents team successfully', async () => {
+      const mockData = {
+        data: [],
+      };
+      const listOfficialAgentsSpy =
+        nexusaiAPI.router.agents_team.listOfficialAgents.mockResolvedValue(
+          mockData,
+        );
+
+      await store.loadOfficialAgents({
+        search: 'Test Search',
+      });
+
+      expect(store.officialAgents.status).toBe('complete');
+      expect(store.officialAgents.data).toEqual(mockData.data);
+      expect(listOfficialAgentsSpy).toHaveBeenCalledWith({
+        search: 'Test Search',
+      });
+    });
+
+    it('should handle errors when loading official agents', async () => {
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      nexusaiAPI.router.agents_team.listOfficialAgents.mockRejectedValue(
+        new Error('Error'),
+      );
+
+      await store.loadOfficialAgents();
+
+      expect(store.officialAgents.status).toBe('error');
+    });
+  });
+
+  describe('loadMyAgents', () => {
+    it('should load my agents team successfully', async () => {
+      const mockData = {
+        data: [],
+      };
+      const listMyAgentsSpy =
+        nexusaiAPI.router.agents_team.listMyAgents.mockResolvedValue(mockData);
+
+      await store.loadMyAgents({
+        search: 'Test Search',
+      });
+
+      expect(store.myAgents.status).toBe('complete');
+      expect(store.myAgents.data).toEqual(mockData.data);
+      expect(listMyAgentsSpy).toHaveBeenCalledWith({
+        search: 'Test Search',
+      });
+    });
+
+    it('should handle errors when loading my agents', async () => {
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      nexusaiAPI.router.agents_team.listMyAgents.mockRejectedValue(
+        new Error('Error'),
+      );
+
+      await store.loadMyAgents();
+
+      expect(store.myAgents.status).toBe('error');
+    });
+  });
+
+  describe('toggleAgentAssignment', () => {
+    it('should throws an error if uuid is missing', async () => {
+      expect.assertions(1);
+      try {
+        await store.toggleAgentAssignment({ is_assigned: true });
+      } catch (error) {
+        expect(error.message).toBe('uuid and is_assigned are required');
+      }
+    });
+
+    it('updates agent assignment correctly', async () => {
+      const uuid = '123';
+      const is_assigned = true;
+      const mockData = { uuid, assigned: true };
+      nexusaiAPI.router.agents_team.toggleAgentAssignment.mockResolvedValue({
+        data: mockData,
+      });
+
+      const agent = { uuid, assigned: false };
+      store.officialAgents.data.push(agent);
+
+      await store.toggleAgentAssignment({ uuid, is_assigned });
+
+      expect(
+        nexusaiAPI.router.agents_team.toggleAgentAssignment,
+      ).toHaveBeenCalledWith({
+        agentUuid: uuid,
+        is_assigned,
+      });
+      expect(store.officialAgents.data[0].assigned).toBe(true);
+
+      store.officialAgents.data = [];
+      store.myAgents.data.push(agent);
+
+      await store.toggleAgentAssignment({ uuid, is_assigned });
+
+      expect(store.myAgents.data[0].assigned).toBe(true);
+    });
+
+    it('should handle errors when toggling agent assignment', async () => {
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      nexusaiAPI.router.agents_team.toggleAgentAssignment.mockRejectedValue(
+        new Error('Error'),
+      );
+
+      await store.toggleAgentAssignment({ uuid: '123', is_assigned: true });
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith('error', new Error('Error'));
+    });
+  });
+});
