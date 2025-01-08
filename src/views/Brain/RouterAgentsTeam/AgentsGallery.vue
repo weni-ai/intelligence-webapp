@@ -1,5 +1,8 @@
 <template>
-  <section class="agents-gallery">
+  <section
+    class="agents-gallery"
+    data-testid="agents-gallery"
+  >
     <UnnnicIntelligenceText
       tag="h2"
       family="secondary"
@@ -14,6 +17,7 @@
       class="agents-gallery__tabs"
       :tabs="contentTabs.map((tab) => tab.page)"
       :activeTab="activeTab"
+      data-testid="agents-gallery-tabs"
       @change="onTabChange"
     >
       <template
@@ -29,14 +33,19 @@
       v-model="search[activeTab]"
       iconLeft="search"
       :placeholder="$t('router.agents_team.gallery.search_placeholder')"
+      data-testid="search-input"
     />
 
-    <section class="agents-gallery__cards">
+    <section
+      class="agents-gallery__cards"
+      data-testid="agent-cards"
+    >
       <template v-if="isLoadingAgents">
         <AgentCard
           v-for="(_, index) in Array(3)"
           :key="index"
           loading
+          data-testid="agent-card-loading"
         />
       </template>
 
@@ -49,6 +58,7 @@
           :skills="agent.skills"
           :uuid="agent.uuid"
           :assigned="agent.assigned"
+          data-testid="agent-card"
         />
       </template>
     </section>

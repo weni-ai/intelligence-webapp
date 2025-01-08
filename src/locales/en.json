@@ -66,7 +66,7 @@
     "tabs": {
       "monitoring": "Supervisor",
       "personalization": "Personality",
-      "agents-team": "My agents team",
+      "agents-team": "Agents",
       "content": "Knowledge",
       "actions": "Actions",
       "tunings": "Tunings"
@@ -336,6 +336,9 @@
         "not_found": {
           "title": "The contents of the file could not be viewed",
           "description": "The contents of the file could not be found.<br />Please delete the file and try adding it again."
+        },
+        "bedrock": {
+          "title": "Content view is not available"
         }
       }
     },

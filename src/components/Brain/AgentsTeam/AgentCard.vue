@@ -1,6 +1,9 @@
 <template>
   <section class="agent-card">
-    <AgentCardSkeleton v-if="loading" />
+    <AgentCardSkeleton
+      v-if="loading"
+      data-testid="agent-card-skeleton"
+    />
 
     <section
       v-else
@@ -12,6 +15,7 @@
         size="body-gt"
         color="neutral-darkest"
         weight="bold"
+        data-testid="title"
       >
         {{ title }}
       </UnnnicIntelligenceText>
@@ -22,6 +26,7 @@
         family="secondary"
         size="body-gt"
         color="neutral-cloudy"
+        data-testid="description"
       >
         {{ description }}
       </UnnnicIntelligenceText>
@@ -32,6 +37,7 @@
           :key="skill.name"
           :title="skill.name"
           :icon="skill.icon"
+          data-testid="skill"
         />
       </section>
     </section>
@@ -51,6 +57,7 @@
       :iconLeft="assigned ? 'check' : ''"
       size="small"
       :loading="isAssigning"
+      data-testid="assign-button"
       @click="toggleAgentAssignment"
     />
   </section>
