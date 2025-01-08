@@ -1,12 +1,35 @@
 import { mount } from '@vue/test-utils';
 
+import { createTestingPinia } from '@pinia/testing';
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
+
 import AgentCard from '../AgentCard.vue';
+import { nextTick } from 'vue';
+import { beforeEach, it } from 'vitest';
+
+const pinia = createTestingPinia({
+  initialState: {
+    officialAgents: {
+      status: null,
+      data: [],
+    },
+    myAgents: {
+      status: null,
+      data: [],
+    },
+  },
+});
 
 describe('AgentCard.vue', () => {
   let wrapper;
 
+  const agentsTeamStore = useAgentsTeamStore();
+
   beforeEach(() => {
     wrapper = mount(AgentCard, {
+      global: {
+        plugins: [pinia],
+      },
       props: {
         loading: false,
         title: 'Test Title',
@@ -47,9 +70,43 @@ describe('AgentCard.vue', () => {
     expect(skills[1].props('icon')).toBe('icon-2');
   });
 
-  it('should emits assign event when button is clicked', async () => {
-    await wrapper.setProps({ assignment: true });
-    await wrapper.find('[data-testid="assign-button"]').trigger('click');
-    expect(wrapper.emitted('assign')).toHaveLength(1);
+  describe('Assign button', () => {
+    beforeEach(async () => {
+      await wrapper.setProps({ assignment: true });
+    });
+
+    const assignButton = () =>
+      wrapper.findComponent('[data-testid="assign-button"]');
+
+    test('renders assign button with correct type and iconLeft', async () => {
+      expect(assignButton().props('type')).toBe('primary');
+      expect(assignButton().props('iconLeft')).toBe('');
+
+      await wrapper.setProps({ assigned: true });
+
+      expect(assignButton().props('type')).toBe('tertiary');
+      expect(assignButton().props('iconLeft')).toBe('check');
+    });
+
+    it('calls toggleAgentAssignment when button is clicked', async () => {
+      await wrapper
+        .findComponent('[data-testid="assign-button"]')
+        .trigger('click');
+
+      expect(agentsTeamStore.toggleAgentAssignment).toHaveBeenCalled();
+    });
+
+    it('should log error when toggleAgentAssignment throws an error', async () => {
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+      agentsTeamStore.toggleAgentAssignment = vi
+        .fn()
+        .mockRejectedValue(new Error('API Error'));
+
+      await wrapper.vm.toggleAgentAssignment();
+
+      expect(consoleErrorSpy).toHaveBeenCalled();
+    });
   });
 });

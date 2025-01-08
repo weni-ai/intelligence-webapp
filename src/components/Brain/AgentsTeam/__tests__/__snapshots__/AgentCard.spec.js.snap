@@ -86,7 +86,7 @@ exports[`AgentCard.vue > renders correctly 1`] = `
     </section>
   </section>
   <button
-    class="unnnic-button unnnic-button--size-small unnnic-button--primary"
+    class="agent-card__button unnnic-button unnnic-button--size-small unnnic-button--primary agent-card__button"
     data-testid="assign-button"
     data-v-eb2aecd0=""
     data-v-ed84dbab=""
