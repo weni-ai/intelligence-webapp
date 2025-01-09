@@ -6,6 +6,7 @@
       size="body-lg"
       color="neutral-darkest"
       weight="bold"
+      data-testid="title"
     >
       {{ $t('router.agents_team.active_team.title') }}
     </UnnnicIntelligenceText>
@@ -19,6 +20,7 @@
           v-for="(_, index) in Array(3)"
           :key="index"
           loading
+          data-testid="loading-card"
         />
       </template>
 
@@ -30,6 +32,7 @@
           :skills="agent.skills"
           :uuid="agent.uuid"
           :assignment="false"
+          data-testid="team-card"
         />
       </template>
     </section>
@@ -37,6 +40,7 @@
     <section
       v-if="!isLoadingTeam && activeTeam.length === 0"
       class="active-team__empty"
+      data-testid="empty-state"
     >
       <UnnnicIntelligenceText
         tag="p"
