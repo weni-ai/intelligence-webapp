@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`RouterAgentsTeam > matches snapshot 1`] = `
+<section
+  class="agents-team"
+  data-v-d0fbe27f=""
+>
+  <active-team-stub
+    data-v-d0fbe27f=""
+  />
+  <unnnic-divider-stub
+    data-v-d0fbe27f=""
+    scheme="neutral-soft"
+    yspacing="lg"
+  />
+  <agents-gallery-stub
+    data-v-d0fbe27f=""
+  />
+</section>
+`;

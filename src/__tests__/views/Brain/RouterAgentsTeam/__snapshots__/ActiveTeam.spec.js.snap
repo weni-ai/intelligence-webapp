@@ -1,0 +1,56 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ActiveTeam component > should match snapshot 1`] = `
+<section
+  class="active-team"
+  data-v-ef307fb1=""
+>
+  <h2
+    class="unnnic-text unnnic-text--size-body-lg unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-bold unnnic-text--color-neutral-darkest"
+    data-testid="title"
+    data-v-ec8da4ad=""
+    data-v-ef307fb1=""
+  >
+    
+    Active team
+    
+  </h2>
+  <!--v-if-->
+  <section
+    class="active-team__empty"
+    data-testid="empty-state"
+    data-v-ef307fb1=""
+  >
+    <p
+      class="unnnic-text unnnic-text--size-body-gt unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-bold unnnic-text--color-neutral-dark"
+      data-v-ec8da4ad=""
+      data-v-ef307fb1=""
+    >
+      
+      No agents in your team
+      
+    </p>
+    <section
+      class="empty__description"
+      data-v-ef307fb1=""
+    >
+      <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
+      <p
+        class="description__text"
+        data-v-ef307fb1=""
+      >
+        Add agents from the gallery below or 
+        
+        <a
+          class="description__link"
+          data-v-ef307fb1=""
+          href="#"
+        >
+          create agent
+        </a>
+        
+      </p>
+    </section>
+  </section>
+</section>
+`;

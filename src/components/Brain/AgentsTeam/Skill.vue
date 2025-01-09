@@ -1,6 +1,11 @@
 <template>
   <section class="skill">
-    <p class="skill__icon">{{ icon }}</p>
+    <p
+      class="skill__icon"
+      data-testid="skill-icon"
+    >
+      {{ icon }}
+    </p>
 
     <UnnnicIntelligenceText
       class="skill__title"
@@ -8,6 +13,7 @@
       family="secondary"
       size="body-md"
       color="neutral-cloudy"
+      data-testid="skill-name"
     >
       {{ title }}
     </UnnnicIntelligenceText>
