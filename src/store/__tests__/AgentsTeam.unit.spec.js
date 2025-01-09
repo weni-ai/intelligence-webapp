@@ -14,6 +14,32 @@ describe('AgentsTeamStore', () => {
     store = useAgentsTeamStore();
   });
 
+  describe('loadActiveTeam', () => {
+    it('should load active team successfully', async () => {
+      const mockData = {
+        data: [],
+      };
+      nexusaiAPI.router.agents_team.listActiveTeam.mockResolvedValue(mockData);
+
+      await store.loadActiveTeam();
+
+      expect(store.activeTeam.status).toBe('complete');
+      expect(store.activeTeam.data).toEqual(mockData.data);
+    });
+
+    it('should handle errors when loading active team', async () => {
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      nexusaiAPI.router.agents_team.listActiveTeam.mockRejectedValue(
+        new Error('Error'),
+      );
+
+      await store.loadActiveTeam();
+
+      expect(store.activeTeam.status).toBe('error');
+    });
+  });
+
   describe('loadOfficialAgents', () => {
     it('should load official agents team successfully', async () => {
       const mockData = {
