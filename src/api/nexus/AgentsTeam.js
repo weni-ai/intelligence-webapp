@@ -1,4 +1,8 @@
-// import { cleanParams } from '@/utils/http';
+import { computed } from 'vue';
+
+import request from '@/api/nexusaiRequest';
+import globalStore from '@/store';
+import { cleanParams } from '@/utils/http';
 
 const officialAgentsMock = [
   {
@@ -62,62 +66,11 @@ const officialAgentsMock = [
   },
 ];
 
-const myAgentsMock = [
-  {
-    uuid: '34536bda-0bab-4a47-967e-5719e9e792e3',
-    name: 'Credit card agent',
-    description:
-      'Manages credit card services, such as issuing cards, cancellations, and checking balances',
-    skills: [
-      { name: 'Issue credit card', icon: '💳' },
-      { name: 'Cancel credit card', icon: '❌' },
-      { name: 'Check balance', icon: '💰' },
-    ],
-    assigned: false,
-  },
-  {
-    uuid: '765004f3-c784-4762-85f4-a93ca329a7f7',
-    name: 'Tracking agent',
-    description:
-      'Assists customers with product tracking and streamlines the checkout process',
-    skills: [
-      { name: 'Search catalogue', icon: '🛒' },
-      { name: 'Checkout', icon: '🛒' },
-    ],
-    assigned: false,
-  },
-];
-
-const activeTeamMock = [
-  {
-    uuid: '987bda93c-0bab-4a47-967e-5719e9e792e3',
-    name: 'Order Analyst',
-    skills: [
-      { name: 'Get order', icon: '🛒' },
-      { name: 'Cancel order', icon: '🛒' },
-      { name: 'UPS order tracking', icon: '📈' },
-    ],
-  },
-  {
-    uuid: '13436bda-0bab-4a47-967e-5719e9e792e3',
-    name: 'Credit card agent',
-    skills: [
-      { name: 'Issue credit card', icon: '💳' },
-      { name: 'Cancel credit card', icon: '❌' },
-      { name: 'Check balance', icon: '💰' },
-    ],
-  },
-  {
-    uuid: '076504f3-c784-4762-85f4-a93ca329a7f7',
-    name: 'Tracking agent',
-    skills: [
-      { name: 'Search catalogue', icon: '🛒' },
-      { name: 'Checkout', icon: '🛒' },
-    ],
-  },
-];
-
 const mockPromise = () => new Promise((resolve) => setTimeout(resolve, 1000));
+
+const connectProjectUuid = computed(
+  () => globalStore.state.Auth.connectProjectUuid,
+);
 
 export const AgentsTeam = {
   async listOfficialAgents({ search }) {
@@ -142,55 +95,51 @@ export const AgentsTeam = {
   },
 
   async listMyAgents({ search }) {
-    // const params = cleanParams({
-    //   search,
-    // });
-    // const { data } = await request.$http.get(`api/agents/my-agents/${projectUuid}`, {
-    //   params,
-    // });
+    const params = cleanParams({
+      search,
+    });
+    const { data } = await request.$http.get(
+      `api/agents/my-agents/${connectProjectUuid.value}`,
+      {
+        params,
+      },
+    );
 
-    return mockPromise().then(() => ({
-      data: myAgentsMock.map(
-        ({ uuid, name, description, skills, assigned }) => ({
-          uuid,
-          name,
-          description,
-          skills,
-          assigned,
-        }),
-      ),
-    }));
+    return {
+      data: data.map(({ uuid, name, description, skills, assigned }) => ({
+        uuid,
+        name,
+        description,
+        skills,
+        assigned,
+      })),
+    };
   },
 
   async listActiveTeam() {
-    // const params = cleanParams({
-    //   search,
-    // });
-    // const { data } = await request.$http.get(`api/agents/team/${projectUuid}`, {
-    //   params,
-    // });
+    const { data } = await request.$http.get(
+      `api/agents/teams/${connectProjectUuid.value}`,
+    );
 
-    return mockPromise().then(() => ({
-      data: activeTeamMock.map(({ uuid, name, skills }) => ({
+    return {
+      data: data.map(({ uuid, name, skills }) => ({
         uuid,
         name,
         skills,
       })),
-    }));
+    };
   },
 
   async toggleAgentAssignment({ agentUuid, is_assigned }) {
-    // const params = cleanParams({
-    //   search,
-    // });
-    // const { data } = await request.$http.patch(`api/agents/${agentUuid}`, {
-    //   assigned: is_assigned,
-    // });
-
-    return mockPromise().then(() => ({
-      data: {
+    const { data } = await request.$http.patch(
+      `api/project/${connectProjectUuid.value}/assign/${agentUuid}`,
+      {
         assigned: is_assigned,
       },
-    }));
+    );
+
+    return {
+      data,
+    };
   },
 };
