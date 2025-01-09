@@ -52,6 +52,7 @@
       <template v-else>
         <AgentCard
           v-if="activeTab === 'my-agents'"
+          data-testid="agent-card-empty"
           empty
         />
 
