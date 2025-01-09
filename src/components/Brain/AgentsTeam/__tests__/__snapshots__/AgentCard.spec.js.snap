@@ -3,6 +3,7 @@
 exports[`AgentCard.vue > renders correctly 1`] = `
 <section
   class="agent-card"
+  data-testid="agent-card"
   data-v-eb2aecd0=""
 >
   <section

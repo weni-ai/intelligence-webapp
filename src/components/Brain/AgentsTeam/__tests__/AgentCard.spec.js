@@ -98,6 +98,22 @@ describe('AgentCard.vue', () => {
       });
     });
 
+    it('should add empty class when empty prop is true', async () => {
+      await wrapper.setProps({ empty: true });
+
+      const agentCard = wrapper.find('[data-testid="agent-card"]');
+
+      expect(agentCard.classes()).toContain('agent-card--empty');
+    });
+
+    it('should render agent card empty when empty prop is true', async () => {
+      await wrapper.setProps({ empty: true });
+
+      expect(wrapper.find('[data-testid="agent-card-empty"]').exists()).toBe(
+        true,
+      );
+    });
+
     it('should log error when toggleAgentAssignment throws an error', async () => {
       const consoleErrorSpy = vi
         .spyOn(console, 'error')

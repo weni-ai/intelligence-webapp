@@ -1,11 +1,17 @@
 <template>
-  <section :class="['agent-card', { 'agent-card--empty': empty }]">
+  <section
+    data-testid="agent-card"
+    :class="['agent-card', { 'agent-card--empty': empty }]"
+  >
     <AgentCardSkeleton
       v-if="loading"
       data-testid="agent-card-skeleton"
     />
 
-    <AgentCardEmpty v-else-if="empty" />
+    <AgentCardEmpty
+      v-else-if="empty"
+      data-testid="agent-card-empty"
+    />
 
     <section
       v-else
