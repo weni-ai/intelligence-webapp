@@ -37,6 +37,8 @@ function createNewAgent() {
   border: none;
   background: none;
 
+  padding: $unnnic-spacing-xgiant - 6px 0;
+
   display: flex;
   flex-direction: column;
   align-items: center;
