@@ -61,8 +61,9 @@
         >
           <template #link>
             <a
-              :href="agentsTeamStore.linkToCreateAgent"
               class="description__link"
+              :href="agentsTeamStore.linkToCreateAgent"
+              target="_blank"
               >{{ $t('router.agents_team.active_team.create_agent') }}</a
             >
           </template>

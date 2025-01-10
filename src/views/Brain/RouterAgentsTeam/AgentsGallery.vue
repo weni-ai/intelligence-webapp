@@ -37,7 +37,10 @@
     />
 
     <section
-      class="agents-gallery__cards"
+      :class="[
+        'agents-gallery__cards',
+        { 'agents-gallery__cards--empty': isMyAgentsEmpty },
+      ]"
       data-testid="agent-cards"
     >
       <template v-if="isLoadingAgents">
@@ -52,6 +55,7 @@
       <template v-else>
         <AgentCard
           v-if="activeTab === 'my-agents'"
+          data-testid="agent-card-empty"
           empty
         />
 
@@ -98,6 +102,12 @@ const agentsData = computed(() =>
 const isLoadingAgents = computed(
   () => officialAgents.status === 'loading' || myAgents.status === 'loading',
 );
+const isMyAgentsEmpty = computed(
+  () =>
+    activeTab.value === 'my-agents' &&
+    myAgents.data.length === 0 &&
+    !isLoadingAgents.value,
+);
 
 function onTabChange(newTab) {
   activeTab.value = newTab;
@@ -140,6 +150,10 @@ watch(
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: $unnnic-spacing-sm;
+
+    &--empty {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 }
 </style>

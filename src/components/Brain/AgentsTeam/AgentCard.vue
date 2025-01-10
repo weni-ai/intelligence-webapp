@@ -1,11 +1,17 @@
 <template>
-  <section :class="['agent-card', { 'agent-card--empty': empty }]">
+  <section
+    data-testid="agent-card"
+    :class="['agent-card', { 'agent-card--empty': empty }]"
+  >
     <AgentCardSkeleton
       v-if="loading"
       data-testid="agent-card-skeleton"
     />
 
-    <AgentCardEmpty v-else-if="empty" />
+    <AgentCardEmpty
+      v-else-if="empty"
+      data-testid="agent-card-empty"
+    />
 
     <section
       v-else
@@ -24,11 +30,13 @@
 
       <UnnnicIntelligenceText
         v-if="description"
+        class="content__description"
         tag="p"
         family="secondary"
         size="body-gt"
         color="neutral-cloudy"
         data-testid="description"
+        :title="description"
       >
         {{ description }}
       </UnnnicIntelligenceText>
@@ -159,6 +167,13 @@ async function toggleAgentAssignment() {
     display: flex;
     flex-direction: column;
     gap: $unnnic-spacing-xs;
+
+    .content__description {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
     .content__skills {
       display: flex;

@@ -42,12 +42,15 @@ exports[`AgentsGallery.vue > should match snapshot 1`] = `
     data-v-33150d34=""
   >
     
+    <!--v-if-->
+    
     <agent-card-stub
       assigned="false"
       assignment="true"
       data-testid="agent-card"
       data-v-33150d34=""
       description="Description 1"
+      empty="false"
       loading="false"
       skills="[object Object]"
       title="Agent 1"
@@ -59,80 +62,13 @@ exports[`AgentsGallery.vue > should match snapshot 1`] = `
       data-testid="agent-card"
       data-v-33150d34=""
       description="Description 2"
+      empty="false"
       loading="false"
       skills="[object Object]"
       title="Agent 2"
       uuid="uuid-2"
     />
     
-  </section>
-</section>
-`;
-
-exports[`AgentsGallery.vue > should renders correctly 1`] = `
-<section
-  class="agents-gallery"
-  data-testid="agents-gallery"
-  data-v-33150d34=""
->
-  <unnnic-intelligence-text-stub
-    color="neutral-darkest"
-    data-v-33150d34=""
-    family="secondary"
-    lineheight="md"
-    size="body-lg"
-    tag="h2"
-    weight="bold"
-  />
-  <anonymous-stub
-    activetab="official"
-    class="agents-gallery__tabs"
-    data-testid="agents-gallery-tabs"
-    data-v-33150d34=""
-    size="md"
-    tabs="official,my-agents"
-  />
-  <unnnic-input-stub
-    allowtogglepassword="false"
-    data-testid="search-input"
-    data-v-33150d34=""
-    hascloudycolor="false"
-    iconleft="search"
-    mask=""
-    modelvalue=""
-    nativetype="text"
-    placeholder="Search by agent or skill"
-    size="md"
-    type="normal"
-  />
-  <section
-    class="agents-gallery__cards"
-    data-testid="agent-cards"
-    data-v-33150d34=""
-  >
-    
-    <agent-card-stub
-      assigned="false"
-      assignment="true"
-      data-testid="agent-card"
-      data-v-33150d34=""
-      description="Description 1"
-      loading="false"
-      skills="[object Object]"
-      title="Agent 1"
-      uuid="uuid-1"
-    />
-    <agent-card-stub
-      assigned="false"
-      assignment="true"
-      data-testid="agent-card"
-      data-v-33150d34=""
-      description="Description 2"
-      loading="false"
-      skills="[object Object]"
-      title="Agent 2"
-      uuid="uuid-2"
-    />
     
   </section>
 </section>
