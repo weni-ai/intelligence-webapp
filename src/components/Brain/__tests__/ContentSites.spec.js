@@ -87,7 +87,7 @@ describe('ContentSites.vue', () => {
 
   beforeEach(() => {
     useRoute.mockImplementationOnce(() => ({
-      name: 'router-personalization',
+      name: 'router-profile',
       params: {
         contentBaseUuid: 'uuuid-01',
       },

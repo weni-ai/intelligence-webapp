@@ -14,8 +14,8 @@ export default function useBrainRoutes() {
       tag: t('new'),
     },
     {
-      title: 'personalization',
-      page: 'router-personalization',
+      title: 'profile',
+      page: 'router-profile',
       icon: 'person',
       preview: true,
     },

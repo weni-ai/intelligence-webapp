@@ -1,13 +1,13 @@
 <template>
-  <section class="customization__container">
-    <div class="customization__container__persona">
+  <section class="profile__container">
+    <div class="profile__container__persona">
       <section>
-        <p class="customization-title">{{ $t('customization.title') }}</p>
-        <p class="customization-sub_title">
-          {{ $t('customization.sub_title') }}
+        <p class="profile-title">{{ $t('profile.title') }}</p>
+        <p class="profile-sub_title">
+          {{ $t('profile.sub_title') }}
         </p>
       </section>
-      <div class="customization__form">
+      <div class="profile__form">
         <LoadingFormElement
           v-if="loading"
           label
@@ -15,20 +15,20 @@
 
         <UnnnicFormElement
           v-else
-          :label="$t('customization.fields.name')"
-          class="customization__form-element"
+          :label="$t('profile.fields.name')"
+          class="profile__form-element"
         >
           <UnnnicInput
             v-model="brain.name.current"
             data-test="input-name"
-            :placeholder="$t('customization.placeholders.name')"
+            :placeholder="$t('profile.placeholders.name')"
             :type="errorRequiredFields.name ? 'error' : 'normal'"
           />
 
           <FieldErrorRequired v-if="errorRequiredFields.name" />
         </UnnnicFormElement>
       </div>
-      <div class="customization__form">
+      <div class="profile__form">
         <LoadingFormElement
           v-if="loading"
           label
@@ -36,13 +36,13 @@
 
         <UnnnicFormElement
           v-else
-          :label="$t('customization.fields.occupation')"
-          class="customization__form-element"
+          :label="$t('profile.fields.occupation')"
+          class="profile__form-element"
         >
           <UnnnicInput
             v-model="brain.role.current"
             data-test="input-role"
-            :placeholder="$t('customization.placeholders.occupation')"
+            :placeholder="$t('profile.placeholders.occupation')"
             :type="errorRequiredFields.role ? 'error' : 'normal'"
           />
 
@@ -56,8 +56,8 @@
 
         <UnnnicFormElement
           v-else
-          :label="$t('customization.fields.personality')"
-          class="customization__form-element"
+          :label="$t('profile.fields.personality')"
+          class="profile__form-element"
         >
           <UnnnicSelectSmart
             data-test="select-personality"
@@ -68,7 +68,7 @@
           />
         </UnnnicFormElement>
       </div>
-      <div class="customization__container__persona">
+      <div class="profile__container__persona">
         <LoadingFormElement
           v-if="loading"
           label
@@ -77,14 +77,14 @@
 
         <UnnnicFormElement
           v-else
-          :label="$t('customization.fields.goal')"
-          class="customization__form-element"
+          :label="$t('profile.fields.goal')"
+          class="profile__form-element"
         >
           <UnnnicTextArea
             v-bind="$props"
             v-model="brain.goal.current"
             data-test="textarea"
-            :placeholder="$t('customization.placeholders.goal')"
+            :placeholder="$t('profile.placeholders.goal')"
             :type="errorRequiredFields.goal ? 'error' : 'normal'"
           />
 
@@ -93,13 +93,13 @@
       </div>
     </div>
 
-    <div class="customization__container__instructions">
+    <div class="profile__container__instructions">
       <section>
-        <p class="customization-title">
-          {{ $t('customization.instructions.title') }}
+        <p class="profile-title">
+          {{ $t('profile.instructions.title') }}
         </p>
-        <p class="customization-sub_title">
-          {{ $t('customization.instructions.sub_title') }}
+        <p class="profile-sub_title">
+          {{ $t('profile.instructions.sub_title') }}
         </p>
       </section>
 
@@ -112,17 +112,17 @@
         v-for="(instruction, index) in brain.instructions.current"
         v-else
         :key="index"
-        class="customization__instructions"
+        class="profile__instructions"
       >
         <UnnnicFormElement
-          :label="$t('customization.fields.instruction')"
-          class="customization__instructions-element"
+          :label="$t('profile.fields.instruction')"
+          class="profile__instructions-element"
         >
-          <section class="customization__instructions__form_group">
+          <section class="profile__instructions__form_group">
             <UnnnicInput
               v-model="instruction.instruction"
               :data-test="`instruction-${index}`"
-              :placeholder="$t('customization.placeholders.instruction')"
+              :placeholder="$t('profile.placeholders.instruction')"
             />
             <UnnnicButtonIcon
               v-bind="$props"
@@ -142,7 +142,7 @@
         v-else
         data-test="btn-add-instruction"
         size="large"
-        :text="$t('customization.instructions.add_instruction_btn')"
+        :text="$t('profile.instructions.add_instruction_btn')"
         type="tertiary"
         iconLeft="add-1"
         :disabled="brain.instructions.current.at(-1)?.instruction === ''"
@@ -155,8 +155,8 @@
       showModal
       scheme="aux-red-500"
       modalIcon="error"
-      :text="$t('customization.instructions.modals.title')"
-      :description="$t('customization.instructions.modals.description')"
+      :text="$t('profile.instructions.modals.title')"
+      :description="$t('profile.instructions.modals.description')"
       :closeIcon="false"
       class="modal-remove-instructions"
       data-test="remove-modal"
@@ -166,7 +166,7 @@
           type="tertiary"
           @click="showRemoveModal = false"
         >
-          {{ $t('customization.instructions.modals.back_btn') }}
+          {{ $t('profile.instructions.modals.back_btn') }}
         </UnnnicButton>
 
         <UnnnicButton
@@ -175,7 +175,7 @@
           data-test="btn-remove-inst"
           @click="removeInstruction"
         >
-          {{ $t('customization.instructions.modals.remove_btn') }}
+          {{ $t('profile.instructions.modals.remove_btn') }}
         </UnnnicButton>
       </template>
     </UnnnicModal>
@@ -183,7 +183,7 @@
 </template>
 
 <script>
-import { useBrainCustomizationStore } from '@/store/BrainCustomization';
+import { useProfileStore } from '@/store/Profile';
 import LoadingFormElement from '../../components/LoadingFormElement.vue';
 import FieldErrorRequired from './Preview/FieldErrorRequired.vue';
 import { onMounted } from 'vue';
@@ -197,15 +197,15 @@ export default {
   },
 
   setup() {
-    const brainCustomizationStore = useBrainCustomizationStore();
+    const profileStore = useProfileStore();
     const alertStore = useAlertStore();
 
     onMounted(() => {
-      brainCustomizationStore.load().then(() => {
-        if (brainCustomizationStore.status === 'error') {
+      profileStore.load().then(() => {
+        if (profileStore.status === 'error') {
           alertStore.add({
             type: 'error',
-            text: i18n.global.t('customization.invalid_get_data'),
+            text: i18n.global.t('profile.invalid_get_data'),
           });
         }
       });
@@ -213,7 +213,7 @@ export default {
 
     return {
       alertStore,
-      brainCustomizationStore,
+      profileStore,
     };
   },
 
@@ -230,47 +230,47 @@ export default {
     personalities() {
       return [
         {
-          label: this.$t('customization.fields.personality'),
+          label: this.$t('profile.fields.personality'),
           value: '',
         },
         {
-          label: this.$t('customization.fields.personalities.friendly'),
+          label: this.$t('profile.fields.personalities.friendly'),
           value: 'Amigável',
         },
         {
-          label: this.$t('customization.fields.personalities.cooperative'),
+          label: this.$t('profile.fields.personalities.cooperative'),
           value: 'Cooperativo',
         },
         {
-          label: this.$t('customization.fields.personalities.extrovert'),
+          label: this.$t('profile.fields.personalities.extrovert'),
           value: 'Extrovertido',
         },
         {
-          label: this.$t('customization.fields.personalities.generous'),
+          label: this.$t('profile.fields.personalities.generous'),
           value: 'Generoso',
         },
         {
-          label: this.$t('customization.fields.personalities.relaxed'),
+          label: this.$t('profile.fields.personalities.relaxed'),
           value: 'Relaxado',
         },
         {
-          label: this.$t('customization.fields.personalities.organized'),
+          label: this.$t('profile.fields.personalities.organized'),
           value: 'Organizado',
         },
         {
-          label: this.$t('customization.fields.personalities.systematic'),
+          label: this.$t('profile.fields.personalities.systematic'),
           value: 'Sistemático',
         },
         {
-          label: this.$t('customization.fields.personalities.innovative'),
+          label: this.$t('profile.fields.personalities.innovative'),
           value: 'Inovador',
         },
         {
-          label: this.$t('customization.fields.personalities.creative'),
+          label: this.$t('profile.fields.personalities.creative'),
           value: 'Criativo',
         },
         {
-          label: this.$t('customization.fields.personalities.intellectual'),
+          label: this.$t('profile.fields.personalities.intellectual'),
           value: 'Intelectual',
         },
       ];
@@ -281,7 +281,7 @@ export default {
     },
 
     brain() {
-      return this.brainCustomizationStore;
+      return this.profileStore;
     },
 
     errorRequiredFields() {
@@ -291,7 +291,7 @@ export default {
 
   methods: {
     addEmptyInstruction() {
-      this.brainCustomizationStore.addEmptyInstruction();
+      this.profileStore.addEmptyInstruction();
     },
 
     handleShowRemoveModal(index) {
@@ -307,16 +307,14 @@ export default {
       try {
         this.removing = true;
 
-        await this.brainCustomizationStore.removeInstruction(
-          this.currentInstruction,
-        );
+        await this.profileStore.removeInstruction(this.currentInstruction);
 
         this.showRemoveModal = false;
         this.currentInstruction = null;
 
         this.alertStore.add({
           type: 'success',
-          text: this.$t('customization.instructions.modals.success_message'),
+          text: this.$t('profile.instructions.modals.success_message'),
         });
 
         if (this.brain.instructions.current.length === 0) {
@@ -325,7 +323,7 @@ export default {
       } catch {
         this.alertStore.add({
           type: 'error',
-          text: this.$t('customization.instructions.modals.error_message'),
+          text: this.$t('profile.instructions.modals.error_message'),
         });
       } finally {
         this.removing = false;
@@ -346,7 +344,7 @@ export default {
   }
 }
 
-.customization {
+.profile {
   &-title {
     color: $unnnic-color-neutral-dark;
     font-family: $unnnic-font-family-secondary;

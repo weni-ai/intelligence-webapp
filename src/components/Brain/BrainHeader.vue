@@ -16,11 +16,11 @@
       </UnnnicIntelligenceText>
     </section>
     <UnnnicButton
-      v-if="route.name === 'router-personalization'"
+      v-if="route.name === 'router-profile'"
       class="save-button"
-      :disabled="brainCustomization.isSaveButtonDisabled"
-      :loading="brainCustomization.isSaving"
-      @click="brainCustomization.save"
+      :disabled="profile.isSaveButtonDisabled"
+      :loading="profile.isSaving"
+      @click="profile.save"
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
@@ -48,7 +48,7 @@ import { ref, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { format, subDays } from 'date-fns';
 import useBrainRoutes from '@/composables/useBrainRoutes';
-import { useBrainCustomizationStore } from '@/store/BrainCustomization';
+import { useProfileStore } from '@/store/Profile';
 
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
@@ -59,7 +59,7 @@ const dateFilter = ref({
 const route = useRoute();
 const router = useRouter();
 
-const brainCustomization = useBrainCustomizationStore();
+const profile = useProfileStore();
 
 const currentBrainRoute = computed(() => {
   return (
