@@ -21,10 +21,11 @@ exports[`AgentCard.vue > renders correctly 1`] = `
       
     </p>
     <p
-      class="unnnic-text unnnic-text--size-body-gt unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-regular unnnic-text--color-neutral-cloudy"
+      class="unnnic-text unnnic-text--size-body-gt unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-regular unnnic-text--color-neutral-cloudy content__description content__description"
       data-testid="description"
       data-v-eb2aecd0=""
       data-v-ec8da4ad=""
+      title="Test Description"
     >
       
       Test Description

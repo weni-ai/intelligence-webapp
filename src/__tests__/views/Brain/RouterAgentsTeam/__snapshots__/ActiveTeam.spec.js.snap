@@ -44,7 +44,8 @@ exports[`ActiveTeam component > should match snapshot 1`] = `
         <a
           class="description__link"
           data-v-ef307fb1=""
-          href="#"
+          href="https://github.com/weni-ai/weni-cli"
+          target="_blank"
         >
           create agent
         </a>
