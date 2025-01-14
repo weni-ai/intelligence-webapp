@@ -2,12 +2,6 @@
   <header class="header">
     <section class="header__infos">
       <section class="infos__title">
-        <UnnnicAvatarIcon
-          size="sm"
-          :icon="currentBrainRoute?.icon"
-          scheme="aux-purple-500"
-        />
-
         <p class="title__text">
           {{ $t(`router.tabs.${currentBrainRoute?.title}`) }}
         </p>
@@ -119,7 +113,7 @@ watch(
 
   &__infos {
     display: grid;
-    gap: $unnnic-spacing-sm;
+    gap: $unnnic-spacing-xs;
 
     .infos__title {
       display: flex;
@@ -130,7 +124,7 @@ watch(
         color: $unnnic-color-neutral-darkest;
         font-family: $unnnic-font-family-secondary;
         font-size: $unnnic-font-size-title-sm;
-        line-height: $unnnic-font-size-title-sm * 2.3;
+        line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
         font-weight: $unnnic-font-weight-bold;
       }
     }
