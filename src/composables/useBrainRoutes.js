@@ -15,6 +15,7 @@ export default function useBrainRoutes() {
     },
     {
       title: 'profile',
+      description: t('profile.description'),
       page: 'router-profile',
       icon: 'person',
       preview: true,
