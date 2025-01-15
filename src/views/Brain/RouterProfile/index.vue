@@ -28,10 +28,7 @@ const alertStore = useAlertStore();
 
 onMounted(() => {
   profileStore.load().then(() => {
-    console.log('profileStore.status', profileStore.status);
     if (profileStore.status === 'error') {
-      console.log('alert');
-
       alertStore.add({
         type: 'error',
         text: i18n.global.t('profile.invalid_get_data'),
