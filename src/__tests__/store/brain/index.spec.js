@@ -2,12 +2,12 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import store from '@/store/brain/index.js';
 import nexusaiAPI from '@/api/nexusaiAPI.js';
 import { createPinia, setActivePinia } from 'pinia';
-import { useBrainCustomizationStore } from '@/store/BrainCustomization';
+import { useProfileStore } from '@/store/Profile';
 
 vi.mock('@/api/nexusaiAPI.js', () => ({
   default: {
     router: {
-      customization: {
+      profile: {
         read: vi.fn(),
         edit: vi.fn(),
       },
@@ -74,22 +74,19 @@ const rootState = {
 };
 
 describe('store/brain/index.js', () => {
-  let brainCustomizationStore;
-  let brainCustomizationStoreValidate;
-  let brainCustomizationStoreSave;
+  let profileStore;
+  let profileStoreValidate;
+  let profileStoreSave;
 
   beforeEach(() => {
     vi.clearAllMocks();
 
     setActivePinia(createPinia());
 
-    brainCustomizationStore = useBrainCustomizationStore();
+    profileStore = useProfileStore();
 
-    brainCustomizationStoreValidate = vi.spyOn(
-      brainCustomizationStore,
-      'validate',
-    );
-    brainCustomizationStoreSave = vi.spyOn(brainCustomizationStore, 'save');
+    profileStoreValidate = vi.spyOn(profileStore, 'validate');
+    profileStoreSave = vi.spyOn(profileStore, 'save');
   });
 
   describe('getters', () => {
@@ -163,7 +160,7 @@ describe('store/brain/index.js', () => {
       const result = await store.actions.loadBrainTunings({
         commit,
         state: {
-          customizationStatus: 'notToLoad',
+          profileStatus: 'notToLoad',
         },
         rootState,
       });
@@ -244,10 +241,10 @@ describe('store/brain/index.js', () => {
       store.getters.hasBrainCustomizationChanged = true;
       store.getters.hasBrainTuningsChanged = true;
       store.getters.hasBrainContentTextChanged = true;
-      brainCustomizationStore.name.current = 'Changed';
-      brainCustomizationStore.role.current = 'Changed';
-      brainCustomizationStore.personality.current = 'Changed';
-      brainCustomizationStore.goal.current = 'Changed';
+      profileStore.name.current = 'Changed';
+      profileStore.role.current = 'Changed';
+      profileStore.personality.current = 'Changed';
+      profileStore.goal.current = 'Changed';
       const dispatch = vi.fn().mockResolvedValue([]);
       await store.actions.saveBrainChanges({
         state: { isSavingChanges: false },
