@@ -6,9 +6,9 @@
       class="profile__divider"
     />
 
-    <RouterProfileGeneralInfo />
+    <RouterProfileGeneralInfo data-testid="general-info" />
 
-    <RouterProfileInstructions />
+    <RouterProfileInstructions data-testid="instructions" />
   </section>
 </template>
 
@@ -28,7 +28,10 @@ const alertStore = useAlertStore();
 
 onMounted(() => {
   profileStore.load().then(() => {
+    console.log('profileStore.status', profileStore.status);
     if (profileStore.status === 'error') {
+      console.log('alert');
+
       alertStore.add({
         type: 'error',
         text: i18n.global.t('profile.invalid_get_data'),
