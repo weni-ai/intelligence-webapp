@@ -1679,7 +1679,7 @@
     }
   },
   "profile": {
-    "description": "Perfil do seu agente inteligente. Aqui é onde você irá inserir suas características e comportamentos.",
+    "description": "Personalize as informações básicas e o comportamento do agente.",
     "save_btn": "Salvar Alterações",
     "invalid_field": "Campo obrigatório",
     "invalid_get_data": "Erro ao tentar buscar os dados",
