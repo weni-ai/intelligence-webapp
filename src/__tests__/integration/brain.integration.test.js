@@ -5,7 +5,7 @@ import RouterMonitoring from '@/views/Brain/RouterMonitoring/index.vue';
 import RouterContentBase from '@/views/Brain/RouterContentBase.vue';
 import RouterActions from '@/views/Brain/RouterActions.vue';
 import RouterTunings from '@/views/Brain/RouterTunings.vue';
-import RouterProfile from '@/views/Brain/RouterProfile.vue';
+import RouterProfile from '@/views/Brain/RouterProfile/index.vue';
 import ModalPreviewQRCode from '@/views/Brain/Preview/ModalPreviewQRCode.vue';
 import ModalSaveChangesError from '@/views/Brain/ModalSaveChangesError.vue';
 import Tests from '@/views/repository/content/Tests.vue';
@@ -143,7 +143,7 @@ const router = createRouter({
         {
           path: 'profile',
           name: 'router-profile',
-          component: () => import('@/views/Brain/RouterProfile.vue'),
+          component: () => import('@/views/Brain/RouterProfile/index.vue'),
         },
         {
           path: 'content',

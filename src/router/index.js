@@ -96,7 +96,7 @@ const router = createRouter({
         {
           path: 'profile',
           name: 'router-profile',
-          component: () => import('../views/Brain/RouterProfile.vue'),
+          component: () => import('../views/Brain/RouterProfile/index.vue'),
         },
         {
           path: 'content',

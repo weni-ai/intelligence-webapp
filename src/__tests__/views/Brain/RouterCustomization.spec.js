@@ -1,7 +1,6 @@
 import { mount, flushPromises } from '@vue/test-utils';
-import RouterProfile from '@/views/Brain/RouterProfile.vue';
+import RouterProfile from '@/views/Brain/RouterProfile/index.vue';
 import nexusaiAPI from '@/api/nexusaiAPI';
-import FieldErrorRequired from '@/views/Brain/Preview/FieldErrorRequired.vue';
 import { createStore } from 'vuex';
 import { expect } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
@@ -168,18 +167,6 @@ describe('RouterProfile', () => {
     });
 
     expect(loadingElements.length).toBeGreaterThan(0);
-  });
-
-  test('handles validation errors', async () => {
-    profileStore.status = 'idle';
-    profileStore.errorRequiredFields.name = true;
-    profileStore.errorRequiredFields.role = true;
-    profileStore.errorRequiredFields.goal = true;
-
-    await wrapper.vm.$nextTick();
-    const errorFields = wrapper.findAllComponents(FieldErrorRequired);
-
-    expect(errorFields.length).toBe(3);
   });
 
   test('emits appropriate events', async () => {

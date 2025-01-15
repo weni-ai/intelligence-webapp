@@ -1679,17 +1679,30 @@
     }
   },
   "profile": {
-    "title": "Persona del agente",
-    "sub_title": "Perfil de tu agente inteligente. Aquí es donde introducirás sus características y comportamientos",
+    "description": "Perfil de tu agente inteligente. Aquí es donde introducirás sus características y comportamientos",
     "save_btn": "Guardar cambios",
     "invalid_field": "Campo obligatorio",
     "invalid_get_data": "Error al intentar obtener los datos",
     "fields": {
-      "name": "Nombre",
-      "occupation": "Ocupación",
-      "personality": "Personalidad",
-      "goal": "Objetivo",
-      "instruction": "Instrucción",
+      "name": {
+        "title": "¿Cómo se presenta el agente?",
+        "description": "Este es el nombre que se muestra durante interacciones con los usuarios",
+        "placeholder": "Tainá"
+      },
+      "occupation": {
+        "title": "¿Cuál es el rol principal del agente?",
+        "placeholder": "Asistente de soporte al cliente",
+        "description": "Define el rol principal del agente para que los usuarios comprendan cómo los ayuda"
+      },
+      "goal": {
+        "title": "¿Cuál es el objetivo principal del agente?",
+        "placeholder": "Responde preguntas de los clientes",
+        "description": "Esto ayuda a definir lo que el agente pretende lograr durante interacciones"
+      },
+      "personality": {
+        "title": "¿Cuál es el tono de voz del agente?",
+        "description": "Elige cómo se comunica el agente con los usuarios"
+      },
       "personalities": {
         "friendly": "Amistoso",
         "extrovert": "Extrovertido",
@@ -1703,16 +1716,14 @@
         "intellectual": "Intelectual"
       }
     },
-    "placeholders": {
-      "instruction": "Eres gracioso pero no haces bromas",
-      "name": "Tainá",
-      "occupation": "Experto en llamas",
-      "goal": "Responder preguntas y dar información sobre llamas"
-    },
     "instructions": {
       "title": "Instrucciones generales",
       "sub_title": "Cómo quieres que se comporte el agente.",
       "add_instruction_btn": "Añadir instrucción",
+      "instruction": {
+        "title": "Instrucción",
+        "placeholder": "Eres gracioso pero no haces bromas"
+      },
       "modals": {
         "title": "Quitar instrucción",
         "description": "¿Estás seguro de que quieres eliminar la instrucción?",
