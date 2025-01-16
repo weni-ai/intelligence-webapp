@@ -48,7 +48,6 @@ onMounted(() => {
 section.profile {
   display: grid;
   grid-template-rows: repeat(4, auto);
-  gap: $unnnic-spacing-md;
 
   .profile__divider {
     margin: 0;
