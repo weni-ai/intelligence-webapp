@@ -8,6 +8,12 @@
 
     <RouterProfileGeneralInfo data-testid="general-info" />
 
+    <UnnnicDivider
+      data-testid="divider"
+      ySpacing="md"
+      class="profile__divider"
+    />
+
     <RouterProfileInstructions data-testid="instructions" />
   </section>
 </template>

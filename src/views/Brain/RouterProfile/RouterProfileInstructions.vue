@@ -189,11 +189,11 @@ export default {
   align-self: stretch;
 
   .instructions__title {
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-neutral-darkest;
     font-family: $unnnic-font-family-secondary;
-    font-size: $unnnic-font-size-body-gt;
+    font-size: $unnnic-font-size-body-lg;
     font-weight: $unnnic-font-weight-bold;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
   }
 
   .instructions__subtitle {
