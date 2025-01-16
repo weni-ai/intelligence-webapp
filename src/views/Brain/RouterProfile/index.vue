@@ -45,11 +45,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.profile {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  align-self: stretch;
+section.profile {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
   gap: $unnnic-spacing-md;
 
   .profile__divider {
