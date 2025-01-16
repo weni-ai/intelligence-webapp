@@ -42,7 +42,7 @@ describe('RouterProfile', () => {
   });
 
   it('renders all child components', () => {
-    expect(wrapper.find('[data-testid="divider"]').exists()).toBe(true);
+    expect(wrapper.findAllComponents('[data-testid="divider"]').length).toBe(2);
     expect(wrapper.findComponent('[data-testid="general-info"]').exists()).toBe(
       true,
     );
