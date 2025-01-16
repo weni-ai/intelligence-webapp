@@ -47,11 +47,10 @@ onMounted(() => {
 <style lang="scss" scoped>
 section.profile {
   display: grid;
-  grid-template-rows: repeat(4, auto);
-  gap: $unnnic-spacing-md;
+  grid-template-rows: repeat(2, auto 1fr);
 
-  .profile__divider {
-    margin: 0;
+  .profile__divider:first-of-type {
+    margin-top: 0;
   }
 }
 </style>
