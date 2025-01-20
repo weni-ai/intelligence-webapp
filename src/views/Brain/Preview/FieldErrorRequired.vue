@@ -6,7 +6,7 @@
       size="sm"
     />
 
-    {{ $t('customization.invalid_field') }}
+    {{ $t('profile.invalid_field') }}
   </p>
 </template>
 

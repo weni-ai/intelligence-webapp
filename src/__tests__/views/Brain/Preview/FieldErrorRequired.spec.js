@@ -9,9 +9,7 @@ describe('FieldErrorRequired', () => {
   });
 
   test('renders the error message correctly', () => {
-    expect(wrapper.text()).toContain(
-      wrapper.vm.$t('customization.invalid_field'),
-    );
+    expect(wrapper.text()).toContain(wrapper.vm.$t('profile.invalid_field'));
   });
 
   test('renders the icon correctly', () => {

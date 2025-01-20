@@ -1,13 +1,13 @@
 import { mount, flushPromises } from '@vue/test-utils';
-import RouterCustomization from '@/views/Brain/RouterCustomization.vue';
+import RouterProfile from '@/views/Brain/RouterProfile.vue';
 import nexusaiAPI from '@/api/nexusaiAPI';
 import FieldErrorRequired from '@/views/Brain/Preview/FieldErrorRequired.vue';
 import { createStore } from 'vuex';
 import { expect } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
-import { useBrainCustomizationStore } from '@/store/BrainCustomization';
+import { useProfileStore } from '@/store/Profile';
 
-vi.spyOn(nexusaiAPI.router.customization, 'read').mockResolvedValue({
+vi.spyOn(nexusaiAPI.router.profile, 'read').mockResolvedValue({
   data: {
     agent: {
       name: '',
@@ -28,8 +28,8 @@ const store = createStore({
         connectProjectUuid: 'test2323test',
       },
       Brain: {
-        customizationStatus: 'idle',
-        customizationErrorRequiredFields: {
+        profileStatus: 'idle',
+        profileErrorRequiredFields: {
           name: false,
           role: false,
           goal: false,
@@ -49,39 +49,39 @@ const store = createStore({
     };
   },
   actions: {
-    loadBrainCustomization: vi.fn(),
+    loadBrainProfile: vi.fn(),
   },
 });
 
-describe('RouterCustomization', () => {
+describe('RouterProfile', () => {
   let wrapper;
   let dispatchSpy;
-  let brainCustomizationStore;
+  let profileStore;
 
   beforeEach(() => {
     vi.clearAllMocks();
 
     dispatchSpy = vi.spyOn(store, 'dispatch');
 
-    wrapper = mount(RouterCustomization, {
+    wrapper = mount(RouterProfile, {
       global: {
         plugins: [store, pinia],
       },
     });
 
-    brainCustomizationStore = useBrainCustomizationStore();
+    profileStore = useProfileStore();
   });
 
   test('renders title and subtitle', () => {
-    const title = wrapper.find('.customization-title');
-    const subTitle = wrapper.find('.customization-sub_title');
+    const title = wrapper.find('.profile-title');
+    const subTitle = wrapper.find('.profile-sub_title');
 
     expect(title.exists()).toBe(true);
     expect(subTitle.exists()).toBe(true);
   });
 
-  test('calls loadBrainCustomization on mount', () => {
-    expect(brainCustomizationStore.load).toHaveBeenCalled();
+  test('calls loadBrainProfile on mount', () => {
+    expect(profileStore.load).toHaveBeenCalled();
   });
 
   test('renders input fields and handles input changes', async () => {
@@ -111,7 +111,7 @@ describe('RouterCustomization', () => {
     wrapper.vm.handleShowRemoveModal(0);
     expect(wrapper.vm.showRemoveModal).toBe(true);
 
-    nexusaiAPI.router.customization.delete = vi.fn().mockResolvedValue({});
+    nexusaiAPI.router.profile.delete = vi.fn().mockResolvedValue({});
 
     await wrapper.vm.removeInstruction();
     await flushPromises();
@@ -145,7 +145,7 @@ describe('RouterCustomization', () => {
     wrapper.vm.handleShowRemoveModal(1);
     expect(wrapper.vm.showRemoveModal).toBe(true);
 
-    nexusaiAPI.router.customization.delete = vi.fn().mockResolvedValue({});
+    nexusaiAPI.router.profile.delete = vi.fn().mockResolvedValue({});
 
     await wrapper.vm.removeInstruction();
     await flushPromises();
@@ -159,7 +159,7 @@ describe('RouterCustomization', () => {
   });
 
   test('shows loading elements', async () => {
-    brainCustomizationStore.status = 'loading';
+    profileStore.status = 'loading';
 
     await wrapper.vm.$nextTick();
 
@@ -171,10 +171,10 @@ describe('RouterCustomization', () => {
   });
 
   test('handles validation errors', async () => {
-    brainCustomizationStore.status = 'idle';
-    brainCustomizationStore.errorRequiredFields.name = true;
-    brainCustomizationStore.errorRequiredFields.role = true;
-    brainCustomizationStore.errorRequiredFields.goal = true;
+    profileStore.status = 'idle';
+    profileStore.errorRequiredFields.name = true;
+    profileStore.errorRequiredFields.role = true;
+    profileStore.errorRequiredFields.goal = true;
 
     await wrapper.vm.$nextTick();
     const errorFields = wrapper.findAllComponents(FieldErrorRequired);
@@ -183,7 +183,7 @@ describe('RouterCustomization', () => {
   });
 
   test('emits appropriate events', async () => {
-    store.state.Brain.customizationStatus = 'idle';
+    store.state.Brain.profileStatus = 'idle';
 
     await wrapper.vm.$nextTick();
 

@@ -65,7 +65,7 @@
     },
     "tabs": {
       "monitoring": "Supervisor",
-      "personalization": "Personalidad",
+      "profile": "Perfil",
       "content": "Conocimiento",
       "actions": "Acciones",
       "tunings": "Ajustes"
@@ -1678,7 +1678,7 @@
       }
     }
   },
-  "customization": {
+  "profile": {
     "title": "Persona del agente",
     "sub_title": "Perfil de tu agente inteligente. Aquí es donde introducirás sus características y comportamientos",
     "save_btn": "Guardar cambios",
