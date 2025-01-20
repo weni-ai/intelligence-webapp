@@ -80,7 +80,7 @@ import Tests from '../repository/content/Tests.vue';
 import RouterMonitoring from './RouterMonitoring/index.vue';
 import RouterActions from './RouterActions.vue';
 import RouterContentBase from './RouterContentBase.vue';
-import RouterProfile from './RouterProfile.vue';
+import RouterProfile from './RouterProfile/index.vue';
 import RouterTunings from './RouterTunings.vue';
 import ModalPreviewQRCode from './Preview/ModalPreviewQRCode.vue';
 import ModalSaveChangesError from './ModalSaveChangesError.vue';
