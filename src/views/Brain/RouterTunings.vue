@@ -37,16 +37,22 @@
 <script setup>
 import ChangesHistory from '@/components/Brain/Tunings/ChangesHistory.vue';
 import Settings from '@/components/Brain/Tunings/Settings.vue';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
-const tabs = ref([
-  { title: 'config', page: 'config' },
-  { title: 'history', page: 'hist' },
-]);
 
-const activeTab = ref('config');
+const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
+
+const tabs = ref(
+  [
+    isAgentsTeamEnabled ? null : { title: 'config', page: 'config' },
+    { title: 'history', page: 'hist' },
+  ].filter((obj) => obj),
+);
+
+const activeTab = ref(isAgentsTeamEnabled ? 'hist' : 'config');
 
 const props = defineProps({
   data: {
