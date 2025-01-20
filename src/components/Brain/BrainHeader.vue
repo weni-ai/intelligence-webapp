@@ -31,7 +31,7 @@
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
     <UnnnicButton
-      v-else-if="route.name === 'router-tunings'"
+      v-else-if="route.name === 'router-tunings' && !isAgentsTeamEnabled"
       class="save-button"
       :disabled="$store.getters.isBrainSaveButtonDisabled"
       :loading="$store.state.Brain.isSavingChanges"
@@ -55,6 +55,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { format, subDays } from 'date-fns';
 import useBrainRoutes from '@/composables/useBrainRoutes';
 import { useBrainCustomizationStore } from '@/store/BrainCustomization';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
@@ -66,6 +67,8 @@ const route = useRoute();
 const router = useRouter();
 
 const brainCustomization = useBrainCustomizationStore();
+
+const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
 const currentBrainRoute = computed(() => {
   return (
