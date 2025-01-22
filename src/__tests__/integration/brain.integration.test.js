@@ -5,7 +5,7 @@ import RouterMonitoring from '@/views/Brain/RouterMonitoring/index.vue';
 import RouterContentBase from '@/views/Brain/RouterContentBase.vue';
 import RouterActions from '@/views/Brain/RouterActions.vue';
 import RouterTunings from '@/views/Brain/RouterTunings.vue';
-import RouterCustomization from '@/views/Brain/RouterCustomization.vue';
+import RouterProfile from '@/views/Brain/RouterProfile/index.vue';
 import ModalPreviewQRCode from '@/views/Brain/Preview/ModalPreviewQRCode.vue';
 import ModalSaveChangesError from '@/views/Brain/ModalSaveChangesError.vue';
 import Tests from '@/views/repository/content/Tests.vue';
@@ -17,9 +17,9 @@ import { createWebHistory, createRouter } from 'vue-router';
 import Home from '@/views/Home.vue';
 import { createTestingPinia } from '@pinia/testing';
 import { Actions as ActionsAPI } from '@/api/nexus/Actions';
-import { useBrainCustomizationStore } from '@/store/BrainCustomization';
+import { useProfileStore } from '@/store/Profile';
 
-vi.spyOn(nexusaiAPI.router.customization, 'read').mockResolvedValue({
+vi.spyOn(nexusaiAPI.router.profile, 'read').mockResolvedValue({
   data: {
     agent: {
       name: '',
@@ -53,8 +53,8 @@ const store = createStore({
           current: '',
           old: '',
         },
-        customizationStatus: 'idle',
-        customizationErrorRequiredFields: {
+        profileStatus: 'idle',
+        profileErrorRequiredFields: {
           name: false,
           role: false,
           goal: false,
@@ -88,7 +88,7 @@ const store = createStore({
   },
   actions: {
     saveBrainChanges: vi.fn(),
-    loadBrainCustomization: vi.fn(),
+    loadBrainProfile: vi.fn(),
     loadBrainTunings: vi.fn(),
 
     async loadActions({ state: { Actions: state } }) {
@@ -121,7 +121,7 @@ const router = createRouter({
       name: 'router',
       component: Brain,
       redirect: () => {
-        return { name: 'router-personalization' };
+        return { name: 'router-profile' };
       },
       async beforeEnter(_to, _from, next) {
         const { data } = await nexusaiAPI.router.read({
@@ -141,9 +141,9 @@ const router = createRouter({
           component: () => import('@/views/Brain/RouterMonitoring/index.vue'),
         },
         {
-          path: 'personalization',
-          name: 'router-personalization',
-          component: () => import('@/views/Brain/RouterCustomization.vue'),
+          path: 'profile',
+          name: 'router-profile',
+          component: () => import('@/views/Brain/RouterProfile/index.vue'),
         },
         {
           path: 'agents-team',
@@ -153,7 +153,7 @@ const router = createRouter({
         {
           path: 'content',
           name: 'router-content',
-          component: () => import('@/views/Brain/RouterCustomization.vue'),
+          component: () => import('@/views/Brain/RouterContentBase.vue'),
         },
         {
           path: 'actions',
@@ -290,7 +290,7 @@ const removedRequest = vi
 describe('Brain integration', () => {
   let wrapper;
   let dispatchSpy;
-  let brainCustomizationStore;
+  let profileStore;
 
   beforeEach(async () => {
     router.push('/router');
@@ -308,18 +308,18 @@ describe('Brain integration', () => {
           RouterTunings,
           ModalSaveChangesError,
           ModalPreviewQRCode,
-          RouterCustomization,
+          RouterProfile,
           Tests,
         },
       },
     });
 
-    brainCustomizationStore = useBrainCustomizationStore();
+    profileStore = useProfileStore();
   });
 
   test('check if all routes render the correct component when accessed by tabs', async () => {
-    const customizationComponent = wrapper.findComponent(RouterCustomization);
-    expect(customizationComponent.exists()).toBe(true);
+    const profileComponent = wrapper.findComponent(RouterProfile);
+    expect(profileComponent.exists()).toBe(true);
 
     const navigation = wrapper.findAll('[data-test="nav-router"]');
 
