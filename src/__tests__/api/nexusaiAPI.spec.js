@@ -665,11 +665,11 @@ describe('nexusaiAPI.js', () => {
     expect(result).toEqual(mockResponse);
   });
 
-  it('should read customization settings', async () => {
+  it('should read profile settings', async () => {
     const mockResponse = { data: 'mockData' };
     request.$http.get.mockResolvedValue(mockResponse);
 
-    const result = await nexusaiAPI.router.customization.read({
+    const result = await nexusaiAPI.router.profile.read({
       projectUuid: 'project1',
     });
 
@@ -679,11 +679,11 @@ describe('nexusaiAPI.js', () => {
     expect(result).toEqual(mockResponse);
   });
 
-  it('should edit customization settings', async () => {
+  it('should edit profile settings', async () => {
     const mockResponse = { data: 'mockData' };
     request.$http.put.mockResolvedValue(mockResponse);
 
-    const result = await nexusaiAPI.router.customization.edit({
+    const result = await nexusaiAPI.router.profile.edit({
       projectUuid: 'project1',
       data: { setting: 'value' },
     });
@@ -699,11 +699,11 @@ describe('nexusaiAPI.js', () => {
     expect(result).toEqual(mockResponse);
   });
 
-  it('should delete customization setting', async () => {
+  it('should delete profile setting', async () => {
     const mockResponse = { data: 'mockData' };
     request.$http.delete.mockResolvedValue(mockResponse);
 
-    const result = await nexusaiAPI.router.customization.delete({
+    const result = await nexusaiAPI.router.profile.delete({
       projectUuid: 'project1',
       id: 'setting1',
     });

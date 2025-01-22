@@ -27,9 +27,7 @@
             <RouterMonitoring v-else-if="route.name === 'router-monitoring'" />
             <RouterAgentsTeam v-else-if="route.name === 'router-agents-team'" />
             <RouterActions v-else-if="route.name === 'router-actions'" />
-            <RouterCustomization
-              v-else-if="route.name === 'router-personalization'"
-            />
+            <RouterProfile v-else-if="route.name === 'router-profile'" />
             <RouterTunings
               v-else-if="route.name === 'router-tunings'"
               :data="routerTunings"
@@ -84,7 +82,7 @@ import RouterMonitoring from './RouterMonitoring/index.vue';
 import RouterAgentsTeam from './RouterAgentsTeam/index.vue';
 import RouterActions from './RouterActions.vue';
 import RouterContentBase from './RouterContentBase.vue';
-import RouterCustomization from './RouterCustomization.vue';
+import RouterProfile from './RouterProfile/index.vue';
 import RouterTunings from './RouterTunings.vue';
 import ModalPreviewQRCode from './Preview/ModalPreviewQRCode.vue';
 import ModalSaveChangesError from './ModalSaveChangesError.vue';
@@ -106,7 +104,7 @@ export default {
     RouterActions,
     RouterAgentsTeam,
     RouterContentBase,
-    RouterCustomization,
+    RouterProfile,
     RouterTunings,
     ModalPreviewQRCode,
     ModalSaveChangesError,
