@@ -1,5 +1,5 @@
 import nexusaiAPI from '@/api/nexusaiAPI';
-import { useBrainCustomizationStore } from '@/store/BrainCustomization';
+import { useProfileStore } from '@/store/Profile';
 import { flushPromises } from '@vue/test-utils';
 import { createPinia, setActivePinia } from 'pinia';
 import { beforeAll, beforeEach, vi } from 'vitest';
@@ -12,8 +12,8 @@ vi.mock('@/store', () => ({
   },
 }));
 
-const customizationRead = vi
-  .spyOn(nexusaiAPI.router.customization, 'read')
+const profileRead = vi
+  .spyOn(nexusaiAPI.router.profile, 'read')
   .mockResolvedValue({
     data: {
       agent: {
@@ -27,49 +27,49 @@ const customizationRead = vi
     },
   });
 
-const customizationInstructionDelete = vi
-  .spyOn(nexusaiAPI.router.customization, 'delete')
+const profileInstructionDelete = vi
+  .spyOn(nexusaiAPI.router.profile, 'delete')
   .mockResolvedValue();
 
-describe('BrainCustomization', () => {
-  let brainCustomizationStore;
+describe('Profile', () => {
+  let profileStore;
 
   beforeEach(() => {
     setActivePinia(createPinia());
 
-    brainCustomizationStore = useBrainCustomizationStore();
+    profileStore = useProfileStore();
   });
 
   it('status should be null initially', () => {
-    expect(brainCustomizationStore.status).toBe(null);
+    expect(profileStore.status).toBe(null);
   });
 
   describe('when load is called', () => {
     it('status should be loading', () => {
-      brainCustomizationStore.load();
-      brainCustomizationStore.load();
+      profileStore.load();
+      profileStore.load();
 
-      expect(brainCustomizationStore.status).toBe('loading');
-      expect(customizationRead).toHaveBeenCalledTimes(1);
+      expect(profileStore.status).toBe('loading');
+      expect(profileRead).toHaveBeenCalledTimes(1);
     });
 
     describe('when load is complete', () => {
       beforeEach(() => {
-        brainCustomizationStore.load();
+        profileStore.load();
       });
 
       it('status should be complete', () => {
-        expect(brainCustomizationStore.status).toBe('complete');
+        expect(profileStore.status).toBe('complete');
       });
 
       it('should call the API with the correct params', () => {
-        expect(customizationRead).toHaveBeenCalledWith({
+        expect(profileRead).toHaveBeenCalledWith({
           projectUuid: '1234',
         });
       });
 
       it('should fill the store with the API data', () => {
-        expect(brainCustomizationStore).toEqual(
+        expect(profileStore).toEqual(
           expect.objectContaining({
             name: { current: 'Initial Name', old: 'Initial Name' },
             role: { current: 'Initial Role', old: 'Initial Role' },
@@ -81,7 +81,7 @@ describe('BrainCustomization', () => {
           }),
         );
 
-        expect(brainCustomizationStore.instructions).toEqual({
+        expect(profileStore.instructions).toEqual({
           current: [{ id: '1', instruction: 'First Instruction' }],
           old: [{ id: '1', instruction: 'First Instruction' }],
         });
@@ -89,7 +89,7 @@ describe('BrainCustomization', () => {
 
       describe('when the user wants to add a new empty instruction', () => {
         beforeAll(() => {
-          brainCustomizationStore.addEmptyInstruction();
+          profileStore.addEmptyInstruction();
         });
 
         beforeEach(() => {
@@ -97,7 +97,7 @@ describe('BrainCustomization', () => {
         });
 
         it('should add a new empty instruction', () => {
-          expect(brainCustomizationStore.instructions).toEqual({
+          expect(profileStore.instructions).toEqual({
             current: [
               { id: '1', instruction: 'First Instruction' },
               { instruction: '' },
@@ -113,16 +113,16 @@ describe('BrainCustomization', () => {
           it('should call the API with the correct params', async () => {
             const instructionIndex = 0;
 
-            await brainCustomizationStore.removeInstruction(instructionIndex);
+            await profileStore.removeInstruction(instructionIndex);
 
-            expect(customizationInstructionDelete).toHaveBeenCalledWith({
+            expect(profileInstructionDelete).toHaveBeenCalledWith({
               id: '1',
               projectUuid: '1234',
             });
           });
 
           it('should remove the instruction', () => {
-            expect(brainCustomizationStore.instructions).toEqual({
+            expect(profileStore.instructions).toEqual({
               current: [{ instruction: '' }],
               old: [{ instruction: '' }],
             });
@@ -133,15 +133,15 @@ describe('BrainCustomization', () => {
           beforeEach(() => {
             const instructionIndex = 0;
 
-            brainCustomizationStore.removeInstruction(instructionIndex);
+            profileStore.removeInstruction(instructionIndex);
           });
 
           it('should not call the API', () => {
-            expect(customizationInstructionDelete).not.toHaveBeenCalled();
+            expect(profileInstructionDelete).not.toHaveBeenCalled();
           });
 
           it('should remove the instruction', () => {
-            expect(brainCustomizationStore.instructions).toEqual({
+            expect(profileStore.instructions).toEqual({
               current: [],
               old: [],
             });
@@ -150,108 +150,108 @@ describe('BrainCustomization', () => {
       });
 
       it('has changed should be false', () => {
-        expect(brainCustomizationStore.hasChanged).toBe(false);
+        expect(profileStore.hasChanged).toBe(false);
       });
 
       describe.each(['name', 'role', 'personality', 'goal'])(
         'when the user changes the %s attribute',
         (attribute) => {
           it('hasChanged should be true', () => {
-            brainCustomizationStore[attribute].current = 'Changed';
+            profileStore[attribute].current = 'Changed';
 
-            expect(brainCustomizationStore.hasChanged).toBe(true);
+            expect(profileStore.hasChanged).toBe(true);
           });
         },
       );
 
       it('has changed should be false whe the instruction text changes', () => {
-        brainCustomizationStore.instructions.current[0].instruction = 'Changed';
+        profileStore.instructions.current[0].instruction = 'Changed';
 
-        expect(brainCustomizationStore.hasChanged).toBe(true);
+        expect(profileStore.hasChanged).toBe(true);
       });
     });
   });
 
   describe('when the API return error', () => {
     it('status should be error', async () => {
-      customizationRead.mockRejectedValueOnce();
+      profileRead.mockRejectedValueOnce();
 
-      await brainCustomizationStore.load();
+      await profileStore.load();
 
-      expect(brainCustomizationStore.status).toBe('error');
+      expect(profileStore.status).toBe('error');
     });
   });
 
   describe('isSaveButtonDisabled', () => {
     it('should be true when hasChanged is false', () => {
-      expect(brainCustomizationStore.isSaveButtonDisabled).toBe(true);
+      expect(profileStore.isSaveButtonDisabled).toBe(true);
     });
 
     it('should be false when hasChanged is true', () => {
-      brainCustomizationStore.name.current = 'Changed';
-      expect(brainCustomizationStore.isSaveButtonDisabled).toBe(false);
+      profileStore.name.current = 'Changed';
+      expect(profileStore.isSaveButtonDisabled).toBe(false);
     });
 
     it('should be true when errorRequiredFields is not empty', () => {
-      brainCustomizationStore.errorRequiredFields = { name: true };
-      expect(brainCustomizationStore.isSaveButtonDisabled).toBe(true);
+      profileStore.errorRequiredFields = { name: true };
+      expect(profileStore.isSaveButtonDisabled).toBe(true);
     });
 
     it('should be false when errorRequiredFields is empty', () => {
-      brainCustomizationStore.errorRequiredFields = {};
-      brainCustomizationStore.name.current = 'Changed';
-      expect(brainCustomizationStore.isSaveButtonDisabled).toBe(false);
+      profileStore.errorRequiredFields = {};
+      profileStore.name.current = 'Changed';
+      expect(profileStore.isSaveButtonDisabled).toBe(false);
     });
   });
 
   describe('validate', () => {
     it('should throw an error when name is empty', () => {
-      brainCustomizationStore.name.current = '';
-      expect(() => brainCustomizationStore.validate()).toThrowError();
+      profileStore.name.current = '';
+      expect(() => profileStore.validate()).toThrowError();
     });
 
     it('should throw an error when role is empty', () => {
-      brainCustomizationStore.role.current = '';
-      expect(() => brainCustomizationStore.validate()).toThrowError();
+      profileStore.role.current = '';
+      expect(() => profileStore.validate()).toThrowError();
     });
 
     it('should throw an error when goal is empty', () => {
-      brainCustomizationStore.goal.current = '';
-      expect(() => brainCustomizationStore.validate()).toThrowError();
+      profileStore.goal.current = '';
+      expect(() => profileStore.validate()).toThrowError();
     });
 
     it('should not throw an error when all fields are filled', () => {
-      brainCustomizationStore.name.current = 'Test Name';
-      brainCustomizationStore.role.current = 'Test Role';
-      brainCustomizationStore.goal.current = 'Test Goal';
-      expect(() => brainCustomizationStore.validate()).not.toThrowError();
+      profileStore.name.current = 'Test Name';
+      profileStore.role.current = 'Test Role';
+      profileStore.goal.current = 'Test Goal';
+      expect(() => profileStore.validate()).not.toThrowError();
     });
 
     it('should set errorRequiredFields correctly', () => {
-      brainCustomizationStore.name.current = '';
-      brainCustomizationStore.role.current = 'Test Role';
-      brainCustomizationStore.goal.current = 'Test Goal';
+      profileStore.name.current = '';
+      profileStore.role.current = 'Test Role';
+      profileStore.goal.current = 'Test Goal';
 
       try {
-        brainCustomizationStore.validate();
+        profileStore.validate();
       } catch (e) {
         // this catch is only here to make the test pass without throwing
       }
 
-      expect(brainCustomizationStore.errorRequiredFields).toMatchObject({
+      expect(profileStore.errorRequiredFields).toMatchObject({
         name: true,
       });
     });
 
     it('should watch for changes in required fields', () => {
-      brainCustomizationStore.name.current = '';
+      profileStore.name.current = '';
       try {
-        brainCustomizationStore.validate();
+        profileStore.validate();
       } catch (e) {
         // this catch is only here to make the test pass without throwing
       }
-      brainCustomizationStore.name.current = 'Test Name';
-      expect(brainCustomizationStore.errorRequiredFields).toMatchObject({
+      profileStore.name.current = 'Test Name';
+      expect(profileStore.errorRequiredFields).toMatchObject({
         name: true,
       });
     });
@@ -259,13 +259,13 @@ describe('BrainCustomization', () => {
 
   describe('save', () => {
     it('should call nexusaiAPI with correct data', async () => {
-      const editSpy = vi.spyOn(nexusaiAPI.router.customization, 'edit');
-      brainCustomizationStore.name.current = 'Test Name';
-      brainCustomizationStore.role.current = 'Test Role';
-      brainCustomizationStore.personality.current = 'Test Personality';
-      brainCustomizationStore.instructions.current = ['Test Instruction'];
-      brainCustomizationStore.goal.current = 'Test Goal';
-      await brainCustomizationStore.save();
+      const editSpy = vi.spyOn(nexusaiAPI.router.profile, 'edit');
+      profileStore.name.current = 'Test Name';
+      profileStore.role.current = 'Test Role';
+      profileStore.personality.current = 'Test Personality';
+      profileStore.instructions.current = ['Test Instruction'];
+      profileStore.goal.current = 'Test Goal';
+      await profileStore.save();
       expect(editSpy).toHaveBeenCalledTimes(1);
       expect(editSpy).toHaveBeenCalledWith({
         data: {
