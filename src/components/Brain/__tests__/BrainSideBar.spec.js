@@ -6,7 +6,7 @@ import { createTestingPinia } from '@pinia/testing';
 
 const routes = [
   { path: '/monitoring', name: 'router-monitoring', component: {} },
-  { path: '/personalization', name: 'router-personalization', component: {} },
+  { path: '/profile', name: 'router-profile', component: {} },
   { path: '/agents-team', name: 'router-agents-team', component: {} },
   { path: '/content', name: 'router-content', component: {} },
   { path: '/actions', name: 'router-actions', component: {} },
@@ -107,7 +107,7 @@ describe('BrainSideBar', () => {
     const afterEachMock = vi.fn();
     router.afterEach(afterEachMock);
 
-    router.push('/personalization');
+    router.push('/profile');
     await flushPromises();
 
     expect(afterEachMock).toHaveBeenCalled();

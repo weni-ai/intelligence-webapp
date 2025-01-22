@@ -2,12 +2,6 @@
   <header class="header">
     <section class="header__infos">
       <section class="infos__title">
-        <UnnnicAvatarIcon
-          size="sm"
-          :icon="currentBrainRoute?.icon"
-          scheme="aux-purple-500"
-        />
-
         <p class="title__text">
           {{ $t(`router.tabs.${currentBrainRoute?.title}`) }}
         </p>
@@ -22,11 +16,11 @@
       </UnnnicIntelligenceText>
     </section>
     <UnnnicButton
-      v-if="route.name === 'router-personalization'"
+      v-if="route.name === 'router-profile'"
       class="save-button"
-      :disabled="brainCustomization.isSaveButtonDisabled"
-      :loading="brainCustomization.isSaving"
-      @click="brainCustomization.save"
+      :disabled="profile.isSaveButtonDisabled"
+      :loading="profile.isSaving"
+      @click="profile.save"
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
@@ -54,7 +48,7 @@ import { ref, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { format, subDays } from 'date-fns';
 import useBrainRoutes from '@/composables/useBrainRoutes';
-import { useBrainCustomizationStore } from '@/store/BrainCustomization';
+import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 const brainRoutes = useBrainRoutes();
@@ -66,7 +60,7 @@ const dateFilter = ref({
 const route = useRoute();
 const router = useRouter();
 
-const brainCustomization = useBrainCustomizationStore();
+const profile = useProfileStore();
 
 const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
@@ -122,7 +116,7 @@ watch(
 
   &__infos {
     display: grid;
-    gap: $unnnic-spacing-sm;
+    gap: $unnnic-spacing-xs;
 
     .infos__title {
       display: flex;
@@ -133,7 +127,7 @@ watch(
         color: $unnnic-color-neutral-darkest;
         font-family: $unnnic-font-family-secondary;
         font-size: $unnnic-font-size-title-sm;
-        line-height: $unnnic-font-size-title-sm * 2.3;
+        line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
         font-weight: $unnnic-font-weight-bold;
       }
     }
