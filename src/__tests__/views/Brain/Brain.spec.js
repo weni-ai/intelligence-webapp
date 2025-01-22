@@ -102,7 +102,7 @@ describe('Brain Component', () => {
   let pushMock;
   beforeEach(() => {
     useRoute.mockImplementationOnce(() => ({
-      name: 'router-personalization',
+      name: 'router-profile',
       params: {
         contentBaseUuid: 'uuuid-01',
       },
@@ -121,7 +121,7 @@ describe('Brain Component', () => {
         stubs: {
           RouterLink: true,
           RouterView: true,
-          RouterCustomization: true,
+          RouterProfile: true,
           ModalPreviewQRCode: true,
           BrainSideBar: true,
           BrainHeader: true,
@@ -165,7 +165,7 @@ describe('Brain Component', () => {
   });
 
   test('displays ModalSaveChangesError when tabsWithError is not null', async () => {
-    store.state.Brain.tabsWithError = ['personalization'];
+    store.state.Brain.tabsWithError = ['profile'];
     await flushPromises();
     expect(wrapper.findComponent(ModalSaveChangesError).exists()).toBe(true);
   });
@@ -315,9 +315,9 @@ describe('Brain Component', () => {
   test('check if router components are rendered correctly based on route.name', async () => {
     const routes = [
       {
-        title: 'personalization',
-        page: 'router-personalization',
-        component: 'RouterCustomization',
+        title: 'profile',
+        page: 'router-profile',
+        component: 'RouterProfile',
       },
       {
         title: 'content',
@@ -346,7 +346,7 @@ describe('Brain Component', () => {
           stubs: {
             RouterLink: true,
             RouterView: true,
-            RouterCustomization: true,
+            RouterProfile: true,
             RouterTunings: true,
             RouterActions: true,
             RouterContentBase: true,
