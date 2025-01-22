@@ -137,7 +137,14 @@
       "router_edited": "Descrição de {name} atualizada"
     },
     "agents_team": {
-      "description": "Crie a equipe de agentes perfeita."
+      "description": "Crie a equipe de agentes perfeita.",
+      "card": {
+        "assign": "Atribuir ao time"
+      },
+      "gallery": {
+        "title": "Galeria de agentes",
+        "search_placeholder": "Pesquisar por agente ou habilidade"
+      }
     },
     "content": {
       "fields": {

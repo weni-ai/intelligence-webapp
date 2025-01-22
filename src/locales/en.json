@@ -137,7 +137,14 @@
       "router_edited": "Description of {name} updated"
     },
     "agents_team": {
-      "description": "Build the perfect agent team."
+      "description": "Build the perfect agent team.",
+      "card": {
+        "assign": "Assign to team"
+      },
+      "gallery": {
+        "title": "Agents gallery",
+        "search_placeholder": "Search by agent or skill"
+      }
     },
     "content": {
       "fields": {
