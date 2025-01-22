@@ -139,11 +139,14 @@
     "agents_team": {
       "description": "Crie a equipe de agentes perfeita.",
       "card": {
-        "assign": "Atribuir ao time"
+        "assign": "Atribuir ao time",
+        "assigned": "Atribuído"
       },
       "gallery": {
         "title": "Galeria de agentes",
-        "search_placeholder": "Pesquisar por agente ou habilidade"
+        "search_placeholder": "Pesquisar por agente ou habilidade",
+        "official": "Oficial",
+        "my-agents": "Meus agentes"
       }
     },
     "content": {

@@ -139,11 +139,14 @@
     "agents_team": {
       "description": "Construye el equipo de agentes perfecto.",
       "card": {
-        "assign": "Asignar al equipo"
+        "assign": "Asignar al equipo",
+        "assigned": "Asignado"
       },
       "gallery": {
         "title": "Galería de agentes",
-        "search_placeholder": "Buscar por agente o habilidad"
+        "search_placeholder": "Buscar por agente o habilidad",
+        "official": "Oficial",
+        "my-agents": "Mis agentes"
       }
     },
     "content": {

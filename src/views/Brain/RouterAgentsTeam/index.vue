@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <AgentsGallery />
 </template>
-<script setup></script>
+<script setup>
+import AgentsGallery from './AgentsGallery.vue';
+</script>
 <style lang="scss" scoped></style>
