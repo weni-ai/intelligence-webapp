@@ -2,6 +2,7 @@ import { flushPromises, mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from 'vue-router';
 import { expect } from 'vitest';
 import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
+import { createTestingPinia } from '@pinia/testing';
 
 const routes = [
   { path: '/monitoring', name: 'router-monitoring', component: {} },
@@ -20,10 +21,12 @@ const router = createRouter({
 describe('BrainSideBar', () => {
   let wrapper;
 
+  const pinia = createTestingPinia();
+
   beforeEach(() => {
     wrapper = mount(BrainSideBar, {
       global: {
-        plugins: [router],
+        plugins: [router, pinia],
       },
     });
   });
@@ -92,11 +95,11 @@ describe('BrainSideBar', () => {
 
   test('navigates to the correct tab when clicking on a sidebar item', async () => {
     const sidebarItems = wrapper.findAll('[data-test="nav-router"]');
-    expect(sidebarItems.length).toBe(6);
+    expect(sidebarItems.length).toBe(5);
 
     const pushSpy = vi.spyOn(router, 'push');
 
-    await sidebarItems[3].trigger('click');
+    await sidebarItems[2].trigger('click');
     expect(pushSpy).toHaveBeenCalledWith({ name: 'router-content' });
   });
 
