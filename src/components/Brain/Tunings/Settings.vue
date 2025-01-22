@@ -104,7 +104,7 @@
         :key="index"
         :modelValue="field.value"
         :type="hasValidate ? 'error' : 'normal'"
-        :message="hasValidate ? $t('customization.invalid_field') : ''"
+        :message="hasValidate ? $t('profile.invalid_field') : ''"
         :nativeType="field.type"
         @update:model-value="updateField(field.name, $event)"
       />
