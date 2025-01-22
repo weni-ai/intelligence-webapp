@@ -94,9 +94,9 @@ const router = createRouter({
           component: () => import('../views/Brain/RouterMonitoring/index.vue'),
         },
         {
-          path: 'personalization',
-          name: 'router-personalization',
-          component: () => import('../views/Brain/RouterCustomization.vue'),
+          path: 'profile',
+          name: 'router-profile',
+          component: () => import('../views/Brain/RouterProfile/index.vue'),
         },
         {
           path: 'agents-team',
@@ -106,7 +106,7 @@ const router = createRouter({
         {
           path: 'content',
           name: 'router-content',
-          component: () => import('../views/Brain/RouterCustomization.vue'),
+          component: () => import('../views/Brain/RouterContentBase.vue'),
         },
         {
           path: 'actions',

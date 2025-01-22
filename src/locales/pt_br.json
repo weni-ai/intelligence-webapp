@@ -65,7 +65,7 @@
     },
     "tabs": {
       "monitoring": "Supervisor",
-      "personalization": "Personalidade",
+      "profile": "Perfil",
       "agents-team": "Agentes",
       "content": "Conhecimento",
       "actions": "Ações",
@@ -257,7 +257,7 @@
     }
   },
   "content_bases": {
-    "description": "Insira o conteúdo que seu agente usará para responder às perguntas. Inclua todas as informações, arquivos e sites necessários para que o agente forneça respostas precisas e úteis.",
+    "description": "Adicione conhecimento através de arquivos, links ou texto para que o agente possa responder com precisão.",
     "quick_test": "Teste rápido",
     "sidebar_quick_test_title": "Teste rápido da base {name}",
     "sidebar_quick_test_description": "Envie uma mensagem para testar essa base de conteúdo e saiba quais perguntas ela é capaz de responder",
@@ -1682,18 +1682,31 @@
       }
     }
   },
-  "customization": {
-    "title": "Persona do agente",
-    "sub_title": "Perfil do seu agente inteligente. Aqui é onde você irá inserir suas características e comportamentos.",
+  "profile": {
+    "description": "Personalize as informações básicas e o comportamento do agente.",
     "save_btn": "Salvar Alterações",
     "invalid_field": "Campo obrigatório",
     "invalid_get_data": "Erro ao tentar buscar os dados",
     "fields": {
-      "name": "Nome",
-      "occupation": "Ocupação",
-      "personality": "Personalidade",
-      "goal": "Objetivo",
-      "instruction": "Instrução",
+      "name": {
+        "title": "Como o agente se apresenta?",
+        "description": "Este é o nome exibido durante as interações com os usuários",
+        "placeholder": "Tainá"
+      },
+      "occupation": {
+        "title": "Qual é a função principal do agente?",
+        "placeholder": "Assistente de Suporte ao Cliente",
+        "description": "Defina a função principal do agente para que os usuários entendam como isso os ajuda"
+      },
+      "goal": {
+        "title": "Qual é o objetivo principal do agente?",
+        "placeholder": "Responder perguntas dos clientes",
+        "description": "Isso ajuda a definir o que o agente pretende alcançar durante as interações"
+      },
+      "personality": {
+        "title": "Qual é o tom de voz do agente?",
+        "description": "Escolha como o agente se comunica com os usuários"
+      },
       "personalities": {
         "friendly": "Amigável",
         "extrovert": "Extrovertido",
@@ -1707,16 +1720,14 @@
         "intellectual": "Intelectual"
       }
     },
-    "placeholders": {
-      "instruction": "Você é divertido mas não faz piadas",
-      "name": "Tainá",
-      "occupation": "Especialista em lhamas",
-      "goal": "Tirar dúvidas e dar informações sobre lhamas"
-    },
     "instructions": {
       "title": "Instruções gerais",
       "sub_title": "Como você quer que o agente se comporte.",
       "add_instruction_btn": "Adicionar instrução",
+      "instruction": {
+        "title": "Instrução",
+        "placeholder": "Você é engraçado, mas não faz piadas"
+      },
       "modals": {
         "title": "Remover instrução",
         "description": "Tem certeza que deseja remover a instrução?",

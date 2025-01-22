@@ -177,7 +177,7 @@ export default {
       },
     },
 
-    customization: {
+    profile: {
       read({ projectUuid }) {
         return request.$http.get(`api/${projectUuid}/customization/`);
       },

@@ -65,7 +65,7 @@
     },
     "tabs": {
       "monitoring": "Supervisor",
-      "personalization": "Personality",
+      "profile": "Profile",
       "agents-team": "Agents",
       "content": "Knowledge",
       "actions": "Actions",
@@ -257,7 +257,7 @@
     }
   },
   "content_bases": {
-    "description": "Enter the content that your agent will use to answer the questions. Include all the information, files and websites necessary for the agent to provide accurate and useful answers.",
+    "description": "Add knowledge through files, links, or text so the agent can respond accurately.",
     "quick_test": "Quick test",
     "sidebar_quick_test_title": "Quick test of the {name} base",
     "sidebar_quick_test_description": "Send a message to test this content base and find out what questions it can answer",
@@ -1682,18 +1682,31 @@
       }
     }
   },
-  "customization": {
-    "title": "Agent persona",
-    "sub_title": "Profile of your intelligent agent. This is where you'll enter its characteristics and behaviors.",
+  "profile": {
+    "description": "Customize the agent’s basic information and behavior.",
     "save_btn": "Save Changes",
     "invalid_field": "Required field",
     "invalid_get_data": "Error trying to get the data",
     "fields": {
-      "name": "Name",
-      "occupation": "Occupation",
-      "personality": "Personality",
-      "goal": "Goal",
-      "instruction": "Instruction",
+      "name": {
+        "title": "How does the agent introduce itself?",
+        "description": "This is the name displayed during interactions with users",
+        "placeholder": "Tainá"
+      },
+      "occupation": {
+        "title": "What’s the agent’s main role?",
+        "placeholder": "Customer Support Assistant",
+        "description": "Define the agent’s main role so users understand how it helps them"
+      },
+      "goal": {
+        "title": "What’s the agent’s main objective?",
+        "placeholder": "Answer customer questions",
+        "description": "This helps define what the agent aims to achieve during interactions"
+      },
+      "personality": {
+        "title": "What’s the agent’s tone of voice?",
+        "description": "Choose how the agent communicates with users"
+      },
       "personalities": {
         "friendly": "Friendly",
         "extrovert": "Extrovert",
@@ -1707,16 +1720,14 @@
         "intellectual": "Intellectual"
       }
     },
-    "placeholders": {
-      "instruction": "You're funny but you don't make jokes",
-      "name": "Tainá",
-      "occupation": "Llama expert", 
-      "goal": "To answer questions and give information about llamas"
-    },
     "instructions": {
       "title": "General instructions",
       "sub_title": "How you want the agent to behave.",
       "add_instruction_btn": "Add instruction",
+      "instruction": {
+        "title": "Instruction",
+        "placeholder": "You're funny but you don't make jokes"
+      },
       "modals": {
         "title": "Remove instruction",
         "description": "Are you sure you want to remove the instruction?",
