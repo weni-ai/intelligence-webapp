@@ -152,8 +152,10 @@
         "title": "Galería de agentes",
         "search_placeholder": "Buscar por agente o habilidad",
         "official": "Oficial",
-        "my-agents": "Mis agentes"
-      }
+        "my-agents": "Mis agentes",
+        "no_agent_found": "Ningún agente encontrado"
+      },
+      "create_agent": "Crear agente"
     },
     "content": {
       "fields": {

@@ -152,8 +152,10 @@
         "title": "Agents gallery",
         "search_placeholder": "Search by agent or skill",
         "official": "Official",
-        "my-agents": "My agents"
-      }
+        "my-agents": "My agents",
+        "no_agent_found": "No agent found"
+      },
+      "create_agent": "Create agent"
     },
     "content": {
       "fields": {

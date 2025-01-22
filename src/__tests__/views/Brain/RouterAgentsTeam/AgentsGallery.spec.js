@@ -1,4 +1,4 @@
-import { afterEach, beforeEach } from 'vitest';
+import { afterEach, beforeEach, expect } from 'vitest';
 import { nextTick } from 'vue';
 import { shallowMount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
@@ -120,6 +120,21 @@ describe('AgentsGallery.vue', () => {
     await nextTick();
 
     expect(agentsTeamStore.loadMyAgents).toHaveBeenCalledTimes(1);
+  });
+
+  it('should load empty card when tab is my agents', async () => {
+    const agentCardEmpty = () =>
+      wrapper.findComponent('[data-testid="agent-card-empty"]');
+
+    agentsTeamStore.officialAgents.status = 'complete';
+    agentsTeamStore.myAgents.status = 'complete';
+
+    expect(agentCardEmpty().exists()).toBe(false);
+
+    wrapper.vm.activeTab = 'my-agents';
+    await nextTick();
+
+    expect(agentCardEmpty().exists()).toBe(true);
   });
 
   it('should search agents when search input changes', async () => {

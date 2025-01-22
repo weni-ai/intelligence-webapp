@@ -37,7 +37,12 @@
     />
 
     <section
-      class="agents-gallery__cards"
+      :class="[
+        'agents-gallery__cards',
+        {
+          'agents-gallery__cards--empty': isMyAgentsEmpty,
+        },
+      ]"
       data-testid="agent-cards"
     >
       <template v-if="isLoadingAgents">
@@ -50,16 +55,34 @@
       </template>
 
       <template v-else>
-        <AgentCard
-          v-for="agent in agentsData"
-          :key="agent.uuid"
-          :title="agent.name"
-          :description="agent.description"
-          :skills="agent.skills"
-          :uuid="agent.uuid"
-          :assigned="agent.assigned"
-          data-testid="agent-card"
-        />
+        <UnnnicIntelligenceText
+          v-if="isSearchEmpty"
+          color="neutral-clean"
+          family="secondary"
+          size="body-gt"
+          tag="p"
+        >
+          {{ $t('router.agents_team.gallery.no_agent_found') }}
+        </UnnnicIntelligenceText>
+
+        <template v-else>
+          <AgentCard
+            v-if="activeTab === 'my-agents'"
+            data-testid="agent-card-empty"
+            empty
+          />
+
+          <AgentCard
+            v-for="agent in agentsData"
+            :key="agent.uuid"
+            :title="agent.name"
+            :description="agent.description"
+            :skills="agent.skills"
+            :uuid="agent.uuid"
+            :assigned="agent.assigned"
+            data-testid="agent-card"
+          />
+        </template>
       </template>
     </section>
   </section>
@@ -86,6 +109,7 @@ const search = ref({
   official: '',
   'my-agents': '',
 });
+const isSearchEmpty = ref(false);
 
 const agentsData = computed(() =>
   activeTab.value === 'official' ? officialAgents.data : myAgents.data,
@@ -93,6 +117,20 @@ const agentsData = computed(() =>
 const isLoadingAgents = computed(
   () => officialAgents.status === 'loading' || myAgents.status === 'loading',
 );
+const isMyAgentsEmpty = computed(
+  () =>
+    activeTab.value === 'my-agents' &&
+    myAgents.data.length === 0 &&
+    !isLoadingAgents.value,
+);
+
+function updateSearchEmpty() {
+  const currentAgents = agentsData.value;
+  const currentSearch = search.value[activeTab.value];
+
+  isSearchEmpty.value =
+    currentSearch.trim() !== '' && currentAgents.length === 0;
+}
 
 function onTabChange(newTab) {
   activeTab.value = newTab;
@@ -100,6 +138,8 @@ function onTabChange(newTab) {
   if (agentsTeamStore.myAgents.status === null && newTab === 'my-agents') {
     agentsTeamStore.loadMyAgents();
   }
+
+  updateSearchEmpty();
 }
 
 onMounted(() => {
@@ -109,14 +149,16 @@ onMounted(() => {
 const debouncedSearch = (callback) => debounce(callback, 300);
 watch(
   () => search.value['my-agents'],
-  debouncedSearch((search) => {
-    agentsTeamStore.loadMyAgents({ search });
+  debouncedSearch(async (search) => {
+    await agentsTeamStore.loadMyAgents({ search });
+    updateSearchEmpty();
   }),
 );
 watch(
   () => search.value['official'],
-  debouncedSearch((search) => {
-    agentsTeamStore.loadOfficialAgents({ search });
+  debouncedSearch(async (search) => {
+    await agentsTeamStore.loadOfficialAgents({ search });
+    updateSearchEmpty();
   }),
 );
 </script>
@@ -135,6 +177,10 @@ watch(
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: $unnnic-spacing-sm;
+
+    &--empty {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 }
 </style>

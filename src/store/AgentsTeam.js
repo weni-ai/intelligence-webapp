@@ -4,6 +4,8 @@ import { reactive } from 'vue';
 import nexusaiAPI from '@/api/nexusaiAPI.js';
 
 export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
+  const linkToCreateAgent = 'https://github.com/weni-ai/weni-cli';
+
   const activeTeam = reactive({
     status: null,
     data: [],
@@ -93,6 +95,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
   }
 
   return {
+    linkToCreateAgent,
     activeTeam,
     officialAgents,
     myAgents,

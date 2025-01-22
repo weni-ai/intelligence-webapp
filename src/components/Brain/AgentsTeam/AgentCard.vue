@@ -1,8 +1,16 @@
 <template>
-  <section class="agent-card">
+  <section
+    data-testid="agent-card"
+    :class="['agent-card', { 'agent-card--empty': empty }]"
+  >
     <AgentCardSkeleton
       v-if="loading"
       data-testid="agent-card-skeleton"
+    />
+
+    <AgentCardEmpty
+      v-else-if="empty"
+      data-testid="agent-card-empty"
     />
 
     <section
@@ -22,11 +30,13 @@
 
       <UnnnicIntelligenceText
         v-if="description"
+        class="content__description"
         tag="p"
         family="secondary"
         size="body-gt"
         color="neutral-cloudy"
         data-testid="description"
+        :title="description"
       >
         {{ description }}
       </UnnnicIntelligenceText>
@@ -43,7 +53,7 @@
     </section>
 
     <UnnnicButton
-      v-if="!loading && assignment"
+      v-if="!loading && !empty && assignment"
       :class="[
         'agent-card__button',
         { 'agent-card__button--assigned': assigned },
@@ -69,6 +79,7 @@ import { ref } from 'vue';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 import AgentCardSkeleton from './AgentCardSkeleton.vue';
+import AgentCardEmpty from './AgentCardEmpty.vue';
 import Skill from './Skill.vue';
 
 defineEmits(['assign']);
@@ -110,6 +121,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  empty: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const isAssigning = ref(false);
@@ -142,11 +157,23 @@ async function toggleAgentAssignment() {
   gap: $unnnic-spacing-sm;
   align-content: space-between;
 
-  &__content,
-  &__content-loading {
+  &--empty {
+    display: flex;
+
+    cursor: pointer;
+  }
+
+  &__content {
     display: flex;
     flex-direction: column;
     gap: $unnnic-spacing-xs;
+
+    .content__description {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
     .content__skills {
       display: flex;
