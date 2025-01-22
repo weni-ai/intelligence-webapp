@@ -4,6 +4,11 @@ import { reactive } from 'vue';
 import nexusaiAPI from '@/api/nexusaiAPI.js';
 
 export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
+  const activeTeam = reactive({
+    status: null,
+    data: [],
+  });
+
   const officialAgents = reactive({
     status: null,
     data: [],
@@ -13,6 +18,21 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
     status: null,
     data: [],
   });
+
+  async function loadActiveTeam() {
+    try {
+      activeTeam.status = 'loading';
+
+      const { data } = await nexusaiAPI.router.agents_team.listActiveTeam();
+
+      activeTeam.data = data;
+      activeTeam.status = 'complete';
+    } catch (error) {
+      console.error('error', error);
+
+      activeTeam.status = 'error';
+    }
+  }
 
   async function loadOfficialAgents({ search = '' } = {}) {
     try {
@@ -73,8 +93,10 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
   }
 
   return {
+    activeTeam,
     officialAgents,
     myAgents,
+    loadActiveTeam,
     loadOfficialAgents,
     loadMyAgents,
     toggleAgentAssignment,

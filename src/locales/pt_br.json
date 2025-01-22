@@ -142,6 +142,12 @@
         "assign": "Atribuir ao time",
         "assigned": "Atribuído"
       },
+      "active_team": {
+        "title": "Equipe ativa",
+        "no_team": "Nenhum agente na sua equipe",
+        "no_team_description": "Adicione agentes da galeria abaixo ou {link}",
+        "create_agent": "crie um agente"
+      },
       "gallery": {
         "title": "Galeria de agentes",
         "search_placeholder": "Pesquisar por agente ou habilidade",
