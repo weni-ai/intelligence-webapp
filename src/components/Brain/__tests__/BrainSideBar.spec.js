@@ -6,6 +6,7 @@ import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
 const routes = [
   { path: '/monitoring', name: 'router-monitoring', component: {} },
   { path: '/profile', name: 'router-profile', component: {} },
+  { path: '/agents-team', name: 'router-agents-team', component: {} },
   { path: '/content', name: 'router-content', component: {} },
   { path: '/actions', name: 'router-actions', component: {} },
   { path: '/tunings', name: 'router-tunings', component: {} },
@@ -91,11 +92,11 @@ describe('BrainSideBar', () => {
 
   test('navigates to the correct tab when clicking on a sidebar item', async () => {
     const sidebarItems = wrapper.findAll('[data-test="nav-router"]');
-    expect(sidebarItems.length).toBe(5);
+    expect(sidebarItems.length).toBe(6);
 
     const pushSpy = vi.spyOn(router, 'push');
 
-    await sidebarItems[2].trigger('click');
+    await sidebarItems[3].trigger('click');
     expect(pushSpy).toHaveBeenCalledWith({ name: 'router-content' });
   });
 

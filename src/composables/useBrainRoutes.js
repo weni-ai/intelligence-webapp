@@ -21,6 +21,13 @@ export default function useBrainRoutes() {
       preview: true,
     },
     {
+      title: 'agents-team',
+      description: t('router.agents_team.description'),
+      page: 'router-agents-team',
+      icon: 'workspaces',
+      preview: false,
+    },
+    {
       title: 'content',
       description: t('content_bases.description'),
       page: 'router-content',

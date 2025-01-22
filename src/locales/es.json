@@ -66,6 +66,7 @@
     "tabs": {
       "monitoring": "Supervisor",
       "profile": "Perfil",
+      "agents-team": "Agentes",
       "content": "Conocimiento",
       "actions": "Acciones",
       "tunings": "Ajustes"
@@ -134,6 +135,9 @@
       "router_activated": "Agent Builder activado en {name}",
       "router_removed": "Agent Builder eliminado de {name}",
       "router_edited": "Descripción de {name} actualizada"
+    },
+    "agents_team": {
+      "description": "Construye el equipo de agentes perfecto."
     },
     "content": {
       "fields": {

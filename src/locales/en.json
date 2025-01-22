@@ -66,6 +66,7 @@
     "tabs": {
       "monitoring": "Supervisor",
       "profile": "Profile",
+      "agents-team": "Agents",
       "content": "Knowledge",
       "actions": "Actions",
       "tunings": "Tunings"
@@ -134,6 +135,9 @@
       "router_activated": "Agent Builder activated in {name}",
       "router_removed": "Agent Builder removed from {name}",
       "router_edited": "Description of {name} updated"
+    },
+    "agents_team": {
+      "description": "Build the perfect agent team."
     },
     "content": {
       "fields": {
