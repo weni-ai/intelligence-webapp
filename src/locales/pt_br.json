@@ -92,7 +92,12 @@
         "all_messages": "Todas mensagens",
         "answers_found": "Respostas encontradas",
         "answers_not_found": "Respostas não encontradas",
-        "messages_that_trigger_actions": "Mensagens que ativaram ações"
+        "messages_that_trigger_actions": "Mensagens que ativaram ações",
+        "view": {
+          "title": "Visualizar",
+          "channels": "Mensagens recebidas por meio de canais",
+          "preview": "Mensagens do preview do Agent Builder"
+        }
       },
       "no_message_received": "Nenhuma mensagem recebida",
       "load_previous_messages": "Carregar mensagens anteriores",
