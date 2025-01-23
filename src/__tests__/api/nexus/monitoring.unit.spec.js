@@ -51,6 +51,7 @@ describe('Monitoring API', () => {
         text: 'Test1',
         started_day: '2024-01-01',
         ended_day: '2024-01-02',
+        source: 'channels',
       });
 
       expect(request.$http.get).toHaveBeenCalledWith(
@@ -63,6 +64,7 @@ describe('Monitoring API', () => {
             ended_day: '2024-01-02',
             page_size: 10,
             page: 1,
+            source: 'router',
           },
         },
       );
@@ -200,6 +202,7 @@ describe('Monitoring API', () => {
         projectUuid: 'test-uuid',
         started_day: '2024-01-01',
         ended_day: '2024-01-02',
+        source: 'channels',
       });
 
       expect(request.$http.get).toHaveBeenCalledWith(
@@ -208,6 +211,7 @@ describe('Monitoring API', () => {
           params: {
             started_day: '2024-01-01',
             ended_day: '2024-01-02',
+            source: 'router',
           },
         },
       );

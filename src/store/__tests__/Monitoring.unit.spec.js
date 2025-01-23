@@ -287,4 +287,29 @@ describe('MonitoringStore', () => {
       expect(store.messages.newMessages[0]).toBe(messageMock.message);
     });
   });
+
+  describe('updateMessagesSource', () => {
+    it('should update messages source successfully', async () => {
+      expect(store.messages.source).toBe('channels');
+
+      const sourceMock = 'preview';
+      await store.updateMessagesSource(sourceMock);
+
+      expect(store.messages.source).toBe(sourceMock);
+    });
+
+    it('should return undefined if source is the same', async () => {
+      const sourceMock = 'channels';
+      await store.updateMessagesSource(sourceMock);
+
+      expect(store.messages.source).toBe(sourceMock);
+    });
+
+    it('should set source default to channels', async () => {
+      await store.updateMessagesSource('preview');
+      await store.updateMessagesSource();
+
+      expect(store.messages.source).toBe('channels');
+    });
+  });
 });
