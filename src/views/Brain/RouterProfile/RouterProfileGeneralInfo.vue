@@ -125,10 +125,6 @@ export default {
     personalities() {
       return [
         {
-          label: this.$t('profile.fields.personality'),
-          value: '',
-        },
-        {
           label: this.$t('profile.fields.personalities.friendly'),
           value: 'Amigável',
         },
