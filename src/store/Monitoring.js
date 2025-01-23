@@ -62,6 +62,7 @@ export const useMonitoringStore = defineStore('monitoring', () => {
     status: null,
     data: [],
     count: 0,
+    source: 'channels',
     newMessages: [],
     performance: {
       status: null,
@@ -90,6 +91,7 @@ export const useMonitoringStore = defineStore('monitoring', () => {
         text,
         started_day,
         ended_day,
+        source: messages.source,
       });
 
       messages.data = data;
@@ -164,6 +166,7 @@ export const useMonitoringStore = defineStore('monitoring', () => {
         projectUuid: connectProjectUuid.value,
         started_day,
         ended_day,
+        source: messages.source,
       });
 
       messages.performance = {
@@ -195,6 +198,14 @@ export const useMonitoringStore = defineStore('monitoring', () => {
     messages.newMessages.push(message);
   }
 
+  function updateMessagesSource(source = 'channels') {
+    if (messages.source === source) {
+      return;
+    }
+
+    messages.source = source;
+  }
+
   return {
     messages,
     ws,
@@ -204,5 +215,6 @@ export const useMonitoringStore = defineStore('monitoring', () => {
     loadMessagesPerformance,
     rateAnswer,
     createNewMessage,
+    updateMessagesSource,
   };
 });

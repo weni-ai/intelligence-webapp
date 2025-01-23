@@ -33,13 +33,18 @@
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
-    <UnnnicInputDatePicker
+    <section
       v-else-if="showDateFilter"
-      v-model="dateFilter"
-      class="filter-date"
-      size="sm"
-      position="right"
-    />
+      class="monitoring-filters"
+    >
+      <UnnnicInputDatePicker
+        v-model="dateFilter"
+        class="filter-date"
+        size="sm"
+        position="right"
+      />
+      <MonitoringViewFilter />
+    </section>
   </header>
 </template>
 
@@ -50,6 +55,8 @@ import { format, subDays } from 'date-fns';
 import useBrainRoutes from '@/composables/useBrainRoutes';
 import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+
+import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
 
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
@@ -138,11 +145,18 @@ watch(
   width: 18.5 * $unnnic-font-size;
   margin-left: auto;
 }
-.filter-date {
-  :deep(.unnnic-form) {
-    width: 100%;
-    .unnnic-form-input {
+
+.monitoring-filters {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: $unnnic-spacing-xs;
+
+  .filter-date {
+    :deep(.unnnic-form) {
       width: 100%;
+      .unnnic-form-input {
+        width: 100%;
+      }
     }
   }
 }

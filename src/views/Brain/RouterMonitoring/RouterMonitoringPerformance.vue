@@ -113,6 +113,11 @@ watch(
     immediate: true,
   },
 );
+
+watch(
+  () => monitoringStore.messages.source,
+  () => getMessagesPerformance(),
+);
 </script>
 
 <style lang="scss" scoped>
