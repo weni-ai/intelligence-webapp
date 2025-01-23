@@ -6,6 +6,7 @@
         type="secondary"
         size="small"
         iconCenter="more_vert"
+        data-testid="view-filter-button"
       />
     </template>
 
@@ -16,12 +17,14 @@
         horizontal="right-right"
         vertical="top-bottom"
         class="view-filter__popover"
+        data-testid="popover"
       >
         <UnnnicIntelligenceText
           tag="p"
           family="secondary"
           size="body-md"
           color="neutral-cloudy"
+          data-testid="popover-title"
         >
           {{ $t('router.monitoring.filters.view.title') }}
         </UnnnicIntelligenceText>
@@ -36,6 +39,7 @@
               v-model="viewFilter"
               :value="option"
               size="md"
+              data-testid="radio-button"
             >
               {{ $t(`router.monitoring.filters.view.${option}`) }}
             </UnnnicRadio>
