@@ -35,7 +35,7 @@
             <UnnnicRadio
               v-model="viewFilter"
               :value="option"
-              size="sm"
+              size="md"
             >
               {{ $t(`router.monitoring.filters.view.${option}`) }}
             </UnnnicRadio>
