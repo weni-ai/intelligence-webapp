@@ -47,12 +47,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 import Popover from '@/views/Brain/Popover.vue';
 
+import { useMonitoringStore } from '@/store/Monitoring';
+
 const viewFilter = ref('channels');
 const viewOptions = ref(['channels', 'preview']);
+
+const monitoringStore = useMonitoringStore();
+
+function updateViewFilter() {
+  monitoringStore.updateMessagesSource(viewFilter.value);
+}
+
+watch(viewFilter, updateViewFilter);
 </script>
 
 <style lang="scss" scoped>

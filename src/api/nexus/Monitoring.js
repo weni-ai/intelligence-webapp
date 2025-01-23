@@ -11,7 +11,10 @@ export const Monitoring = {
       text,
       started_day,
       ended_day,
+      source,
     }) {
+      const treatedSource = source === 'channels' ? 'router' : source;
+
       const params = cleanParams({
         tag,
         text,
@@ -19,7 +22,9 @@ export const Monitoring = {
         ended_day,
         page_size: pageInterval,
         page,
+        source: treatedSource,
       });
+
       const {
         data: { results, count },
       } = await request.$http.get(`api/${projectUuid}/message_history/`, {
@@ -67,10 +72,13 @@ export const Monitoring = {
       return data;
     },
 
-    async performance({ projectUuid, started_day, ended_day }) {
+    async performance({ projectUuid, started_day, ended_day, source }) {
+      const treatedSource = source === 'channels' ? 'router' : source;
+
       const params = cleanParams({
         started_day,
         ended_day,
+        source: treatedSource,
       });
       const { data } = await request.$http.get(
         `api/${projectUuid}/tags-analytics/`,

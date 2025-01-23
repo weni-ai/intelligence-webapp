@@ -260,6 +260,10 @@ watch(inspectedAnswerIndex, (newIndex) => {
   highlightRow(newIndex);
 });
 
+watch(
+  () => monitoringStore.messages.source,
+  () => getNewMessages(),
+);
 watch(pagination, () => getReceivedMessages());
 
 watch(
