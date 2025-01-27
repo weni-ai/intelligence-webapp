@@ -160,7 +160,8 @@
         "my-agents": "My agents",
         "no_agent_found": "No agent found"
       },
-      "create_agent": "Create agent"
+      "create_agent": "Create agent",
+      "preview": "Preview"
     },
     "content": {
       "fields": {

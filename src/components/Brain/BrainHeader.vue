@@ -33,6 +33,15 @@
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
+    <UnnnicButton
+      v-else-if="route.name === 'router-agents-team'"
+      class="save-button"
+      type="primary"
+      iconLeft="play_arrow"
+      @click="handlePreview"
+    >
+      {{ $t('router.agents_team.preview') }}
+    </UnnnicButton>
     <section
       v-else-if="showDateFilter"
       class="monitoring-filters"
@@ -105,6 +114,11 @@ watch(
     immediate: true,
   },
 );
+
+const handlePreview = () => {
+  // TODO: Implement preview functionality
+  console.log('Preview clicked');
+};
 </script>
 
 <style lang="scss" scoped>
