@@ -45,7 +45,6 @@ const handleMessages = (newMessages) => {
 </script>
 
 <style lang="scss" scoped>
-$preview-drawer-padding: $unnnic-spacing-sm $unnnic-spacing-md;
 .preview-drawer {
   &:deep(.unnnic-drawer__container) .unnnic-drawer__content {
     padding: 0;
@@ -62,7 +61,7 @@ $preview-drawer-padding: $unnnic-spacing-sm $unnnic-spacing-md;
         $unnnic-color-neutral-soft;
 
       :deep(.quick-test) {
-        padding: $preview-drawer-padding;
+        padding: $unnnic-spacing-sm $unnnic-spacing-md;
         gap: 0;
 
         .messages {
@@ -76,7 +75,7 @@ $preview-drawer-padding: $unnnic-spacing-sm $unnnic-spacing-md;
     }
 
     .content__details {
-      padding: $preview-drawer-padding;
+      overflow: hidden;
     }
   }
 }

@@ -1,8 +1,10 @@
 <template>
   <section class="preview-details">
     <UnnnicTab
-      v-model="selectedTab"
+      class="preview-details__tabs"
+      :modelValue="selectedTab"
       :tabs="detailTabs"
+      @change="selectedTab = $event"
     >
       <template
         v-for="tab in detailTabs"
@@ -25,15 +27,7 @@
         v-else
         class="details__logs"
       >
-        <p
-          v-if="!messages.length"
-          class="details__logs__empty"
-        >
-          {{ $t('router.preview.no_logs_registered') }}
-        </p>
-        <template v-else>
-          <!-- TODO: Add logs content -->
-        </template>
+        <PreviewLogs />
       </section>
     </section>
   </section>
@@ -41,6 +35,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
 
 defineProps({
   messages: {
@@ -59,22 +54,13 @@ const detailTabs = ['visual_flow', 'logs'];
   flex-direction: column;
   height: 100%;
 
-  &__content {
-    flex: 1;
-    margin-top: $unnnic-spacing-md;
-    overflow: auto;
+  &__tabs {
+    padding: $unnnic-spacing-sm $unnnic-spacing-md 0;
   }
-}
 
-.details {
-  &__logs {
-    &__empty {
-      color: $unnnic-color-neutral-cloudy;
-      font-family: $unnnic-font-family-secondary;
-      font-size: $unnnic-font-size-body-gt;
-      line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-      font-weight: $unnnic-font-weight-regular;
-    }
+  &__content {
+    padding: 0 $unnnic-spacing-md;
+    overflow: auto;
   }
 }
 </style>
