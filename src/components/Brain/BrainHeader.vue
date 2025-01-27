@@ -55,6 +55,8 @@
       <MonitoringViewFilter />
     </section>
   </header>
+
+  <PreviewDrawer v-model="isPreviewOpen" />
 </template>
 
 <script setup>
@@ -66,6 +68,7 @@ import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
+import PreviewDrawer from './Preview/PreviewDrawer.vue';
 
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
@@ -77,6 +80,7 @@ const route = useRoute();
 const router = useRouter();
 
 const profile = useProfileStore();
+const isPreviewOpen = ref(false);
 
 const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
@@ -116,8 +120,7 @@ watch(
 );
 
 const handlePreview = () => {
-  // TODO: Implement preview functionality
-  console.log('Preview clicked');
+  isPreviewOpen.value = true;
 };
 </script>
 

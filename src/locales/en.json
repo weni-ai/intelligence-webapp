@@ -262,6 +262,10 @@
     "preview": {
       "title": "Agent preview",
       "active": "Agent Builder active",
+      "no_logs_registered": "No logs registered",
+      "visual_flow": "Visual flow",
+      "logs": "Logs",
+      "agents_preview": "Agents preview",
       "options": {
         "refresh": "Clear conversations",
         "qr_code": "View from mobile",
