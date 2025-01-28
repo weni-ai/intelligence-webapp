@@ -7,7 +7,7 @@
       v-if="!processedLogs.length"
       class="preview-logs__empty"
     >
-      No logs registered
+      {{ $t('router.preview.no_logs_registered') }}
     </p>
 
     <TransitionGroup
@@ -39,8 +39,7 @@
               class="step__see-full"
               @click="openModalLogFullDetails(log.summary, log.trace)"
             >
-              <!-- TODO: Translate button text -->
-              See full details
+              {{ $t('router.preview.see_full_details') }}
             </button>
           </li>
         </TransitionGroup>
@@ -75,34 +74,31 @@ const selectedLog = ref({
 const processedLogs = computed(() => {
   if (!agentsTeamStore.activeTeam.data) return [];
 
-  const traces = previewStore.collaboratorsTraces;
-  const activeTeam = agentsTeamStore.activeTeam.data?.agents;
-  const manager = agentsTeamStore.activeTeam.data?.manager;
+  const { collaboratorsTraces: traces } = previewStore;
+  const { agents: activeTeam, manager } = agentsTeamStore.activeTeam.data || {};
 
-  const logsByAgent = {};
-
-  traces.forEach((trace) => {
+  return traces.reduce((logsByAgent, trace) => {
     const agent = activeTeam.find(
       (agent) => agent.external_id === trace.trace.agentId,
     );
 
     const agentToLog = agent || manager;
-    if (agentToLog) {
-      if (!logsByAgent[agentToLog.external_id]) {
-        logsByAgent[agentToLog.external_id] = {
-          agent_name: agentToLog.name || 'Manager',
-          steps: [],
-          summary: trace.summary,
-          trace,
-        };
-      }
-      logsByAgent[agentToLog.external_id].steps.push(
-        trace.summary || 'Unknown',
-      );
-    }
-  });
+    if (!agentToLog) return logsByAgent;
 
-  return Object.values(logsByAgent);
+    const lastLog = logsByAgent.at(-1);
+    if (lastLog?.external_id !== agentToLog.external_id) {
+      logsByAgent.push({
+        external_id: agentToLog.external_id,
+        agent_name: agentToLog.name || 'Manager',
+        steps: [],
+        summary: trace.summary,
+        trace,
+      });
+    }
+
+    logsByAgent.at(-1)?.steps.push(trace.summary || 'Unknown');
+    return logsByAgent;
+  }, []);
 });
 
 const progressHeight = ref(0);
@@ -232,6 +228,9 @@ function updateProgressBarHeight(type = 'agent') {
         list-style: none;
 
         .steps__step {
+          &:first-letter {
+            text-transform: uppercase;
+          }
           color: $unnnic-color-neutral-cloudy;
           font-family: $unnnic-font-family-secondary;
           font-size: $unnnic-font-size-body-gt;

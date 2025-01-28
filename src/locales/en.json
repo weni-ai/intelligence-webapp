@@ -263,6 +263,7 @@
       "title": "Agent preview",
       "active": "Agent Builder active",
       "no_logs_registered": "No logs registered",
+      "see_full_details": "See full details",
       "visual_flow": "Visual flow",
       "logs": "Logs",
       "agents_preview": "Agents preview",
