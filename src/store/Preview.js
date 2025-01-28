@@ -55,6 +55,10 @@ export const usePreviewStore = defineStore('preview', () => {
     traces.value.push(update);
   }
 
+  function clearTraces() {
+    traces.value = [];
+  }
+
   function connectWS() {
     if (ws.value) return;
 
@@ -79,6 +83,7 @@ export const usePreviewStore = defineStore('preview', () => {
     ws,
     connectWS,
     disconnectWS,
+    clearTraces,
     agents,
     managerAgent,
     collaboratorsTraces,

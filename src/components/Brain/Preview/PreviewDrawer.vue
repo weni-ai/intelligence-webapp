@@ -25,7 +25,6 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { useStore } from 'vuex';
 
 import { usePreviewStore } from '@/store/Preview';
 
@@ -53,7 +52,10 @@ watch(
   () => props.modelValue,
   (isModalOpen) => {
     if (isModalOpen && !previewStore.ws) previewStore.connectWS();
-    if (!isModalOpen && previewStore.ws) previewStore.disconnectWS();
+    if (!isModalOpen) {
+      if (previewStore.ws) previewStore.disconnectWS();
+      previewStore.clearTraces();
+    }
   },
 );
 </script>
