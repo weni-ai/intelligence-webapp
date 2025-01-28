@@ -13,15 +13,28 @@
       icon="neurology"
       scheme="aux-purple"
     />
-    <div class="agent-card__content">
-      <h3 class="agent-card__title">{{ name }}</h3>
-      <p
+    <section class="agent-card__content">
+      <UnnnicIntelligenceText
+        tag="h3"
+        family="secondary"
+        class="agent-card__title"
+        size="body-gt"
+        color="neutral-darkest"
+        weight="bold"
+      >
+        {{ name }}
+      </UnnnicIntelligenceText>
+      <UnnnicIntelligenceText
+        tag="p"
+        family="secondary"
         class="agent-card__status"
         :class="{ 'agent-card__status--active': active }"
+        size="body-md"
+        color="weni-600"
       >
         {{ active ? currentTask : 'Standby' }}
-      </p>
-    </div>
+      </UnnnicIntelligenceText>
+    </section>
   </section>
 </template>
 
@@ -49,14 +62,21 @@ defineProps({
 
 <style lang="scss" scoped>
 .agent-card {
-  background-color: $unnnic-color-background-white;
-  border-radius: $unnnic-border-radius-md;
-  padding: $unnnic-spacing-sm;
   box-shadow: $unnnic-shadow-level-near;
+  border-radius: $unnnic-border-radius-md;
+  background-color: $unnnic-color-background-white;
+
+  padding: $unnnic-spacing-sm;
+
+  display: flex;
+  align-items: center;
+  gap: $unnnic-spacing-ant;
+
+  z-index: 1;
 
   &--standby {
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
     box-shadow: none;
+    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
 
     .agent-card__title {
       color: $unnnic-color-neutral-cleanest;
@@ -67,21 +87,14 @@ defineProps({
     }
   }
 
-  &__title {
-    font-size: $unnnic-font-size-body-gt;
-    color: $unnnic-color-neutral-darkest;
-    margin: 0;
-    line-height: calc($unnnic-font-size-body-gt + $unnnic-line-height-md);
+  &__content {
+    overflow: hidden;
   }
 
-  &__status {
-    font-size: $unnnic-font-size-body-md;
-    color: $unnnic-color-neutral-cloudy;
-    margin: 0;
-    line-height: calc($unnnic-font-size-body-md + $unnnic-line-height-small);
-    &--active {
-      color: $unnnic-color-weni-600;
-    }
+  .agent-card__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 </style>

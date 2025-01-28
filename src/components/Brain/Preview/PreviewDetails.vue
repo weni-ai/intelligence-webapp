@@ -62,7 +62,7 @@ const detailTabs = ['visual_flow', 'logs'];
 
   &__content {
     padding: 0 $unnnic-spacing-md;
-    overflow: auto;
+    overflow: hidden auto;
   }
 }
 </style>
