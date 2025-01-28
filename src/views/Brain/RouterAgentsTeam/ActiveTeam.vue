@@ -81,7 +81,9 @@ import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import AgentCard from '@/components/Brain/AgentsTeam/AgentCard.vue';
 
 const agentsTeamStore = useAgentsTeamStore();
-const activeTeam = computed(() => agentsTeamStore.activeTeam.data);
+const activeTeam = computed(
+  () => agentsTeamStore.activeTeam.data?.agents || [],
+);
 
 const isLoadingTeam = computed(
   () => agentsTeamStore.activeTeam.status === 'loading',

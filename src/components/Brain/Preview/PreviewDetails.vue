@@ -20,7 +20,7 @@
         v-if="selectedTab === 'visual_flow'"
         class="details__visual-flow"
       >
-        <!-- TODO: Add visual flow content -->
+        <PreviewVisualFlow />
       </section>
 
       <section
@@ -35,7 +35,9 @@
 
 <script setup>
 import { ref } from 'vue';
+
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
+import PreviewVisualFlow from './PreviewVisualFlow.vue';
 
 defineProps({
   messages: {

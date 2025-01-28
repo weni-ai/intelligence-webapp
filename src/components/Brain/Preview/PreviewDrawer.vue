@@ -24,7 +24,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+
+import WS from '@/websocket/setup';
+
+import { usePreviewStore } from '@/store/Preview';
+
 import Tests from '@/views/repository/content/Tests.vue';
 import PreviewDetails from './PreviewDetails.vue';
 
@@ -42,6 +48,26 @@ const messages = ref([]);
 const handleMessages = (newMessages) => {
   messages.value = newMessages;
 };
+
+const ws = ref(null);
+const store = useStore();
+const auth = computed(() => store.state.Auth);
+const previewStore = usePreviewStore();
+
+function connectMonitoringWS() {
+  if (previewStore.ws) return;
+
+  ws.value = new WS({
+    project: auth.value.connectProjectUuid,
+    token: auth.value.token.replace('Bearer ', ''),
+    endpoint: 'preview',
+  });
+  ws.value.connect();
+
+  previewStore.ws = ws;
+}
+
+onMounted(() => connectMonitoringWS());
 </script>
 
 <style lang="scss" scoped>

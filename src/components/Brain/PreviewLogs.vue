@@ -3,6 +3,13 @@
     ref="logList"
     class="preview-logs"
   >
+    <p
+      v-if="!processedLogs.length"
+      class="preview-logs__empty"
+    >
+      No logs registered
+    </p>
+
     <TransitionGroup
       class="preview-logs__logs"
       name="logs"
@@ -10,7 +17,7 @@
       @enter="updateProgressBarHeight('agent')"
     >
       <li
-        v-for="(log, logIndex) in logs"
+        v-for="(log, logIndex) in processedLogs"
         :key="logIndex"
         class="logs__log"
       >
@@ -28,11 +35,11 @@
             class="steps__step"
           >
             <p>{{ step }}</p>
-            <!-- TODO: Translate button text -->
             <button
               class="step__see-full"
-              @click="openModalLogFullDetails"
+              @click="openModalLogFullDetails(log.summary, log.trace)"
             >
+              <!-- TODO: Translate button text -->
               See full details
             </button>
           </li>
@@ -42,50 +49,76 @@
 
     <article class="preview-logs__progress-bar" />
 
-    <!-- TODO: Remove this temp buttons and their functions -->
-    <button @click="addAgent">Add Agent</button>
-    <button @click="addStep">Add Step</button>
+    <PreviewLogsDetailsModal
+      v-model="showDetailsModal"
+      :title="selectedLog.summary"
+      :trace="selectedLog.trace"
+    />
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, onMounted, nextTick, computed } from 'vue';
+import { usePreviewStore } from '@/store/Preview';
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import PreviewLogsDetailsModal from './Preview/PreviewLogsDetailsModal.vue';
 
-const logs = ref([
-  {
-    agent_name: 'Agata Batata',
-    steps: [
-      'Greeting',
-      'Order cancellation request',
-      'Forwarded to Order Analyst',
-      'Cancel Order skill activated',
-    ],
-  },
-  {
-    agent_name: 'Order Analyst',
-    steps: ['Cancel order skill activated'],
-  },
-]);
+const previewStore = usePreviewStore();
+const agentsTeamStore = useAgentsTeamStore();
+
+const showDetailsModal = ref(false);
+const selectedLog = ref({
+  summary: '',
+  trace: '',
+});
+
+const processedLogs = computed(() => {
+  if (!agentsTeamStore.activeTeam.data) return [];
+
+  const traces = previewStore.collaboratorsTraces;
+  const activeTeam = agentsTeamStore.activeTeam.data?.agents;
+  const manager = agentsTeamStore.activeTeam.data?.manager;
+
+  const logsByAgent = {};
+
+  traces.forEach((trace) => {
+    const agent = activeTeam.find(
+      (agent) => agent.external_id === trace.trace.agentId,
+    );
+
+    const agentToLog = agent || manager;
+    if (agentToLog) {
+      if (!logsByAgent[agentToLog.external_id]) {
+        logsByAgent[agentToLog.external_id] = {
+          agent_name: agentToLog.name || 'Manager',
+          steps: [],
+          summary: trace.summary,
+          trace,
+        };
+      }
+      logsByAgent[agentToLog.external_id].steps.push(
+        trace.summary || 'Unknown',
+      );
+    }
+  });
+
+  return Object.values(logsByAgent);
+});
 
 const progressHeight = ref(0);
 
 onMounted(() => {
   updateProgressBarHeight('mount');
+
+  if (!agentsTeamStore.activeTeam.data) {
+    agentsTeamStore.loadActiveTeam();
+  }
 });
 
-function openModalLogFullDetails() {
-  alert('TODO: Open modal log full details');
+function openModalLogFullDetails(summary, trace) {
+  selectedLog.value = { summary, trace };
+  showDetailsModal.value = true;
 }
-
-const addAgent = () => {
-  logs.value.push({
-    agent_name: `New Log ${logs.value.length + 1}`,
-    steps: ['New step'],
-  });
-};
-const addStep = () => {
-  logs.value.at(-1).steps.push('New step');
-};
 
 const logTranslateY = 24;
 
@@ -139,6 +172,16 @@ function updateProgressBarHeight(type = 'agent') {
   position: relative;
 
   margin: 0 auto;
+
+  .preview-logs__empty {
+    margin: 0;
+    padding: 0;
+
+    color: $unnnic-color-neutral-clean;
+    font-family: $unnnic-font-family-secondary;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+  }
 
   .preview-logs__logs {
     position: relative;
