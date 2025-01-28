@@ -1,8 +1,15 @@
 import { defineStore } from 'pinia';
-import { computed, reactive, ref } from 'vue';
+
+import WS from '@/websocket/setup';
+
+import { computed, ref } from 'vue';
+
+import globalStore from '.';
 
 export const usePreviewStore = defineStore('preview', () => {
-  const ws = reactive(null);
+  const auth = computed(() => globalStore.state.Auth);
+
+  const ws = ref(null);
   const traces = ref([]);
   const collaboratorsTraces = computed(() =>
     traces.value
@@ -48,8 +55,30 @@ export const usePreviewStore = defineStore('preview', () => {
     traces.value.push(update);
   }
 
+  function connectWS() {
+    if (ws.value) return;
+
+    const newWs = new WS({
+      project: auth.value.connectProjectUuid,
+      token: auth.value.token.replace('Bearer ', ''),
+      endpoint: 'preview',
+    });
+    newWs.connect();
+
+    ws.value = newWs;
+  }
+
+  function disconnectWS() {
+    if (!ws.value) return;
+
+    ws.value.disconnect();
+    ws.value = null;
+  }
+
   return {
     ws,
+    connectWS,
+    disconnectWS,
     agents,
     managerAgent,
     collaboratorsTraces,

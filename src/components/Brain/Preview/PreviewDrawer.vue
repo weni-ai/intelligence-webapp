@@ -24,17 +24,15 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 import { useStore } from 'vuex';
-
-import WS from '@/websocket/setup';
 
 import { usePreviewStore } from '@/store/Preview';
 
 import Tests from '@/views/repository/content/Tests.vue';
 import PreviewDetails from './PreviewDetails.vue';
 
-defineProps({
+const props = defineProps({
   modelValue: {
     type: Boolean,
     required: true,
@@ -49,25 +47,15 @@ const handleMessages = (newMessages) => {
   messages.value = newMessages;
 };
 
-const ws = ref(null);
-const store = useStore();
-const auth = computed(() => store.state.Auth);
 const previewStore = usePreviewStore();
 
-function connectMonitoringWS() {
-  if (previewStore.ws) return;
-
-  ws.value = new WS({
-    project: auth.value.connectProjectUuid,
-    token: auth.value.token.replace('Bearer ', ''),
-    endpoint: 'preview',
-  });
-  ws.value.connect();
-
-  previewStore.ws = ws;
-}
-
-onMounted(() => connectMonitoringWS());
+watch(
+  () => props.modelValue,
+  (isModalOpen) => {
+    if (isModalOpen && !previewStore.ws) previewStore.connectWS();
+    if (!isModalOpen && previewStore.ws) previewStore.disconnectWS();
+  },
+);
 </script>
 
 <style lang="scss" scoped>

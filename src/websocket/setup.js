@@ -35,6 +35,11 @@ export default class WebSocketSetup {
     }
   }
 
+  disconnect() {
+    this.clearPingInterval();
+    this.ws.ws.close();
+  }
+
   ping() {
     const isWebSocketOpen = this.ws.ws.readyState === this.ws.ws.OPEN;
     if (isWebSocketOpen) {
