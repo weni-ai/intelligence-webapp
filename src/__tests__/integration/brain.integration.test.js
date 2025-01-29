@@ -311,6 +311,9 @@ describe('Brain integration', () => {
           RouterProfile,
           Tests,
         },
+        stubs: {
+          UnnnicSelectSmart: true,
+        },
       },
     });
 
