@@ -7,7 +7,7 @@
       ref="managerRef"
       name="Manager"
       :active="true"
-      currentTask="Coordinating team tasks"
+      :currentTask="$t('router.preview.manager_task')"
       type="manager"
     />
 
