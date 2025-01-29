@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
 
-import WS from '@/websocket/setup';
-
 import { computed, ref } from 'vue';
 
+import WS from '@/websocket/setup';
+
+import { useAgentsTeamStore } from './AgentsTeam';
 import globalStore from '.';
 
 export const usePreviewStore = defineStore('preview', () => {
@@ -16,40 +17,19 @@ export const usePreviewStore = defineStore('preview', () => {
       .filter((trace) => trace.type === 'trace_update')
       .map((trace) => trace.trace),
   );
+  const activeAgent = computed(() => {
+    const lastTrace = traces.value.at(-1)?.trace;
+    const agent = useAgentsTeamStore().activeTeam.data?.agents?.find(
+      (agent) => agent.external_id === lastTrace?.trace?.agentId,
+    );
 
-  const managerAgent = ref({
-    id: 1,
-    name: 'Manager',
-    active: true,
-    currentTask: 'Coordinating team tasks',
+    return agent
+      ? {
+          ...agent,
+          currentTask: lastTrace?.summary,
+        }
+      : null;
   });
-
-  const agents = ref([
-    {
-      id: 2,
-      name: 'Order Analyst',
-      active: true,
-      currentTask: 'Working on order cancellation',
-    },
-    {
-      id: 3,
-      name: 'Credit card agent',
-      active: false,
-      currentTask: '',
-    },
-    {
-      id: 4,
-      name: 'Tracking agent',
-      active: false,
-      currentTask: '',
-    },
-    {
-      id: 5,
-      name: 'Product Concierge',
-      active: false,
-      currentTask: '',
-    },
-  ]);
 
   function addTrace(update) {
     traces.value.push(update);
@@ -84,8 +64,7 @@ export const usePreviewStore = defineStore('preview', () => {
     connectWS,
     disconnectWS,
     clearTraces,
-    agents,
-    managerAgent,
+    activeAgent,
     collaboratorsTraces,
     traces,
     addTrace,

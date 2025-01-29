@@ -1,22 +1,32 @@
 <template>
-  <section class="visual-flow">
+  <section
+    ref="visualFlowRef"
+    class="visual-flow"
+  >
     <AgentCard
-      v-if="managerAgent"
-      :name="managerAgent.name"
-      :active="managerAgent.active"
-      :currentTask="managerAgent.currentTask"
+      ref="managerRef"
+      name="Manager"
+      :active="true"
+      currentTask="Coordinating team tasks"
       type="manager"
     />
 
-    <!-- <span class="visual-flow__line" /> -->
+    <BranchLines
+      class="visual-flow__line"
+      :positions="branchPositions"
+      width="25"
+      :height="visualFlowRef?.$el.getBoundingClientRect().height"
+      :startY="managerRef?.$el.getBoundingClientRect().height"
+    />
 
     <section class="visual-flow__team">
       <AgentCard
-        v-for="agent in teamAgents"
+        v-for="(agent, index) in teamAgents"
         :key="agent.id"
+        :ref="(el) => (agentRefs[index] = el)"
         :name="agent.name"
-        :active="agent.active"
-        :currentTask="agent.currentTask"
+        :active="agent.external_id === activeAgent?.external_id"
+        :currentTask="agent.description"
         type="agent"
       />
     </section>
@@ -24,16 +34,48 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { usePreviewStore } from '@/store/Preview';
-import AgentCard from './AgentCard.vue';
+import { computed, ref } from 'vue';
+
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-const previewStore = usePreviewStore();
-const agentsTeamStore = useAgentsTeamStore();
+import AgentCard from './AgentCard.vue';
+import { usePreviewStore } from '@/store/Preview';
+import BranchLines from './BranchLines.vue';
 
-const managerAgent = computed(() => previewStore.managerAgent);
+const agentsTeamStore = useAgentsTeamStore();
+const previewStore = usePreviewStore();
+
 const teamAgents = computed(() => agentsTeamStore.activeTeam.data?.agents);
+const activeAgent = computed(() => previewStore.activeAgent);
+
+const managerRef = ref(null);
+const agentRefs = ref([]);
+
+const branchPositions = computed(() => {
+  if (!managerRef.value || agentRefs.value.length === 0) return [];
+
+  const positions = [];
+  const managerEl = managerRef.value.$el;
+  const managerRect = managerEl.getBoundingClientRect();
+
+  agentRefs.value.forEach((agentRef, index) => {
+    if (!agentRef) return;
+
+    const agentEl = agentRef.$el;
+    const agentRect = agentEl.getBoundingClientRect();
+
+    const startY = 0;
+    const endY = agentRect.top - managerRect.bottom + agentRect.height / 2;
+
+    // Add two positions for each agent (left and right branches)
+    positions.push(
+      { startY, endY, isLeft: index % 2 === 1 },
+      { startY, endY, isLeft: index % 2 === 0 },
+    );
+  });
+
+  return positions;
+});
 </script>
 
 <style lang="scss" scoped>
@@ -43,26 +85,6 @@ const teamAgents = computed(() => agentsTeamStore.activeTeam.data?.agents);
   position: relative;
 
   gap: $unnnic-spacing-md;
-
-  // &__line {
-  //   position: absolute;
-  //   width: calc(50% - 2px);
-  //   height: 25%;
-  //   background-color: $unnnic-color-neutral-white;
-  //   border-radius: 6px;
-  //   top: 25%;
-
-  //   &::after {
-  //     border-radius: 8px;
-  //     content: '';
-  //     background-image: linear-gradient(to bottom, #086766, #4dfbea);
-  //     padding: 2px;
-  //     width: 100%;
-  //     height: 100%;
-  //     position: absolute;
-  //     z-index: -1;
-  //   }
-  // }
 
   &__team {
     display: grid;

@@ -65,12 +65,15 @@ export const AgentsTeam = {
         manager: {
           external_id: manager.external_id,
         },
-        agents: agents.map(({ uuid, name, skills, external_id }) => ({
-          uuid,
-          name,
-          skills,
-          external_id,
-        })),
+        agents: agents.map(
+          ({ uuid, name, skills, external_id, description }) => ({
+            uuid,
+            name,
+            skills,
+            external_id,
+            description,
+          }),
+        ),
       },
     };
   },

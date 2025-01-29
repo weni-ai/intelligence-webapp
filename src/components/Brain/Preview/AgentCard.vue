@@ -4,6 +4,7 @@
     :class="{
       'agent-card--active': active,
       'agent-card--standby': !active,
+      'agent-card--pulse': active && type === 'agent',
     }"
   >
     <UnnnicAvatarIcon
@@ -28,11 +29,13 @@
         tag="p"
         family="secondary"
         class="agent-card__status"
-        :class="{ 'agent-card__status--active': active }"
+        :class="{
+          'agent-card__status--active': active,
+        }"
         size="body-md"
         color="weni-600"
       >
-        {{ active ? currentTask : 'Standby' }}
+        {{ currentTask || 'Standby' }}
       </UnnnicIntelligenceText>
     </section>
   </section>
@@ -65,6 +68,7 @@ defineProps({
   box-shadow: $unnnic-shadow-level-near;
   border-radius: $unnnic-border-radius-md;
   background-color: $unnnic-color-background-white;
+  border: $unnnic-border-width-thinner solid transparent;
 
   padding: $unnnic-spacing-sm;
 
@@ -74,9 +78,11 @@ defineProps({
 
   z-index: 1;
 
+  transition: all 0.3s ease;
+
   &--standby {
     box-shadow: none;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
+    border-color: $unnnic-color-neutral-soft;
 
     .agent-card__title {
       color: $unnnic-color-neutral-cleanest;
