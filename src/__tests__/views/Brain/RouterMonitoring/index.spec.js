@@ -69,6 +69,7 @@ describe('RouterMonitoring view', () => {
 
   it('initializes WebSocket with correct parameters on mount', () => {
     expect(WSMock).toHaveBeenCalledWith({
+      endpoint: 'monitoring',
       project: '123-456',
       token: 'test-token',
     });
