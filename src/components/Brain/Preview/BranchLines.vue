@@ -74,7 +74,7 @@ const generatePath = (position) => {
   const centerX = 13;
   const startY = position.startY || 0;
   const endY = position.endY || 142;
-  const isLeft = position.isLeft || true;
+  const isLeft = position.isLeft || false;
   const radius = position.radius || 8;
   const targetX = isLeft ? 0 : 25;
   const controlX = isLeft ? centerX - radius : centerX + radius;
