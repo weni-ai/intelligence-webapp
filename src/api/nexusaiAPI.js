@@ -4,6 +4,8 @@ import { Actions } from './nexus/Actions';
 import { Monitoring } from './nexus/Monitoring';
 import { AgentsTeam } from './nexus/AgentsTeam';
 
+import i18n from '@/utils/plugins/i18n';
+
 export default {
   question: {
     create({ contentBaseUuid, text, language }) {
@@ -205,6 +207,7 @@ export default {
           text,
           attachments,
           contact_urn,
+          language: i18n.global.locale,
         });
       },
       uploadFile({ projectUuid, file }) {
