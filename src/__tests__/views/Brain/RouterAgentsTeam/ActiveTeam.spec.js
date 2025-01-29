@@ -57,7 +57,7 @@ describe('ActiveTeam component', () => {
 
   it('renders the loading state', async () => {
     agentsTeamStore.activeTeam.status = 'loading';
-    agentsTeamStore.activeTeam.data = [];
+    agentsTeamStore.activeTeam.data.agents = [];
 
     await nextTick();
 
@@ -76,7 +76,7 @@ describe('ActiveTeam component', () => {
         skills: [{ name: 'Skill 1', icon: '🛒' }],
       },
     ];
-    agentsTeamStore.activeTeam.data = agents;
+    agentsTeamStore.activeTeam.data.agents = agents;
     agentsTeamStore.activeTeam.status = 'complete';
 
     await nextTick();
@@ -87,7 +87,7 @@ describe('ActiveTeam component', () => {
 
   it('renders the empty state', async () => {
     agentsTeamStore.activeTeam.status = 'complete';
-    agentsTeamStore.activeTeam.data = [];
+    agentsTeamStore.activeTeam.data.agents = [];
 
     await nextTick();
 
