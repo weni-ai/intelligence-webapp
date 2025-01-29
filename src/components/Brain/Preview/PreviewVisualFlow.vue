@@ -18,7 +18,7 @@
       :height="visualFlowRef?.$el.getBoundingClientRect().height"
       :startY="managerRef?.$el.getBoundingClientRect().height"
       :coloredLineIndex="
-        teamAgents.findIndex(
+        teamAgents?.findIndex(
           (agent) => agent.external_id === activeAgent?.external_id,
         )
       "

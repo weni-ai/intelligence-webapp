@@ -38,6 +38,7 @@
       class="save-button"
       type="primary"
       iconLeft="play_arrow"
+      iconsFilled
       @click="handlePreview"
     >
       {{ $t('router.agents_team.preview') }}

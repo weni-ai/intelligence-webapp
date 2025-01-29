@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, computed } from 'vue';
+import { ref, onMounted, nextTick, computed, watch } from 'vue';
 import { usePreviewStore } from '@/store/Preview';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import PreviewLogsDetailsModal from './Preview/PreviewLogsDetailsModal.vue';
@@ -145,6 +145,15 @@ function updateProgressBarHeight(type = 'agent') {
     }
   });
 }
+
+watch(
+  () => previewStore.collaboratorsTraces,
+  (newTraces) => {
+    if (newTraces.length === 0) {
+      progressHeight.value = 0;
+    }
+  },
+);
 </script>
 
 <style scoped lang="scss">

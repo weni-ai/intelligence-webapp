@@ -3,13 +3,30 @@
     :modelValue="modelValue"
     :title="$t('router.preview.agents_preview')"
     class="preview-drawer"
-    size="lg"
+    size="xl"
     @close="$emit('update:modelValue', false)"
   >
+    <template #title>
+      <section class="preview-drawer__header">
+        <UnnnicIntelligenceText
+          tag="h2"
+          size="title-sm"
+          weight="bold"
+          color="neutral-darkest"
+        >
+          {{ $t('router.preview.agents_preview') }}
+        </UnnnicIntelligenceText>
+        <ContentItemActions
+          :actions="previewHeaderActions"
+          minWidth="175px"
+        />
+      </section>
+    </template>
     <template #content>
       <section class="preview-drawer__content">
         <section class="content__preview">
           <Tests
+            :key="refreshPreviewValue"
             usePreview
             @messages="handleMessages"
           />
@@ -30,6 +47,8 @@ import { usePreviewStore } from '@/store/Preview';
 
 import Tests from '@/views/repository/content/Tests.vue';
 import PreviewDetails from './PreviewDetails.vue';
+import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
+import i18n from '@/utils/plugins/i18n';
 
 const props = defineProps({
   modelValue: {
@@ -58,12 +77,34 @@ watch(
     }
   },
 );
+
+const previewHeaderActions = [
+  {
+    scheme: 'neutral-dark',
+    icon: 'refresh',
+    text: i18n.global.t('router.preview.options.refresh'),
+    onClick: refreshPreview,
+  },
+];
+
+const refreshPreviewValue = ref(0);
+
+function refreshPreview() {
+  refreshPreviewValue.value += 1;
+  previewStore.clearTraces();
+}
 </script>
 
 <style lang="scss" scoped>
 .preview-drawer {
   &:deep(.unnnic-drawer__container) .unnnic-drawer__content {
     padding: 0;
+  }
+
+  &__header {
+    display: flex;
+    gap: $unnnic-spacing-xs;
+    align-items: center;
   }
 
   &__content {
