@@ -5,18 +5,19 @@ import listeners from './listeners';
 export default class WebSocketSetup {
   THIRTY_SECONDS = 30000;
 
-  constructor({ project, token }) {
+  constructor({ project, token, endpoint }) {
     this.project = project;
     this.token = token;
+    this.endpoint = endpoint;
     this.pingIntervalId = null;
-    this.url = `${runtimeVariables.get('NEXUS_WEBSOCKET_BASE_URL')}/socket-server/project/${this.project}/?Token=${this.token}`;
+    this.url = `${runtimeVariables.get('NEXUS_WEBSOCKET_BASE_URL')}/${endpoint}/${this.project}/?Token=${this.token}`;
   }
 
   connect() {
     const ws = new WS(this.url);
 
     this.ws = ws;
-    listeners({ ws });
+    listeners({ ws, type: this.endpoint });
     this.setupPingInterval();
   }
 
@@ -32,6 +33,11 @@ export default class WebSocketSetup {
     if (this.pingIntervalId !== null) {
       clearInterval(this.pingIntervalId);
     }
+  }
+
+  disconnect() {
+    this.clearPingInterval();
+    this.ws.ws.close();
   }
 
   ping() {

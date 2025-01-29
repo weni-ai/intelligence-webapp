@@ -58,12 +58,23 @@ export const AgentsTeam = {
       `api/agents/teams/${connectProjectUuid.value}`,
     );
 
+    const { manager, agents } = data;
+
     return {
-      data: data.map(({ uuid, name, skills }) => ({
-        uuid,
-        name,
-        skills,
-      })),
+      data: {
+        manager: {
+          external_id: manager.external_id,
+        },
+        agents: agents.map(
+          ({ uuid, name, skills, external_id, description }) => ({
+            uuid,
+            name,
+            skills,
+            external_id,
+            description,
+          }),
+        ),
+      },
     };
   },
 

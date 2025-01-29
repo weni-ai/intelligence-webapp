@@ -160,7 +160,8 @@
         "my-agents": "Mis agentes",
         "no_agent_found": "Ningún agente encontrado"
       },
-      "create_agent": "Crear agente"
+      "create_agent": "Crear agente",
+      "preview": "Vista previa"
     },
     "content": {
       "fields": {
@@ -261,6 +262,12 @@
     "preview": {
       "title": "Vista previa del agente",
       "active": "Agent Builder activo",
+      "no_logs_registered": "No hay registros de logs",
+      "see_full_details": "Ver detalles",
+      "manager_task": "Coordinando tareas del equipo",
+      "visual_flow": "Flujo visual",
+      "logs": "Logs",
+      "agents_preview": "Vista previa de agentes",
       "options": {
         "refresh": "Borrar conversaciones",
         "qr_code": "Ver desde móvil",
