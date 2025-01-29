@@ -123,6 +123,9 @@ function refreshPreview() {
 
         .messages {
           padding: 0;
+
+          margin-right: -$unnnic-spacing-ant;
+          padding-right: $unnnic-spacing-ant;
         }
 
         .write-message {
