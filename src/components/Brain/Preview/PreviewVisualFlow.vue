@@ -17,6 +17,11 @@
       width="25"
       :height="visualFlowRef?.$el.getBoundingClientRect().height"
       :startY="managerRef?.$el.getBoundingClientRect().height"
+      :coloredLineIndex="
+        teamAgents.findIndex(
+          (agent) => agent.external_id === activeAgent?.external_id,
+        )
+      "
     />
 
     <section class="visual-flow__team">
@@ -67,11 +72,7 @@ const branchPositions = computed(() => {
     const startY = 0;
     const endY = agentRect.top - managerRect.bottom + agentRect.height / 2;
 
-    // Add two positions for each agent (left and right branches)
-    positions.push(
-      { startY, endY, isLeft: index % 2 === 1 },
-      { startY, endY, isLeft: index % 2 === 0 },
-    );
+    positions.push({ startY, endY, isLeft: index % 2 === 0 });
   });
 
   return positions;
