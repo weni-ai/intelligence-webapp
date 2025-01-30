@@ -76,6 +76,8 @@ defineProps({
   align-items: center;
   gap: $unnnic-spacing-ant;
 
+  height: fit-content;
+
   z-index: 1;
 
   transition: all 0.3s ease;

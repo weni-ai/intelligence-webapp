@@ -30,8 +30,10 @@
         :key="agent.id"
         :ref="(el) => (agentRefs[index] = el)"
         :name="agent.name"
-        :active="agent.external_id === activeAgent?.external_id"
-        :currentTask="agent.description"
+        :active="isActiveAgent(agent)"
+        :currentTask="
+          isActiveAgent(agent) ? activeAgent?.currentTask : agent.description
+        "
         type="agent"
       />
     </section>
@@ -77,6 +79,10 @@ const branchPositions = computed(() => {
 
   return positions;
 });
+
+function isActiveAgent(agent) {
+  return agent.external_id === activeAgent.value?.external_id;
+}
 </script>
 
 <style lang="scss" scoped>
