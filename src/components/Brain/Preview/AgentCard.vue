@@ -4,7 +4,7 @@
     :class="{
       'agent-card--active': active,
       'agent-card--standby': !active,
-      'agent-card--pulse': active && type === 'agent',
+      'agent-card--animated': active && type === 'agent',
     }"
   >
     <UnnnicAvatarIcon
@@ -79,6 +79,13 @@ defineProps({
   z-index: 1;
 
   transition: all 0.3s ease;
+
+  transform-origin: center;
+  transform-box: fill-box;
+
+  &--animated {
+    transform: scale(1.02);
+  }
 
   &--standby {
     box-shadow: none;

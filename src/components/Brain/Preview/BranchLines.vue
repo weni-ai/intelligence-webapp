@@ -9,16 +9,34 @@
     <defs>
       <linearGradient
         id="branchGradient"
-        x1="19"
-        y1="0"
-        x2="19"
-        y2="150"
+        x1="0"
+        x2="25"
+        :y1="0"
+        :y2="
+          (props.positions[treatedColoredLineIndex]?.endY || 0) -
+          coloredLineOffset
+        "
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#086766" />
+        <stop
+          offset="0"
+          stop-color="#086766"
+        />
         <stop
           offset="1"
           stop-color="#4DFBEA"
+        />
+        <stop
+          offset="2"
+          stop-color="#4DFBEA"
+        />
+        <animateTransform
+          attributeName="gradientTransform"
+          type="rotate"
+          from="0 360"
+          to="360 0"
+          dur="10s"
+          repeatCount="indefinite"
         />
       </linearGradient>
     </defs>
@@ -32,10 +50,17 @@
       stroke-width="1"
       stroke-linejoin="round"
     />
-    <!-- Colored line rendered last -->
+
+    <!-- Colored line -->
     <path
       v-if="coloredPath"
       :d="coloredPath.d"
+      :style="{
+        strokeDasharray:
+          props.positions[treatedColoredLineIndex].endY + 25 + 'px',
+        strokeDashoffset: coloredLineOffset + 'px',
+      }"
+      class="branch-lines__colored"
       stroke="url(#branchGradient)"
       stroke-width="3"
       stroke-linejoin="round"
@@ -44,7 +69,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onUnmounted, ref, watch } from 'vue';
 
 const props = defineProps({
   positions: {
@@ -70,7 +95,7 @@ const props = defineProps({
   },
 });
 
-const generatePath = (position) => {
+function generatePath(position) {
   const centerX = 13;
   const startY = position.startY || 0;
   const endY = position.endY || 142;
@@ -82,24 +107,167 @@ const generatePath = (position) => {
   return {
     d: `M${centerX} ${startY}V${endY}C${centerX} ${endY + radius}, ${controlX} ${endY + radius}, ${targetX} ${endY + radius}H${targetX}`,
   };
-};
+}
 
-const regularPaths = computed(() => {
-  return props.positions
-    .map((position, index) => {
-      if (index === props.coloredLineIndex) return null;
-      return generatePath(position);
-    })
-    .filter(Boolean);
-});
+const regularPaths = computed(() =>
+  props.positions.map((position) => generatePath(position)).filter(Boolean),
+);
 
 const coloredPath = computed(() => {
   if (
-    props.coloredLineIndex < 0 ||
-    props.coloredLineIndex >= props.positions.length
-  )
+    treatedColoredLineIndex.value < 0 ||
+    treatedColoredLineIndex.value >= props.positions.length
+  ) {
     return null;
-  return generatePath(props.positions[props.coloredLineIndex]);
+  }
+
+  return generatePath(props.positions[treatedColoredLineIndex.value]);
+});
+
+const treatedColoredLineIndex = ref(-1);
+const interval = ref(null);
+const offsetMax = computed(() => {
+  return props.positions[props.coloredLineIndex]?.endY + 25 || 0;
+});
+const coloredLineOffset = ref(0);
+const isAnimating = ref(false);
+
+function enterColoredLineAnimation() {
+  return new Promise((resolve) => {
+    isAnimating.value = true;
+    if (interval.value) clearInterval(interval.value);
+
+    if (coloredLineOffset.value <= 0) {
+      isAnimating.value = false;
+      resolve();
+      return;
+    }
+
+    interval.value = setInterval(() => {
+      if (coloredLineOffset.value <= 0) {
+        clearInterval(interval.value);
+        isAnimating.value = false;
+        resolve();
+      } else {
+        coloredLineOffset.value -= 1;
+      }
+    }, 1);
+  });
+}
+
+function leaveColoredLineAnimation(oldVal) {
+  return new Promise((resolve) => {
+    isAnimating.value = true;
+    if (interval.value) clearInterval(interval.value);
+
+    interval.value = setInterval(() => {
+      if (coloredLineOffset.value !== props.positions[oldVal]?.endY + 25) {
+        coloredLineOffset.value += 1;
+      } else {
+        clearInterval(interval.value);
+        isAnimating.value = false;
+        resolve();
+      }
+    }, 1);
+  });
+}
+
+function changeColoredLineAnimation(newColoredLineIndex, oldColoredLineIndex) {
+  isAnimating.value = true;
+  if (interval.value) clearInterval(interval.value);
+
+  const initialOffset = coloredLineOffset.value;
+  const newEndY = props.positions[newColoredLineIndex]?.endY;
+  const oldEndY = props.positions[oldColoredLineIndex]?.endY;
+
+  const targetOffset = (() => {
+    if (newColoredLineIndex > oldColoredLineIndex || newEndY === oldEndY) {
+      return Math.round(initialOffset + 25);
+    }
+
+    if (newEndY < oldEndY) {
+      return Math.round(initialOffset + (oldEndY - newEndY) + 25);
+    }
+
+    return Math.round(initialOffset + (oldEndY - newEndY));
+  })();
+
+  function upAnimation() {
+    return new Promise((resolve) => {
+      const upInterval = setInterval(() => {
+        if (coloredLineOffset.value < targetOffset) {
+          coloredLineOffset.value += 1;
+        } else {
+          clearInterval(upInterval);
+          treatedColoredLineIndex.value = props.coloredLineIndex;
+
+          resolve();
+        }
+      }, 1);
+    });
+  }
+
+  function downAnimation() {
+    return new Promise((resolve) => {
+      const downInterval = setInterval(() => {
+        if (
+          coloredLineOffset.value !== offsetMax.value &&
+          coloredLineOffset.value > 0
+        ) {
+          coloredLineOffset.value -= 1;
+        } else {
+          clearInterval(downInterval);
+          resolve();
+        }
+      }, 1);
+    });
+  }
+
+  return new Promise((resolve) => {
+    upAnimation().then(() => {
+      if (oldEndY < newEndY) {
+        coloredLineOffset.value = 25 + newEndY - oldEndY;
+      }
+
+      if (newEndY < oldEndY) {
+        coloredLineOffset.value = 25;
+      }
+
+      downAnimation().then(() => {
+        isAnimating.value = false;
+        resolve();
+      });
+    });
+  });
+}
+
+async function animateColoredLine(newVal, oldVal) {
+  if (oldVal > -1 && newVal > -1) {
+    await changeColoredLineAnimation(newVal, oldVal);
+  } else if (newVal === -1) {
+    await leaveColoredLineAnimation(oldVal);
+    treatedColoredLineIndex.value = -1;
+  } else {
+    treatedColoredLineIndex.value = props.coloredLineIndex;
+    await enterColoredLineAnimation();
+  }
+}
+
+watch(
+  () => props.coloredLineIndex,
+  (newVal, oldVal) => {
+    if (oldVal === -1) {
+      coloredLineOffset.value = offsetMax.value;
+    }
+
+    if (!isAnimating.value) {
+      animateColoredLine(newVal, oldVal);
+    }
+  },
+);
+
+onUnmounted(() => {
+  clearInterval(interval.value);
 });
 </script>
 
@@ -111,5 +279,10 @@ const coloredPath = computed(() => {
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 0;
+
+  &__colored {
+    stroke-dasharray: 102px;
+    stroke-dashoffset: v-bind('coloredLineOffset + "px"');
+  }
 }
 </style>
