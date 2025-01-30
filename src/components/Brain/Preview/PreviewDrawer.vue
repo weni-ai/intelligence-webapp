@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import { usePreviewStore } from '@/store/Preview';
 
@@ -79,14 +79,14 @@ watch(
   },
 );
 
-const previewHeaderActions = [
+const previewHeaderActions = computed(() => [
   {
     scheme: 'neutral-dark',
     icon: 'refresh',
     text: i18n.global.t('router.preview.options.refresh'),
     onClick: refreshPreview,
   },
-];
+]);
 
 const refreshPreviewValue = ref(0);
 
