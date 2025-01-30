@@ -10,6 +10,7 @@
       <section class="preview-drawer__header">
         <UnnnicIntelligenceText
           tag="h2"
+          family="secondary"
           size="title-sm"
           weight="bold"
           color="neutral-darkest"
@@ -130,10 +131,6 @@ function refreshPreview() {
 
         .write-message {
           padding: 0;
-        }
-
-        .message-input__action {
-          display: none;
         }
 
         .message-input {
