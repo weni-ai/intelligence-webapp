@@ -5,6 +5,7 @@
       data-test="message-input-left-button"
     >
       <ContentItemActions
+        v-if="!isAgentsTeamEnabled"
         data-test="content-item-actions"
         triggerIcon="add"
         triggerSize="md"
@@ -28,7 +29,10 @@
       :value="typeof modelValue === 'string' ? modelValue : ''"
       :placeholder="placeholder"
       type="text"
-      class="message-input"
+      :class="[
+        'message-input',
+        { 'message-input--without-actions': isAgentsTeamEnabled },
+      ]"
       @input="updateModelValue($event.target.value)"
       @keypress.enter="emitSend"
     />
@@ -58,6 +62,7 @@
 <script setup>
 import { computed, nextTick, ref, useTemplateRef } from 'vue';
 import { useStore } from 'vuex';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
 
@@ -70,6 +75,8 @@ const props = defineProps({
     default: '',
   },
 });
+
+const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
 const modelValue = defineModel('modelValue', {
   type: [String, File],
@@ -167,7 +174,8 @@ const audioValue = computed(() =>
 );
 const rightButtonType = computed(() =>
   isRecordingAudio.value ||
-  (modelValue.value && typeof modelValue.value === 'string')
+  (modelValue.value && typeof modelValue.value === 'string') ||
+  isAgentsTeamEnabled
     ? 'send'
     : 'mic',
 );
@@ -231,6 +239,10 @@ function emitSend() {
 
   border-radius: $unnnic-border-radius-md;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
+
+  &--without-actions {
+    padding: $unnnic-spacing-sm;
+  }
 
   &::placeholder {
     color: $unnnic-color-neutral-clean;

@@ -132,10 +132,6 @@ function refreshPreview() {
           padding: 0;
         }
 
-        .message-input__action {
-          display: none;
-        }
-
         .message-input {
           padding: $unnnic-spacing-sm;
         }
