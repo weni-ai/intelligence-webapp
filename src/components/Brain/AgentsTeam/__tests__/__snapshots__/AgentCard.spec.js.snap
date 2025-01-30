@@ -90,8 +90,8 @@ exports[`AgentCard.vue > renders correctly 1`] = `
   <button
     class="agent-card__button unnnic-button unnnic-button--size-small unnnic-button--primary agent-card__button"
     data-testid="assign-button"
+    data-v-27a31b8d=""
     data-v-eb2aecd0=""
-    data-v-ed84dbab=""
   >
     <!---->
     <!---->
@@ -99,7 +99,7 @@ exports[`AgentCard.vue > renders correctly 1`] = `
     <span
       class="unnnic-button__label"
       data-testid="button-label"
-      data-v-ed84dbab=""
+      data-v-27a31b8d=""
     >
       
       
