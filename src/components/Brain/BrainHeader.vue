@@ -33,6 +33,15 @@
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
+    <UnnnicButton
+      v-else-if="route.name === 'router-agents-team'"
+      class="save-button"
+      type="primary"
+      iconLeft="play_arrow"
+      @click="handlePreview"
+    >
+      {{ $t('router.agents_team.preview') }}
+    </UnnnicButton>
     <section
       v-else-if="showDateFilter"
       class="monitoring-filters"
@@ -46,6 +55,8 @@
       <MonitoringViewFilter />
     </section>
   </header>
+
+  <PreviewDrawer v-model="isPreviewOpen" />
 </template>
 
 <script setup>
@@ -57,6 +68,7 @@ import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
+import PreviewDrawer from './Preview/PreviewDrawer.vue';
 
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
@@ -68,6 +80,7 @@ const route = useRoute();
 const router = useRouter();
 
 const profile = useProfileStore();
+const isPreviewOpen = ref(false);
 
 const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
@@ -105,6 +118,10 @@ watch(
     immediate: true,
   },
 );
+
+const handlePreview = () => {
+  isPreviewOpen.value = true;
+};
 </script>
 
 <style lang="scss" scoped>

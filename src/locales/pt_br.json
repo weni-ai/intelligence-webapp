@@ -160,7 +160,8 @@
         "my-agents": "Meus agentes",
         "no_agent_found": "Nenhum agente encontrado"
       },
-      "create_agent": "Crie um agente"
+      "create_agent": "Crie um agente",
+      "preview": "Preview"
     },
     "content": {
       "fields": {
@@ -261,6 +262,10 @@
     "preview": {
       "title": "Preview do agente",
       "active": "Agent Builder ativo",
+      "no_logs_registered": "Nenhum registro de logs",
+      "visual_flow": "Fluxo visual",
+      "logs": "Logs",
+      "agents_preview": "Preview dos agentes",
       "options": {
         "refresh": "Limpar conversas",
         "qr_code": "Visualizar pelo celular",
