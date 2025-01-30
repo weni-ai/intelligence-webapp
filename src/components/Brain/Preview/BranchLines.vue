@@ -69,7 +69,7 @@
 </template>
 
 <script setup>
-import { computed, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const props = defineProps({
   positions: {
@@ -265,6 +265,10 @@ watch(
     }
   },
 );
+
+onMounted(() => {
+  treatedColoredLineIndex.value = props.coloredLineIndex;
+});
 
 onUnmounted(() => {
   clearInterval(interval.value);
