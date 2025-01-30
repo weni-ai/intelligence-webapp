@@ -62,7 +62,7 @@ describe('Socket', () => {
 
       const mockEvent = {
         data: JSON.stringify({
-          type: 'other-type',
+          type: 'pong',
           message: JSON.stringify({ key: 'value' }),
         }),
       };
@@ -95,7 +95,7 @@ describe('Socket', () => {
 
       const mockEvent = {
         data: JSON.stringify({
-          type: 'other-type',
+          type: 'pong',
           message: JSON.stringify({ some: 'data' }),
         }),
       };

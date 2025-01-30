@@ -23,7 +23,9 @@ export default class Socket {
       const { type } = data;
 
       this.#handlers.forEach(({ message, callback }) => {
-        if (message === type) callback(data.message);
+        if (type === 'pong') return;
+
+        callback(data.message);
       });
     };
   }

@@ -24,11 +24,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+
+import { usePreviewStore } from '@/store/Preview';
+
 import Tests from '@/views/repository/content/Tests.vue';
 import PreviewDetails from './PreviewDetails.vue';
 
-defineProps({
+const props = defineProps({
   modelValue: {
     type: Boolean,
     required: true,
@@ -42,10 +45,22 @@ const messages = ref([]);
 const handleMessages = (newMessages) => {
   messages.value = newMessages;
 };
+
+const previewStore = usePreviewStore();
+
+watch(
+  () => props.modelValue,
+  (isModalOpen) => {
+    if (isModalOpen && !previewStore.ws) previewStore.connectWS();
+    if (!isModalOpen) {
+      if (previewStore.ws) previewStore.disconnectWS();
+      previewStore.clearTraces();
+    }
+  },
+);
 </script>
 
 <style lang="scss" scoped>
-$preview-drawer-padding: $unnnic-spacing-sm $unnnic-spacing-md;
 .preview-drawer {
   &:deep(.unnnic-drawer__container) .unnnic-drawer__content {
     padding: 0;
@@ -62,7 +77,7 @@ $preview-drawer-padding: $unnnic-spacing-sm $unnnic-spacing-md;
         $unnnic-color-neutral-soft;
 
       :deep(.quick-test) {
-        padding: $preview-drawer-padding;
+        padding: $unnnic-spacing-sm $unnnic-spacing-md;
         gap: 0;
 
         .messages {
@@ -76,7 +91,7 @@ $preview-drawer-padding: $unnnic-spacing-sm $unnnic-spacing-md;
     }
 
     .content__details {
-      padding: $preview-drawer-padding;
+      overflow: hidden;
     }
   }
 }

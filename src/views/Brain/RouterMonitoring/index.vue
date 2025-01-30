@@ -33,6 +33,7 @@ function connectMonitoringWS() {
   ws.value = new WS({
     project: auth.value.connectProjectUuid,
     token: auth.value.token.replace('Bearer ', ''),
+    endpoint: 'monitoring',
   });
   ws.value.connect();
 
