@@ -83,7 +83,7 @@ describe('AgentCard.vue', () => {
 
       await wrapper.setProps({ assigned: true });
 
-      expect(assignButton().props('type')).toBe('tertiary');
+      expect(assignButton().props('type')).toBe('secondary');
       expect(assignButton().props('iconLeft')).toBe('check');
     });
 

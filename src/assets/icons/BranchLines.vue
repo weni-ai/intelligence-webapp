@@ -26,18 +26,6 @@
           offset="1"
           stop-color="#4DFBEA"
         />
-        <stop
-          offset="2"
-          stop-color="#4DFBEA"
-        />
-        <animateTransform
-          attributeName="gradientTransform"
-          type="rotate"
-          from="0 360"
-          to="360 0"
-          dur="10s"
-          repeatCount="indefinite"
-        />
       </linearGradient>
     </defs>
 
@@ -131,6 +119,7 @@ const offsetMax = computed(() => {
 });
 const coloredLineOffset = ref(0);
 const isAnimating = ref(false);
+const animationTime = ref(0.5);
 
 function enterColoredLineAnimation() {
   return new Promise((resolve) => {
@@ -151,7 +140,7 @@ function enterColoredLineAnimation() {
       } else {
         coloredLineOffset.value -= 1;
       }
-    }, 1);
+    }, animationTime.value);
   });
 }
 
@@ -168,7 +157,7 @@ function leaveColoredLineAnimation(oldVal) {
         isAnimating.value = false;
         resolve();
       }
-    }, 1);
+    }, animationTime.value);
   });
 }
 
@@ -203,7 +192,7 @@ function changeColoredLineAnimation(newColoredLineIndex, oldColoredLineIndex) {
 
           resolve();
         }
-      }, 1);
+      }, animationTime.value);
     });
   }
 
@@ -219,7 +208,7 @@ function changeColoredLineAnimation(newColoredLineIndex, oldColoredLineIndex) {
           clearInterval(downInterval);
           resolve();
         }
-      }, 1);
+      }, animationTime.value);
     });
   }
 

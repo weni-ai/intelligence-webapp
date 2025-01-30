@@ -44,10 +44,10 @@
 import { computed, ref } from 'vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
-
-import AgentCard from './AgentCard.vue';
 import { usePreviewStore } from '@/store/Preview';
-import BranchLines from './BranchLines.vue';
+
+import BranchLines from '@/assets/icons/BranchLines.vue';
+import AgentCard from './AgentCard.vue';
 
 const agentsTeamStore = useAgentsTeamStore();
 const previewStore = usePreviewStore();
