@@ -15,7 +15,10 @@
       </template>
     </UnnnicTab>
 
-    <section class="preview-details__content">
+    <section
+      ref="contentRef"
+      class="preview-details__content"
+    >
       <section
         v-if="selectedTab === 'visual_flow'"
         class="details__visual-flow"
@@ -27,7 +30,7 @@
         v-else
         class="details__logs"
       >
-        <PreviewLogs />
+        <PreviewLogs @scroll-to-bottom="scrollContentToBottom" />
       </section>
     </section>
   </section>
@@ -48,6 +51,14 @@ defineProps({
 
 const selectedTab = ref('visual_flow');
 const detailTabs = ['visual_flow', 'logs'];
+
+const contentRef = ref(null);
+const scrollContentToBottom = () => {
+  contentRef.value.scrollTo({
+    top: contentRef.value.scrollHeight,
+    behavior: 'smooth',
+  });
+};
 </script>
 
 <style lang="scss" scoped>

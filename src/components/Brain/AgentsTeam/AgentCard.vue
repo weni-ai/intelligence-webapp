@@ -63,7 +63,7 @@
           ? $t('router.agents_team.card.assigned')
           : $t('router.agents_team.card.assign')
       "
-      :type="assigned ? 'tertiary' : 'primary'"
+      :type="assigned ? 'secondary' : 'primary'"
       :iconLeft="assigned ? 'check' : ''"
       size="small"
       :loading="isAssigning"

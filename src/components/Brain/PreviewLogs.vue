@@ -57,10 +57,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, computed } from 'vue';
+import { ref, onMounted, nextTick, computed, watch } from 'vue';
 import { usePreviewStore } from '@/store/Preview';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import PreviewLogsDetailsModal from './Preview/PreviewLogsDetailsModal.vue';
+
+const emit = defineEmits(['scroll-to-bottom']);
 
 const previewStore = usePreviewStore();
 const agentsTeamStore = useAgentsTeamStore();
@@ -143,8 +145,19 @@ function updateProgressBarHeight(type = 'agent') {
         firstLogRect.height / 2 -
         lastLogRect.height / 2;
     }
+
+    emit('scroll-to-bottom');
   });
 }
+
+watch(
+  () => previewStore.collaboratorsTraces,
+  (newTraces) => {
+    if (newTraces.length === 0) {
+      progressHeight.value = 0;
+    }
+  },
+);
 </script>
 
 <style scoped lang="scss">

@@ -2,6 +2,7 @@ import { shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 
 import MessageInput from '../MessageInput.vue';
+import { createTestingPinia } from '@pinia/testing';
 
 const defaultProps = {
   placeholder: 'Type a message',
@@ -30,11 +31,13 @@ const store = createStore({
   },
 });
 
+const pinia = createTestingPinia();
+
 const setup = (props = {}) =>
   shallowMount(MessageInput, {
     props: { ...defaultProps, ...props },
     global: {
-      plugins: [store],
+      plugins: [store, pinia],
     },
   });
 

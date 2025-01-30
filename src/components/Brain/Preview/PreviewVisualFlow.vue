@@ -18,7 +18,7 @@
       :height="visualFlowRef?.$el.getBoundingClientRect().height"
       :startY="managerRef?.$el.getBoundingClientRect().height"
       :coloredLineIndex="
-        teamAgents.findIndex(
+        teamAgents?.findIndex(
           (agent) => agent.external_id === activeAgent?.external_id,
         )
       "
@@ -30,8 +30,10 @@
         :key="agent.id"
         :ref="(el) => (agentRefs[index] = el)"
         :name="agent.name"
-        :active="agent.external_id === activeAgent?.external_id"
-        :currentTask="agent.description"
+        :active="isActiveAgent(agent)"
+        :currentTask="
+          isActiveAgent(agent) ? activeAgent?.currentTask : agent.description
+        "
         type="agent"
       />
     </section>
@@ -42,10 +44,10 @@
 import { computed, ref } from 'vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
-
-import AgentCard from './AgentCard.vue';
 import { usePreviewStore } from '@/store/Preview';
-import BranchLines from './BranchLines.vue';
+
+import BranchLines from '@/assets/icons/BranchLines.vue';
+import AgentCard from './AgentCard.vue';
 
 const agentsTeamStore = useAgentsTeamStore();
 const previewStore = usePreviewStore();
@@ -77,6 +79,10 @@ const branchPositions = computed(() => {
 
   return positions;
 });
+
+function isActiveAgent(agent) {
+  return agent.external_id === activeAgent.value?.external_id;
+}
 </script>
 
 <style lang="scss" scoped>
