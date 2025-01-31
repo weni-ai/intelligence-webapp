@@ -94,6 +94,7 @@ import i18n from '@/utils/plugins/i18n';
 import useBrainRoutes from '@/composables/useBrainRoutes';
 import BrainWarningBar from '@/components/Brain/BrainWarningBar.vue';
 import BrainHeaderPreview from '@/components/Brain/BrainHeaderPreview.vue';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 export default {
   name: 'Brain',
@@ -162,6 +163,7 @@ export default {
     const brainRoutes = useBrainRoutes();
     const showPreview = computed(
       () =>
+        !useFeatureFlagsStore().flags.agentsTeam &&
         brainRoutes.value.find((mappedRoute) => mappedRoute.page === route.name)
           ?.preview,
     );
