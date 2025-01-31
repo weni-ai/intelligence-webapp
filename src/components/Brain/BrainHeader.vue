@@ -39,6 +39,7 @@
       type="primary"
       iconLeft="play_arrow"
       iconsFilled
+      :disabled="!agentsTeamStore.activeTeam.data.agents.length"
       @click="handlePreview"
     >
       {{ $t('router.agents_team.preview') }}
@@ -67,9 +68,11 @@ import { format, subDays } from 'date-fns';
 import useBrainRoutes from '@/composables/useBrainRoutes';
 import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
-
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
 import PreviewDrawer from './Preview/PreviewDrawer.vue';
+
+const agentsTeamStore = useAgentsTeamStore();
 
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
