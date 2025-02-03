@@ -34,10 +34,10 @@
             :key="stepIndex"
             class="steps__step"
           >
-            <p>{{ step }}</p>
+            <p>{{ step.title }}</p>
             <button
               class="step__see-full"
-              @click="openModalLogFullDetails(log.summary, log.trace)"
+              @click="openModalLogFullDetails(step.title, step.trace)"
             >
               {{ $t('router.preview.see_full_details') }}
             </button>
@@ -93,12 +93,13 @@ const processedLogs = computed(() => {
         external_id: agentToLog.external_id,
         agent_name: agentToLog.name || 'Manager',
         steps: [],
-        summary: trace.summary,
-        trace,
       });
     }
 
-    logsByAgent.at(-1)?.steps.push(trace.summary || 'Unknown');
+    logsByAgent.at(-1)?.steps.push({
+      title: trace.summary || 'Unknown',
+      trace,
+    });
     return logsByAgent;
   }, []);
 });
