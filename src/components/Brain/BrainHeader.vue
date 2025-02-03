@@ -67,7 +67,6 @@ import { format, subDays } from 'date-fns';
 import useBrainRoutes from '@/composables/useBrainRoutes';
 import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
-
 import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
 import PreviewDrawer from './Preview/PreviewDrawer.vue';
 
