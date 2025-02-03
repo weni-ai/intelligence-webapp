@@ -1,5 +1,6 @@
 <template>
   <UnnnicModalDialog
+    class="preview-logs-details__modal"
     :modelValue="modelValue"
     showCloseIcon
     size="md"
@@ -8,11 +9,13 @@
   >
     <section class="preview-logs-details">
       <UnnnicIntelligenceText
+        class="preview-logs-details__trace"
+        tag="p"
         color="neutral-dark"
         family="secondary"
         size="body-gt"
       >
-        {{ trace }}
+        {{ prettyPrintJSON(trace) }}
       </UnnnicIntelligenceText>
     </section>
   </UnnnicModalDialog>
@@ -35,9 +38,21 @@ defineProps({
 });
 
 defineEmits(['update:modelValue']);
+
+function prettyPrintJSON(json) {
+  const jsonString = JSON.stringify(json, null, '\t');
+
+  return jsonString;
+}
 </script>
 
 <style lang="scss" scoped>
+.preview-logs-details__modal {
+  :deep(.unnnic-modal-dialog__container__body) {
+    overflow: hidden;
+  }
+}
+
 .preview-logs-details {
   border-radius: $unnnic-border-radius-sm;
   background-color: $unnnic-color-neutral-lightest;
@@ -47,5 +62,10 @@ defineEmits(['update:modelValue']);
   display: flex;
   flex-direction: column;
   gap: $unnnic-spacing-sm;
+
+  &__trace {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
 }
 </style>

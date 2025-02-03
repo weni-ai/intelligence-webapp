@@ -34,10 +34,10 @@
             :key="stepIndex"
             class="steps__step"
           >
-            <p>{{ step }}</p>
+            <p>{{ step.title }}</p>
             <button
               class="step__see-full"
-              @click="openModalLogFullDetails(log.summary, log.trace)"
+              @click="openModalLogFullDetails(step.title, step.trace)"
             >
               {{ $t('router.preview.see_full_details') }}
             </button>
@@ -57,10 +57,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, computed } from 'vue';
+import { ref, onMounted, nextTick, computed, watch } from 'vue';
 import { usePreviewStore } from '@/store/Preview';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import PreviewLogsDetailsModal from './Preview/PreviewLogsDetailsModal.vue';
+
+const emit = defineEmits(['scroll-to-bottom']);
 
 const previewStore = usePreviewStore();
 const agentsTeamStore = useAgentsTeamStore();
@@ -91,12 +93,13 @@ const processedLogs = computed(() => {
         external_id: agentToLog.external_id,
         agent_name: agentToLog.name || 'Manager',
         steps: [],
-        summary: trace.summary,
-        trace,
       });
     }
 
-    logsByAgent.at(-1)?.steps.push(trace.summary || 'Unknown');
+    logsByAgent.at(-1)?.steps.push({
+      title: trace.summary || 'Unknown',
+      trace,
+    });
     return logsByAgent;
   }, []);
 });
@@ -143,8 +146,19 @@ function updateProgressBarHeight(type = 'agent') {
         firstLogRect.height / 2 -
         lastLogRect.height / 2;
     }
+
+    emit('scroll-to-bottom');
   });
 }
+
+watch(
+  () => previewStore.collaboratorsTraces,
+  (newTraces) => {
+    if (newTraces.length === 0) {
+      progressHeight.value = 0;
+    }
+  },
+);
 </script>
 
 <style scoped lang="scss">
