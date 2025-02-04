@@ -34,7 +34,7 @@
         </section>
 
         <section class="content__details">
-          <PreviewDetails :messages="messages" />
+          <PreviewDetails />
         </section>
       </section>
     </template>
