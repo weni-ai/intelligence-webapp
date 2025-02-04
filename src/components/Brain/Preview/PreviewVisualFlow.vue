@@ -3,7 +3,7 @@
     ref="visualFlowRef"
     class="visual-flow"
   >
-    <AgentCard
+    <PreviewAgentCard
       ref="managerRef"
       name="Manager"
       :active="true"
@@ -25,7 +25,7 @@
     />
 
     <section class="visual-flow__team">
-      <AgentCard
+      <PreviewAgentCard
         v-for="(agent, index) in teamAgents"
         :key="agent.id"
         :ref="(el) => (agentRefs[index] = el)"
@@ -47,7 +47,7 @@ import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { usePreviewStore } from '@/store/Preview';
 
 import BranchLines from '@/assets/icons/BranchLines.vue';
-import AgentCard from './AgentCard.vue';
+import PreviewAgentCard from './PreviewAgentCard.vue';
 
 const agentsTeamStore = useAgentsTeamStore();
 const previewStore = usePreviewStore();
