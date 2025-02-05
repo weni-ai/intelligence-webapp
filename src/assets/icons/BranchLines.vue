@@ -156,8 +156,16 @@ function leaveColoredLineAnimation(oldVal) {
 
     if (interval.value) clearInterval(interval.value);
 
+    const targetOffset = props.positions[oldVal]?.endY + 25;
+
+    if (coloredLineOffset.value >= targetOffset) {
+      isAnimating.value = false;
+      resolve();
+      return;
+    }
+
     interval.value = setInterval(() => {
-      if (coloredLineOffset.value !== props.positions[oldVal]?.endY + 25) {
+      if (coloredLineOffset.value < targetOffset) {
         coloredLineOffset.value += 1;
       } else {
         clearInterval(interval.value);
@@ -181,11 +189,7 @@ function changeColoredLineAnimation(newColoredLineIndex, oldColoredLineIndex) {
       return Math.round(initialOffset + 25);
     }
 
-    if (newEndY < oldEndY) {
-      return Math.round(initialOffset + (oldEndY - newEndY) + 25);
-    }
-
-    return Math.round(initialOffset + (oldEndY - newEndY));
+    return Math.round(initialOffset + (oldEndY - newEndY) + 25);
   })();
 
   function upAnimation() {
@@ -195,7 +199,7 @@ function changeColoredLineAnimation(newColoredLineIndex, oldColoredLineIndex) {
           coloredLineOffset.value += 1;
         } else {
           clearInterval(upInterval);
-          treatedColoredLineIndex.value = props.coloredLineIndex;
+          treatedColoredLineIndex.value = newColoredLineIndex;
 
           resolve();
         }

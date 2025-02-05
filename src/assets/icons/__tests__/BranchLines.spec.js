@@ -1,4 +1,4 @@
-import { vi } from 'vitest';
+import { describe, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import BranchLines from '../BranchLines.vue';
 
@@ -12,7 +12,7 @@ const defaultProps = {
 
 const samplePositions = [
   { startY: 0, endY: 100, isLeft: true, radius: 8 },
-  { startY: 0, endY: 150, isLeft: false, radius: 8 },
+  { startY: 0, endY: 100, isLeft: false, radius: 8 },
   { startY: 0, endY: 200, isLeft: true, radius: 8 },
 ];
 
@@ -184,6 +184,19 @@ describe('BranchLines.vue', () => {
         expect(clearIntervalSpy).toHaveBeenCalled();
       });
 
+      it('should not clear interval if it is not set', async () => {
+        wrapper.vm.interval = null;
+        const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
+        wrapper.vm.leaveColoredLineAnimation(0);
+        expect(clearIntervalSpy).not.toHaveBeenCalled();
+      });
+
+      it('should resolve when leave animation is not needed', async () => {
+        wrapper.vm.coloredLineOffset = 125;
+        await wrapper.vm.leaveColoredLineAnimation(0);
+        expect(wrapper.vm.isAnimating).toBe(false);
+      });
+
       it('should increase coloredLineOffset until it reaches target value', async () => {
         await wrapper.setProps({
           positions: samplePositions,
@@ -217,12 +230,63 @@ describe('BranchLines.vue', () => {
         expect(clearIntervalSpy).toHaveBeenCalled();
         expect(wrapper.vm.isAnimating).toBe(false);
       });
+    });
+
+    describe('changeColoredLineAnimation', () => {
+      beforeEach(async () => {
+        wrapper.vm.animateColoredLine = vi.fn();
+        await wrapper.setProps({
+          positions: samplePositions,
+          coloredLineIndex: 0,
+        });
+
+        await vi.advanceTimersToNextTimerAsync();
+        vi.clearAllMocks();
+      });
+
+      it('should start animation and set isAnimating to true', async () => {
+        wrapper.vm.changeColoredLineAnimation(0, 1);
+        expect(wrapper.vm.isAnimating).toBe(true);
+      });
+
+      it('should clear existing interval if present', async () => {
+        wrapper.vm.interval = setInterval(() => {}, 1000);
+        const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
+
+        wrapper.vm.changeColoredLineAnimation(0, 1);
+        expect(clearIntervalSpy).toHaveBeenCalled();
+      });
 
       it('should not clear interval if it is not set', async () => {
         wrapper.vm.interval = null;
         const clearIntervalSpy = vi.spyOn(window, 'clearInterval');
-        wrapper.vm.leaveColoredLineAnimation(0);
+        wrapper.vm.changeColoredLineAnimation(0, 1);
         expect(clearIntervalSpy).not.toHaveBeenCalled();
+      });
+
+      it('should perform up animation when moving to a higher index', async () => {
+        wrapper.vm.changeColoredLineAnimation(1, 0);
+
+        vi.advanceTimersToNextTimer();
+        expect(wrapper.vm.coloredLineOffset).toBe(25);
+        expect(wrapper.vm.treatedColoredLineIndex).toBe(1);
+      });
+
+      it('should perform up animation when endY is different', async () => {
+        wrapper.vm.changeColoredLineAnimation(2, 0);
+
+        await vi.advanceTimersByTimeAsync(wrapper.vm.animationTime * 125);
+        expect(wrapper.vm.coloredLineOffset).toBe(125);
+
+        expect(wrapper.vm.isAnimating).toBe(false);
+      });
+
+      it('should handle transition when new endY is less than old endY', async () => {
+        wrapper.vm.changeColoredLineAnimation(0, 2);
+
+        await vi.advanceTimersByTimeAsync(wrapper.vm.animationTime * 125);
+        expect(wrapper.vm.coloredLineOffset).toBe(0);
+        expect(wrapper.vm.isAnimating).toBe(false);
       });
     });
 
