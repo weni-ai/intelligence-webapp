@@ -5,6 +5,7 @@
     class="branch-lines"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    data-testid="branch-lines-svg"
   >
     <defs>
       <linearGradient
@@ -17,14 +18,17 @@
           coloredLineOffset
         "
         gradientUnits="userSpaceOnUse"
+        data-testid="branch-gradient"
       >
         <stop
           offset="0"
           stop-color="#086766"
+          data-testid="gradient-start"
         />
         <stop
           offset="1"
           stop-color="#4DFBEA"
+          data-testid="gradient-end"
         />
       </linearGradient>
     </defs>
@@ -37,6 +41,7 @@
       stroke="#E2E6ED"
       stroke-width="1"
       stroke-linejoin="round"
+      :data-testid="`regular-path-${index}`"
     />
 
     <!-- Colored line -->
@@ -52,6 +57,7 @@
       stroke="url(#branchGradient)"
       stroke-width="3"
       stroke-linejoin="round"
+      data-testid="colored-path"
     />
   </svg>
 </template>
@@ -147,6 +153,7 @@ function enterColoredLineAnimation() {
 function leaveColoredLineAnimation(oldVal) {
   return new Promise((resolve) => {
     isAnimating.value = true;
+
     if (interval.value) clearInterval(interval.value);
 
     interval.value = setInterval(() => {
