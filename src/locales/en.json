@@ -257,6 +257,9 @@
           "cancel": "Cancel",
           "action": "Deactivate"
         }
+      },
+      "credentials": {
+        "description": "Enter the credentials to integrate the agents into the team"
       }
     },
     "preview": {
