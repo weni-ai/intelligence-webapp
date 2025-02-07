@@ -7,6 +7,7 @@
       v-for="index in 3"
       :key="index"
       class="credentials-skeleton__item"
+      data-testid="credentials-skeleton-item"
     >
       <UnnnicSkeletonLoading
         tag="div"

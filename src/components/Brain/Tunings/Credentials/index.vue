@@ -5,26 +5,33 @@
       family="secondary"
       size="body-gt"
       color="neutral-cloudy"
+      data-testid="credentials-description"
     >
       {{ $t('router.tunings.credentials.description') }}
     </UnnnicIntelligenceText>
 
     <section class="credentials__form">
-      <CredentialsSkeleton v-if="tuningsStore.credentials.data === null" />
+      <CredentialsSkeleton
+        v-if="tuningsStore.credentials.data === null"
+        data-testid="credentials-skeleton"
+      />
       <template v-else>
         <UnnnicFormElement
           v-for="(credential, key) in credentials"
           :key="key"
           :label="credential.label"
+          data-testid="credentials-form-element"
         >
           <UnnnicInput
             v-model="credential.value"
             :nativeType="credential.is_confidential ? 'password' : 'text'"
             :placeholder="credential.placeholder || credential.label"
+            data-testid="credentials-form-input"
           />
         </UnnnicFormElement>
 
         <UnnnicButton
+          data-testid="credentials-save-button"
           :disabled="!tuningsStore.isCredentialsValid"
           :loading="tuningsStore.credentials.status === 'loading'"
           @click="saveChanges"
