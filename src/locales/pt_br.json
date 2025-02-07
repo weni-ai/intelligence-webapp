@@ -257,6 +257,9 @@
           "cancel": "Cancelar",
           "action": "Desativar"
         }
+      },
+      "credentials": {
+        "description": "Insira as credenciais para integrar os agentes na equipe"
       }
     },
     "preview": {

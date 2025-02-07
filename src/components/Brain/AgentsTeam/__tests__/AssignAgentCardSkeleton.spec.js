@@ -1,12 +1,12 @@
 import { mount } from '@vue/test-utils';
 
-import AgentCardSkeleton from '../AgentCardSkeleton.vue';
+import AssignAgentSkeleton from '../AssignAgentCardSkeleton.vue';
 
 describe('AgentCardSkeleton.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(AgentCardSkeleton);
+    wrapper = mount(AssignAgentSkeleton);
   });
 
   it('renders correctly', () => {

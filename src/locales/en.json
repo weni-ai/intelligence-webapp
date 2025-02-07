@@ -148,6 +148,12 @@
         "assign": "Assign to team",
         "assigned": "Assigned"
       },
+      "drawer": {
+        "title": "Assign {name} to team",
+        "description": "Enter the credentials to assign the agent",
+        "use_credentials": "Use credentials from Tunings",
+        "assign": "Assign"
+      },
       "active_team": {
         "title": "Active team",
         "no_team": "No agents in your team",
@@ -258,6 +264,9 @@
           "cancel": "Cancel",
           "action": "Deactivate"
         }
+      },
+      "credentials": {
+        "description": "Enter the credentials to integrate the agents into the team"
       }
     },
     "preview": {

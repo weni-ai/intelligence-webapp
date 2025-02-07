@@ -1,14 +1,14 @@
 <template>
   <button
-    class="agent-card-empty"
-    data-testid="agent-card-empty"
+    class="assign-agent-card-empty"
+    data-testid="assign-agent-card-empty"
     @click="createNewAgent"
   >
     <UnnnicIcon
       icon="add"
       size="md"
       scheme="neutral-clean"
-      data-testid="agent-card-empty-icon"
+      data-testid="assign-agent-card-empty-icon"
     />
 
     <UnnnicIntelligenceText
@@ -16,7 +16,7 @@
       family="secondary"
       size="body-gt"
       color="neutral-dark"
-      data-testid="agent-card-empty-title"
+      data-testid="assign-agent-card-empty-title"
     >
       {{ $t('router.agents_team.create_agent') }}
     </UnnnicIntelligenceText>
@@ -33,7 +33,7 @@ function createNewAgent() {
 </script>
 
 <style lang="scss" scoped>
-.agent-card-empty {
+.assign-agent-card-empty {
   border: none;
   background: none;
 
