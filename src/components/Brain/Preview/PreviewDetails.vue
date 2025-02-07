@@ -1,6 +1,10 @@
 <template>
-  <section class="preview-details">
+  <section
+    data-testid="preview-details"
+    class="preview-details"
+  >
     <UnnnicTab
+      data-testid="preview-details-tabs"
       class="preview-details__tabs"
       :modelValue="selectedTab"
       :tabs="detailTabs"
@@ -17,10 +21,12 @@
 
     <section
       ref="contentRef"
+      data-testid="preview-details-content"
       class="preview-details__content"
     >
       <section
         v-if="selectedTab === 'visual_flow'"
+        data-testid="preview-details-visual-flow"
         class="details__visual-flow"
       >
         <PreviewVisualFlow />
@@ -28,6 +34,7 @@
 
       <section
         v-else
+        data-testid="preview-details-logs"
         class="details__logs"
       >
         <PreviewLogs @scroll-to-bottom="scrollContentToBottom" />
@@ -41,13 +48,6 @@ import { ref } from 'vue';
 
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
 import PreviewVisualFlow from './PreviewVisualFlow.vue';
-
-defineProps({
-  messages: {
-    type: Array,
-    required: true,
-  },
-});
 
 const selectedTab = ref('visual_flow');
 const detailTabs = ['visual_flow', 'logs'];
