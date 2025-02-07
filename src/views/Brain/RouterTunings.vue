@@ -1,6 +1,6 @@
 <template>
   <section class="tunings__container">
-    <header class="tunings__container_header">
+    <header class="container__header">
       <UnnnicIntelligenceText
         tag="p"
         family="secondary"
@@ -9,7 +9,7 @@
         {{ $t('router.tunings.description') }}
       </UnnnicIntelligenceText>
     </header>
-    <section class="tunings__container_tabs">
+    <section class="container__tabs">
       <UnnnicTab
         :tabs="tabs.map((e) => e.page)"
         :activeTab="activeTab"
@@ -25,6 +25,7 @@
       </UnnnicTab>
     </section>
     <section>
+      <Credentials v-if="activeTab === 'credentials'" />
       <Settings
         v-if="activeTab === 'config'"
         :data="props.data"
@@ -37,6 +38,7 @@
 <script setup>
 import ChangesHistory from '@/components/Brain/Tunings/ChangesHistory.vue';
 import Settings from '@/components/Brain/Tunings/Settings.vue';
+import Credentials from '@/components/Brain/Tunings/Credentials/index.vue';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
@@ -47,12 +49,14 @@ const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
 const tabs = ref(
   [
-    isAgentsTeamEnabled ? null : { title: 'config', page: 'config' },
+    isAgentsTeamEnabled
+      ? { title: 'config', page: 'credentials' }
+      : { title: 'config', page: 'config' },
     { title: 'history', page: 'hist' },
   ].filter((obj) => obj),
 );
 
-const activeTab = ref(isAgentsTeamEnabled ? 'hist' : 'config');
+const activeTab = ref(isAgentsTeamEnabled ? 'credentials' : 'config');
 
 const props = defineProps({
   data: {
@@ -75,12 +79,12 @@ const onTabChange = (newTab) => {
 
 <style lang="scss" scoped>
 .tunings__container {
-  &_header {
+  .container__header {
     display: flex;
     flex-direction: column;
   }
 
-  &_tabs {
+  .container__tabs {
     margin: $unnnic-spacing-md 0 0 0;
 
     :deep(.tab-header) {

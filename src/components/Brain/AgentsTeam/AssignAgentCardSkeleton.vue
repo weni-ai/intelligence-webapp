@@ -1,7 +1,7 @@
 <template>
   <section
-    class="agent-card-skeleton"
-    data-testid="agent-card-skeleton"
+    class="assign-agent-card-skeleton"
+    data-testid="assign-agent-card-skeleton"
   >
     <UnnnicSkeletonLoading
       tag="div"
@@ -18,7 +18,7 @@
     />
 
     <section
-      class="agent-card-skeleton__skills"
+      class="assign-agent-card-skeleton__skills"
       data-testid="skills-section"
     >
       <UnnnicSkeletonLoading
@@ -45,7 +45,7 @@
 </template>
 
 <style lang="scss" scoped>
-.agent-card-skeleton {
+.assign-agent-card-skeleton {
   display: flex;
   flex-direction: column;
   gap: $unnnic-spacing-xs;

@@ -1,21 +1,21 @@
 <template>
   <section
-    data-testid="agent-card"
-    :class="['agent-card', { 'agent-card--empty': empty }]"
+    data-testid="assign-agent-card"
+    :class="['assign-agent-card', { 'assign-agent-card--empty': empty }]"
   >
-    <AgentCardSkeleton
+    <AssignAgentCardSkeleton
       v-if="loading"
-      data-testid="agent-card-skeleton"
+      data-testid="assign-agent-card-skeleton"
     />
 
-    <AgentCardEmpty
+    <AssignAgentCardEmpty
       v-else-if="empty"
-      data-testid="agent-card-empty"
+      data-testid="assign-agent-card-empty"
     />
 
     <section
       v-else
-      class="agent-card__content"
+      class="assign-agent-card__content"
     >
       <UnnnicIntelligenceText
         tag="p"
@@ -55,8 +55,8 @@
     <UnnnicButton
       v-if="!loading && !empty && assignment"
       :class="[
-        'agent-card__button',
-        { 'agent-card__button--assigned': assigned },
+        'assign-agent-card__button',
+        { 'assign-agent-card__button--assigned': assigned },
       ]"
       :text="
         assigned
@@ -78,11 +78,9 @@ import { ref } from 'vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-import AgentCardSkeleton from './AgentCardSkeleton.vue';
-import AgentCardEmpty from './AgentCardEmpty.vue';
+import AssignAgentCardSkeleton from './AssignAgentCardSkeleton.vue';
+import AssignAgentCardEmpty from './AssignAgentCardEmpty.vue';
 import Skill from './Skill.vue';
-
-defineEmits(['assign']);
 
 const props = defineProps({
   loading: {
@@ -147,7 +145,7 @@ async function toggleAgentAssignment() {
 </script>
 
 <style lang="scss" scoped>
-.agent-card {
+.assign-agent-card {
   border-radius: $unnnic-border-radius-md;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
 
@@ -182,7 +180,7 @@ async function toggleAgentAssignment() {
     }
   }
 
-  :deep(.unnnic-button).agent-card__button {
+  :deep(.unnnic-button).assign-agent-card__button {
     &--assigned {
       color: $unnnic-color-weni-600;
     }
