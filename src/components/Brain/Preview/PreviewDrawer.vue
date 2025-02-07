@@ -1,5 +1,6 @@
 <template>
   <UnnnicDrawer
+    data-testid="preview-drawer"
     :modelValue="modelValue"
     :title="$t('router.preview.agents_preview')"
     class="preview-drawer"
@@ -7,8 +8,12 @@
     @close="$emit('update:modelValue', false)"
   >
     <template #title>
-      <section class="preview-drawer__header">
+      <section
+        data-testid="preview-drawer-header"
+        class="preview-drawer__header"
+      >
         <UnnnicIntelligenceText
+          data-testid="preview-drawer-title"
           tag="h2"
           family="secondary"
           size="title-sm"
@@ -18,23 +23,32 @@
           {{ $t('router.preview.agents_preview') }}
         </UnnnicIntelligenceText>
         <ContentItemActions
+          data-testid="preview-drawer-actions"
           :actions="previewHeaderActions"
           minWidth="175px"
         />
       </section>
     </template>
     <template #content>
-      <section class="preview-drawer__content">
-        <section class="content__preview">
+      <section
+        data-testid="preview-drawer-content"
+        class="preview-drawer__content"
+      >
+        <section
+          data-testid="preview-drawer-preview"
+          class="content__preview"
+        >
           <Tests
             :key="refreshPreviewValue"
             usePreview
-            @messages="handleMessages"
           />
         </section>
 
-        <section class="content__details">
-          <PreviewDetails :messages="messages" />
+        <section
+          data-testid="preview-drawer-details"
+          class="content__details"
+        >
+          <PreviewDetails />
         </section>
       </section>
     </template>
@@ -59,12 +73,6 @@ const props = defineProps({
 });
 
 defineEmits(['update:modelValue']);
-
-const messages = ref([]);
-
-const handleMessages = (newMessages) => {
-  messages.value = newMessages;
-};
 
 const previewStore = usePreviewStore();
 

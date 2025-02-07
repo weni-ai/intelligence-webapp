@@ -1,6 +1,7 @@
 <template>
   <UnnnicModalDialog
     class="preview-logs-details__modal"
+    data-testid="preview-logs-details-modal"
     :modelValue="modelValue"
     showCloseIcon
     size="md"
@@ -10,6 +11,7 @@
     <section class="preview-logs-details">
       <UnnnicIntelligenceText
         class="preview-logs-details__trace"
+        data-testid="preview-logs-details-trace"
         tag="p"
         color="neutral-dark"
         family="secondary"
