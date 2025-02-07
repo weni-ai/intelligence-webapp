@@ -15,7 +15,7 @@
       class="visual-flow__line"
       :positions="branchPositions"
       width="25"
-      :height="visualFlowRef?.$el.getBoundingClientRect().height"
+      :height="visualFlowHeight"
       :startY="managerRef?.$el.getBoundingClientRect().height"
       :coloredLineIndex="
         teamAgents?.findIndex(
@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { usePreviewStore } from '@/store/Preview';
@@ -65,6 +65,8 @@ const branchPositions = computed(() => {
   const managerEl = managerRef.value.$el;
   const managerRect = managerEl.getBoundingClientRect();
 
+  visualFlowHeight.value; // Only access to ensure reactivity
+
   agentRefs.value.forEach((agentRef, index) => {
     if (!agentRef) return;
 
@@ -74,15 +76,32 @@ const branchPositions = computed(() => {
     const startY = 0;
     const endY = agentRect.top - managerRect.bottom + agentRect.height / 2;
 
-    positions.push({ startY, endY, isLeft: index % 2 === 0 });
+    positions.push({
+      startY,
+      endY,
+      isLeft: index % 2 === 0,
+    });
   });
-
   return positions;
 });
 
 function isActiveAgent(agent) {
   return agent.external_id === activeAgent.value?.external_id;
 }
+
+const visualFlowHeight = ref(0);
+const visualFlowRef = ref(null);
+
+watch(
+  () => activeAgent.value,
+  () => {
+    nextTick(() => {
+      visualFlowHeight.value =
+        visualFlowRef.value?.getBoundingClientRect().height;
+    });
+  },
+  { immediate: true, deep: true },
+);
 </script>
 
 <style lang="scss" scoped>
