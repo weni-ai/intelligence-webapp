@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 
-import AssignAgentSkeleton from '../AssignAgentSkeleton.vue';
+import AssignAgentSkeleton from '../AssignAgentCardSkeleton.vue';
 
 describe('AgentCardSkeleton.vue', () => {
   let wrapper;
@@ -15,21 +15,19 @@ describe('AgentCardSkeleton.vue', () => {
 
   it('renders skeleton loading components', () => {
     const skeletonLoadings = wrapper.findAll(
-      '[data-testid="assign-agent-skeleton-loading"]',
+      '[data-testid="skeleton-loading"]',
     );
     expect(skeletonLoadings.length).toBe(3);
   });
 
   it('renders skills section', () => {
-    const skillsSection = wrapper.find(
-      '[data-testid="assign-agent-skills-section"]',
-    );
+    const skillsSection = wrapper.find('[data-testid="skills-section"]');
     expect(skillsSection.exists()).toBe(true);
   });
 
   it('renders skills skeleton loadings', () => {
     const skillsSkeletonLoadings = wrapper.findAll(
-      '[data-testid="assign-agent-skills-skeleton-loading"]',
+      '[data-testid="skills-skeleton-loading"]',
     );
     expect(skillsSkeletonLoadings.length).toBe(2);
   });

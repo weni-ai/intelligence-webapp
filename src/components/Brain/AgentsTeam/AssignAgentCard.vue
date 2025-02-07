@@ -3,12 +3,12 @@
     data-testid="assign-agent-card"
     :class="['assign-agent-card', { 'assign-agent-card--empty': empty }]"
   >
-    <AssignAgentSkeleton
+    <AssignAgentCardSkeleton
       v-if="loading"
       data-testid="assign-agent-card-skeleton"
     />
 
-    <AssignAgentEmpty
+    <AssignAgentCardEmpty
       v-else-if="empty"
       data-testid="assign-agent-card-empty"
     />
@@ -66,16 +66,9 @@
       :type="assigned ? 'secondary' : 'primary'"
       :iconLeft="assigned ? 'check' : ''"
       size="small"
+      :loading="isAssigning"
       data-testid="assign-button"
-      @click="showAssignModal = true"
-    />
-
-    <AssignAgentDrawer
-      v-model="showAssignModal"
-      :title="title"
-      :uuid="uuid"
-      :assigned="assigned"
-      @assigned="toggleAgentAssignment"
+      @click="toggleAgentAssignment"
     />
   </section>
 </template>
@@ -83,10 +76,11 @@
 <script setup>
 import { ref } from 'vue';
 
-import AssignAgentSkeleton from './AssignAgentSkeleton.vue';
-import AssignAgentEmpty from './AssignAgentEmpty.vue';
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
+
+import AssignAgentCardSkeleton from './AssignAgentCardSkeleton.vue';
+import AssignAgentCardEmpty from './AssignAgentCardEmpty.vue';
 import Skill from './Skill.vue';
-import AssignAgentDrawer from './AssignAgentDrawer.vue';
 
 const props = defineProps({
   loading: {
@@ -131,7 +125,23 @@ const props = defineProps({
   },
 });
 
-const showAssignModal = ref(false);
+const isAssigning = ref(false);
+const agentsTeamStore = useAgentsTeamStore();
+
+async function toggleAgentAssignment() {
+  isAssigning.value = true;
+
+  try {
+    await agentsTeamStore.toggleAgentAssignment({
+      uuid: props.uuid,
+      is_assigned: !props.assigned,
+    });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isAssigning.value = false;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -170,7 +180,7 @@ const showAssignModal = ref(false);
     }
   }
 
-  :deep(.unnnic-button).agent-card__button {
+  :deep(.unnnic-button).assign-agent-card__button {
     &--assigned {
       color: $unnnic-color-weni-600;
     }

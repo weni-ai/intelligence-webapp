@@ -16,7 +16,7 @@
       class="active-team__cards"
     >
       <template v-if="isLoadingTeam">
-        <AgentCard
+        <AssignAgentCard
           v-for="(_, index) in Array(3)"
           :key="index"
           loading
@@ -25,7 +25,7 @@
       </template>
 
       <template v-else>
-        <AgentCard
+        <AssignAgentCard
           v-for="agent in activeTeam"
           :key="agent.uuid"
           :title="agent.name"
@@ -78,7 +78,7 @@ import { computed, onMounted } from 'vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-import AgentCard from '@/components/Brain/AgentsTeam/AgentCard.vue';
+import AssignAgentCard from '@/components/Brain/AgentsTeam/AssignAgentCard.vue';
 
 const agentsTeamStore = useAgentsTeamStore();
 const activeTeam = computed(
