@@ -11,10 +11,13 @@
       >
         {{ $t('router.tunings.credentials.used_by_official_agents') }}
       </UnnnicIntelligenceText>
-      <CredentialsForm :credentials="credentials?.officialAgents" />
+      <CredentialsForm
+        data-testid="credentials-form"
+        :credentials="credentials?.officialAgents"
+      />
     </section>
 
-    <UnnnicDivider />
+    <UnnnicDivider data-testid="credentials-divider" />
 
     <section class="credentials__form">
       <UnnnicIntelligenceText
@@ -27,7 +30,10 @@
       >
         {{ $t('router.tunings.credentials.used_by_customized_agents') }}
       </UnnnicIntelligenceText>
-      <CredentialsForm :credentials="credentials?.myAgents" />
+      <CredentialsForm
+        data-testid="credentials-form"
+        :credentials="credentials?.myAgents"
+      />
     </section>
   </section>
 </template>

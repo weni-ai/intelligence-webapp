@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash';
 import globalStore from '.';
 import { useAlertStore } from './Alert';
 
-import i18n from '@/i18n';
+import i18n from '@/utils/plugins/i18n';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 
