@@ -31,12 +31,14 @@ describe('AssignAgentCard.vue', () => {
       },
       props: {
         loading: false,
-        title: 'Test Title',
-        description: 'Test Description',
-        skills: [
-          { name: 'Skill 1', icon: 'icon-1' },
-          { name: 'Skill 2', icon: 'icon-2' },
-        ],
+        agent: {
+          name: 'Test Title',
+          description: 'Test Description',
+          skills: [
+            { name: 'Skill 1', icon: 'icon-1' },
+            { name: 'Skill 2', icon: 'icon-2' },
+          ],
+        },
       },
     });
   });
@@ -83,7 +85,9 @@ describe('AssignAgentCard.vue', () => {
       expect(assignButton().props('type')).toBe('primary');
       expect(assignButton().props('iconLeft')).toBe('');
 
-      await wrapper.setProps({ assigned: true });
+      await wrapper.setProps({
+        agent: { ...wrapper.props('agent'), assigned: true },
+      });
 
       expect(assignButton().props('type')).toBe('secondary');
       expect(assignButton().props('iconLeft')).toBe('check');

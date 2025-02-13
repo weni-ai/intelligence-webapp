@@ -3,9 +3,6 @@ import { computed, ref } from 'vue';
 import { cloneDeep } from 'lodash';
 
 import globalStore from '.';
-import { useAlertStore } from './Alert';
-
-import i18n from '@/utils/plugins/i18n';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 
@@ -13,8 +10,6 @@ export const useTuningsStore = defineStore('Tunings', () => {
   const connectProjectUuid = computed(
     () => globalStore.state.Auth.connectProjectUuid,
   );
-
-  const alertStore = useAlertStore();
 
   const initialCredentials = ref(null);
   const credentials = ref({
@@ -46,6 +41,26 @@ export const useTuningsStore = defineStore('Tunings', () => {
 
     return hasAllCredentials && hasChanges;
   });
+
+  function getCredentialIndex(credentialName) {
+    const myAgentsIndex = credentials.value.data.myAgents.findIndex(
+      (credential) => credential.name === credentialName,
+    );
+
+    const officialAgentsIndex = credentials.value.data.officialAgents.findIndex(
+      (credential) => credential.name === credentialName,
+    );
+
+    return [
+      myAgentsIndex !== -1 ? myAgentsIndex : officialAgentsIndex,
+      myAgentsIndex !== -1 ? 'myAgents' : 'officialAgents',
+    ];
+  }
+
+  function updateCredentialValue(credentialName, value) {
+    const [index, type] = getCredentialIndex(credentialName);
+    credentials.value.data[type][index].value = value;
+  }
 
   async function fetchCredentials() {
     if (credentials.value.data) {
@@ -98,13 +113,6 @@ export const useTuningsStore = defineStore('Tunings', () => {
       initialCredentials.value = cloneDeep(credentials.value.data);
 
       credentials.value.status = 'success';
-
-      alertStore.add({
-        text: i18n.global.t(
-          'router.tunings.credentials.credentials_updated_successfully',
-        ),
-        type: 'success',
-      });
     } catch (error) {
       credentials.value.status = 'error';
     }
@@ -114,6 +122,8 @@ export const useTuningsStore = defineStore('Tunings', () => {
     credentials,
     isCredentialsValid,
     initialCredentials,
+    getCredentialIndex,
+    updateCredentialValue,
     fetchCredentials,
     saveCredentials,
   };

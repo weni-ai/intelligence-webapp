@@ -43,13 +43,16 @@ export const AgentsTeam = {
     );
 
     return {
-      data: data.map(({ uuid, name, description, skills, assigned }) => ({
-        uuid,
-        name,
-        description,
-        skills,
-        assigned,
-      })),
+      data: data.map(
+        ({ uuid, name, description, skills, assigned, credentials }) => ({
+          uuid,
+          name,
+          description,
+          skills,
+          assigned,
+          credentials,
+        }),
+      ),
     };
   },
 
@@ -66,12 +69,13 @@ export const AgentsTeam = {
           external_id: manager.external_id,
         },
         agents: agents.map(
-          ({ uuid, name, skills, external_id, description }) => ({
+          ({ uuid, name, skills, external_id, description, credentials }) => ({
             uuid,
             name,
             skills,
             external_id,
             description,
+            credentials,
           }),
         ),
       },
