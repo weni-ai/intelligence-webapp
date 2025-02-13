@@ -145,13 +145,16 @@
       "description": "Crie a equipe de agentes perfeita.",
       "card": {
         "assign": "Atribuir ao time",
-        "assigned": "Atribuído"
+        "assigned": "Atribuído",
+        "success_alert": "Agente atribuído ao time com sucesso"
       },
       "drawer": {
         "title": "Atribuir {name} ao time",
         "description": "Insira as credenciais para atribuir o agente",
         "use_credentials": "Usar credenciais do Ajustes",
-        "assign": "Atribuir"
+        "assign": "Atribuir",
+        "credentials_used_by_this_agent": "Credenciais usadas por este agente",
+        "credentials_shared_with_all_agents": "Essas credenciais serão compartilhadas para que todos os agentes tenham acesso"
       },
       "active_team": {
         "title": "Equipe ativa",

@@ -145,13 +145,16 @@
       "description": "Build the perfect agent team.",
       "card": {
         "assign": "Assign to team",
-        "assigned": "Assigned"
+        "assigned": "Assigned",
+        "success_alert": "Agent assigned to team successfully"
       },
       "drawer": {
         "title": "Assign {name} to team",
         "description": "Enter the credentials to assign the agent",
         "use_credentials": "Use credentials from Tunings",
-        "assign": "Assign"
+        "assign": "Assign",
+        "credentials_used_by_this_agent": "Credentials used by this agent",
+        "credentials_shared_with_all_agents": "These credentials will be shared so that all agents have access"
       },
       "active_team": {
         "title": "Active team",

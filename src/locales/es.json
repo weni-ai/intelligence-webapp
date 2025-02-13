@@ -145,13 +145,16 @@
       "description": "Construye el equipo de agentes perfecto.",
       "card": {
         "assign": "Asignar al equipo",
-        "assigned": "Asignado"
+        "assigned": "Asignado",
+        "success_alert": "Agente asignado al equipo con éxito"
       }, 
       "drawer": {
         "title": "Asignar {name} al equipo",
         "description": "Ingrese las credenciales para asignar el agente",
         "use_credentials": "Usar credenciales de Ajustes",
-        "assign": "Asignar"
+        "assign": "Asignar",
+        "credentials_used_by_this_agent": "Credenciales usadas por este agente",
+        "credentials_shared_with_all_agents": "Estas credenciales serán compartidas para que todos los agentes tengan acceso"
       },
       "active_team": {
         "title": "Equipo activo",

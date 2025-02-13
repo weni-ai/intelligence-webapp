@@ -75,11 +75,7 @@
           <AssignAgentCard
             v-for="agent in agentsData"
             :key="agent.uuid"
-            :title="agent.name"
-            :description="agent.description"
-            :skills="agent.skills"
-            :uuid="agent.uuid"
-            :assigned="agent.assigned"
+            :agent="agent"
             data-testid="agent-card"
           />
         </template>

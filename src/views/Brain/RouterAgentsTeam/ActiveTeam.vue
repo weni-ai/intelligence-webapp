@@ -28,9 +28,7 @@
         <AssignAgentCard
           v-for="agent in activeTeam"
           :key="agent.uuid"
-          :title="agent.name"
-          :skills="agent.skills"
-          :uuid="agent.uuid"
+          :agent="agent"
           :assignment="false"
           data-testid="team-card"
         />
