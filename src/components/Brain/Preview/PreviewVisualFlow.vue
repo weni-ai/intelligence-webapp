@@ -2,9 +2,11 @@
   <section
     ref="visualFlowRef"
     class="visual-flow"
+    data-testid="visual-flow"
   >
-    <AgentCard
+    <PreviewAgentCard
       ref="managerRef"
+      data-testid="visual-flow-manager"
       name="Manager"
       :active="true"
       :currentTask="$t('router.preview.manager_task')"
@@ -13,9 +15,10 @@
 
     <BranchLines
       class="visual-flow__line"
+      data-testid="visual-flow-branch-lines"
       :positions="branchPositions"
       width="25"
-      :height="visualFlowRef?.$el.getBoundingClientRect().height"
+      :height="visualFlowHeight"
       :startY="managerRef?.$el.getBoundingClientRect().height"
       :coloredLineIndex="
         teamAgents?.findIndex(
@@ -24,11 +27,15 @@
       "
     />
 
-    <section class="visual-flow__team">
-      <AgentCard
+    <section
+      class="visual-flow__team"
+      data-testid="visual-flow-team"
+    >
+      <PreviewAgentCard
         v-for="(agent, index) in teamAgents"
         :key="agent.id"
         :ref="(el) => (agentRefs[index] = el)"
+        data-testid="visual-flow-agent"
         :name="agent.name"
         :active="isActiveAgent(agent)"
         :currentTask="
@@ -41,13 +48,13 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { usePreviewStore } from '@/store/Preview';
 
 import BranchLines from '@/assets/icons/BranchLines.vue';
-import AgentCard from './AgentCard.vue';
+import PreviewAgentCard from './PreviewAgentCard.vue';
 
 const agentsTeamStore = useAgentsTeamStore();
 const previewStore = usePreviewStore();
@@ -65,6 +72,8 @@ const branchPositions = computed(() => {
   const managerEl = managerRef.value.$el;
   const managerRect = managerEl.getBoundingClientRect();
 
+  visualFlowHeight.value; // Only access to ensure reactivity
+
   agentRefs.value.forEach((agentRef, index) => {
     if (!agentRef) return;
 
@@ -74,15 +83,32 @@ const branchPositions = computed(() => {
     const startY = 0;
     const endY = agentRect.top - managerRect.bottom + agentRect.height / 2;
 
-    positions.push({ startY, endY, isLeft: index % 2 === 0 });
+    positions.push({
+      startY,
+      endY,
+      isLeft: index % 2 === 0,
+    });
   });
-
   return positions;
 });
 
 function isActiveAgent(agent) {
   return agent.external_id === activeAgent.value?.external_id;
 }
+
+const visualFlowHeight = ref(0);
+const visualFlowRef = ref(null);
+
+watch(
+  () => activeAgent.value,
+  () => {
+    nextTick(() => {
+      visualFlowHeight.value =
+        visualFlowRef.value?.getBoundingClientRect().height;
+    });
+  },
+  { immediate: true, deep: true },
+);
 </script>
 
 <style lang="scss" scoped>
