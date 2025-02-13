@@ -40,51 +40,47 @@
           </section>
         </section>
 
-        <template v-else>
+        <UnnnicIntelligenceText
+          tag="p"
+          family="secondary"
+          size="body-gt"
+          color="neutral-cloudy"
+        >
+          {{ $t('router.agents_team.drawer.description') }}
+        </UnnnicIntelligenceText>
+
+        <UnnnicFormElement
+          v-for="(credential, key) in credentialsWithoutValue"
+          :key="key"
+          :label="credential.label"
+        >
+          <UnnnicInput
+            :modelValue="getCredentialValue(credential.name)"
+            :placeholder="credential.placeholder || credential.label"
+            @update:model-value="
+              tuningsStore.updateCredentialValue(credential.name, $event)
+            "
+          />
+        </UnnnicFormElement>
+
+        <section class="assign-agent-drawer__shared-info">
+          <UnnnicIcon
+            scheme="neutral-cleanest"
+            icon="info"
+            size="sm"
+            filled
+          />
           <UnnnicIntelligenceText
             tag="p"
             family="secondary"
-            size="body-gt"
-            color="neutral-cloudy"
+            size="body-md"
+            color="neutral-clean"
           >
-            {{ $t('router.agents_team.drawer.description') }}
+            {{
+              $t('router.agents_team.drawer.credentials_shared_with_all_agents')
+            }}
           </UnnnicIntelligenceText>
-
-          <UnnnicFormElement
-            v-for="(credential, key) in agent.credentials"
-            :key="key"
-            :label="credential.label"
-          >
-            <UnnnicInput
-              :modelValue="getCredentialValue(credential.name)"
-              :placeholder="credential.placeholder || credential.label"
-              @update:model-value="
-                tuningsStore.updateCredentialValue(credential.name, $event)
-              "
-            />
-          </UnnnicFormElement>
-
-          <section class="assign-agent-drawer__shared-info">
-            <UnnnicIcon
-              scheme="neutral-cleanest"
-              icon="info"
-              size="sm"
-              filled
-            />
-            <UnnnicIntelligenceText
-              tag="p"
-              family="secondary"
-              size="body-md"
-              color="neutral-clean"
-            >
-              {{
-                $t(
-                  'router.agents_team.drawer.credentials_shared_with_all_agents',
-                )
-              }}
-            </UnnnicIntelligenceText>
-          </section>
-        </template>
+        </section>
       </section>
     </template>
   </UnnnicDrawer>
@@ -121,10 +117,25 @@ const hasCredentialsWithValue = computed(() => {
   });
 });
 
-const credentialsWithValue = computed(() => {
+const credentialsWithoutValue = computed(() => {
   return (
-    props.agent.credentials?.filter((credential) =>
-      getCredentialValue(credential.name),
+    props.agent.credentials?.filter((credential) => {
+      const [index, type] = tuningsStore.getCredentialIndex(credential.name);
+      const value = tuningsStore.initialCredentials[type][index].value;
+      return !value?.trim();
+    }) || []
+  );
+});
+
+const credentialsWithValue = computed(() => {
+  const withoutValueNames = credentialsWithoutValue.value.map(
+    (cred) => cred.name,
+  );
+  return (
+    props.agent.credentials?.filter(
+      (credential) =>
+        getCredentialValue(credential.name) &&
+        !withoutValueNames.includes(credential.name),
     ) || []
   );
 });
