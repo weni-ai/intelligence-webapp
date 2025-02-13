@@ -146,13 +146,16 @@
       "description": "Build the perfect agent team.",
       "card": {
         "assign": "Assign to team",
-        "assigned": "Assigned"
+        "assigned": "Assigned",
+        "success_alert": "Agent assigned to team successfully"
       },
       "drawer": {
         "title": "Assign {name} to team",
         "description": "Enter the credentials to assign the agent",
         "use_credentials": "Use credentials from Tunings",
-        "assign": "Assign"
+        "assign": "Assign",
+        "credentials_used_by_this_agent": "Credentials used by this agent",
+        "credentials_shared_with_all_agents": "These credentials will be shared so that all agents have access"
       },
       "active_team": {
         "title": "Active team",
@@ -191,6 +194,7 @@
       "description": "Manage settings and track changes made.",
       "tabs": {
         "config": "Settings",
+        "credentials": "Credentials",
         "history": "History of changes"
       },
       "history": {
@@ -266,7 +270,11 @@
         }
       },
       "credentials": {
-        "description": "Enter the credentials to integrate the agents into the team"
+        "no_credentials": "No credentials inserted",
+        "used_by_official_agents": "Credentials used by official agents",
+        "used_by_customized_agents": "Credentials used by customized agents",
+        "used_by": "Used by",
+        "credentials_updated_successfully": "Credentials updated successfully"
       }
     },
     "preview": {

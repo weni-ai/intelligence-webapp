@@ -12,11 +12,11 @@ describe('CredentialsSkeleton.vue', () => {
     wrapper.unmount();
   });
 
-  it('should render 3 skeleton items with label and input skeletons', () => {
+  it('should render 2 skeleton items with label and input skeletons', () => {
     const skeletonItems = wrapper.findAll(
-      '[data-testid="credentials-skeleton-item"]',
+      '[data-testid="credentials-skeleton"]',
     );
-    expect(skeletonItems).toHaveLength(3);
+    expect(skeletonItems).toHaveLength(2);
 
     skeletonItems.forEach((item) => {
       const skeletonLoadings = item.findAllComponents(
@@ -33,15 +33,5 @@ describe('CredentialsSkeleton.vue', () => {
       expect(skeletonLoadings[1].props('width')).toBe('100%');
       expect(skeletonLoadings[1].props('tag')).toBe('div');
     });
-  });
-
-  it('should render an button skeleton loading at the bottom', () => {
-    const buttonSkeleton = wrapper
-      .findAllComponents('[data-testid="skeleton-loading"]')
-      .at(-1);
-    expect(buttonSkeleton.exists()).toBeTruthy();
-    expect(buttonSkeleton.props('height')).toBe('45px');
-    expect(buttonSkeleton.props('width')).toBe('100%');
-    expect(buttonSkeleton.props('tag')).toBe('div');
   });
 });

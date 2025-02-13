@@ -159,6 +159,17 @@ export default {
         );
       },
 
+      listCredentials({ projectUuid }) {
+        return request.$http.get(`api/project/${projectUuid}/credentials`);
+      },
+
+      editCredentials({ projectUuid, credentials = {} }) {
+        return request.$http.patch(
+          `api/project/${projectUuid}/credentials`,
+          credentials,
+        );
+      },
+
       historyChanges: {
         read({ projectUuid, pageSize = 10, page = 1, filter = '' }) {
           let url = `api/${projectUuid}/activities/?page=${page}&page_size=${pageSize}`;

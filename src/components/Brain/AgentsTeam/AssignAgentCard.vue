@@ -25,25 +25,24 @@
         weight="bold"
         data-testid="title"
       >
-        {{ title }}
+        {{ agent.name }}
       </UnnnicIntelligenceText>
 
       <UnnnicIntelligenceText
-        v-if="description"
+        v-if="agent.description && assignment"
         class="content__description"
         tag="p"
         family="secondary"
         size="body-gt"
         color="neutral-cloudy"
         data-testid="description"
-        :title="description"
       >
-        {{ description }}
+        {{ agent.description }}
       </UnnnicIntelligenceText>
 
       <section class="content__skills">
         <Skill
-          v-for="skill in skills"
+          v-for="skill in agent.skills"
           :key="skill.name"
           :title="skill.name"
           :icon="skill.icon"
@@ -56,21 +55,32 @@
       v-if="!loading && !empty && assignment"
       :class="[
         'assign-agent-card__button',
-        { 'assign-agent-card__button--assigned': assigned },
+        { 'assign-agent-card__button--assigned': agent.assigned },
       ]"
       :text="
-        assigned
+        agent.assigned
           ? $t('router.agents_team.card.assigned')
           : $t('router.agents_team.card.assign')
       "
-      :type="assigned ? 'secondary' : 'primary'"
-      :iconLeft="assigned ? 'check' : ''"
+      :type="agent.assigned ? 'secondary' : 'primary'"
+      :iconLeft="agent.assigned ? 'check' : ''"
       size="small"
       :loading="isAssigning"
       data-testid="assign-button"
-      @click="toggleAgentAssignment"
+      @click="
+        !agent.assigned && agent.credentials?.length > 0
+          ? toggleDrawer()
+          : toggleAgentAssignment()
+      "
     />
   </section>
+
+  <AssignAgentDrawer
+    v-model="isAssignDrawerOpen"
+    :agent="agent"
+    :isAssigning="isDrawerAssigning"
+    @assign="toggleDrawerAssigning"
+  />
 </template>
 
 <script setup>
@@ -81,43 +91,20 @@ import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import AssignAgentCardSkeleton from './AssignAgentCardSkeleton.vue';
 import AssignAgentCardEmpty from './AssignAgentCardEmpty.vue';
 import Skill from './Skill.vue';
+import AssignAgentDrawer from './AssignAgentDrawer.vue';
 
 const props = defineProps({
   loading: {
     type: Boolean,
     default: false,
   },
-  title: {
-    type: String,
-    default: '',
-  },
-  description: {
-    type: String,
-    default: '',
-  },
-  /**
-   * An array of skills where each skill is an object with the following properties:
-   * @property {string} name - The name of the skill
-   * @property {string} icon - The icon of the skill
-   */
-  skills: {
-    type: Array,
-    default: () => [],
-    validator(skills) {
-      return skills.every((skill) => 'name' in skill && 'icon' in skill);
-    },
+  agent: {
+    type: Object,
+    default: () => ({}),
   },
   assignment: {
     type: Boolean,
     default: true,
-  },
-  assigned: {
-    type: Boolean,
-    default: false,
-  },
-  uuid: {
-    type: String,
-    default: '',
   },
   empty: {
     type: Boolean,
@@ -125,22 +112,38 @@ const props = defineProps({
   },
 });
 
-const isAssigning = ref(false);
 const agentsTeamStore = useAgentsTeamStore();
 
-async function toggleAgentAssignment() {
-  isAssigning.value = true;
+const isAssignDrawerOpen = ref(false);
+const isAssigning = ref(false);
+const isDrawerAssigning = ref(false);
 
+async function toggleDrawer() {
+  isAssignDrawerOpen.value = !isAssignDrawerOpen.value;
+}
+
+async function assignAgent() {
   try {
     await agentsTeamStore.toggleAgentAssignment({
-      uuid: props.uuid,
-      is_assigned: !props.assigned,
+      uuid: props.agent.uuid,
+      is_assigned: !props.agent.assigned,
     });
   } catch (error) {
     console.error(error);
-  } finally {
-    isAssigning.value = false;
   }
+}
+
+async function toggleAgentAssignment() {
+  isAssigning.value = true;
+  await assignAgent();
+  isAssigning.value = false;
+}
+
+async function toggleDrawerAssigning() {
+  isDrawerAssigning.value = true;
+  await assignAgent();
+  isDrawerAssigning.value = false;
+  toggleDrawer();
 }
 </script>
 

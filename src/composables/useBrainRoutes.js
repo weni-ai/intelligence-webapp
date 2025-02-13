@@ -51,6 +51,7 @@ export default function useBrainRoutes() {
           },
       {
         title: 'tunings',
+        description: t('router.tunings.description'),
         page: 'router-tunings',
         icon: 'settings',
         preview: true,
