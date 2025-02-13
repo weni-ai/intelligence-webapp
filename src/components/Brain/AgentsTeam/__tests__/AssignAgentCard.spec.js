@@ -4,7 +4,7 @@ import { mount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-import AgentCard from '../AgentCard.vue';
+import AssignAgentCard from '../AssignAgentCard.vue';
 
 const pinia = createTestingPinia({
   initialState: {
@@ -19,24 +19,26 @@ const pinia = createTestingPinia({
   },
 });
 
-describe('AgentCard.vue', () => {
+describe('AssignAgentCard.vue', () => {
   let wrapper;
 
   const agentsTeamStore = useAgentsTeamStore();
 
   beforeEach(() => {
-    wrapper = mount(AgentCard, {
+    wrapper = mount(AssignAgentCard, {
       global: {
         plugins: [pinia],
       },
       props: {
         loading: false,
-        title: 'Test Title',
-        description: 'Test Description',
-        skills: [
-          { name: 'Skill 1', icon: 'icon-1' },
-          { name: 'Skill 2', icon: 'icon-2' },
-        ],
+        agent: {
+          name: 'Test Title',
+          description: 'Test Description',
+          skills: [
+            { name: 'Skill 1', icon: 'icon-1' },
+            { name: 'Skill 2', icon: 'icon-2' },
+          ],
+        },
       },
     });
   });
@@ -49,7 +51,9 @@ describe('AgentCard.vue', () => {
     await wrapper.setProps({ loading: true });
 
     expect(
-      wrapper.findComponent('[data-testid="agent-card-skeleton"]').exists(),
+      wrapper
+        .findComponent('[data-testid="assign-agent-card-skeleton"]')
+        .exists(),
     ).toBe(true);
   });
 
@@ -81,7 +85,9 @@ describe('AgentCard.vue', () => {
       expect(assignButton().props('type')).toBe('primary');
       expect(assignButton().props('iconLeft')).toBe('');
 
-      await wrapper.setProps({ assigned: true });
+      await wrapper.setProps({
+        agent: { ...wrapper.props('agent'), assigned: true },
+      });
 
       expect(assignButton().props('type')).toBe('secondary');
       expect(assignButton().props('iconLeft')).toBe('check');
@@ -101,17 +107,17 @@ describe('AgentCard.vue', () => {
     it('should add empty class when empty prop is true', async () => {
       await wrapper.setProps({ empty: true });
 
-      const agentCard = wrapper.find('[data-testid="agent-card"]');
+      const assignAgentCard = wrapper.find('[data-testid="assign-agent-card"]');
 
-      expect(agentCard.classes()).toContain('agent-card--empty');
+      expect(assignAgentCard.classes()).toContain('assign-agent-card--empty');
     });
 
     it('should render agent card empty when empty prop is true', async () => {
       await wrapper.setProps({ empty: true });
 
-      expect(wrapper.find('[data-testid="agent-card-empty"]').exists()).toBe(
-        true,
-      );
+      expect(
+        wrapper.find('[data-testid="assign-agent-card-empty"]').exists(),
+      ).toBe(true);
     });
 
     it('should log error when toggleAgentAssignment throws an error', async () => {

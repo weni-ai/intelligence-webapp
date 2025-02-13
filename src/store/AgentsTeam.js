@@ -2,9 +2,14 @@ import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
 import nexusaiAPI from '@/api/nexusaiAPI.js';
+import { useAlertStore } from './Alert';
+
+import i18n from '@/utils/plugins/i18n';
 
 export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
   const linkToCreateAgent = 'https://github.com/weni-ai/weni-cli';
+
+  const alertStore = useAlertStore();
 
   const activeTeam = reactive({
     status: null,
@@ -89,6 +94,11 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
       if (agent) {
         agent.assigned = data.assigned;
       }
+
+      alertStore.add({
+        text: i18n.global.t('router.agents_team.card.success_alert'),
+        type: 'success',
+      });
     } catch (error) {
       console.error('error', error);
     }

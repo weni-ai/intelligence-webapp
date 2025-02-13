@@ -1,15 +1,6 @@
 <template>
-  <section class="tunings__container">
-    <header class="tunings__container_header">
-      <UnnnicIntelligenceText
-        tag="p"
-        family="secondary"
-        size="body-gt"
-      >
-        {{ $t('router.tunings.description') }}
-      </UnnnicIntelligenceText>
-    </header>
-    <section class="tunings__container_tabs">
+  <section class="tunings">
+    <section class="tunings__tabs">
       <UnnnicTab
         :tabs="tabs.map((e) => e.page)"
         :activeTab="activeTab"
@@ -25,6 +16,7 @@
       </UnnnicTab>
     </section>
     <section>
+      <Credentials v-if="activeTab === 'credentials'" />
       <Settings
         v-if="activeTab === 'config'"
         :data="props.data"
@@ -35,11 +27,13 @@
 </template>
 
 <script setup>
-import ChangesHistory from '@/components/Brain/Tunings/ChangesHistory.vue';
-import Settings from '@/components/Brain/Tunings/Settings.vue';
-import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+
+import ChangesHistory from '@/components/Brain/Tunings/ChangesHistory.vue';
+import Settings from '@/components/Brain/Tunings/Settings.vue';
+import Credentials from '@/components/Brain/Tunings/Credentials/index.vue';
 
 const store = useStore();
 
@@ -47,12 +41,14 @@ const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
 const tabs = ref(
   [
-    isAgentsTeamEnabled ? null : { title: 'config', page: 'config' },
+    isAgentsTeamEnabled
+      ? { title: 'credentials', page: 'credentials' }
+      : { title: 'config', page: 'config' },
     { title: 'history', page: 'hist' },
   ].filter((obj) => obj),
 );
 
-const activeTab = ref(isAgentsTeamEnabled ? 'hist' : 'config');
+const activeTab = ref(isAgentsTeamEnabled ? 'credentials' : 'config');
 
 const props = defineProps({
   data: {
@@ -74,15 +70,8 @@ const onTabChange = (newTab) => {
 </script>
 
 <style lang="scss" scoped>
-.tunings__container {
-  &_header {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &_tabs {
-    margin: $unnnic-spacing-md 0 0 0;
-
+.tunings {
+  &__tabs {
     :deep(.tab-header) {
       margin-bottom: $unnnic-spacing-md;
     }

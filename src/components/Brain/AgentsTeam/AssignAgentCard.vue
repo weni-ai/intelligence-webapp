@@ -1,21 +1,21 @@
 <template>
   <section
-    data-testid="agent-card"
-    :class="['agent-card', { 'agent-card--empty': empty }]"
+    data-testid="assign-agent-card"
+    :class="['assign-agent-card', { 'assign-agent-card--empty': empty }]"
   >
-    <AgentCardSkeleton
+    <AssignAgentCardSkeleton
       v-if="loading"
-      data-testid="agent-card-skeleton"
+      data-testid="assign-agent-card-skeleton"
     />
 
-    <AgentCardEmpty
+    <AssignAgentCardEmpty
       v-else-if="empty"
-      data-testid="agent-card-empty"
+      data-testid="assign-agent-card-empty"
     />
 
     <section
       v-else
-      class="agent-card__content"
+      class="assign-agent-card__content"
     >
       <UnnnicIntelligenceText
         tag="p"
@@ -25,25 +25,24 @@
         weight="bold"
         data-testid="title"
       >
-        {{ title }}
+        {{ agent.name }}
       </UnnnicIntelligenceText>
 
       <UnnnicIntelligenceText
-        v-if="description"
+        v-if="agent.description && assignment"
         class="content__description"
         tag="p"
         family="secondary"
         size="body-gt"
         color="neutral-cloudy"
         data-testid="description"
-        :title="description"
       >
-        {{ description }}
+        {{ agent.description }}
       </UnnnicIntelligenceText>
 
       <section class="content__skills">
         <Skill
-          v-for="skill in skills"
+          v-for="skill in agent.skills"
           :key="skill.name"
           :title="skill.name"
           :icon="skill.icon"
@@ -55,22 +54,33 @@
     <UnnnicButton
       v-if="!loading && !empty && assignment"
       :class="[
-        'agent-card__button',
-        { 'agent-card__button--assigned': assigned },
+        'assign-agent-card__button',
+        { 'assign-agent-card__button--assigned': agent.assigned },
       ]"
       :text="
-        assigned
+        agent.assigned
           ? $t('router.agents_team.card.assigned')
           : $t('router.agents_team.card.assign')
       "
-      :type="assigned ? 'secondary' : 'primary'"
-      :iconLeft="assigned ? 'check' : ''"
+      :type="agent.assigned ? 'secondary' : 'primary'"
+      :iconLeft="agent.assigned ? 'check' : ''"
       size="small"
       :loading="isAssigning"
       data-testid="assign-button"
-      @click="toggleAgentAssignment"
+      @click="
+        !agent.assigned && agent.credentials?.length > 0
+          ? toggleDrawer()
+          : toggleAgentAssignment()
+      "
     />
   </section>
+
+  <AssignAgentDrawer
+    v-model="isAssignDrawerOpen"
+    :agent="agent"
+    :isAssigning="isDrawerAssigning"
+    @assign="toggleDrawerAssigning"
+  />
 </template>
 
 <script setup>
@@ -78,48 +88,23 @@ import { ref } from 'vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-import AgentCardSkeleton from './AgentCardSkeleton.vue';
-import AgentCardEmpty from './AgentCardEmpty.vue';
+import AssignAgentCardSkeleton from './AssignAgentCardSkeleton.vue';
+import AssignAgentCardEmpty from './AssignAgentCardEmpty.vue';
 import Skill from './Skill.vue';
-
-defineEmits(['assign']);
+import AssignAgentDrawer from './AssignAgentDrawer.vue';
 
 const props = defineProps({
   loading: {
     type: Boolean,
     default: false,
   },
-  title: {
-    type: String,
-    default: '',
-  },
-  description: {
-    type: String,
-    default: '',
-  },
-  /**
-   * An array of skills where each skill is an object with the following properties:
-   * @property {string} name - The name of the skill
-   * @property {string} icon - The icon of the skill
-   */
-  skills: {
-    type: Array,
-    default: () => [],
-    validator(skills) {
-      return skills.every((skill) => 'name' in skill && 'icon' in skill);
-    },
+  agent: {
+    type: Object,
+    default: () => ({}),
   },
   assignment: {
     type: Boolean,
     default: true,
-  },
-  assigned: {
-    type: Boolean,
-    default: false,
-  },
-  uuid: {
-    type: String,
-    default: '',
   },
   empty: {
     type: Boolean,
@@ -127,27 +112,43 @@ const props = defineProps({
   },
 });
 
-const isAssigning = ref(false);
 const agentsTeamStore = useAgentsTeamStore();
 
-async function toggleAgentAssignment() {
-  isAssigning.value = true;
+const isAssignDrawerOpen = ref(false);
+const isAssigning = ref(false);
+const isDrawerAssigning = ref(false);
 
+async function toggleDrawer() {
+  isAssignDrawerOpen.value = !isAssignDrawerOpen.value;
+}
+
+async function assignAgent() {
   try {
     await agentsTeamStore.toggleAgentAssignment({
-      uuid: props.uuid,
-      is_assigned: !props.assigned,
+      uuid: props.agent.uuid,
+      is_assigned: !props.agent.assigned,
     });
   } catch (error) {
     console.error(error);
-  } finally {
-    isAssigning.value = false;
   }
+}
+
+async function toggleAgentAssignment() {
+  isAssigning.value = true;
+  await assignAgent();
+  isAssigning.value = false;
+}
+
+async function toggleDrawerAssigning() {
+  isDrawerAssigning.value = true;
+  await assignAgent();
+  isDrawerAssigning.value = false;
+  toggleDrawer();
 }
 </script>
 
 <style lang="scss" scoped>
-.agent-card {
+.assign-agent-card {
   border-radius: $unnnic-border-radius-md;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
 
@@ -182,7 +183,7 @@ async function toggleAgentAssignment() {
     }
   }
 
-  :deep(.unnnic-button).agent-card__button {
+  :deep(.unnnic-button).assign-agent-card__button {
     &--assigned {
       color: $unnnic-color-weni-600;
     }

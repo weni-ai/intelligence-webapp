@@ -145,7 +145,16 @@
       "description": "Crie a equipe de agentes perfeita.",
       "card": {
         "assign": "Atribuir ao time",
-        "assigned": "Atribuído"
+        "assigned": "Atribuído",
+        "success_alert": "Agente atribuído ao time com sucesso"
+      },
+      "drawer": {
+        "title": "Atribuir {name} ao time",
+        "description": "Insira as credenciais para atribuir o agente",
+        "use_credentials": "Usar credenciais do Ajustes",
+        "assign": "Atribuir",
+        "credentials_used_by_this_agent": "Credenciais usadas por este agente",
+        "credentials_shared_with_all_agents": "Essas credenciais serão compartilhadas para que todos os agentes tenham acesso"
       },
       "active_team": {
         "title": "Equipe ativa",
@@ -184,6 +193,7 @@
       "description": "Gerencie as configurações e acompanhe as alterações realizadas.",
       "tabs": {
         "config": "Configurações",
+        "credentials": "Credenciais",
         "history": "Histórico de alterações"
       },
       "history": {
@@ -257,6 +267,13 @@
           "cancel": "Cancelar",
           "action": "Desativar"
         }
+      },
+      "credentials": {
+        "no_credentials": "Nenhuma credencial inserida",
+        "used_by_official_agents": "Credenciais usadas pelos agentes oficiais",
+        "used_by_customized_agents": "Credenciais usadas pelos agentes personalizados",
+        "used_by": "Usadas por",
+        "credentials_updated_successfully": "Credenciais atualizadas com sucesso"
       }
     },
     "preview": {

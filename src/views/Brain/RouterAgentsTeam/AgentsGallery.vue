@@ -46,7 +46,7 @@
       data-testid="agent-cards"
     >
       <template v-if="isLoadingAgents">
-        <AgentCard
+        <AssignAgentCard
           v-for="(_, index) in Array(3)"
           :key="index"
           loading
@@ -66,20 +66,16 @@
         </UnnnicIntelligenceText>
 
         <template v-else>
-          <AgentCard
+          <AssignAgentCard
             v-if="activeTab === 'my-agents'"
             data-testid="agent-card-empty"
             empty
           />
 
-          <AgentCard
+          <AssignAgentCard
             v-for="agent in agentsData"
             :key="agent.uuid"
-            :title="agent.name"
-            :description="agent.description"
-            :skills="agent.skills"
-            :uuid="agent.uuid"
-            :assigned="agent.assigned"
+            :agent="agent"
             data-testid="agent-card"
           />
         </template>
@@ -92,7 +88,7 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import { debounce } from 'lodash';
 
-import AgentCard from '@/components/Brain/AgentsTeam/AgentCard.vue';
+import AssignAgentCard from '@/components/Brain/AgentsTeam/AssignAgentCard.vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 

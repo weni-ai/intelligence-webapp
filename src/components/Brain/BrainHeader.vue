@@ -25,11 +25,11 @@
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
     <UnnnicButton
-      v-else-if="route.name === 'router-tunings' && !isAgentsTeamEnabled"
+      v-else-if="route.name === 'router-tunings'"
       class="save-button"
-      :disabled="$store.getters.isBrainSaveButtonDisabled"
-      :loading="$store.state.Brain.isSavingChanges"
-      @click="$store.dispatch('saveBrainChanges')"
+      :disabled="isTuningsSaveButtonDisabled"
+      :loading="isTuningsSaveButtonLoading"
+      @click="saveTunings"
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
@@ -62,11 +62,19 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue';
+import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { format, subDays } from 'date-fns';
+
 import useBrainRoutes from '@/composables/useBrainRoutes';
+
 import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useTuningsStore } from '@/store/Tunings';
+import { useAlertStore } from '@/store/Alert';
+
+import i18n from '@/utils/plugins/i18n';
+
 import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
 import PreviewDrawer from './Preview/PreviewDrawer.vue';
 
@@ -91,6 +99,40 @@ const currentBrainRoute = computed(() => {
 });
 
 const showDateFilter = computed(() => route.name === 'router-monitoring');
+
+const tuningsStore = useTuningsStore();
+const store = useStore();
+
+const isTuningsSaveButtonDisabled = computed(() => {
+  return isAgentsTeamEnabled
+    ? !tuningsStore.isCredentialsValid
+    : store.getters.isBrainSaveButtonDisabled;
+});
+
+const isTuningsSaveButtonLoading = computed(() => {
+  return isAgentsTeamEnabled
+    ? tuningsStore.credentials.status === 'loading' &&
+        tuningsStore.credentials.data
+    : store.state.Brain.isSavingChanges;
+});
+
+async function saveTunings() {
+  if (isAgentsTeamEnabled) {
+    try {
+      await tuningsStore.saveCredentials();
+      useAlertStore().add({
+        text: i18n.global.t(
+          'router.tunings.credentials.credentials_updated_successfully',
+        ),
+        type: 'success',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    store.dispatch('saveBrainChanges');
+  }
+}
 
 function updateQueriesAtFilterDate() {
   if (!showDateFilter.value) return;
