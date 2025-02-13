@@ -190,6 +190,7 @@
       "description": "Manage settings and track changes made.",
       "tabs": {
         "config": "Settings",
+        "credentials": "Credentials",
         "history": "History of changes"
       },
       "history": {
@@ -265,7 +266,11 @@
         }
       },
       "credentials": {
-        "description": "Enter the credentials to integrate the agents into the team"
+        "no_credentials": "No credentials inserted",
+        "used_by_official_agents": "Credentials used by official agents",
+        "used_by_customized_agents": "Credentials used by customized agents",
+        "used_by": "Used by",
+        "credentials_updated_successfully": "Credentials updated successfully"
       }
     },
     "preview": {

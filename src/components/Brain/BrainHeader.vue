@@ -25,11 +25,11 @@
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
     <UnnnicButton
-      v-else-if="route.name === 'router-tunings' && !isAgentsTeamEnabled"
+      v-else-if="route.name === 'router-tunings'"
       class="save-button"
-      :disabled="$store.getters.isBrainSaveButtonDisabled"
-      :loading="$store.state.Brain.isSavingChanges"
-      @click="$store.dispatch('saveBrainChanges')"
+      :disabled="isTuningsSaveButtonDisabled"
+      :loading="isTuningsSaveButtonLoading"
+      @click="saveTunings"
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
@@ -69,6 +69,8 @@ import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
 import PreviewDrawer from './Preview/PreviewDrawer.vue';
+import { useTuningsStore } from '@/store/Tunings';
+import { useStore } from 'vuex';
 
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
@@ -91,6 +93,30 @@ const currentBrainRoute = computed(() => {
 });
 
 const showDateFilter = computed(() => route.name === 'router-monitoring');
+
+const tuningsStore = useTuningsStore();
+const store = useStore();
+
+const isTuningsSaveButtonDisabled = computed(() => {
+  return isAgentsTeamEnabled
+    ? !tuningsStore.isCredentialsValid
+    : store.getters.isBrainSaveButtonDisabled;
+});
+
+const isTuningsSaveButtonLoading = computed(() => {
+  return isAgentsTeamEnabled
+    ? tuningsStore.credentials.status === 'loading' &&
+        tuningsStore.credentials.data
+    : store.state.Brain.isSavingChanges;
+});
+
+function saveTunings() {
+  if (isAgentsTeamEnabled) {
+    tuningsStore.saveCredentials();
+  } else {
+    store.dispatch('saveBrainChanges');
+  }
+}
 
 function updateQueriesAtFilterDate() {
   if (!showDateFilter.value) return;

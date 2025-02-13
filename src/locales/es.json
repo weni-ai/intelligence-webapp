@@ -146,6 +146,12 @@
       "card": {
         "assign": "Asignar al equipo",
         "assigned": "Asignado"
+      }, 
+      "drawer": {
+        "title": "Asignar {name} al equipo",
+        "description": "Ingrese las credenciales para asignar el agente",
+        "use_credentials": "Usar credenciales de Ajustes",
+        "assign": "Asignar"
       },
       "active_team": {
         "title": "Equipo activo",
@@ -184,6 +190,7 @@
       "description": "Gestionar la configuración y realizar un seguimiento de los cambios realizados",
       "tabs": {
         "config": "Configuración",
+        "credentials": "Credenciales",
         "history": "Historial de cambios"
       },
       "history": {
@@ -257,9 +264,13 @@
           "cancel": "Cancelar",
           "action": "Desactivar"
         }
-      },
+        },
       "credentials": {
-        "description": "Introduzca las credenciales para integrar los agentes en el equipo"
+        "no_credentials": "No hay credenciales insertadas",
+        "used_by_official_agents": "Credenciales usadas por los agentes oficiales",
+        "used_by_customized_agents": "Credenciales usadas por los agentes personalizados",
+        "used_by": "Usadas por",
+        "credentials_updated_successfully": "Credenciales actualizadas con éxito"
       }
     },
     "preview": {

@@ -147,6 +147,12 @@
         "assign": "Atribuir ao time",
         "assigned": "Atribuído"
       },
+      "drawer": {
+        "title": "Atribuir {name} ao time",
+        "description": "Insira as credenciais para atribuir o agente",
+        "use_credentials": "Usar credenciais do Ajustes",
+        "assign": "Atribuir"
+      },
       "active_team": {
         "title": "Equipe ativa",
         "no_team": "Nenhum agente na sua equipe",
@@ -184,6 +190,7 @@
       "description": "Gerencie as configurações e acompanhe as alterações realizadas.",
       "tabs": {
         "config": "Configurações",
+        "credentials": "Credenciais",
         "history": "Histórico de alterações"
       },
       "history": {
@@ -259,7 +266,11 @@
         }
       },
       "credentials": {
-        "description": "Insira as credenciais para integrar os agentes na equipe"
+        "no_credentials": "Nenhuma credencial inserida",
+        "used_by_official_agents": "Credenciais usadas pelos agentes oficiais",
+        "used_by_customized_agents": "Credenciais usadas pelos agentes personalizados",
+        "used_by": "Usadas por",
+        "credentials_updated_successfully": "Credenciais atualizadas com sucesso"
       }
     },
     "preview": {
