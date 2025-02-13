@@ -2,9 +2,11 @@
   <section
     ref="visualFlowRef"
     class="visual-flow"
+    data-testid="visual-flow"
   >
-    <AgentCard
+    <PreviewAgentCard
       ref="managerRef"
+      data-testid="visual-flow-manager"
       name="Manager"
       :active="true"
       :currentTask="$t('router.preview.manager_task')"
@@ -13,6 +15,7 @@
 
     <BranchLines
       class="visual-flow__line"
+      data-testid="visual-flow-branch-lines"
       :positions="branchPositions"
       width="25"
       :height="visualFlowHeight"
@@ -24,11 +27,15 @@
       "
     />
 
-    <section class="visual-flow__team">
-      <AgentCard
+    <section
+      class="visual-flow__team"
+      data-testid="visual-flow-team"
+    >
+      <PreviewAgentCard
         v-for="(agent, index) in teamAgents"
         :key="agent.id"
         :ref="(el) => (agentRefs[index] = el)"
+        data-testid="visual-flow-agent"
         :name="agent.name"
         :active="isActiveAgent(agent)"
         :currentTask="
@@ -47,7 +54,7 @@ import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { usePreviewStore } from '@/store/Preview';
 
 import BranchLines from '@/assets/icons/BranchLines.vue';
-import AgentCard from './AgentCard.vue';
+import PreviewAgentCard from './PreviewAgentCard.vue';
 
 const agentsTeamStore = useAgentsTeamStore();
 const previewStore = usePreviewStore();
