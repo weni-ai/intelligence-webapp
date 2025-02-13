@@ -40,47 +40,51 @@
           </section>
         </section>
 
-        <UnnnicIntelligenceText
-          tag="p"
-          family="secondary"
-          size="body-gt"
-          color="neutral-cloudy"
-        >
-          {{ $t('router.agents_team.drawer.description') }}
-        </UnnnicIntelligenceText>
-
-        <UnnnicFormElement
-          v-for="(credential, key) in credentialsWithoutValue"
-          :key="key"
-          :label="credential.label"
-        >
-          <UnnnicInput
-            :modelValue="getCredentialValue(credential.name)"
-            :placeholder="credential.placeholder || credential.label"
-            @update:model-value="
-              tuningsStore.updateCredentialValue(credential.name, $event)
-            "
-          />
-        </UnnnicFormElement>
-
-        <section class="assign-agent-drawer__shared-info">
-          <UnnnicIcon
-            scheme="neutral-cleanest"
-            icon="info"
-            size="sm"
-            filled
-          />
+        <template v-if="credentialsWithoutValue.length">
           <UnnnicIntelligenceText
             tag="p"
             family="secondary"
-            size="body-md"
-            color="neutral-clean"
+            size="body-gt"
+            color="neutral-cloudy"
           >
-            {{
-              $t('router.agents_team.drawer.credentials_shared_with_all_agents')
-            }}
+            {{ $t('router.agents_team.drawer.description') }}
           </UnnnicIntelligenceText>
-        </section>
+
+          <UnnnicFormElement
+            v-for="(credential, key) in credentialsWithoutValue"
+            :key="key"
+            :label="credential.label"
+          >
+            <UnnnicInput
+              :modelValue="getCredentialValue(credential.name)"
+              :placeholder="credential.placeholder || credential.label"
+              @update:model-value="
+                tuningsStore.updateCredentialValue(credential.name, $event)
+              "
+            />
+          </UnnnicFormElement>
+
+          <section class="assign-agent-drawer__shared-info">
+            <UnnnicIcon
+              scheme="neutral-cleanest"
+              icon="info"
+              size="sm"
+              filled
+            />
+            <UnnnicIntelligenceText
+              tag="p"
+              family="secondary"
+              size="body-md"
+              color="neutral-clean"
+            >
+              {{
+                $t(
+                  'router.agents_team.drawer.credentials_shared_with_all_agents',
+                )
+              }}
+            </UnnnicIntelligenceText>
+          </section>
+        </template>
       </section>
     </template>
   </UnnnicDrawer>
