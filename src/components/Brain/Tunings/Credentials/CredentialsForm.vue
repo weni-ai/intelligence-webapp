@@ -52,8 +52,11 @@ const tuningsStore = useTuningsStore();
 
 function getCredentialDescription(credential) {
   const formattedAgents = formatListToReadable(
-    credential.agents_using.map((agent) => agent.name),
+    credential.agents_using?.map((agent) => agent.name),
   );
+
+  if (!formattedAgents)
+    return i18n.global.t('router.tunings.credentials.no_agents_using');
 
   return `${i18n.global.t('router.tunings.credentials.used_by')} ${formattedAgents}`;
 }

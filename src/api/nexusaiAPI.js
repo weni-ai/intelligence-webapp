@@ -170,6 +170,19 @@ export default {
         );
       },
 
+      createCredentials({
+        projectUuid,
+        credentials = {},
+        agent_uuid,
+        is_confidential = true,
+      }) {
+        return request.$http.post(`api/project/${projectUuid}/credentials`, {
+          credentials,
+          agent_uuid,
+          is_confidential,
+        });
+      },
+
       historyChanges: {
         read({ projectUuid, pageSize = 10, page = 1, filter = '' }) {
           let url = `api/${projectUuid}/activities/?page=${page}&page_size=${pageSize}`;

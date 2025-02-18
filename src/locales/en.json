@@ -273,6 +273,7 @@
         "used_by_official_agents": "Credentials used by official agents",
         "used_by_customized_agents": "Credentials used by customized agents",
         "used_by": "Used by",
+        "no_agents_using": "No agents using",
         "credentials_updated_successfully": "Credentials updated successfully"
       }
     },

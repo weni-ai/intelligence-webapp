@@ -1,5 +1,6 @@
 <template>
   <UnnnicDrawer
+    v-if="agent.credentials?.length"
     :modelValue="modelValue"
     class="assign-agent-drawer"
     :title="$t('router.agents_team.drawer.title', { name: agent.name })"
@@ -125,14 +126,14 @@ const credentialsWithoutValue = computed(() => {
   return (
     props.agent.credentials?.filter((credential) => {
       const [index, type] = tuningsStore.getCredentialIndex(credential.name);
-      const value = tuningsStore.initialCredentials[type][index].value;
+      const value = tuningsStore.initialCredentials?.[type]?.[index]?.value;
       return !value?.trim();
     }) || []
   );
 });
 
 const credentialsWithValue = computed(() => {
-  const withoutValueNames = credentialsWithoutValue.value.map(
+  const withoutValueNames = credentialsWithoutValue?.value.map(
     (cred) => cred.name,
   );
   return (
@@ -149,7 +150,7 @@ const hasAllCredentialsWithValue = computed(() => {
 
   return props.agent.credentials.every((credential) => {
     const [index, type] = tuningsStore.getCredentialIndex(credential.name);
-    const value = tuningsStore.credentials.data[type][index].value;
+    const value = tuningsStore.credentials.data?.[type]?.[index]?.value;
     return !!value?.trim();
   });
 });
@@ -159,14 +160,31 @@ function close() {
 }
 
 async function toggleAgentAssignment() {
-  await tuningsStore.saveCredentials();
-  emit('assign');
+  try {
+    const agentHaveCredentialsCreated = props.agent.credentials.some(
+      (credential) => {
+        const [index, type] = tuningsStore.getCredentialIndex(credential.name);
+
+        return tuningsStore.initialCredentials?.[type]?.[index];
+      },
+    );
+
+    if (!agentHaveCredentialsCreated) {
+      await tuningsStore.createCredentials(props.agent);
+    } else if (credentialsWithoutValue.value.length) {
+      await tuningsStore.saveCredentials();
+    }
+
+    emit('assign');
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 const getCredentialValue = (credentialName) => {
   const [index, type] = tuningsStore.getCredentialIndex(credentialName);
 
-  return tuningsStore.credentials.data[type][index].value;
+  return tuningsStore.credentials.data?.[type]?.[index]?.value;
 };
 </script>
 
