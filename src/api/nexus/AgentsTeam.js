@@ -21,13 +21,16 @@ export const AgentsTeam = {
     );
 
     return {
-      data: data.map(({ uuid, name, description, skills, assigned }) => ({
-        uuid,
-        name,
-        description,
-        skills,
-        assigned,
-      })),
+      data: data.map(
+        ({ uuid, name, description, skills, assigned, credentials }) => ({
+          uuid,
+          name,
+          description,
+          skills,
+          assigned,
+          credentials,
+        }),
+      ),
     };
   },
 
