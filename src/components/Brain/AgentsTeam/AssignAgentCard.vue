@@ -87,6 +87,7 @@
 import { ref } from 'vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import { useTuningsStore } from '@/store/Tunings';
 
 import AssignAgentCardSkeleton from './AssignAgentCardSkeleton.vue';
 import AssignAgentCardEmpty from './AssignAgentCardEmpty.vue';
@@ -118,6 +119,8 @@ const isAssignDrawerOpen = ref(false);
 const isAssigning = ref(false);
 const isDrawerAssigning = ref(false);
 
+const tuningsStore = useTuningsStore();
+
 async function toggleDrawer() {
   isAssignDrawerOpen.value = !isAssignDrawerOpen.value;
 }
@@ -142,6 +145,7 @@ async function toggleAgentAssignment() {
 async function toggleDrawerAssigning() {
   isDrawerAssigning.value = true;
   await assignAgent();
+  await tuningsStore.fetchCredentials();
   isDrawerAssigning.value = false;
   toggleDrawer();
 }
