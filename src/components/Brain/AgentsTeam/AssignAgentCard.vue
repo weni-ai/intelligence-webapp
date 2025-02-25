@@ -1,16 +1,11 @@
 <template>
   <section
     data-testid="assign-agent-card"
-    :class="['assign-agent-card', { 'assign-agent-card--empty': empty }]"
+    class="assign-agent-card"
   >
     <AssignAgentCardSkeleton
       v-if="loading"
       data-testid="assign-agent-card-skeleton"
-    />
-
-    <AssignAgentCardEmpty
-      v-else-if="empty"
-      data-testid="assign-agent-card-empty"
     />
 
     <section
@@ -52,7 +47,7 @@
     </section>
 
     <UnnnicButton
-      v-if="!loading && !empty && assignment"
+      v-if="!loading && assignment"
       :class="[
         'assign-agent-card__button',
         { 'assign-agent-card__button--assigned': agent.assigned },
@@ -90,7 +85,6 @@ import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { useTuningsStore } from '@/store/Tunings';
 
 import AssignAgentCardSkeleton from './AssignAgentCardSkeleton.vue';
-import AssignAgentCardEmpty from './AssignAgentCardEmpty.vue';
 import Skill from './Skill.vue';
 import AssignAgentDrawer from './AssignAgentDrawer.vue';
 
@@ -106,10 +100,6 @@ const props = defineProps({
   assignment: {
     type: Boolean,
     default: true,
-  },
-  empty: {
-    type: Boolean,
-    default: false,
   },
 });
 
@@ -161,12 +151,6 @@ async function toggleDrawerAssigning() {
   display: grid;
   gap: $unnnic-spacing-sm;
   align-content: space-between;
-
-  &--empty {
-    display: flex;
-
-    cursor: pointer;
-  }
 
   &__content {
     display: flex;

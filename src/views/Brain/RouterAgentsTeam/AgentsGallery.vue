@@ -67,12 +67,6 @@
 
         <template v-else>
           <AssignAgentCard
-            v-if="activeTab === 'my-agents'"
-            data-testid="agent-card-empty"
-            empty
-          />
-
-          <AssignAgentCard
             v-for="agent in agentsData"
             :key="agent.uuid"
             :agent="agent"
