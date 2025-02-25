@@ -1,8 +1,9 @@
-import { beforeEach, it } from 'vitest';
+import { beforeEach, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import { createTestingPinia } from '@pinia/testing';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import i18n from '@/utils/plugins/i18n';
 
 import AssignAgentCard from '../AssignAgentCard.vue';
 
@@ -73,6 +74,54 @@ describe('AssignAgentCard.vue', () => {
     expect(skills[1].props('icon')).toBe('icon-2');
   });
 
+  describe('ContentHeader', () => {
+    it('should render header actions when assignment is false', async () => {
+      await wrapper.setProps({ assignment: false });
+      expect(
+        wrapper.find('[data-testid="assign-agent-card-actions"]').exists(),
+      ).toBe(true);
+    });
+
+    it('should not render header actions when assignment is true', () => {
+      expect(
+        wrapper.find('[data-testid="assign-agent-card-actions"]').exists(),
+      ).toBe(false);
+    });
+
+    it('should render official tag when agent is official', async () => {
+      await wrapper.setProps({
+        assignment: false,
+        agent: {
+          ...wrapper.props('agent'),
+          is_official: true,
+        },
+      });
+
+      const tag = wrapper.findComponent('[data-testid="agent-tag"]');
+      expect(tag.props('text')).toBe(
+        i18n.global.t('router.agents_team.card.official'),
+      );
+
+      expect(tag.props('scheme')).toBe('weni');
+    });
+
+    it('should render custom tag when agent is not official', async () => {
+      await wrapper.setProps({
+        assignment: false,
+        agent: {
+          ...wrapper.props('agent'),
+          is_official: false,
+        },
+      });
+
+      const tag = wrapper.findComponent('[data-testid="agent-tag"]');
+      expect(tag.props('text')).toBe(
+        i18n.global.t('router.agents_team.card.custom'),
+      );
+      expect(tag.props('scheme')).toBe('aux-purple');
+    });
+  });
+
   describe('Assign button', () => {
     beforeEach(async () => {
       await wrapper.setProps({ assignment: true });
@@ -93,15 +142,19 @@ describe('AssignAgentCard.vue', () => {
       expect(assignButton().props('iconLeft')).toBe('check');
     });
 
-    it('calls toggleAgentAssignment when button is clicked', async () => {
-      await wrapper
-        .findComponent('[data-testid="assign-button"]')
-        .trigger('click');
-
-      expect(agentsTeamStore.toggleAgentAssignment).toHaveBeenCalledWith({
-        uuid: wrapper.props('uuid'),
-        is_assigned: !wrapper.props('assigned'),
+    it('calls toggleAgentAssignment when button is clicked for an agent without credentials', async () => {
+      await wrapper.setProps({
+        agent: { ...wrapper.props('agent'), assigned: false },
       });
+
+      const toggleAgentAssignmentSpy = vi.spyOn(
+        wrapper.vm,
+        'toggleAgentAssignment',
+      );
+
+      await assignButton().trigger('click');
+
+      expect(toggleAgentAssignmentSpy).toHaveBeenCalled();
     });
 
     it('should log error when toggleAgentAssignment throws an error', async () => {

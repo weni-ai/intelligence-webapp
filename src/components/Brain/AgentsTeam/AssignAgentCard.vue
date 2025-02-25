@@ -12,16 +12,40 @@
       v-else
       class="assign-agent-card__content"
     >
-      <UnnnicIntelligenceText
-        tag="p"
-        family="secondary"
-        size="body-gt"
-        color="neutral-darkest"
-        weight="bold"
-        data-testid="title"
-      >
-        {{ agent.name }}
-      </UnnnicIntelligenceText>
+      <header class="content__header">
+        <UnnnicIntelligenceText
+          tag="p"
+          family="secondary"
+          size="body-gt"
+          color="neutral-darkest"
+          weight="bold"
+          data-testid="title"
+        >
+          {{ agent.name }}
+        </UnnnicIntelligenceText>
+
+        <section
+          v-if="!assignment"
+          class="header__actions"
+          data-testid="assign-agent-card-actions"
+        >
+          <UnnnicTag
+            type="next"
+            :text="
+              agent.is_official
+                ? $t('router.agents_team.card.official')
+                : $t('router.agents_team.card.custom')
+            "
+            :scheme="agent.is_official ? 'weni' : 'aux-purple'"
+            data-testid="agent-tag"
+          />
+
+          <ContentItemActions
+            :actions="assignAgentHeaderActions"
+            minWidth="175px"
+          />
+        </section>
+      </header>
 
       <UnnnicIntelligenceText
         v-if="agent.description && assignment"
@@ -79,14 +103,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { useTuningsStore } from '@/store/Tunings';
 
+import i18n from '@/utils/plugins/i18n';
+
 import AssignAgentCardSkeleton from './AssignAgentCardSkeleton.vue';
-import Skill from './Skill.vue';
 import AssignAgentDrawer from './AssignAgentDrawer.vue';
+import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
+import Skill from './Skill.vue';
 
 const props = defineProps({
   loading: {
@@ -111,6 +138,15 @@ const isDrawerAssigning = ref(false);
 
 const tuningsStore = useTuningsStore();
 
+const assignAgentHeaderActions = computed(() => [
+  {
+    scheme: 'aux-red-500',
+    icon: 'delete',
+    text: i18n.global.t('router.agents_team.card.remove_agent'),
+    onClick: toggleAgentAssignment,
+  },
+]);
+
 async function toggleDrawer() {
   isAssignDrawerOpen.value = !isAssignDrawerOpen.value;
 }
@@ -119,7 +155,7 @@ async function assignAgent() {
   try {
     await agentsTeamStore.toggleAgentAssignment({
       uuid: props.agent.uuid,
-      is_assigned: !props.agent.assigned,
+      is_assigned: props.assignment ? !props.agent.assigned : false,
     });
   } catch (error) {
     console.error(error);
@@ -156,6 +192,18 @@ async function toggleDrawerAssigning() {
     display: flex;
     flex-direction: column;
     gap: $unnnic-spacing-xs;
+
+    .content__header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: $unnnic-spacing-xs;
+
+      .header__actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
 
     .content__description {
       display: -webkit-box;
