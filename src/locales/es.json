@@ -161,9 +161,8 @@
       },
       "active_team": {
         "title": "Equipo activo",
-        "no_team": "No hay agentes en su equipo",
-        "no_team_description": "Añadir agentes de la galería debajo o {link}",
-        "create_agent": "crear un agente"
+        "no_team": "No hay agentes asignados al equipo",
+        "no_team_description": "Vaya a {assign_agents} para ver la galería y asignar agentes a su equipo"
       },
       "gallery": {
         "title": "Galería de agentes",

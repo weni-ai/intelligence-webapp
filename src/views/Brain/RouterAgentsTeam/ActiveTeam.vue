@@ -29,10 +29,18 @@
       class="active-team__empty"
       data-testid="empty-state"
     >
+      <UnnnicIcon
+        class="empty__icon"
+        size="xl"
+        scheme="neutral-soft"
+        icon="workspaces"
+        filled
+      />
+
       <UnnnicIntelligenceText
         tag="p"
         family="secondary"
-        size="body-gt"
+        size="body-lg"
         color="neutral-dark"
         weight="bold"
       >
@@ -40,19 +48,17 @@
       </UnnnicIntelligenceText>
 
       <section class="empty__description">
+        <!-- This comment prevents from auto-capitalizing i18n-t to I18nT which would break the component -->
         <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
         <i18n-t
           class="description__text"
           keypath="router.agents_team.active_team.no_team_description"
           tag="p"
         >
-          <template #link>
-            <a
-              class="description__link"
-              :href="agentsTeamStore.linkToCreateAgent"
-              target="_blank"
-              >{{ $t('router.agents_team.active_team.create_agent') }}</a
-            >
+          <template #assign_agents>
+            <p class="description__assign-agents">
+              {{ $t('router.agents_team.assign_agents') }}
+            </p>
           </template>
         </i18n-t>
       </section>
@@ -83,42 +89,58 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .active-team {
-  border-radius: $unnnic-border-radius-md;
-  border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-
-  padding: $unnnic-spacing-sm;
-
   display: flex;
   flex-direction: column;
   gap: $unnnic-spacing-sm;
 
   &__empty {
-    border-radius: $unnnic-border-radius-md;
-    border: $unnnic-border-width-thinner dashed $unnnic-color-neutral-cleanest;
+    height: 100%;
 
     padding: $unnnic-spacing-xl $unnnic-spacing-sm;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 
-    background-color: $unnnic-color-neutral-lightest;
+    .empty__icon {
+      margin-bottom: $unnnic-spacing-ant;
+      font-size: $unnnic-font-size-body-gt * 4;
+    }
 
     .empty__description {
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: $unnnic-spacing-nano / 2;
 
       .description__text {
         font-family: $unnnic-font-family-secondary;
         font-size: $unnnic-font-size-body-md;
         color: $unnnic-color-neutral-cloudy;
+        display: contents;
       }
 
-      .description__link {
+      .description__assign-agents {
+        position: relative;
+
         font-size: $unnnic-font-size-body-md;
         color: $unnnic-color-neutral-cloudy;
-        text-decoration: underline;
+        font-weight: $unnnic-font-weight-bold;
+
+        cursor: pointer;
+
+        &::after {
+          content: '';
+
+          position: absolute;
+          bottom: 0;
+          left: 0;
+
+          width: 100%;
+          height: 1px;
+
+          background-color: $unnnic-color-neutral-cloudy;
+        }
       }
     }
   }
