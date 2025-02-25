@@ -5,16 +5,6 @@ exports[`ActiveTeam component > should match snapshot 1`] = `
   class="active-team"
   data-v-ef307fb1=""
 >
-  <h2
-    class="unnnic-text unnnic-text--size-body-lg unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-bold unnnic-text--color-neutral-darkest"
-    data-testid="title"
-    data-v-ec8da4ad=""
-    data-v-ef307fb1=""
-  >
-    
-    Active team
-    
-  </h2>
   <!--v-if-->
   <section
     class="active-team__empty"

@@ -1,16 +1,5 @@
 <template>
   <section class="active-team">
-    <UnnnicIntelligenceText
-      tag="h2"
-      family="secondary"
-      size="body-lg"
-      color="neutral-darkest"
-      weight="bold"
-      data-testid="title"
-    >
-      {{ $t('router.agents_team.active_team.title') }}
-    </UnnnicIntelligenceText>
-
     <section
       v-if="isLoadingTeam || activeTeam.length"
       class="active-team__cards"
