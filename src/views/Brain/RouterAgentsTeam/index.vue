@@ -6,11 +6,14 @@
     />
 
     <ActiveTeam />
+
+    <AgentsGalleryModal />
   </section>
 </template>
 
 <script setup>
 import ActiveTeam from './ActiveTeam.vue';
+import AgentsGalleryModal from './AgentsGalleryModal.vue';
 </script>
 
 <style lang="scss" scoped>
