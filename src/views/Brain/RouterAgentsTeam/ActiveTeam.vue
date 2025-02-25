@@ -56,7 +56,10 @@
           tag="p"
         >
           <template #assign_agents>
-            <p class="description__assign-agents">
+            <p
+              class="description__assign-agents"
+              @click="handleAgentsGallery"
+            >
               {{ $t('router.agents_team.assign_agents') }}
             </p>
           </template>
@@ -81,6 +84,10 @@ const activeTeam = computed(
 const isLoadingTeam = computed(
   () => agentsTeamStore.activeTeam.status === 'loading',
 );
+
+function handleAgentsGallery() {
+  agentsTeamStore.isAgentsGalleryOpen = true;
+}
 
 onMounted(() => {
   agentsTeamStore.loadActiveTeam();
