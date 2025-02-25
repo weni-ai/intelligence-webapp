@@ -173,7 +173,8 @@
         "no_agent_found": "No agent found"
       },
       "create_agent": "Create agent",
-      "preview": "Preview"
+      "preview": "Preview",
+      "assign_agents": "Assign agents"
     },
     "content": {
       "fields": {
