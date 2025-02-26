@@ -281,7 +281,8 @@
         "used_by_customized_agents": "Credenciales usadas por los agentes personalizados",
         "used_by": "Usadas por",
         "no_agents_using": "Ningún agente usando",
-        "credentials_updated_successfully": "Credenciales actualizadas con éxito"
+        "credentials_updated_successfully": "Credenciales actualizadas con éxito",
+        "get_error": "Error al obtener credenciales"
       }
     },
     "preview": {
