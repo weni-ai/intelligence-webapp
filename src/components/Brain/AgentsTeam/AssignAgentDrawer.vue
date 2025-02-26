@@ -60,7 +60,10 @@
               :modelValue="getCredentialValue(credential.name)"
               :placeholder="credential.placeholder || credential.label"
               @update:model-value="
-                tuningsStore.updateCredentialValue(credential.name, $event)
+                tuningsStore.updateCredential({
+                  ...credential,
+                  value: $event,
+                })
               "
             />
           </UnnnicFormElement>
@@ -170,7 +173,7 @@ async function toggleAgentAssignment() {
     );
 
     if (!agentHaveCredentialsCreated) {
-      await tuningsStore.createCredentials(props.agent);
+      await tuningsStore.createCredentials(props.agent.uuid);
     } else if (credentialsWithoutValue.value.length) {
       await tuningsStore.saveCredentials();
     }
