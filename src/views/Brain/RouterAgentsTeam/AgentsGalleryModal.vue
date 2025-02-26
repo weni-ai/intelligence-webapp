@@ -25,9 +25,15 @@
         />
       </SidebarMenu>
 
+      <section class="agents-gallery__content">
       <section
-        v-if="isMyAgentsEmpty && activeTab === 'my-agents'"
-        class="agents-gallery__empty-custom-agents"
+          v-if="activeTab === 'my-agents'"
+          :class="[
+            'agents-gallery__custom-agents',
+            {
+              'agents-gallery__custom-agents--empty': isMyAgentsEmpty,
+            },
+          ]"
       >
         <UnnnicIntelligenceText
           tag="p"
@@ -41,7 +47,7 @@
         <!-- This comment prevents from auto-capitalizing i18n-t to I18nT which would break the component -->
         <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
         <i18n-t
-          class="empty-custom-agents__description"
+            class="custom-agents__description"
           keypath="router.agents_team.gallery.weni_cli_documentation_description"
           tag="p"
         >
@@ -55,11 +61,7 @@
           </template>
         </i18n-t>
       </section>
-
-      <section
-        v-else
-        class="agents-gallery__content"
-      >
+        <template v-if="!isMyAgentsEmpty">
         <UnnnicInput
           v-model="search[activeTab]"
           iconLeft="search"
@@ -106,6 +108,7 @@
             </template>
           </template>
         </section>
+        </template>
       </section>
     </section>
   </UnnnicModalDialog>
@@ -232,16 +235,24 @@ watch(
       }
     }
 
-    &__empty-custom-agents {
-      width: 100%;
-      height: 100%;
+    &__custom-agents {
+      height: fit-content;
 
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-direction: column;
+      justify-content: flex-start;
 
-      .empty-custom-agents__description {
+      gap: $unnnic-spacing-nano;
+
+      &--empty {
+        flex-direction: column;
+      justify-content: center;
+
+        width: 100%;
+        height: 100%;
+      }
+
+      .custom-agents__description {
         display: flex;
         align-items: center;
         gap: $unnnic-spacing-nano;

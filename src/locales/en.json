@@ -146,7 +146,8 @@
       "card": {
         "assign": "Assign to team",
         "assigned": "Assigned",
-        "success_alert": "Agent assigned to team successfully",
+        "success_assign_alert": "{agent} assigned to team successfully",
+        "success_unassign_alert": "{agent} removed from team successfully",
         "official": "Official",
         "custom": "Custom",
         "remove_agent": "Remove agent"

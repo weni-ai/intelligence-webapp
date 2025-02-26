@@ -146,7 +146,8 @@
       "card": {
         "assign": "Asignar al equipo",
         "assigned": "Asignado",
-        "success_alert": "Agente asignado al equipo con éxito",
+        "success_assign_alert": "{agent} asignado al equipo con éxito",
+        "success_unassign_alert": "{agent} eliminado del equipo con éxito",
         "official": "Oficial",
         "custom": "Personalizado",
         "remove_agent": "Eliminar agente"
@@ -169,7 +170,10 @@
         "search_placeholder": "Buscar por agente o habilidad",
         "official_agents": "Agentes oficiales",
         "custom_agents": "Agentes personalizados",
-        "no_agent_found": "Ningún agente encontrado"
+        "no_agent_found": "Ningún agente encontrado",
+        "custom_agents_description": "Los agentes personalizados son creados usando Weni CLI.",
+        "weni_cli_documentation": "Documentación de Weni CLI",
+        "weni_cli_documentation_description": "Consulte la {weni_cli_documentation} para obtener instrucciones detalladas."
       },
       "create_agent": "Crear agente",
       "preview": "Vista previa",
