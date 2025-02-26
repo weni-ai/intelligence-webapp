@@ -26,7 +26,7 @@
       </SidebarMenu>
 
       <section class="agents-gallery__content">
-      <section
+        <section
           v-if="activeTab === 'my-agents'"
           :class="[
             'agents-gallery__custom-agents',
@@ -34,80 +34,81 @@
               'agents-gallery__custom-agents--empty': isMyAgentsEmpty,
             },
           ]"
-      >
-        <UnnnicIntelligenceText
-          tag="p"
-          family="secondary"
-          size="body-gt"
-          color="neutral-cloudy"
         >
-          {{ $t('router.agents_team.gallery.custom_agents_description') }}
-        </UnnnicIntelligenceText>
+          <UnnnicIntelligenceText
+            tag="p"
+            family="secondary"
+            size="body-gt"
+            color="neutral-cloudy"
+          >
+            {{ $t('router.agents_team.gallery.custom_agents_description') }}
+          </UnnnicIntelligenceText>
 
-        <!-- This comment prevents from auto-capitalizing i18n-t to I18nT which would break the component -->
-        <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
-        <i18n-t
+          <!-- This comment prevents from auto-capitalizing i18n-t to I18nT which would break the component -->
+          <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
+          <i18n-t
             class="custom-agents__description"
-          keypath="router.agents_team.gallery.weni_cli_documentation_description"
-          tag="p"
-        >
-          <template #weni_cli_documentation>
-            <p
-              class="description__link"
-              @click="openCLI"
-            >
-              {{ $t('router.agents_team.gallery.weni_cli_documentation') }}
-            </p>
-          </template>
-        </i18n-t>
-      </section>
+            keypath="router.agents_team.gallery.weni_cli_documentation_description"
+            tag="p"
+          >
+            <template #weni_cli_documentation>
+              <p
+                class="description__link"
+                @click="openCLI"
+              >
+                {{ $t('router.agents_team.gallery.weni_cli_documentation') }}
+              </p>
+            </template>
+          </i18n-t>
+        </section>
         <template v-if="!isMyAgentsEmpty">
-        <UnnnicInput
-          v-model="search[activeTab]"
-          iconLeft="search"
-          :placeholder="$t('router.agents_team.gallery.search_placeholder')"
-          data-testid="search-input"
-        />
+          <UnnnicInput
+            v-model="search[activeTab]"
+            iconLeft="search"
+            :placeholder="$t('router.agents_team.gallery.search_placeholder')"
+            data-testid="search-input"
+          />
 
-        <section
-          :class="[
-            'content__cards',
-            {
-              'content__cards--empty': isMyAgentsEmpty,
-            },
-          ]"
-          data-testid="agent-cards"
-        >
-          <template v-if="isLoadingAgents">
-            <AssignAgentCard
-              v-for="(_, index) in Array(3)"
-              :key="index"
-              loading
-              data-testid="agent-card-loading"
-            />
-          </template>
-
-          <template v-else>
-            <UnnnicIntelligenceText
-              v-if="isSearchEmpty"
-              color="neutral-clean"
-              family="secondary"
-              size="body-gt"
-              tag="p"
-            >
-              {{ $t('router.agents_team.gallery.no_agent_found') }}
-            </UnnnicIntelligenceText>
-
-            <template v-else>
+          <section
+            :class="[
+              'content__cards',
+              {
+                'content__cards--empty': isMyAgentsEmpty,
+              },
+            ]"
+            data-testid="agent-cards"
+          >
+            <template v-if="isLoadingAgents">
               <AssignAgentCard
-                v-for="agent in agentsData"
-                :key="agent.uuid"
-                :agent="agent"
-                data-testid="agent-card"
+                v-for="(_, index) in Array(3)"
+                :key="index"
+                loading
+                data-testid="agent-card-loading"
               />
             </template>
-          </template>
-        </section>
+
+            <template v-else>
+              <UnnnicIntelligenceText
+                v-if="isSearchEmpty"
+                color="neutral-clean"
+                family="secondary"
+                size="body-gt"
+                tag="p"
+              >
+                {{ $t('router.agents_team.gallery.no_agent_found') }}
+              </UnnnicIntelligenceText>
+
+              <template v-else>
+                <AssignAgentCard
+                  v-for="agent in agentsData"
+                  :key="agent.uuid"
+                  :agent="agent"
+                  data-testid="agent-card"
+                  @agent-assigned="closeModal"
+                />
+              </template>
+            </template>
+          </section>
         </template>
       </section>
     </section>
@@ -246,7 +247,7 @@ watch(
 
       &--empty {
         flex-direction: column;
-      justify-content: center;
+        justify-content: center;
 
         width: 100%;
         height: 100%;
