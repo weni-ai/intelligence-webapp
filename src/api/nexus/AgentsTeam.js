@@ -30,6 +30,7 @@ export const AgentsTeam = {
           assigned,
           credentials,
           external_id,
+          is_official,
         }) => ({
           uuid,
           name,
@@ -38,6 +39,7 @@ export const AgentsTeam = {
           assigned,
           credentials,
           external_id,
+          is_official,
         }),
       ),
     };
@@ -64,6 +66,7 @@ export const AgentsTeam = {
           assigned,
           credentials,
           external_id,
+          is_official,
         }) => ({
           uuid,
           name,
@@ -72,6 +75,7 @@ export const AgentsTeam = {
           assigned,
           credentials,
           external_id,
+          is_official,
         }),
       ),
     };
@@ -90,13 +94,22 @@ export const AgentsTeam = {
           external_id: manager.external_id,
         },
         agents: agents.map(
-          ({ uuid, name, skills, external_id, description, credentials }) => ({
+          ({
             uuid,
             name,
             skills,
             external_id,
             description,
             credentials,
+            is_official,
+          }) => ({
+            uuid,
+            name,
+            skills,
+            external_id,
+            description,
+            credentials,
+            is_official,
           }),
         ),
       },
