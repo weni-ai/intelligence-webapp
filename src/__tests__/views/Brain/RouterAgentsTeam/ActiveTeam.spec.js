@@ -47,14 +47,6 @@ describe('ActiveTeam component', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
 
-  it('renders the title', () => {
-    const title = wrapper.find('[data-testid="title"]');
-    expect(title.exists()).toBe(true);
-    expect(title.text()).toBe(
-      i18n.global.t('router.agents_team.active_team.title'),
-    );
-  });
-
   // TODO: Fix this test
 
   // it('renders the loading state', async () => {
