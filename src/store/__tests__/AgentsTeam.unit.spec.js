@@ -107,27 +107,27 @@ describe('AgentsTeamStore', () => {
   });
 
   describe('toggleAgentAssignment', () => {
-    it('should throws an error if uuid is missing', async () => {
+    it('should throws an error if external_id is missing', async () => {
       expect.assertions(1);
       try {
         await store.toggleAgentAssignment({ is_assigned: true });
       } catch (error) {
-        expect(error.message).toBe('uuid and is_assigned are required');
+        expect(error.message).toBe('external_id and is_assigned are required');
       }
     });
 
     it('updates agent assignment correctly', async () => {
       const uuid = '123';
+      const external_id = '456';
       const is_assigned = true;
-      const mockData = { uuid, assigned: true };
+      const agent = { uuid, external_id, assigned: true };
       nexusaiAPI.router.agents_team.toggleAgentAssignment.mockResolvedValue({
-        data: mockData,
+        data: agent,
       });
 
-      const agent = { uuid, assigned: false };
       store.officialAgents.data.push(agent);
 
-      await store.toggleAgentAssignment({ uuid, is_assigned });
+      await store.toggleAgentAssignment({ external_id, is_assigned });
 
       expect(
         nexusaiAPI.router.agents_team.toggleAgentAssignment,
@@ -135,28 +135,56 @@ describe('AgentsTeamStore', () => {
         agentUuid: uuid,
         is_assigned,
       });
+
       expect(store.officialAgents.data[0].assigned).toBe(true);
 
       store.officialAgents.data = [];
       store.myAgents.data.push(agent);
 
-      await store.toggleAgentAssignment({ uuid, is_assigned });
+      await store.toggleAgentAssignment({ external_id, is_assigned });
 
       expect(store.myAgents.data[0].assigned).toBe(true);
     });
 
-    it('should handle errors when toggling agent assignment', async () => {
+    it('should handle agent not found error when toggling assignment', async () => {
       const consoleErrorSpy = vi
         .spyOn(console, 'error')
         .mockImplementation(() => {});
 
+      const result = await store.toggleAgentAssignment({
+        external_id: '456',
+        is_assigned: true,
+      });
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'error',
+        new Error('Agent not found'),
+      );
+      expect(result.status).toBe('error');
+    });
+
+    it('should handle API error when toggling agent assignment', async () => {
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      const agent = { uuid: '123', external_id: '456', assigned: true };
+      store.officialAgents.data.push(agent);
+
       nexusaiAPI.router.agents_team.toggleAgentAssignment.mockRejectedValue(
-        new Error('Error'),
+        new Error('API Error'),
       );
 
-      await store.toggleAgentAssignment({ uuid: '123', is_assigned: true });
+      const result = await store.toggleAgentAssignment({
+        external_id: '456',
+        is_assigned: true,
+      });
 
-      expect(consoleErrorSpy).toHaveBeenCalledWith('error', new Error('Error'));
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'error',
+        new Error('API Error'),
+      );
+      expect(result.status).toBe('error');
     });
   });
 });

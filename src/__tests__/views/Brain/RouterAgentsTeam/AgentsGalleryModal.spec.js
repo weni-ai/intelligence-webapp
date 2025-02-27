@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, expect } from 'vitest';
 import { nextTick } from 'vue';
-import { shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-import AgentsGallery from '@/views/Brain/RouterAgentsTeam/AgentsGallery.vue';
+import AgentsGalleryModal from '@/views/Brain/RouterAgentsTeam/AgentsGalleryModal.vue';
 
 const pinia = createTestingPinia({
   initialState: {
@@ -53,9 +53,12 @@ describe('AgentsGallery.vue', () => {
   const agentsTeamStore = useAgentsTeamStore();
 
   beforeEach(() => {
-    wrapper = shallowMount(AgentsGallery, {
+    wrapper = mount(AgentsGalleryModal, {
       global: {
         plugins: [pinia],
+      },
+      props: {
+        modelValue: true,
       },
     });
   });
@@ -72,11 +75,16 @@ describe('AgentsGallery.vue', () => {
     expect(wrapper.find('[data-testid="agents-gallery"]').exists()).toBe(true);
   });
 
-  it('should renders the tabs', () => {
-    const tabs = wrapper.findComponent('[data-testid="agents-gallery-tabs"]');
+  it('should renders the sidebar menu with the correct tabs', () => {
+    const sidebarMenu = wrapper.findComponent('[data-testid="sidebar-menu"]');
+    const sidebarItems = wrapper.findAllComponents(
+      '[data-testid="sidebar-item"]',
+    );
 
-    expect(tabs.props('tabs').length).toBe(2);
-    expect(tabs.props('activeTab')).toBe('official');
+    expect(sidebarMenu.exists()).toBe(true);
+    expect(sidebarItems.length).toBe(2);
+    expect(sidebarItems[0].props('active')).toBe(true);
+    expect(sidebarItems[1].props('active')).toBe(false);
   });
 
   it('should renders the search input', () => {
@@ -85,7 +93,7 @@ describe('AgentsGallery.vue', () => {
   });
 
   it('should renders the agent cards', () => {
-    const agentCards = wrapper.findAllComponents('[data-testid="agent-card"]');
+    const agentCards = wrapper.findAll('[data-testid="assign-agent-card"]');
 
     expect(agentCards.length).toBe(2);
   });
@@ -94,7 +102,9 @@ describe('AgentsGallery.vue', () => {
     agentsTeamStore.officialAgents.status = 'loading';
     await nextTick();
 
-    const loadingCards = wrapper.findAll('[data-testid="agent-card-loading"]');
+    const loadingCards = wrapper.findAll(
+      '[data-testid="assign-agent-card-skeleton"]',
+    );
     expect(loadingCards.length).toBe(3);
   });
 
