@@ -26,6 +26,14 @@
       </SidebarMenu>
 
       <section class="agents-gallery__content">
+        <UnnnicInput
+          v-if="!isMyAgentsEmpty"
+          v-model="search[activeTab]"
+          iconLeft="search"
+          :placeholder="$t('router.agents_team.gallery.search_placeholder')"
+          data-testid="search-input"
+        />
+
         <section
           v-if="activeTab === 'my-agents'"
           :class="[
@@ -61,14 +69,8 @@
             </template>
           </i18n-t>
         </section>
-        <template v-if="!isMyAgentsEmpty">
-          <UnnnicInput
-            v-model="search[activeTab]"
-            iconLeft="search"
-            :placeholder="$t('router.agents_team.gallery.search_placeholder')"
-            data-testid="search-input"
-          />
 
+        <template v-if="!isMyAgentsEmpty">
           <section
             :class="[
               'content__cards',
@@ -150,6 +152,7 @@ const isMyAgentsEmpty = computed(
   () =>
     activeTab.value === 'my-agents' &&
     myAgents.data.length === 0 &&
+    !isSearchEmpty.value &&
     !isLoadingAgents.value,
 );
 
@@ -207,12 +210,6 @@ watch(
     height: 85vh;
   }
 
-  &__sidebar {
-    .sidebar__item {
-      padding: $unnnic-spacing-ant;
-    }
-  }
-
   .agents-gallery {
     height: 100%;
 
@@ -220,12 +217,20 @@ watch(
     grid-template-columns: 170px 1fr;
     gap: $unnnic-spacing-sm;
 
+    &__sidebar {
+      .sidebar__item {
+        padding: $unnnic-spacing-ant;
+      }
+    }
+
     &__content {
       display: flex;
       flex-direction: column;
       gap: $unnnic-spacing-sm;
 
       .content__cards {
+        margin-bottom: $unnnic-spacing-sm;
+
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: $unnnic-spacing-sm;
@@ -242,7 +247,6 @@ watch(
       display: flex;
       align-items: center;
       justify-content: flex-start;
-
       gap: $unnnic-spacing-nano;
 
       &--empty {
