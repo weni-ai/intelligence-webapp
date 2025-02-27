@@ -18,17 +18,16 @@ export const usePreviewStore = defineStore('preview', () => {
       .map((trace) => trace.trace),
   );
   const activeAgent = computed(() => {
+    const agentsTeamStore = useAgentsTeamStore();
     const lastTrace = traces.value.at(-1)?.trace;
-    const agent = useAgentsTeamStore().activeTeam.data?.agents?.find(
+    const agent = agentsTeamStore.activeTeam.data?.agents?.find(
       (agent) => agent.external_id === lastTrace?.trace?.agentId,
     );
 
-    return agent
-      ? {
-          ...agent,
-          currentTask: lastTrace?.summary,
-        }
-      : null;
+    return {
+      ...(agent || agentsTeamStore.activeTeam.data?.manager),
+      currentTask: lastTrace?.summary,
+    };
   });
 
   function addTrace(update) {
