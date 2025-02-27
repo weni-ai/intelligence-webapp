@@ -14,5 +14,8 @@ exports[`RouterAgentsTeam > matches snapshot 1`] = `
   <active-team-stub
     data-v-d0fbe27f=""
   />
+  <agents-gallery-modal-stub
+    data-v-d0fbe27f=""
+  />
 </section>
 `;

@@ -12,7 +12,10 @@
       class="agents-gallery"
       data-testid="agents-gallery"
     >
-      <SidebarMenu class="agents-gallery__sidebar">
+      <SidebarMenu
+        class="agents-gallery__sidebar"
+        data-testid="sidebar-menu"
+      >
         <SideBarItem
           v-for="tab in contentTabs"
           :key="tab.page"
@@ -20,7 +23,7 @@
           :text="$t(`router.agents_team.gallery.${tab.title}`)"
           :active="tab.page === activeTab"
           :iconFilled="tab.page === activeTab"
-          data-test="nav-agent-type"
+          data-testid="sidebar-item"
           @click="onTabChange(tab.page)"
         />
       </SidebarMenu>
@@ -105,7 +108,6 @@
                   v-for="agent in agentsData"
                   :key="agent.uuid"
                   :agent="agent"
-                  data-testid="agent-card"
                   @agent-assigned="closeModal"
                 />
               </template>
