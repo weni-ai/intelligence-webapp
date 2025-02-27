@@ -226,6 +226,8 @@ watch(
       gap: $unnnic-spacing-sm;
 
       .content__cards {
+        margin-bottom: $unnnic-spacing-sm;
+
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: $unnnic-spacing-sm;
@@ -242,7 +244,6 @@ watch(
       display: flex;
       align-items: center;
       justify-content: flex-start;
-
       gap: $unnnic-spacing-nano;
 
       &--empty {
