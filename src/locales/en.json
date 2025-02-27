@@ -291,7 +291,7 @@
       "active": "Agent Builder active",
       "no_logs_registered": "No logs registered",
       "see_full_details": "See full details",
-      "manager_task": "Team Task Coordinator",
+      "manager_task": "Coordinating team tasks",
       "visual_flow": "Visual flow",
       "logs": "Logs",
       "agents_preview": "Agents preview",
@@ -310,7 +310,8 @@
       "flow_started": "Flow {name} started",
       "flow_finished": "Flow finished",
       "message_forwarded_to_brain": "Message forwarded to Agent Builder",
-      "media_and_location_unavailable": "There is no Media and Location action registered"
+      "media_and_location_unavailable": "There is no Media and Location action registered",
+      "standby": "Standby"
     }
   },
   "content_bases": {
