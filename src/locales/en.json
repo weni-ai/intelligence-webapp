@@ -148,6 +148,7 @@
         "assigned": "Assigned",
         "success_assign_alert": "{agent} assigned to team successfully",
         "success_unassign_alert": "{agent} removed from team successfully",
+        "error_alert": "Error updating the team",
         "official": "Official",
         "custom": "Custom",
         "remove_agent": "Remove agent"

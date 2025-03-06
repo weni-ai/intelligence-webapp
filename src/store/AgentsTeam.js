@@ -126,6 +126,11 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
     } catch (error) {
       console.error('error', error);
 
+      alertStore.add({
+        text: i18n.global.t('router.agents_team.card.error_alert'),
+        type: 'error',
+      });
+
       return {
         status: 'error',
       };
