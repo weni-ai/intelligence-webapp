@@ -1,5 +1,8 @@
 <template>
-  <header class="header">
+  <header
+    class="header"
+    :class="{ 'header--agents-team': route.name === 'router-agents-team' }"
+  >
     <section class="header__infos">
       <section class="infos__title">
         <p class="title__text">
@@ -17,7 +20,6 @@
     </section>
     <UnnnicButton
       v-if="route.name === 'router-profile'"
-      class="save-button"
       :disabled="profile.isSaveButtonDisabled"
       :loading="profile.isSaving"
       @click="profile.save"
@@ -26,23 +28,30 @@
     </UnnnicButton>
     <UnnnicButton
       v-else-if="route.name === 'router-tunings'"
-      class="save-button"
       :disabled="isTuningsSaveButtonDisabled"
       :loading="isTuningsSaveButtonLoading"
       @click="saveTunings"
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
-    <UnnnicButton
-      v-else-if="route.name === 'router-agents-team'"
-      class="save-button"
-      type="primary"
-      iconLeft="play_arrow"
-      iconsFilled
-      @click="handlePreview"
-    >
-      {{ $t('router.agents_team.preview') }}
-    </UnnnicButton>
+    <template v-else-if="route.name === 'router-agents-team'">
+      <UnnnicButton
+        type="secondary"
+        iconLeft="add"
+        @click="handleAgentsGallery"
+      >
+        {{ $t('router.agents_team.assign_agents') }}
+      </UnnnicButton>
+
+      <UnnnicButton
+        type="primary"
+        iconLeft="play_arrow"
+        iconsFilled
+        @click="handlePreview"
+      >
+        {{ $t('router.agents_team.preview') }}
+      </UnnnicButton>
+    </template>
     <section
       v-else-if="showDateFilter"
       class="monitoring-filters"
@@ -72,6 +81,7 @@ import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useTuningsStore } from '@/store/Tunings';
 import { useAlertStore } from '@/store/Alert';
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 import i18n from '@/utils/plugins/i18n';
 
@@ -164,6 +174,10 @@ watch(
 const handlePreview = () => {
   isPreviewOpen.value = true;
 };
+
+const handleAgentsGallery = () => {
+  useAgentsTeamStore().isAgentsGalleryOpen = true;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -198,11 +212,15 @@ const handlePreview = () => {
       }
     }
   }
+
+  &--agents-team {
+    grid-template-columns: 9fr 3fr 3fr;
+  }
 }
 
-.save-button {
-  width: 18.5 * $unnnic-font-size;
-  margin-left: auto;
+.agents-team-actions {
+  display: flex;
+  gap: $unnnic-spacing-sm;
 }
 
 .monitoring-filters {

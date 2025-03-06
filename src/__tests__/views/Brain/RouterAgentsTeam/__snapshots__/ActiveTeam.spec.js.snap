@@ -5,51 +5,50 @@ exports[`ActiveTeam component > should match snapshot 1`] = `
   class="active-team"
   data-v-ef307fb1=""
 >
-  <h2
-    class="unnnic-text unnnic-text--size-body-lg unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-bold unnnic-text--color-neutral-darkest"
-    data-testid="title"
-    data-v-ec8da4ad=""
-    data-v-ef307fb1=""
-  >
-    
-    Active team
-    
-  </h2>
   <!--v-if-->
   <section
     class="active-team__empty"
     data-testid="empty-state"
     data-v-ef307fb1=""
   >
+    <span
+      class="material-symbols-rounded unnnic-icon-scheme--neutral-soft unnnic-icon-size--xl material-symbols-rounded--filled empty__icon"
+      data-testid="material-icon"
+      data-v-9846e6db=""
+      data-v-ef307fb1=""
+      translate="no"
+    >
+      workspaces
+    </span>
     <p
-      class="unnnic-text unnnic-text--size-body-gt unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-bold unnnic-text--color-neutral-dark"
+      class="unnnic-text unnnic-text--size-body-lg unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-bold unnnic-text--color-neutral-dark"
       data-v-ec8da4ad=""
       data-v-ef307fb1=""
     >
       
-      No agents in your team
+      No agents assigned into the team
       
     </p>
     <section
       class="empty__description"
       data-v-ef307fb1=""
     >
+      <!-- This comment prevents from auto-capitalizing i18n-t to I18nT which would break the component -->
       <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
       <p
         class="description__text"
         data-v-ef307fb1=""
       >
-        Add agents from the gallery below or 
+        Go to 
         
-        <a
-          class="description__link"
+        <p
+          class="description__assign-agents"
           data-v-ef307fb1=""
-          href="https://github.com/weni-ai/weni-cli"
-          target="_blank"
         >
-          create agent
-        </a>
+          Assign agents
+        </p>
         
+         to view the gallery and add agents to your team
       </p>
     </section>
   </section>

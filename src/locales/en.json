@@ -161,9 +161,8 @@
       },
       "active_team": {
         "title": "Active team",
-        "no_team": "No agents in your team",
-        "no_team_description": "Add agents from the gallery below or {link}",
-        "create_agent": "create agent"
+        "no_team": "No agents assigned into the team",
+        "no_team_description": "Go to {assign_agents} to view the gallery and add agents to your team"
       },
       "gallery": {
         "title": "Agents gallery",
@@ -173,7 +172,8 @@
         "no_agent_found": "No agent found"
       },
       "create_agent": "Create agent",
-      "preview": "Preview"
+      "preview": "Preview",
+      "assign_agents": "Assign agents"
     },
     "content": {
       "fields": {
