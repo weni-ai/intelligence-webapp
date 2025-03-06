@@ -148,8 +148,7 @@
         "assigned": "Atribuído",
         "success_assign_alert": "{agent} atribuído ao time com sucesso",
         "success_unassign_alert": "{agent} removido do time com sucesso",
-        "official": "Oficial",
-        "custom": "Customizado",
+        "error_alert": "Erro ao tentar atualizar o time",
         "remove_agent": "Remover agente"
       },
       "drawer": {

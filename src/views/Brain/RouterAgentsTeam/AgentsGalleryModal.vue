@@ -173,10 +173,6 @@ function updateSearchEmpty() {
 function onTabChange(newTab) {
   activeTab.value = newTab;
 
-  if (agentsTeamStore.myAgents.status === null && newTab === 'my-agents') {
-    agentsTeamStore.loadMyAgents();
-  }
-
   updateSearchEmpty();
 }
 
@@ -190,6 +186,7 @@ function openCLI() {
 
 onMounted(() => {
   agentsTeamStore.loadOfficialAgents();
+  agentsTeamStore.loadMyAgents();
 });
 
 const debouncedSearch = (callback) => debounce(callback, 300);

@@ -161,9 +161,11 @@ async function assignAgent() {
       is_assigned: isAssigned,
     });
 
-    if (status === 'success' && isAssigned) emit('agent-assigned');
-    if (props.agent.credentials?.length || !props.assignment)
-      await tuningsStore.fetchCredentials();
+    if (status === 'success') {
+      if (isAssigned) emit('agent-assigned');
+      if (props.agent.credentials?.length || !props.assignment)
+        await tuningsStore.fetchCredentials();
+    }
   } catch (error) {
     console.error(error);
   }
