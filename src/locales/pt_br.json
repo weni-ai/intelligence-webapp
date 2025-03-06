@@ -146,7 +146,10 @@
       "card": {
         "assign": "Atribuir ao time",
         "assigned": "Atribuído",
-        "success_alert": "Agente atribuído ao time com sucesso"
+        "success_alert": "Agente atribuído ao time com sucesso",
+        "official": "Oficial",
+        "custom": "Customizado",
+        "remove_agent": "Remover agente"
       },
       "drawer": {
         "title": "Atribuir {name} ao time",

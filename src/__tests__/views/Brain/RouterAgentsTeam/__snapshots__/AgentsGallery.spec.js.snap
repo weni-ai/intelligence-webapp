@@ -43,14 +43,11 @@ exports[`AgentsGallery.vue > should match snapshot 1`] = `
   >
     
     
-    <!--v-if-->
-    
     <assign-agent-card-stub
       agent="[object Object]"
       assignment="true"
       data-testid="agent-card"
       data-v-33150d34=""
-      empty="false"
       loading="false"
     />
     <assign-agent-card-stub
@@ -58,10 +55,8 @@ exports[`AgentsGallery.vue > should match snapshot 1`] = `
       assignment="true"
       data-testid="agent-card"
       data-v-33150d34=""
-      empty="false"
       loading="false"
     />
-    
     
     
   </section>
