@@ -146,7 +146,8 @@
       "card": {
         "assign": "Assign to team",
         "assigned": "Assigned",
-        "success_alert": "Agent assigned to team successfully",
+        "success_assign_alert": "{agent} assigned to team successfully",
+        "success_unassign_alert": "{agent} removed from team successfully",
         "official": "Official",
         "custom": "Custom",
         "remove_agent": "Remove agent"
@@ -167,9 +168,12 @@
       "gallery": {
         "title": "Agents gallery",
         "search_placeholder": "Search by agent or skill",
-        "official": "Official",
-        "my-agents": "My agents",
-        "no_agent_found": "No agent found"
+        "official_agents": "Official agents",
+        "custom_agents": "Custom agents",
+        "no_agent_found": "No agent found",
+        "custom_agents_description": "Custom agents are built using Weni CLI.",
+        "weni_cli_documentation": "Weni CLI Documentation",
+        "weni_cli_documentation_description": "Refer to the {weni_cli_documentation} for detailed instructions."
       },
       "create_agent": "Create agent",
       "preview": "Preview",

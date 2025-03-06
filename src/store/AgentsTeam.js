@@ -77,32 +77,58 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
     }
   }
 
-  async function toggleAgentAssignment({ uuid, is_assigned }) {
-    if (!uuid || typeof is_assigned !== 'boolean') {
-      throw new Error('uuid and is_assigned are required');
+  async function toggleAgentAssignment({ external_id, is_assigned }) {
+    if (!external_id || typeof is_assigned !== 'boolean') {
+      throw new Error('external_id and is_assigned are required');
     }
 
     try {
+      const agent =
+        officialAgents.data.find(
+          (agent) => agent.external_id === external_id,
+        ) || myAgents.data.find((agent) => agent.external_id === external_id);
+
+      if (!agent) {
+        throw new Error('Agent not found');
+      }
+
       const { data } =
         await nexusaiAPI.router.agents_team.toggleAgentAssignment({
-          agentUuid: uuid,
+          agentUuid: agent?.uuid,
           is_assigned,
         });
 
-      const agent =
-        officialAgents.data.find((agent) => agent.uuid === uuid) ||
-        myAgents.data.find((agent) => agent.uuid === uuid);
+      agent.assigned = data.assigned;
 
-      if (agent) {
-        agent.assigned = data.assigned;
+      if (is_assigned) {
+        activeTeam.data.agents.push(agent);
+      } else {
+        activeTeam.data.agents = activeTeam.data.agents.filter(
+          (agent) => agent.external_id !== external_id,
+        );
       }
 
       alertStore.add({
-        text: i18n.global.t('router.agents_team.card.success_alert'),
+        text: i18n.global.t(
+          is_assigned
+            ? 'router.agents_team.card.success_assign_alert'
+            : 'router.agents_team.card.success_unassign_alert',
+          {
+            agent: agent.name,
+          },
+        ),
         type: 'success',
       });
+
+      return {
+        status: 'success',
+      };
     } catch (error) {
       console.error('error', error);
+
+      return {
+        status: 'error',
+      };
     }
   }
 

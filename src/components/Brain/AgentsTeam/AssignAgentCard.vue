@@ -130,6 +130,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['agent-assigned']);
+
 const agentsTeamStore = useAgentsTeamStore();
 
 const isAssignDrawerOpen = ref(false);
@@ -152,11 +154,14 @@ async function toggleDrawer() {
 }
 
 async function assignAgent() {
+  const isAssigned = props.assignment ? !props.agent.assigned : false;
   try {
-    await agentsTeamStore.toggleAgentAssignment({
-      uuid: props.agent.uuid,
-      is_assigned: props.assignment ? !props.agent.assigned : false,
+    const { status } = await agentsTeamStore.toggleAgentAssignment({
+      external_id: props.agent.external_id,
+      is_assigned: isAssigned,
     });
+
+    if (status === 'success' && isAssigned) emit('agent-assigned');
   } catch (error) {
     console.error(error);
   }

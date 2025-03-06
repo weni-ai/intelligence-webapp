@@ -146,7 +146,8 @@
       "card": {
         "assign": "Atribuir ao time",
         "assigned": "Atribuído",
-        "success_alert": "Agente atribuído ao time com sucesso",
+        "success_assign_alert": "{agent} atribuído ao time com sucesso",
+        "success_unassign_alert": "{agent} removido do time com sucesso",
         "official": "Oficial",
         "custom": "Customizado",
         "remove_agent": "Remover agente"
@@ -167,9 +168,12 @@
       "gallery": {
         "title": "Galeria de agentes",
         "search_placeholder": "Pesquisar por agente ou habilidade",
-        "official": "Oficial",
-        "my-agents": "Meus agentes",
-        "no_agent_found": "Nenhum agente encontrado"
+        "official_agents": "Agentes oficiais",
+        "custom_agents": "Agentes customizados",
+        "no_agent_found": "Nenhum agente encontrado",
+        "custom_agents_description": "Agentes customizados são criados usando o Weni CLI.",
+        "weni_cli_documentation": "Documentação do Weni CLI",
+        "weni_cli_documentation_description": "Consulte a {weni_cli_documentation} para instruções detalhadas."
       },
       "create_agent": "Crie um agente",
       "preview": "Preview",
