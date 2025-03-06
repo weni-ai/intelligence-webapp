@@ -160,7 +160,9 @@ export default {
       },
 
       listCredentials({ projectUuid }) {
-        return request.$http.get(`api/project/${projectUuid}/credentials`);
+        return request.$http.get(`api/project/${projectUuid}/credentials`, {
+          hideGenericErrorAlert: true,
+        });
       },
 
       editCredentials({ projectUuid, credentials = {} }) {

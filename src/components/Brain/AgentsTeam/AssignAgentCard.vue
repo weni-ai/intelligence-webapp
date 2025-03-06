@@ -162,6 +162,8 @@ async function assignAgent() {
     });
 
     if (status === 'success' && isAssigned) emit('agent-assigned');
+    if (props.agent.credentials?.length || !props.assignment)
+      await tuningsStore.fetchCredentials();
   } catch (error) {
     console.error(error);
   }
@@ -176,7 +178,6 @@ async function toggleAgentAssignment() {
 async function toggleDrawerAssigning() {
   isDrawerAssigning.value = true;
   await assignAgent();
-  await tuningsStore.fetchCredentials();
   isDrawerAssigning.value = false;
   toggleDrawer();
 }

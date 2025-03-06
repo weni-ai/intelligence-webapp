@@ -281,7 +281,8 @@
         "used_by_customized_agents": "Credentials used by customized agents",
         "used_by": "Used by",
         "no_agents_using": "No agents using",
-        "credentials_updated_successfully": "Credentials updated successfully"
+        "credentials_updated_successfully": "Credentials updated successfully",
+        "get_error": "Error getting credentials"
       }
     },
     "preview": {
