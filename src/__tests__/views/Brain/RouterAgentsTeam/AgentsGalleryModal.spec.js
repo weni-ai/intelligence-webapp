@@ -109,8 +109,9 @@ describe('AgentsGalleryModal.vue', () => {
       expect(assignAgentCards().length).toBe(2);
     });
 
-    it('loads official agents when mounted', () => {
+    it('loads official and my agents when mounted', () => {
       expect(agentsTeamStore.loadOfficialAgents).toHaveBeenCalledTimes(1);
+      expect(agentsTeamStore.loadMyAgents).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -148,15 +149,6 @@ describe('AgentsGalleryModal.vue', () => {
       await sidebarItems()[1].trigger('click');
 
       expect(wrapper.vm.agentsData).toEqual(agentsTeamStore.myAgents.data);
-    });
-
-    it('loads my agents when tab changes if not loaded', async () => {
-      agentsTeamStore.myAgents.status = null;
-      vi.clearAllMocks();
-
-      await sidebarItems()[1].trigger('click');
-
-      expect(agentsTeamStore.loadMyAgents).toHaveBeenCalledTimes(1);
     });
 
     it('does not reload my agents if already loaded', async () => {
