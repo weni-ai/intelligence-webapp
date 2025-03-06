@@ -9,7 +9,11 @@
       data-testid="visual-flow-manager"
       name="Manager"
       :active="true"
-      :currentTask="$t('router.preview.manager_task')"
+      :currentTask="
+        isActiveAgent(manager)
+          ? activeAgent?.currentTask || $t('router.preview.manager_task')
+          : $t('router.preview.manager_task')
+      "
       type="manager"
     />
 
@@ -39,7 +43,9 @@
         :name="agent.name"
         :active="isActiveAgent(agent)"
         :currentTask="
-          isActiveAgent(agent) ? activeAgent?.currentTask : agent.description
+          isActiveAgent(agent)
+            ? activeAgent?.currentTask
+            : $t('router.preview.standby')
         "
         type="agent"
       />
@@ -60,6 +66,7 @@ const agentsTeamStore = useAgentsTeamStore();
 const previewStore = usePreviewStore();
 
 const teamAgents = computed(() => agentsTeamStore.activeTeam.data?.agents);
+const manager = computed(() => agentsTeamStore.activeTeam.data?.manager);
 const activeAgent = computed(() => previewStore.activeAgent);
 
 const managerRef = ref(null);

@@ -148,6 +148,7 @@
         "assigned": "Asignado",
         "success_assign_alert": "{agent} asignado al equipo con éxito",
         "success_unassign_alert": "{agent} eliminado del equipo con éxito",
+        "error_alert": "Error al intentar actualizar el equipo",
         "official": "Oficial",
         "custom": "Personalizado",
         "remove_agent": "Eliminar agente"
@@ -290,7 +291,7 @@
       "active": "Agent Builder activo",
       "no_logs_registered": "No hay registros de logs",
       "see_full_details": "Ver detalles",
-      "manager_task": "Coordinador de tareas del equipo",
+      "manager_task": "Coordinando tareas del equipo",
       "visual_flow": "Flujo visual",
       "logs": "Logs",
       "agents_preview": "Vista previa de agentes",
@@ -309,7 +310,8 @@
       "flow_started": "Flujo {name} iniciado",
       "flow_finished": "Flujo finalizado",
       "message_forwarded_to_brain": "Mensaje transmitido a Agent Builder",
-      "media_and_location_unavailable": "No hay ninguna acción de Medios y Ubicación registrada"
+      "media_and_location_unavailable": "No hay ninguna acción de Medios y Ubicación registrada",
+      "standby": "Standby"
     }
   },
   "content_bases": {

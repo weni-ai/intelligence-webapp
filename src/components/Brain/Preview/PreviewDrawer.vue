@@ -128,7 +128,7 @@ function refreshPreview() {
 
       :deep(.quick-test) {
         padding: $unnnic-spacing-sm $unnnic-spacing-md;
-        gap: 0;
+        gap: $unnnic-spacing-xs;
 
         .messages {
           padding: 0;
@@ -143,6 +143,7 @@ function refreshPreview() {
 
         .message-input {
           padding: $unnnic-spacing-sm;
+          padding-right: $unnnic-spacing-giant;
         }
       }
     }
