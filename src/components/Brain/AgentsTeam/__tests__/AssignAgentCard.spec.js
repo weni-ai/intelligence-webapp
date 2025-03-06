@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils';
 
 import { createTestingPinia } from '@pinia/testing';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import { useTuningsStore } from '@/store/Tunings';
 import i18n from '@/utils/plugins/i18n';
 
 import AssignAgentCard from '../AssignAgentCard.vue';
@@ -24,11 +25,15 @@ describe('AssignAgentCard.vue', () => {
   let wrapper;
 
   const agentsTeamStore = useAgentsTeamStore();
+  const tuningsStore = useTuningsStore();
 
   beforeEach(() => {
     wrapper = mount(AssignAgentCard, {
       global: {
         plugins: [pinia],
+        stubs: {
+          AssignAgentDrawer: true,
+        },
       },
       props: {
         loading: false,
@@ -169,5 +174,217 @@ describe('AssignAgentCard.vue', () => {
 
       expect(consoleErrorSpy).toHaveBeenCalled();
     });
+
+    describe('toggleDrawer', () => {
+      it('should toggle the isAssignDrawerOpen when toggleDrawer called', async () => {
+        expect(wrapper.vm.isAssignDrawerOpen).toBe(false);
+
+        await wrapper.vm.toggleDrawer();
+
+        expect(wrapper.vm.isAssignDrawerOpen).toBe(true);
+
+        await wrapper.vm.toggleDrawer();
+
+        expect(wrapper.vm.isAssignDrawerOpen).toBe(false);
+      });
+
+      it('should call toggleDrawer when clicking assign button with agent having credentials', async () => {
+        await wrapper.setProps({
+          agent: {
+            ...wrapper.props('agent'),
+            assigned: false,
+            credentials: [{ id: 1 }],
+          },
+        });
+
+        const toggleDrawerSpy = vi.spyOn(wrapper.vm, 'toggleDrawer');
+
+        await assignButton().trigger('click');
+
+        expect(toggleDrawerSpy).toHaveBeenCalled();
+      });
+
+      it('should not call toggleDrawer for agent without credentials', async () => {
+        await wrapper.setProps({
+          agent: {
+            ...wrapper.props('agent'),
+            assigned: false,
+            credentials: [],
+          },
+        });
+
+        const toggleDrawerSpy = vi.spyOn(wrapper.vm, 'toggleDrawer');
+        const toggleAgentAssignmentSpy = vi.spyOn(
+          wrapper.vm,
+          'toggleAgentAssignment',
+        );
+
+        await assignButton().trigger('click');
+
+        expect(toggleDrawerSpy).not.toHaveBeenCalled();
+        expect(toggleAgentAssignmentSpy).toHaveBeenCalled();
+      });
+
+      it('should not call toggleDrawer for already assigned agent', async () => {
+        await wrapper.setProps({
+          agent: {
+            ...wrapper.props('agent'),
+            assigned: true,
+            credentials: [{ id: 1 }],
+          },
+        });
+
+        const toggleDrawerSpy = vi.spyOn(wrapper.vm, 'toggleDrawer');
+        const toggleAgentAssignmentSpy = vi.spyOn(
+          wrapper.vm,
+          'toggleAgentAssignment',
+        );
+
+        await assignButton().trigger('click');
+
+        expect(toggleDrawerSpy).not.toHaveBeenCalled();
+        expect(toggleAgentAssignmentSpy).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('assignAgent', () => {
+    beforeEach(() => {
+      agentsTeamStore.toggleAgentAssignment = vi.fn().mockResolvedValue({
+        status: 'success',
+      });
+
+      tuningsStore.fetchCredentials = vi.fn().mockResolvedValue();
+    });
+
+    it('should emit agent-assigned event when agent is successfully assigned', async () => {
+      await wrapper.setProps({
+        assignment: true,
+        agent: {
+          ...wrapper.props('agent'),
+          assigned: false,
+          external_id: 'test-id',
+        },
+      });
+
+      await wrapper.vm.assignAgent();
+
+      expect(wrapper.emitted('agent-assigned')).toBeTruthy();
+    });
+
+    it('should not emit agent-assigned event when agent is successfully unassigned', async () => {
+      await wrapper.setProps({
+        assignment: true,
+        agent: {
+          ...wrapper.props('agent'),
+          assigned: true,
+          external_id: 'test-id',
+        },
+      });
+
+      await wrapper.vm.assignAgent();
+
+      expect(wrapper.emitted('agent-assigned')).toBeFalsy();
+    });
+
+    it('should call fetchCredentials when agent has credentials', async () => {
+      await wrapper.setProps({
+        assignment: true,
+        agent: {
+          ...wrapper.props('agent'),
+          credentials: [{ id: 1 }],
+          external_id: 'test-id',
+        },
+      });
+
+      await wrapper.vm.assignAgent();
+
+      expect(tuningsStore.fetchCredentials).toHaveBeenCalled();
+    });
+
+    it('should call fetchCredentials when assignment is false', async () => {
+      await wrapper.setProps({
+        assignment: false,
+        agent: {
+          ...wrapper.props('agent'),
+          credentials: [],
+          external_id: 'test-id',
+        },
+      });
+
+      await wrapper.vm.assignAgent();
+
+      expect(tuningsStore.fetchCredentials).toHaveBeenCalled();
+    });
+
+    it('should not call fetchCredentials when agent has no credentials and assignment is true', async () => {
+      await wrapper.setProps({
+        assignment: true,
+        agent: {
+          ...wrapper.props('agent'),
+          credentials: [],
+          external_id: 'test-id',
+        },
+      });
+
+      await wrapper.vm.assignAgent();
+
+      expect(tuningsStore.fetchCredentials).not.toHaveBeenCalled();
+    });
+
+    it('should not process success actions when status is not success', async () => {
+      agentsTeamStore.toggleAgentAssignment = vi.fn().mockResolvedValue({
+        status: 'error',
+      });
+
+      await wrapper.setProps({
+        assignment: true,
+        agent: {
+          ...wrapper.props('agent'),
+          assigned: false,
+          credentials: [{ id: 1 }],
+          external_id: 'test-id',
+        },
+      });
+
+      await wrapper.vm.assignAgent();
+
+      expect(wrapper.emitted('agent-assigned')).toBeFalsy();
+      expect(tuningsStore.fetchCredentials).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('toggleDrawerAssigning function', () => {
+    beforeEach(() => {
+      vi.spyOn(wrapper.vm, 'assignAgent').mockResolvedValue();
+      vi.spyOn(wrapper.vm, 'toggleDrawer').mockResolvedValue();
+    });
+
+    it('should set isDrawerAssigning to true during assignment process', async () => {
+      expect(wrapper.vm.isDrawerAssigning).toBe(false);
+
+      const process = wrapper.vm.toggleDrawerAssigning();
+
+      expect(wrapper.vm.isDrawerAssigning).toBe(true);
+
+      await process;
+    });
+
+    it('should set isDrawerAssigning to false after assignment process', async () => {
+      await wrapper.vm.toggleDrawerAssigning();
+
+      expect(wrapper.vm.isDrawerAssigning).toBe(false);
+    });
+
+    //TODO: Make the following tests work
+
+    // it('should call assignAgent during the process', async () => {
+    // });
+
+    // it('should call toggleDrawer after the assignment process', async () => {
+    // });
+
+    // it('should still call toggleDrawer even if assignAgent throws an error', async () => {
+    // });
   });
 });
