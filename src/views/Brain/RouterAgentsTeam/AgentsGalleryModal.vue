@@ -6,6 +6,7 @@
     showActionsDivider
     :title="$t('router.agents_team.gallery.title')"
     size="lg"
+    data-testid="agents-gallery-modal"
     @update:model-value="closeModal"
   >
     <section
@@ -39,6 +40,7 @@
 
         <section
           v-if="activeTab === 'my-agents'"
+          data-testid="custom-agents-section"
           :class="[
             'agents-gallery__custom-agents',
             {
@@ -65,6 +67,7 @@
             <template #weni_cli_documentation>
               <p
                 class="description__link"
+                data-testid="weni-cli-documentation-link"
                 @click="openCLI"
               >
                 {{ $t('router.agents_team.gallery.weni_cli_documentation') }}
@@ -81,7 +84,6 @@
                 'content__cards--empty': isMyAgentsEmpty,
               },
             ]"
-            data-testid="agent-cards"
           >
             <template v-if="isLoadingAgents">
               <AssignAgentCard
@@ -99,6 +101,7 @@
                 family="secondary"
                 size="body-gt"
                 tag="p"
+                data-testid="no-agent-found"
               >
                 {{ $t('router.agents_team.gallery.no_agent_found') }}
               </UnnnicIntelligenceText>
@@ -108,6 +111,7 @@
                   v-for="agent in agentsData"
                   :key="agent.uuid"
                   :agent="agent"
+                  data-testid="agent-card"
                   @agent-assigned="closeModal"
                 />
               </template>

@@ -117,7 +117,12 @@ exports[`AssignAgentCard.vue > renders correctly 1`] = `
       <!---->
     </button>
   </section>
-  <!--v-if-->
+  <assign-agent-drawer-stub
+    agent="[object Object]"
+    data-v-73104bd4=""
+    isassigning="false"
+    modelvalue="false"
+  />
   
 </div>
 `;
