@@ -1,4 +1,4 @@
-import { beforeEach, it, vi } from 'vitest';
+import { afterEach, beforeEach, it, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import { createTestingPinia } from '@pinia/testing';
@@ -47,6 +47,10 @@ describe('AssignAgentCard.vue', () => {
         },
       },
     });
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   it('renders correctly', () => {
@@ -376,15 +380,27 @@ describe('AssignAgentCard.vue', () => {
       expect(wrapper.vm.isDrawerAssigning).toBe(false);
     });
 
-    //TODO: Make the following tests work
+    it('should assign agent during the process', async () => {
+      await wrapper.vm.toggleDrawerAssigning();
 
-    // it('should call assignAgent during the process', async () => {
-    // });
+      expect(agentsTeamStore.toggleAgentAssignment).toHaveBeenCalled();
+    });
 
-    // it('should call toggleDrawer after the assignment process', async () => {
-    // });
+    it('should toggle drawer after the assignment process', async () => {
+      wrapper.vm.isAssignDrawerOpen = true;
 
-    // it('should still call toggleDrawer even if assignAgent throws an error', async () => {
-    // });
+      await wrapper.vm.toggleDrawerAssigning();
+
+      expect(wrapper.vm.isAssignDrawerOpen).toBe(false);
+    });
+
+    it('should still call toggleDrawer even if assignAgent throws an error', async () => {
+      wrapper.vm.isAssignDrawerOpen = true;
+      vi.spyOn(wrapper.vm, 'assignAgent').mockRejectedValue(new Error(''));
+
+      await wrapper.vm.toggleDrawerAssigning();
+
+      expect(wrapper.vm.isAssignDrawerOpen).toBe(false);
+    });
   });
 });
