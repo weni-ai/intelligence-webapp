@@ -29,19 +29,19 @@
       <UnnnicTab
         :activeTab="tab"
         size="md"
-        :tabs="['own_intelligences', 'public_intelligences']"
+        :tabs="['content_intelligences', 'classification_intelligences']"
         @change="tab = $event"
       >
-        <template #tab-head-own_intelligences>
-          {{ $t('intelligences.own_intelligences') }}
+        <template #tab-head-content_intelligences>
+          {{ $t('intelligences.content_intelligences') }}
         </template>
 
-        <template #tab-head-public_intelligences>
-          {{ $t('intelligences.public_intelligences') }}
+        <template #tab-head-classification_intelligences>
+          {{ $t('intelligences.classification_intelligences') }}
         </template>
       </UnnnicTab>
 
-      <div v-show="tab === 'own_intelligences'">
+      <div v-show="tab === 'content_intelligences'">
         <IntelligencesFilter
           v-model:name="filterIntelligenceName"
           v-model:type="fitlerIntelligenceType"
@@ -91,7 +91,9 @@
         </div>
       </div>
 
-      <IntelligencesPublicList v-show="tab === 'public_intelligences'" />
+      <IntelligencesPublicList
+        v-show="tab === 'classification_intelligences'"
+      />
     </div>
 
     <CreateIntelligenceModal
@@ -123,7 +125,7 @@ export default {
     return {
       filterIntelligenceName: '',
       fitlerIntelligenceType: 'generative',
-      tab: 'own_intelligences',
+      tab: 'content_intelligences',
       howTabIsShown: 2,
       update: false,
       loading: false,

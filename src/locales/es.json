@@ -15,8 +15,8 @@
   "internal_server_error": "Error interno del servidor",
   "unexpected_error": "Se ha producido un error inesperado",
   "intelligences": {
-    "own_intelligences": "Inteligencias propias",
-    "public_intelligences": "Inteligencias públicas",
+    "content_intelligences": "Inteligencias de contenido",
+    "classification_intelligences": "Inteligencias de clasificación",
     "create_button": "Crear Inteligencia",
     "search_intelligence_placeholder": "Buscar Inteligencia",
     "categories_placeholder": "Categorías",
