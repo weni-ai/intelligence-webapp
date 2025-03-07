@@ -2,8 +2,8 @@
   <div>
     <IntelligencesFilter
       v-model:name="filterIntelligenceName"
-      v-model:type="fitlerIntelligenceType"
-      v-model:category="filterIntelligenceCategory"
+      type="generative"
+      :showTypes="false"
       class="filters"
     />
 

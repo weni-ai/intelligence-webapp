@@ -1,9 +1,5 @@
 <template>
   <div class="intelligences-filters">
-    <div>
-      {{ $t('intelligences.filter_label') }}
-    </div>
-
     <UnnnicSelectSmart
       v-if="category !== undefined"
       size="sm"
@@ -17,7 +13,7 @@
       class="search-input"
       :modelValue="name"
       size="sm"
-      iconLeft="search-1"
+      iconLeft="search"
       data-test="name-input"
       :placeholder="$t('intelligences.search_intelligence_placeholder')"
       @update:model-value="$emit('update:name', $event)"
@@ -34,20 +30,20 @@
     <template v-else-if="showTypes">
       <UnnnicRadio
         :modelValue="type"
-        value="generative"
-        data-test="generative-radio"
+        value="own"
+        data-test="own-radio"
         @update:model-value="$emit('update:type', $event)"
       >
-        {{ $t('intelligences.filter_type_generative_label') }}
+        {{ $t('intelligences.filter_type_own_label') }}
       </UnnnicRadio>
 
       <UnnnicRadio
         :modelValue="type"
-        value="classification"
-        data-test="classification-radio"
+        value="public"
+        data-test="public-radio"
         @update:model-value="$emit('update:type', $event)"
       >
-        {{ $t('intelligences.filter_type_classification_label') }}
+        {{ $t('intelligences.filter_type_public_label') }}
       </UnnnicRadio>
     </template>
   </div>

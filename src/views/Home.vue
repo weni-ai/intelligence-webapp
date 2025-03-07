@@ -41,12 +41,11 @@
         </template>
       </UnnnicTab>
 
-      <div v-show="tab === 'content_intelligences'">
+      <div v-show="tab === 'classification_intelligences'">
         <IntelligencesFilter
           v-model:name="filterIntelligenceName"
-          v-model:type="fitlerIntelligenceType"
-          :loadingType="intelligencesNexusAI.firstLoading"
-          :showTypes="!isGenerativeAIListEmpty"
+          v-model:type="filterIntelligenceType"
+          v-model:category="filterIntelligenceCategory"
           class="filters"
         />
 
@@ -91,9 +90,7 @@
         </div>
       </div>
 
-      <IntelligencesPublicList
-        v-show="tab === 'classification_intelligences'"
-      />
+      <IntelligencesPublicList v-show="tab === 'content_intelligences'" />
     </div>
 
     <CreateIntelligenceModal
@@ -124,7 +121,8 @@ export default {
   data() {
     return {
       filterIntelligenceName: '',
-      fitlerIntelligenceType: 'generative',
+      filterIntelligenceType: 'own',
+      filterIntelligenceCategory: [],
       tab: 'content_intelligences',
       howTabIsShown: 2,
       update: false,
@@ -176,20 +174,11 @@ export default {
   },
 
   computed: {
-    isGenerativeAIListEmpty() {
-      return (
-        this.intelligencesNexusAI.status === 'complete' &&
-        this.intelligencesNexusAI.data.length === 0
-      );
-    },
-
     intelligences() {
       let items;
 
-      if (this.fitlerIntelligenceType === 'generative') {
-        items = this.intelligencesNexusAI.data;
-      } else {
-        items = this.intelligencesFromProject.data.concat(
+      items = this.intelligencesFromProject.data
+        .concat(
           this.intelligencesFromOrg.data.filter(
             ({ uuid }) =>
               !this.intelligencesFromProject.data.some(
@@ -197,8 +186,14 @@ export default {
                   uuid === intelligenceFromProject.uuid,
               ),
           ),
-        );
-      }
+        )
+        .filter((intelligence) => {
+          if (this.filterIntelligenceType === 'own') {
+            return intelligence.owner == this.$store.getters.getOrgSelected;
+          }
+
+          return intelligence.owner != this.$store.getters.getOrgSelected;
+        });
 
       return items.filter((intelligence) => {
         if (this.filterIntelligenceName) {
@@ -220,7 +215,7 @@ export default {
     },
 
     isListEmpty() {
-      if (this.fitlerIntelligenceType === 'generative') {
+      if (this.tab === 'content_intelligences') {
         return (
           this.intelligencesNexusAI.status === 'complete' &&
           this.intelligences.length === 0
@@ -236,25 +231,15 @@ export default {
   },
 
   watch: {
-    isGenerativeAIListEmpty: {
-      handler() {
-        if (this.isGenerativeAIListEmpty) {
-          this.fitlerIntelligenceType = 'classification';
-        }
-      },
-
-      immediate: true,
-    },
-
     isShowingEndOfList() {
       if (this.isShowingEndOfList) {
         if (
-          this.fitlerIntelligenceType === 'classification' &&
+          this.filterIntelligenceType === 'own' &&
           this.intelligencesFromOrg.status !== 'complete'
         ) {
           this.loadIntelligencesFromOrg();
         } else if (
-          this.fitlerIntelligenceType === 'generative' &&
+          this.filterIntelligenceType === 'public' &&
           this.intelligencesNexusAI.status !== 'complete'
         ) {
           this.loadIntelligencesNexusAI();
@@ -262,20 +247,14 @@ export default {
       }
     },
 
-    fitlerIntelligenceType: {
+    filterIntelligenceType: {
       immediate: true,
 
       handler() {
-        if (
-          this.fitlerIntelligenceType === 'classification' &&
-          this.intelligencesFromProject.status === null
-        ) {
+        if (this.intelligencesFromProject.status === null) {
           this.loadIntelligencesFromProject();
           this.loadIntelligencesFromOrg();
-        } else if (
-          this.fitlerIntelligenceType === 'generative' &&
-          this.intelligencesNexusAI.firstLoad
-        ) {
+        } else if (this.intelligencesNexusAI.firstLoad) {
           this.intelligencesNexusAI.firstLoad = false;
           this.loadIntelligencesNexusAI();
         }
@@ -311,7 +290,7 @@ export default {
         this.intelligencesFromProject.status = 'loading';
 
         const { data } = await this.searchProjectWithFlow({
-          projectUUID: this.$store.getters.getProjectSelected,
+          projectUUID: this.$store.state.Auth.connectProjectUuid,
         });
 
         this.intelligencesFromProject.data = data;
@@ -322,7 +301,7 @@ export default {
             data.map(({ uuid, version_default }) => ({
               repository_uuid: uuid,
               repository_version: version_default.id,
-              project_uuid: this.$store.getters.getProjectSelected,
+              project_uuid: this.$store.state.Auth.connectProjectUuid,
               organization: this.$store.getters.getOrgSelected,
             })),
           ),

@@ -20,7 +20,6 @@
     "create_button": "Create Intelligence",
     "search_intelligence_placeholder": "Search Intelligence",
     "categories_placeholder": "Categories",
-    "filter_label": "Filter:",
     "no_intelligence_added": "No Intelligence added",
     "view_bases": "View bases",
     "no_content_base_added": "No content base added",
@@ -30,8 +29,8 @@
     "sidebar_view_content_bases_description": "View the content bases that are part of this AI.",
     "delete_intelligence": "Delete Intelligence",
     "delete_intelligence_confirmation_modal_description": "Are you sure you want to delete <b>{name}</b> intelligence?<br>This action cannot be reversed.",
-    "filter_type_generative_label": "Generative AIs",
-    "filter_type_classification_label": "Classification AIs"
+    "filter_type_own_label": "Own intelligences",
+    "filter_type_public_label": "Public intelligences"
   },
   "bases": {
     "create": {
