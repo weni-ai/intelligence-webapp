@@ -62,6 +62,7 @@
             <UnnnicInput
               :modelValue="getCredentialValue(credential.name)"
               :placeholder="credential.placeholder || credential.label"
+              :nativeType="credential.is_confidential ? 'password' : 'text'"
               data-testid="assign-agent-drawer-input"
               @update:model-value="
                 tuningsStore.updateCredential({

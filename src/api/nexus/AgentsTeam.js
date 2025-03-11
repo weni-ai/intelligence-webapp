@@ -122,6 +122,9 @@ export const AgentsTeam = {
       {
         assigned: is_assigned,
       },
+      {
+        hideGenericErrorAlert: true,
+      },
     );
 
     return {
