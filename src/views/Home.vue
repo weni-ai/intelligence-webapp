@@ -86,7 +86,6 @@
 
       <!-- Classification Intelligences Tab -->
       <div v-show="tab === 'classification_intelligences'">
-        <!-- CARD HERE -->
         <ClassificationDeprecationAlert class="deprecation-alert-container" />
 
         <IntelligencesFilter
@@ -96,12 +95,10 @@
           class="filters"
         />
 
-        <!-- Classification Intelligences Empty State -->
         <EmptyIntelligencesState
           v-if="isClassificationEmpty && !isClassificationLoading"
         />
 
-        <!-- Classification Intelligences List -->
         <div
           v-else
           class="intelligences-list"
