@@ -87,8 +87,8 @@
           >
             <template v-if="isLoadingAgents">
               <AssignAgentCard
-                v-for="(_, index) in Array(3)"
-                :key="index"
+                v-for="n in 3"
+                :key="n"
                 loading
                 data-testid="agent-card-loading"
               />
