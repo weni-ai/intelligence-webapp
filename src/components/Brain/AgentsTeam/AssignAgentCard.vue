@@ -40,10 +40,20 @@
             data-testid="agent-tag"
           />
 
-          <ContentItemActions
-            :actions="assignAgentHeaderActions"
-            minWidth="175px"
+          <UnnnicIconLoading
+            v-if="isToggleAgentAssignmentLoading"
+            size="avatar-nano"
           />
+          <!-- v-show used instead of v-else to prevent ContentItemActions popover rendering error -->
+          <section
+            v-show="!isToggleAgentAssignmentLoading"
+            class="actions__content"
+          >
+            <ContentItemActions
+              :actions="assignAgentHeaderActions"
+              minWidth="175px"
+            />
+          </section>
         </section>
       </header>
 
@@ -137,6 +147,7 @@ const agentsTeamStore = useAgentsTeamStore();
 const isAssignDrawerOpen = ref(false);
 const isAssigning = ref(false);
 const isDrawerAssigning = ref(false);
+const isToggleAgentAssignmentLoading = ref(false);
 
 const tuningsStore = useTuningsStore();
 
@@ -156,6 +167,8 @@ async function toggleDrawer() {
 async function assignAgent() {
   const isAssigned = props.assignment ? !props.agent.assigned : false;
   try {
+    isToggleAgentAssignmentLoading.value = true;
+
     const { status } = await agentsTeamStore.toggleAgentAssignment({
       external_id: props.agent.external_id,
       is_assigned: isAssigned,
@@ -168,6 +181,8 @@ async function assignAgent() {
     }
   } catch (error) {
     console.error(error);
+  } finally {
+    isToggleAgentAssignmentLoading.value = false;
   }
 }
 
@@ -210,6 +225,10 @@ async function toggleDrawerAssigning() {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        .actions__content {
+          display: flex;
+        }
       }
     }
 
