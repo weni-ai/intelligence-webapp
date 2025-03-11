@@ -29,53 +29,46 @@
       <UnnnicTab
         :activeTab="tab"
         size="md"
-        :tabs="['own_intelligences', 'public_intelligences']"
+        :tabs="['content_intelligences', 'classification_intelligences']"
         @change="tab = $event"
       >
-        <template #tab-head-own_intelligences>
-          {{ $t('intelligences.own_intelligences') }}
+        <template #tab-head-content_intelligences>
+          {{
+            $t('intelligences.content_intelligences') || 'Content Intelligences'
+          }}
         </template>
 
-        <template #tab-head-public_intelligences>
-          {{ $t('intelligences.public_intelligences') }}
+        <template #tab-head-classification_intelligences>
+          {{
+            $t('intelligences.classification_intelligences') ||
+            'Classification Intelligences'
+          }}
         </template>
       </UnnnicTab>
 
-      <div v-show="tab === 'own_intelligences'">
+      <!-- Content Intelligences Tab -->
+      <div v-show="tab === 'content_intelligences'">
         <IntelligencesFilter
           v-model:name="filterIntelligenceName"
-          v-model:type="fitlerIntelligenceType"
-          :loadingType="intelligencesNexusAI.firstLoading"
-          :showTypes="!isGenerativeAIListEmpty"
+          :showTypes="false"
           class="filters"
         />
 
-        <div
-          v-if="isListEmpty"
-          class="intelligences-list--empty"
-        >
-          <img
-            src="../assets/imgs/doris-doubt-reaction.png"
-            alt="Doris Doubt Reaction"
-          />
-
-          <h1 class="intelligences-list__title">
-            {{ $t('intelligences.no_intelligence_added') }}
-          </h1>
-        </div>
+        <EmptyIntelligencesState
+          v-if="getPublicContentIntelligences.length === 0 && !contentLoading"
+        />
 
         <div
           v-else
           class="intelligences-list"
         >
           <IntelligenceFromProjectItem
-            v-for="project in intelligences"
-            :key="project.uuid"
-            :project="project"
-            @removed="removed(project.uuid)"
+            v-for="intelligence in getPublicContentIntelligences"
+            :key="intelligence.uuid"
+            :project="intelligence"
           />
 
-          <template v-if="isLoading">
+          <template v-if="contentLoading">
             <UnnnicSkeletonLoading
               v-for="i in 3"
               :key="i"
@@ -85,13 +78,53 @@
           </template>
 
           <div
-            v-show="!isLoading"
-            ref="end-of-list-element"
-          ></div>
+            ref="contentEndOfListElement"
+            class="load-more-trigger"
+          />
         </div>
       </div>
 
-      <IntelligencesPublicList v-show="tab === 'public_intelligences'" />
+      <!-- Classification Intelligences Tab -->
+      <div v-show="tab === 'classification_intelligences'">
+        <ClassificationDeprecationAlert class="deprecation-alert-container" />
+
+        <IntelligencesFilter
+          v-model:name="filterIntelligenceName"
+          v-model:category="filterIntelligenceCategory"
+          v-model:type="ownershipFilter"
+          class="filters"
+        />
+
+        <EmptyIntelligencesState
+          v-if="isClassificationEmpty && !isClassificationLoading"
+        />
+
+        <div
+          v-else
+          class="intelligences-list"
+        >
+          <IntelligenceFromProjectItem
+            v-for="intelligence in filteredClassificationIntelligences"
+            :key="intelligence.uuid"
+            :project="intelligence"
+            @removed="removeIntelligence(intelligence.uuid)"
+          />
+
+          <template v-if="isClassificationLoading || contentLoading">
+            <UnnnicSkeletonLoading
+              v-for="i in 3"
+              :key="i"
+              tag="div"
+              height="206px"
+            />
+          </template>
+
+          <div
+            ref="classificationEndOfListElement"
+            class="load-more-trigger"
+          ></div>
+        </div>
+      </div>
     </div>
 
     <CreateIntelligenceModal
@@ -101,305 +134,369 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue';
+import { useStore } from 'vuex';
 import CreateIntelligenceModal from '../components/repository/CreateRepository/CreateIntelligenceModal.vue';
-import { mapActions } from 'vuex';
 import IntelligenceFromProjectItem from '../components/repository/home/IntelligenceFromProjectItem.vue';
-import IntelligencesPublicList from '../components/intelligences/IntelligencesPublicList.vue';
 import IntelligencesFilter from '../components/intelligences/IntelligencesFilter.vue';
-import ModalNext from '../components/ModalNext.vue';
-import nexusaiAPI from '../api/nexusaiAPI';
+import EmptyIntelligencesState from '../components/intelligences/EmptyIntelligencesState.vue';
+import useIntelligences from '../composables/useIntelligences';
+import useInfiniteScroll from '../composables/useInfiniteScroll';
+import repository from '../api/repository';
+import ClassificationDeprecationAlert from '../components/intelligences/ClassificationDeprecationAlert.vue';
 
-export default {
-  name: 'Home',
-  components: {
-    CreateIntelligenceModal,
-    IntelligenceFromProjectItem,
-    IntelligencesPublicList,
-    IntelligencesFilter,
-    ModalNext,
-  },
-  data() {
-    return {
-      filterIntelligenceName: '',
-      fitlerIntelligenceType: 'generative',
-      tab: 'own_intelligences',
-      howTabIsShown: 2,
-      update: false,
-      loading: false,
-      openModal: false,
-      category: [],
-      categories: [
-        {
-          value: '',
-          label: this.$t('intelligences.categories_placeholder'),
-        },
-        {
-          value: '1',
-          label: 'Option 1',
-        },
-        {
-          value: '2',
-          label: 'Option 2',
-          description: 'This is the first option',
-        },
-      ],
+const store = useStore();
+const tab = ref('content_intelligences');
+const openModal = ref(false);
+const filterIntelligenceName = ref('');
+const filterIntelligenceCategory = ref([]);
+const ownershipFilter = ref('own');
+const contentLoading = ref(false);
 
-      intelligencesFromProject: {
-        data: [],
-        status: null,
-      },
+const {
+  intelligencesState,
+  isClassificationLoading,
+  getFilteredClassificationIntelligences: getOwnClassificationIntelligences,
+  removeIntelligence,
+  loadClassificationIntelligences,
+} = useIntelligences();
 
-      intelligencesFromOrg: {
-        limit: 20,
-        offset: 0,
-        owner_id: this.$store.getters.getOrgSelected,
-        data: [],
-        next: null,
-        status: null,
-      },
-
-      intelligencesNexusAI: {
-        firstLoad: true,
-        firstLoading: true,
-        orgUuid: this.$store.state.Auth.connectOrgUuid,
-        data: [],
-        next: null,
-        status: null,
-      },
-
-      intersectionObserver: null,
-      isShowingEndOfList: false,
+onMounted(() => {
+  if (!store.state.Repository.publicIntelligences) {
+    store.state.Repository.publicIntelligences = {
+      limit: 20,
+      offset: 0,
+      data: [],
+      next: null,
+      status: null,
     };
-  },
+  }
 
-  computed: {
-    isGenerativeAIListEmpty() {
-      return (
-        this.intelligencesNexusAI.status === 'complete' &&
-        this.intelligencesNexusAI.data.length === 0
-      );
-    },
+  loadInitialData();
+});
 
-    intelligences() {
-      let items;
+const loadInitialData = async () => {
+  try {
+    if (tab.value === 'content_intelligences') {
+      await loadPublicIntelligences();
 
-      if (this.fitlerIntelligenceType === 'generative') {
-        items = this.intelligencesNexusAI.data;
+      setTimeout(() => {
+        if (
+          contentEndOfListElement.value &&
+          hasMoreContentPages.value &&
+          getPublicContentIntelligences.value.length > 0
+        ) {
+          checkContentVisibility();
+        }
+      }, 200);
+    } else {
+      if (ownershipFilter.value === 'own') {
+        await loadClassificationIntelligences();
+        setTimeout(() => {
+          if (
+            classificationEndOfListElement.value &&
+            filteredClassificationIntelligences.value.length > 0
+          ) {
+            checkClassificationVisibility();
+          }
+        }, 200);
       } else {
-        items = this.intelligencesFromProject.data.concat(
-          this.intelligencesFromOrg.data.filter(
-            ({ uuid }) =>
-              !this.intelligencesFromProject.data.some(
-                (intelligenceFromProject) =>
-                  uuid === intelligenceFromProject.uuid,
-              ),
-          ),
-        );
+        await loadPublicIntelligences();
+        setTimeout(() => {
+          if (
+            classificationEndOfListElement.value &&
+            hasMoreClassificationPages.value &&
+            filteredClassificationIntelligences.value.length > 0
+          ) {
+            checkClassificationVisibility();
+          }
+        }, 200);
       }
+    }
+  } catch (error) {
+    console.error('Error loading initial data:', error);
+  }
+};
 
-      return items.filter((intelligence) => {
-        if (this.filterIntelligenceName) {
-          return String(intelligence.name)
-            .toLocaleLowerCase()
-            .includes(this.filterIntelligenceName.toLowerCase());
-        }
+const loadMoreContent = () => {
+  if (
+    tab.value === 'content_intelligences' &&
+    hasMoreContentPages.value &&
+    !contentLoading.value
+  ) {
+    loadPublicIntelligences();
+  }
+};
 
-        return true;
-      });
-    },
+const loadMoreClassification = () => {
+  if (
+    tab.value !== 'classification_intelligences' ||
+    isClassificationLoading.value
+  ) {
+    return;
+  }
 
-    isLoading() {
-      return (
-        this.intelligencesFromProject.status === 'loading' ||
-        this.intelligencesFromOrg.status === 'loading' ||
-        this.intelligencesNexusAI.status === 'loading'
-      );
-    },
+  console.log('Loading more classification intelligences from scroll trigger');
+  if (ownershipFilter.value === 'own') {
+    loadClassificationIntelligences(true);
+  } else if (hasMoreClassificationPages.value) {
+    loadPublicIntelligences();
+  }
+};
 
-    isListEmpty() {
-      if (this.fitlerIntelligenceType === 'generative') {
-        return (
-          this.intelligencesNexusAI.status === 'complete' &&
-          this.intelligences.length === 0
-        );
+const {
+  endOfListElement: contentEndOfListElement,
+  checkVisibilityAndLoad: checkContentVisibility,
+} = useInfiniteScroll(loadMoreContent);
+
+const {
+  endOfListElement: classificationEndOfListElement,
+  checkVisibilityAndLoad: checkClassificationVisibility,
+} = useInfiniteScroll(loadMoreClassification);
+
+const getPublicContentIntelligences = computed(() => {
+  if (!store.state.Repository.publicIntelligences?.data) {
+    return [];
+  }
+
+  return store.state.Repository.publicIntelligences.data.filter(
+    (intelligence) =>
+      intelligence.repository_type === 'content' &&
+      intelligence.name.toLowerCase().includes(filterIntelligenceName.value),
+  );
+});
+
+const hasMoreContentPages = computed(() => {
+  return !!store.state.Repository.publicIntelligences?.next;
+});
+
+const hasMoreClassificationPages = computed(() => {
+  return !!store.state.Repository.publicIntelligences?.next;
+});
+
+const filteredClassificationIntelligences = computed(() => {
+  if (ownershipFilter.value === 'own') {
+    return getOwnClassificationIntelligences(filterIntelligenceName.value);
+  } else {
+    if (!store.state.Repository.publicIntelligences?.data) {
+      return [];
+    }
+
+    const items = store.state.Repository.publicIntelligences.data.filter(
+      (intelligence) => intelligence.repository_type === 'classifier',
+    );
+
+    return items.filter((intelligence) => {
+      if (filterIntelligenceName.value) {
+        return String(intelligence.name)
+          .toLocaleLowerCase()
+          .includes(filterIntelligenceName.value.toLowerCase());
       }
+      return true;
+    });
+  }
+});
 
-      return (
-        this.intelligencesFromProject.status === 'complete' &&
-        this.intelligencesFromOrg.status === 'complete' &&
-        this.intelligences.length === 0
-      );
-    },
-  },
+const isClassificationEmpty = computed(() => {
+  if (ownershipFilter.value === 'own') {
+    return (
+      intelligencesState.value.classification.fromProject.status ===
+        'complete' &&
+      intelligencesState.value.classification.fromOrg.status === 'complete' &&
+      filteredClassificationIntelligences.value.length === 0
+    );
+  } else {
+    const isComplete =
+      store.state.Repository.publicIntelligences?.status === 'complete';
+    return isComplete && filteredClassificationIntelligences.value.length === 0;
+  }
+});
 
-  watch: {
-    isGenerativeAIListEmpty: {
-      handler() {
-        if (this.isGenerativeAIListEmpty) {
-          this.fitlerIntelligenceType = 'classification';
-        }
+const loadPublicIntelligences = async () => {
+  if (
+    contentLoading.value ||
+    store.state.Repository.publicIntelligences?.status === 'loading' ||
+    (store.state.Repository.publicIntelligences?.status === 'complete' &&
+      !store.state.Repository.publicIntelligences?.next)
+  ) {
+    return;
+  }
+
+  try {
+    contentLoading.value = true;
+    store.state.Repository.publicIntelligences.status = 'loading';
+
+    const { data } = await repository.listPublicIntelligences({
+      next: store.state.Repository.publicIntelligences.next,
+      limit: store.state.Repository.publicIntelligences.limit,
+      offset: store.state.Repository.publicIntelligences.offset,
+      params: {
+        categories: filterIntelligenceCategory.value[0]?.label,
       },
-
-      immediate: true,
-    },
-
-    isShowingEndOfList() {
-      if (this.isShowingEndOfList) {
-        if (
-          this.fitlerIntelligenceType === 'classification' &&
-          this.intelligencesFromOrg.status !== 'complete'
-        ) {
-          this.loadIntelligencesFromOrg();
-        } else if (
-          this.fitlerIntelligenceType === 'generative' &&
-          this.intelligencesNexusAI.status !== 'complete'
-        ) {
-          this.loadIntelligencesNexusAI();
-        }
-      }
-    },
-
-    fitlerIntelligenceType: {
-      immediate: true,
-
-      handler() {
-        if (
-          this.fitlerIntelligenceType === 'classification' &&
-          this.intelligencesFromProject.status === null
-        ) {
-          this.loadIntelligencesFromProject();
-          this.loadIntelligencesFromOrg();
-        } else if (
-          this.fitlerIntelligenceType === 'generative' &&
-          this.intelligencesNexusAI.firstLoad
-        ) {
-          this.intelligencesNexusAI.firstLoad = false;
-          this.loadIntelligencesNexusAI();
-        }
-      },
-    },
-  },
-
-  mounted() {
-    this.intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        this.isShowingEndOfList = entry.isIntersecting;
-      });
     });
 
-    this.intersectionObserver.observe(this.$refs['end-of-list-element']);
-  },
+    store.state.Repository.publicIntelligences.data = [
+      ...(store.state.Repository.publicIntelligences.data || []),
+      ...data.results,
+    ];
 
-  beforeUnmount() {
-    this.intersectionObserver.unobserve(this.$refs['end-of-list-element']);
-  },
+    store.state.Repository.publicIntelligences.next = data.next;
 
-  methods: {
-    ...mapActions(['searchProjectWithFlow', 'getRepositories']),
-
-    removed(intelligenceUuid) {
-      this.intelligencesNexusAI.data = this.intelligencesNexusAI.data.filter(
-        ({ uuid }) => intelligenceUuid !== uuid,
-      );
-    },
-
-    async loadIntelligencesFromProject() {
-      try {
-        this.intelligencesFromProject.status = 'loading';
-
-        const { data } = await this.searchProjectWithFlow({
-          projectUUID: this.$store.getters.getProjectSelected,
-        });
-
-        this.intelligencesFromProject.data = data;
-
-        localStorage.setItem(
-          'in_project',
-          JSON.stringify(
-            data.map(({ uuid, version_default }) => ({
-              repository_uuid: uuid,
-              repository_version: version_default.id,
-              project_uuid: this.$store.getters.getProjectSelected,
-              organization: this.$store.getters.getOrgSelected,
-            })),
-          ),
-        );
-      } finally {
-        this.intelligencesFromProject.status = 'complete';
-      }
-    },
-
-    async loadIntelligencesFromOrg() {
-      try {
-        this.intelligencesFromOrg.status = 'loading';
-
-        const { data } = await this.getRepositories({
-          limit: this.intelligencesFromOrg.limit,
-          offset: this.intelligencesFromOrg.offset,
-          owner_id: this.intelligencesFromOrg.owner_id,
-          next: this.intelligencesFromOrg.next,
-        });
-
-        this.intelligencesFromOrg.data = [
-          ...this.intelligencesFromOrg.data,
-          ...data.results.filter(
-            ({ repository_type }) => repository_type === 'classifier',
-          ),
-        ];
-
-        this.intelligencesFromOrg.next = data.next;
-
-        if (!data.next) {
-          this.intelligencesFromOrg.status = 'complete';
-        }
-      } finally {
-        if (this.intelligencesFromOrg.status === 'loading') {
-          this.intelligencesFromOrg.status = null;
-        }
-      }
-    },
-
-    async loadIntelligencesNexusAI() {
-      try {
-        this.intelligencesNexusAI.status = 'loading';
-
-        const { data } = await nexusaiAPI.listIntelligences({
-          orgUuid: this.intelligencesNexusAI.orgUuid,
-          next: this.intelligencesNexusAI.next,
-        });
-
-        this.intelligencesNexusAI.data = [
-          ...this.intelligencesNexusAI.data,
-          ...data.results.filter(({ is_router }) => !is_router),
-        ];
-
-        this.intelligencesNexusAI.next = data.next;
-
-        if (!data.next) {
-          this.intelligencesNexusAI.status = 'complete';
-        }
-      } finally {
-        this.intelligencesNexusAI.firstLoading = false;
-
-        if (this.intelligencesNexusAI.status === 'loading') {
-          this.intelligencesNexusAI.status = null;
-        }
-      }
-    },
-
-    onTabSelected(event) {
-      this.howTabIsShown = event;
-      this.update = !this.update;
-    },
-    createNewIntelligence() {
-      // this.$router.push({
-      //   name: 'new',
-      // });
-      this.openModal = true;
-    },
-  },
+    if (!data.next) {
+      store.state.Repository.publicIntelligences.status = 'complete';
+    }
+  } catch (error) {
+    console.error('Error loading public intelligences:', error);
+  } finally {
+    contentLoading.value = false;
+    if (store.state.Repository.publicIntelligences.status === 'loading') {
+      store.state.Repository.publicIntelligences.status = null;
+    }
+  }
 };
+
+const resetPublicIntelligences = () => {
+  store.state.Repository.publicIntelligences = {
+    limit: 20,
+    offset: 0,
+    data: [],
+    next: null,
+    status: null,
+  };
+};
+
+const createNewIntelligence = () => {
+  openModal.value = true;
+};
+
+watch(tab, (newTab) => {
+  if (newTab === 'content_intelligences') {
+    if (!getPublicContentIntelligences.value.length) {
+      loadPublicIntelligences().then(() => {
+        setTimeout(() => {
+          if (
+            contentEndOfListElement.value &&
+            hasMoreContentPages.value &&
+            getPublicContentIntelligences.value.length > 0
+          ) {
+            checkContentVisibility();
+          }
+        }, 200);
+      });
+    } else if (hasMoreContentPages.value) {
+      setTimeout(() => {
+        checkContentVisibility();
+      }, 200);
+    }
+  } else if (newTab === 'classification_intelligences') {
+    if (
+      ownershipFilter.value === 'own' &&
+      !intelligencesState.value.classification.fromProject.data.length
+    ) {
+      loadClassificationIntelligences().then(() => {
+        setTimeout(() => {
+          if (
+            classificationEndOfListElement.value &&
+            filteredClassificationIntelligences.value.length > 0
+          ) {
+            checkClassificationVisibility();
+          }
+        }, 200);
+      });
+    } else if (
+      ownershipFilter.value === 'public' &&
+      !filteredClassificationIntelligences.value.length
+    ) {
+      loadPublicIntelligences().then(() => {
+        setTimeout(() => {
+          if (
+            classificationEndOfListElement.value &&
+            hasMoreClassificationPages.value &&
+            filteredClassificationIntelligences.value.length > 0
+          ) {
+            checkClassificationVisibility();
+          }
+        }, 200);
+      });
+    } else {
+      setTimeout(() => {
+        checkClassificationVisibility();
+      }, 200);
+    }
+  }
+});
+
+watch(ownershipFilter, () => {
+  if (tab.value === 'classification_intelligences') {
+    if (ownershipFilter.value === 'own') {
+      if (!intelligencesState.value.classification.fromProject.data.length) {
+        loadClassificationIntelligences().then(() => {
+          setTimeout(() => {
+            if (
+              classificationEndOfListElement.value &&
+              filteredClassificationIntelligences.value.length > 0
+            ) {
+              checkClassificationVisibility();
+            }
+          }, 200);
+        });
+      } else {
+        setTimeout(() => {
+          checkClassificationVisibility();
+        }, 200);
+      }
+    } else if (!filteredClassificationIntelligences.value.length) {
+      loadPublicIntelligences().then(() => {
+        setTimeout(() => {
+          if (
+            classificationEndOfListElement.value &&
+            hasMoreClassificationPages.value &&
+            filteredClassificationIntelligences.value.length > 0
+          ) {
+            checkClassificationVisibility();
+          }
+        }, 200);
+      });
+    } else {
+      setTimeout(() => {
+        checkClassificationVisibility();
+      }, 200);
+    }
+  }
+});
+
+watch(filterIntelligenceCategory, () => {
+  if (tab.value === 'classification_intelligences') {
+    resetPublicIntelligences();
+    loadPublicIntelligences();
+  }
+});
+
+watch(getPublicContentIntelligences, (newValue, oldValue) => {
+  if (
+    tab.value === 'content_intelligences' &&
+    newValue.length > 0 &&
+    newValue.length !== oldValue.length &&
+    hasMoreContentPages.value
+  ) {
+    setTimeout(() => {
+      checkContentVisibility();
+    }, 200);
+  }
+});
+
+watch(filteredClassificationIntelligences, (newValue, oldValue) => {
+  if (
+    tab.value === 'classification_intelligences' &&
+    newValue.length > 0 &&
+    newValue.length !== oldValue.length
+  ) {
+    setTimeout(() => {
+      checkClassificationVisibility();
+    }, 200);
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -424,29 +521,6 @@ export default {
     auto-fill,
     minmax(20.625 * $unnnic-font-size, 1fr)
   );
-
-  &--empty {
-    padding-top: $unnnic-spacing-sm;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .create-ia-button {
-      min-width: 15.625 * $unnnic-font-size;
-    }
-  }
-
-  &__title {
-    font-family: $unnnic-font-family-secondary;
-    font-size: $unnnic-font-size-title-sm;
-    line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
-    font-weight: $unnnic-font-weight-bold;
-    color: $unnnic-color-neutral-darkest;
-    text-align: center;
-
-    margin-block: $unnnic-spacing-md;
-  }
 }
 
 .home {
@@ -497,6 +571,7 @@ export default {
       $unnnic-spacing-stack-md;
   }
 }
+
 .home-loading {
   display: flex;
   flex-direction: column;
@@ -536,11 +611,22 @@ export default {
   margin-bottom: $unnnic-spacing-md;
 }
 
+.deprecation-alert-container {
+  margin-bottom: $unnnic-spacing-md;
+}
+
 :deep(.input.size-md) {
   height: auto;
 }
 
 :deep(.unnnic-modal.type-default .container) {
   max-width: 750px;
+}
+
+.load-more-trigger {
+  height: 10px;
+  width: 100%;
+  margin-top: $unnnic-spacing-md;
+  grid-column: 1 / -1;
 }
 </style>
