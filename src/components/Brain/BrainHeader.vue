@@ -80,6 +80,7 @@ import useBrainRoutes from '@/composables/useBrainRoutes';
 import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useTuningsStore } from '@/store/Tunings';
+import { usePreviewStore } from '@/store/Preview';
 import { useAlertStore } from '@/store/Alert';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
@@ -87,7 +88,6 @@ import i18n from '@/utils/plugins/i18n';
 
 import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
 import PreviewDrawer from './Preview/PreviewDrawer.vue';
-
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
   start: format(subDays(new Date(), 30), 'yyyy-MM-dd'),
@@ -111,6 +111,7 @@ const currentBrainRoute = computed(() => {
 const showDateFilter = computed(() => route.name === 'router-monitoring');
 
 const tuningsStore = useTuningsStore();
+const previewStore = usePreviewStore();
 const store = useStore();
 
 const isTuningsSaveButtonDisabled = computed(() => {
@@ -163,8 +164,14 @@ watch(
 
 watch(
   currentBrainRoute,
-  () => {
+  (currentBrainRoute) => {
     updateQueriesAtFilterDate();
+
+    const isAgentsTeamPage = currentBrainRoute.page === 'router-agents-team';
+    if (!isAgentsTeamPage && previewStore.ws) {
+      previewStore.disconnectWS();
+      previewStore.clearTraces();
+    }
   },
   {
     immediate: true,
