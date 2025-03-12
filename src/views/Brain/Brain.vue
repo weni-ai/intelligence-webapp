@@ -52,7 +52,6 @@
           :key="refreshPreviewValue"
           :contentBaseUuid="contentBaseUuid"
           :contentBaseLanguage="contentBase.language"
-          :usePreview="true"
           @messages="getPreviewMessages"
         />
       </section>

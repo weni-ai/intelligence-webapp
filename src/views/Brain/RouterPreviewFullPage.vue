@@ -1,9 +1,9 @@
 <template>
   <section
-    class="preview"
+    class="preview-full-page"
     :style="{ height: `${height}px` }"
   >
-    <Preview usePreview />
+    <Preview />
   </section>
 </template>
 
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.preview {
+.preview-full-page {
   display: flex;
   height: 100%;
   overflow: hidden;

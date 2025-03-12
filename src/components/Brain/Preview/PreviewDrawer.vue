@@ -38,10 +38,7 @@
           data-testid="preview-drawer-preview"
           class="content__preview"
         >
-          <Preview
-            :key="refreshPreviewValue"
-            usePreview
-          />
+          <Preview :key="refreshPreviewValue" />
         </section>
 
         <section
@@ -121,7 +118,7 @@ function refreshPreview() {
       border-right: $unnnic-border-width-thinner solid
         $unnnic-color-neutral-soft;
 
-      :deep(.quick-test) {
+      :deep(.preview) {
         padding: $unnnic-spacing-sm $unnnic-spacing-md;
         gap: $unnnic-spacing-xs;
 

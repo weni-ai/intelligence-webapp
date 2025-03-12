@@ -5,7 +5,7 @@
     @close="$emit('close')"
   >
     <div class="content-bases-list">
-      <Preview
+      <ContentBasePreview
         :contentBaseUuid="repositoryUuid"
         :contentBaseLanguage="repositoryLanguage"
       />
@@ -15,12 +15,12 @@
 
 <script>
 import { mapActions } from 'vuex';
-import Preview from '../../../views/repository/content/Preview.vue';
+import ContentBasePreview from '../../../views/repository/content/ContentBasePreview.vue';
 import RightSidebar from '../../RightSidebar.vue';
 
 export default {
   components: {
-    Preview,
+    ContentBasePreview,
     RightSidebar,
   },
   props: {
