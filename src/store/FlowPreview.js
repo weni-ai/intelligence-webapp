@@ -107,8 +107,6 @@ export const useFlowPreviewStore = defineStore('flowPreview', () => {
     addMessage,
     clearMessages,
     setMessageInput,
-    isTheLastMessage,
-    shouldShowQuickReplies,
     replaceMessage,
     removeMessage,
     treatAnswerResponse,
