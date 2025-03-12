@@ -264,43 +264,35 @@ describe('AgentsGalleryModal.vue', () => {
 
   describe('Computed properties', () => {
     it('correctly computes isLoadingAgents based on store status', async () => {
-      // Initial state
       expect(wrapper.vm.isLoadingAgents).toBe(false);
 
-      // When official agents are loading
       agentsTeamStore.officialAgents.status = 'loading';
       await nextTick();
       expect(wrapper.vm.isLoadingAgents).toBe(true);
 
-      // When official agents complete but my agents loading
       agentsTeamStore.officialAgents.status = 'complete';
       agentsTeamStore.myAgents.status = 'loading';
       await nextTick();
       expect(wrapper.vm.isLoadingAgents).toBe(true);
 
-      // When both complete
       agentsTeamStore.myAgents.status = 'complete';
       await nextTick();
       expect(wrapper.vm.isLoadingAgents).toBe(false);
     });
 
     it('correctly computes isMyAgentsEmpty in different scenarios', async () => {
-      // With data
       agentsTeamStore.myAgents.data = mockAgents;
       wrapper.vm.activeTab = 'my-agents';
       expect(wrapper.vm.isMyAgentsEmpty).toBe(false);
 
-      // Without data
       agentsTeamStore.myAgents.data = [];
       await nextTick();
       expect(wrapper.vm.isMyAgentsEmpty).toBe(true);
 
-      // When loading
       agentsTeamStore.myAgents.status = 'loading';
       await nextTick();
       expect(wrapper.vm.isMyAgentsEmpty).toBe(false);
 
-      // When searching
       wrapper.vm.search['my-agents'] = 'search term';
       wrapper.vm.updateSearchEmpty();
       await nextTick();
