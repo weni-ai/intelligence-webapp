@@ -304,7 +304,7 @@ export default function useFlowPreview() {
       const active = {};
       let activeFlow = '';
 
-      for (const run of this.preview.session.runs) {
+      for (const run of preview.value.session.runs) {
         let finalStep = null;
 
         for (const step of run.path) {
@@ -338,7 +338,7 @@ export default function useFlowPreview() {
             }
           }
 
-          if (this.preview.session.status === 'waiting') {
+          if (preview.value.session.status === 'waiting') {
             active[finalStep.node_uuid] = ++count;
           }
           activeFlow = run.flow_uuid;
@@ -364,12 +364,12 @@ export default function useFlowPreview() {
     };
 
     const body = {
-      session: this.preview.session,
+      session: preview.value.session,
       resume: {
         type: 'msg',
         msg,
         resumed_on: now,
-        contact: this.preview.session.contact,
+        contact: preview.value.session.contact,
       },
     };
 

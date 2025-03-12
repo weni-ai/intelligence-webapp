@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick } from 'vue';
+import { ref, computed, onMounted, watch, nextTick, reactive } from 'vue';
 
 import MessageDisplay from '@/components/QuickTest/MessageDisplay.vue';
 import QuickTestWarn from '@/components/QuickTest/QuickTestWarn.vue';
@@ -247,7 +247,7 @@ function sendMessage() {
 }
 
 async function answer(question) {
-  const answer = {
+  const answer = reactive({
     type: 'answer',
     text: '',
     status: 'loading',
@@ -256,7 +256,7 @@ async function answer(question) {
       value: null,
       reason: null,
     },
-  };
+  });
 
   flowPreviewStore.addMessage(answer);
   scrollToLastMessage();
