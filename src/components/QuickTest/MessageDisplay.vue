@@ -47,7 +47,7 @@
       <AnswerFeedback
         v-if="message.type === 'answer' && message.question_uuid"
         v-model:feedback="message.feedback"
-        :contentBaseUuid="$store.state.router.contentBaseUuid"
+        :contentBaseUuid="store.state.router.contentBaseUuid"
         :questionUuid="message.question_uuid"
       />
 
@@ -56,7 +56,8 @@
   </section>
 </template>
 
-<script>
+<script setup>
+import { useStore } from 'vuex';
 import { lowerFirstCapitalLetter } from '@/utils/handleLetters';
 import { getFileType } from '@/utils/medias';
 import AnswerSources from '@/components/QuickTest/AnswerSources.vue';
@@ -64,74 +65,63 @@ import AnswerFeedback from '@/components/QuickTest/AnswerFeedback.vue';
 import DotTyping from '@/components/QuickTest/DotTyping.vue';
 import Markdown from '@/components/Markdown.vue';
 import PreviewMedia from '@/components/PreviewMedia.vue';
+import i18n from '@/utils/plugins/i18n';
 
-export default {
-  name: 'MessageDisplay',
-
-  components: {
-    Markdown,
-    PreviewMedia,
-    AnswerSources,
-    AnswerFeedback,
-    DotTyping,
+const props = defineProps({
+  message: {
+    type: Object,
+    required: true,
   },
-
-  props: {
-    message: {
-      type: Object,
-      required: true,
-    },
-    shouldShowSources: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+  shouldShowSources: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
+});
 
-  methods: {
-    isStatus(message) {
-      return [
-        'change',
-        'flowstart',
-        'flowsend',
-        'message_forwarded_to_brain',
-        'media_and_location_unavailable',
-      ].includes(message.type);
-    },
+const store = useStore();
 
-    isMedia(message) {
-      return !!getFileType(message);
-    },
+const isStatus = (message) => {
+  return [
+    'change',
+    'flowstart',
+    'flowsend',
+    'message_forwarded_to_brain',
+    'media_and_location_unavailable',
+  ].includes(message.type);
+};
 
-    statusDescription(message) {
-      if (message.type === 'change') {
-        return this.$t('router.preview.field_changed_to_value', {
-          field: this.handleLetter(this.$t(message.name)),
-          value: message.value,
-        });
-      }
+const isMedia = (message) => {
+  return !!getFileType(message);
+};
 
-      if (message.type === 'flowstart') {
-        return this.$t('router.preview.flow_started', { name: message.name });
-      }
+const handleLetter = (message) => {
+  return lowerFirstCapitalLetter(message);
+};
 
-      if (message.type === 'flowsend') {
-        return this.$t('router.preview.flow_finished');
-      }
+const statusDescription = (message) => {
+  if (message.type === 'change') {
+    return i18n.global.t('router.preview.field_changed_to_value', {
+      field: handleLetter(i18n.global.t(message.name)),
+      value: message.value,
+    });
+  }
 
-      if (message.type === 'message_forwarded_to_brain') {
-        return this.$t('router.preview.message_forwarded_to_brain');
-      }
+  if (message.type === 'flowstart') {
+    return i18n.global.t('router.preview.flow_started', { name: message.name });
+  }
 
-      if (message.type === 'media_and_location_unavailable') {
-        return this.$t('router.preview.media_and_location_unavailable');
-      }
-    },
+  if (message.type === 'flowsend') {
+    return i18n.global.t('router.preview.flow_finished');
+  }
 
-    handleLetter(message) {
-      return lowerFirstCapitalLetter(message);
-    },
-  },
+  if (message.type === 'message_forwarded_to_brain') {
+    return i18n.global.t('router.preview.message_forwarded_to_brain');
+  }
+
+  if (message.type === 'media_and_location_unavailable') {
+    return i18n.global.t('router.preview.media_and_location_unavailable');
+  }
 };
 </script>
 
