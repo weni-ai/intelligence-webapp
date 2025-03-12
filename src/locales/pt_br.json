@@ -146,7 +146,10 @@
       "card": {
         "assign": "Atribuir ao time",
         "assigned": "Atribuído",
-        "success_alert": "Agente atribuído ao time com sucesso"
+        "success_assign_alert": "{agent} atribuído ao time com sucesso",
+        "success_unassign_alert": "{agent} removido do time com sucesso",
+        "error_alert": "Erro ao tentar atualizar o time",
+        "remove_agent": "Remover agente"
       },
       "drawer": {
         "title": "Atribuir {name} ao time",
@@ -158,19 +161,22 @@
       },
       "active_team": {
         "title": "Equipe ativa",
-        "no_team": "Nenhum agente na sua equipe",
-        "no_team_description": "Adicione agentes da galeria abaixo ou {link}",
-        "create_agent": "crie um agente"
+        "no_team": "Nenhum agente atribuído à sua equipe",
+        "no_team_description": "Vá para {assign_agents} para ver a galeria e atribuir agentes à sua equipe"
       },
       "gallery": {
         "title": "Galeria de agentes",
         "search_placeholder": "Pesquisar por agente ou habilidade",
-        "official": "Oficial",
-        "my-agents": "Meus agentes",
-        "no_agent_found": "Nenhum agente encontrado"
+        "official_agents": "Agentes oficiais",
+        "custom_agents": "Agentes customizados",
+        "no_agent_found": "Nenhum agente encontrado",
+        "custom_agents_description": "Agentes customizados são criados usando o Weni CLI.",
+        "weni_cli_documentation": "Documentação do Weni CLI",
+        "weni_cli_documentation_description": "Consulte a {weni_cli_documentation} para instruções detalhadas."
       },
       "create_agent": "Crie um agente",
-      "preview": "Preview"
+      "preview": "Preview",
+      "assign_agents": "Atribuir agentes"
     },
     "content": {
       "fields": {
@@ -274,7 +280,8 @@
         "used_by_customized_agents": "Credenciais usadas pelos agentes personalizados",
         "used_by": "Usadas por",
         "no_agents_using": "Nenhum agente usando",
-        "credentials_updated_successfully": "Credenciais atualizadas com sucesso"
+        "credentials_updated_successfully": "Credenciais atualizadas com sucesso",
+        "get_error": "Erro ao requisitar credenciais"
       }
     },
     "preview": {
@@ -282,7 +289,7 @@
       "active": "Agent Builder ativo",
       "no_logs_registered": "Nenhum registro de logs",
       "see_full_details": "Ver detalhes",
-      "manager_task": "Coordenador de tarefas da equipe",
+      "manager_task": "Coordenando tarefas da equipe",
       "visual_flow": "Fluxo visual",
       "logs": "Logs",
       "agents_preview": "Preview dos agentes",
@@ -301,7 +308,8 @@
       "flow_started": "Fluxo {name} iniciado",
       "flow_finished": "Fluxo finalizado",
       "message_forwarded_to_brain": "Mensagem redirecionada para o Agent Builder",
-      "media_and_location_unavailable": "Não há ação de Mídias e Localização cadastrada"
+      "media_and_location_unavailable": "Não há ação de Mídias e Localização cadastrada",
+      "standby": "Standby"
     }
   },
   "content_bases": {

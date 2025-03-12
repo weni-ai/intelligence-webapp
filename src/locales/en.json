@@ -146,7 +146,12 @@
       "card": {
         "assign": "Assign to team",
         "assigned": "Assigned",
-        "success_alert": "Agent assigned to team successfully"
+        "success_assign_alert": "{agent} assigned to team successfully",
+        "success_unassign_alert": "{agent} removed from team successfully",
+        "error_alert": "Error updating the team",
+        "official": "Official",
+        "custom": "Custom",
+        "remove_agent": "Remove agent"
       },
       "drawer": {
         "title": "Assign {name} to team",
@@ -158,19 +163,22 @@
       },
       "active_team": {
         "title": "Active team",
-        "no_team": "No agents in your team",
-        "no_team_description": "Add agents from the gallery below or {link}",
-        "create_agent": "create agent"
+        "no_team": "No agents assigned into the team",
+        "no_team_description": "Go to {assign_agents} to view the gallery and add agents to your team"
       },
       "gallery": {
         "title": "Agents gallery",
         "search_placeholder": "Search by agent or skill",
-        "official": "Official",
-        "my-agents": "My agents",
-        "no_agent_found": "No agent found"
+        "official_agents": "Official agents",
+        "custom_agents": "Custom agents",
+        "no_agent_found": "No agent found",
+        "custom_agents_description": "Custom agents are built using Weni CLI.",
+        "weni_cli_documentation": "Weni CLI Documentation",
+        "weni_cli_documentation_description": "Refer to the {weni_cli_documentation} for detailed instructions."
       },
       "create_agent": "Create agent",
-      "preview": "Preview"
+      "preview": "Preview",
+      "assign_agents": "Assign agents"
     },
     "content": {
       "fields": {
@@ -274,7 +282,8 @@
         "used_by_customized_agents": "Credentials used by customized agents",
         "used_by": "Used by",
         "no_agents_using": "No agents using",
-        "credentials_updated_successfully": "Credentials updated successfully"
+        "credentials_updated_successfully": "Credentials updated successfully",
+        "get_error": "Error getting credentials"
       }
     },
     "preview": {
@@ -282,7 +291,7 @@
       "active": "Agent Builder active",
       "no_logs_registered": "No logs registered",
       "see_full_details": "See full details",
-      "manager_task": "Team Task Coordinator",
+      "manager_task": "Coordinating team tasks",
       "visual_flow": "Visual flow",
       "logs": "Logs",
       "agents_preview": "Agents preview",
@@ -301,7 +310,8 @@
       "flow_started": "Flow {name} started",
       "flow_finished": "Flow finished",
       "message_forwarded_to_brain": "Message forwarded to Agent Builder",
-      "media_and_location_unavailable": "There is no Media and Location action registered"
+      "media_and_location_unavailable": "There is no Media and Location action registered",
+      "standby": "Standby"
     }
   },
   "content_bases": {

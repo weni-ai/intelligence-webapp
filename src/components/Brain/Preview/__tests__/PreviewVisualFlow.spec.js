@@ -15,13 +15,11 @@ describe('PreviewVisualFlow.vue', () => {
       id: 1,
       name: 'Agent 1',
       external_id: 'ext1',
-      description: 'Description 1',
     },
     {
       id: 2,
       name: 'Agent 2',
       external_id: 'ext2',
-      description: 'Description 2',
     },
   ];
 
@@ -32,6 +30,10 @@ describe('PreviewVisualFlow.vue', () => {
         AgentsTeam: {
           activeTeam: {
             data: {
+              manager: {
+                name: 'Manager',
+                external_id: 'ext0',
+              },
               agents: mockTeamAgents,
             },
           },
@@ -107,7 +109,7 @@ describe('PreviewVisualFlow.vue', () => {
     expect(firstAgentCard.props()).toEqual({
       name: mockTeamAgents[0].name,
       active: false,
-      currentTask: mockTeamAgents[0].description,
+      currentTask: i18n.global.t('router.preview.standby'),
       type: 'agent',
     });
   });

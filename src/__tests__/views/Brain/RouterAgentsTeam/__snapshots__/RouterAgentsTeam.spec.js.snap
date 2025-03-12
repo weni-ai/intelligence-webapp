@@ -5,15 +5,16 @@ exports[`RouterAgentsTeam > matches snapshot 1`] = `
   class="agents-team"
   data-v-d0fbe27f=""
 >
-  <active-team-stub
-    data-v-d0fbe27f=""
-  />
   <unnnic-divider-stub
+    class="agents-team__divider"
     data-v-d0fbe27f=""
     scheme="neutral-soft"
     yspacing="lg"
   />
-  <agents-gallery-stub
+  <active-team-stub
+    data-v-d0fbe27f=""
+  />
+  <agents-gallery-modal-stub
     data-v-d0fbe27f=""
   />
 </section>

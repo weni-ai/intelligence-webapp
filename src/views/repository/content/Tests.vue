@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import { get } from 'lodash';
+import { get, attempt } from 'lodash';
 import { reactive } from 'vue';
 
 import AnswerSources from '@/components/QuickTest/AnswerSources.vue';
@@ -479,11 +479,20 @@ export default {
 
           if (data.type === 'broadcast') {
             answer.status = 'loaded';
-            answer.text = get(
-              data,
-              'message',
-              this.$t('quick_test.unable_to_find_an_answer', this.language),
+
+            const safeParseMessage = attempt(
+              JSON.parse.bind(null, data.message),
             );
+            const textOfComponents = safeParseMessage?.msg?.text;
+
+            answer.text =
+              textOfComponents ||
+              get(
+                data,
+                'message',
+                this.$t('quick_test.unable_to_find_an_answer', this.language),
+              );
+
             answer.sources = get(data, 'fonts', []);
 
             this.scrollToLastMessage();

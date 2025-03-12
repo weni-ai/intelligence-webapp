@@ -21,5 +21,5 @@ export function formatListToReadable(items) {
   const lastItem = items.at(-1);
   const otherItems = items.slice(0, -1).join(', ');
 
-  return `${otherItems} ${i18n.global.t('and')} ${lastItem}`;
+  return `${otherItems}${i18n.global.t('and')}${lastItem}`;
 }

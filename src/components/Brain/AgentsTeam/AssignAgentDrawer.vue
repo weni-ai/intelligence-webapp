@@ -9,6 +9,7 @@
     :loadingPrimaryButton="
       tuningsStore.credentials.status === 'loading' || isAssigning
     "
+    data-testid="assign-agent-drawer"
     @primary-button-click="toggleAgentAssignment"
     @close="close"
   >
@@ -17,6 +18,7 @@
         <section
           v-if="hasCredentialsWithValue"
           class="assign-agent-drawer__credentials"
+          data-testid="assign-agent-drawer-credentials"
         >
           <UnnnicIntelligenceText
             tag="p"
@@ -55,28 +57,38 @@
             v-for="(credential, key) in credentialsWithoutValue"
             :key="key"
             :label="credential.label"
+            data-testid="assign-agent-drawer-form-element"
           >
             <UnnnicInput
               :modelValue="getCredentialValue(credential.name)"
               :placeholder="credential.placeholder || credential.label"
+              data-testid="assign-agent-drawer-input"
               @update:model-value="
-                tuningsStore.updateCredentialValue(credential.name, $event)
+                tuningsStore.updateCredential({
+                  ...credential,
+                  value: $event,
+                })
               "
             />
           </UnnnicFormElement>
 
-          <section class="assign-agent-drawer__shared-info">
+          <section
+            class="assign-agent-drawer__shared-info"
+            data-testid="assign-agent-drawer-shared-info"
+          >
             <UnnnicIcon
               scheme="neutral-cleanest"
               icon="info"
               size="sm"
               filled
+              data-testid="assign-agent-drawer-shared-info-icon"
             />
             <UnnnicIntelligenceText
               tag="p"
               family="secondary"
               size="body-md"
               color="neutral-clean"
+              data-testid="assign-agent-drawer-shared-info-text"
             >
               {{
                 $t(
@@ -146,9 +158,7 @@ const credentialsWithValue = computed(() => {
 });
 
 const hasAllCredentialsWithValue = computed(() => {
-  if (!props.agent.credentials?.length) return false;
-
-  return props.agent.credentials.every((credential) => {
+  return props.agent.credentials?.every((credential) => {
     const [index, type] = tuningsStore.getCredentialIndex(credential.name);
     const value = tuningsStore.credentials.data?.[type]?.[index]?.value;
     return !!value?.trim();
@@ -170,7 +180,7 @@ async function toggleAgentAssignment() {
     );
 
     if (!agentHaveCredentialsCreated) {
-      await tuningsStore.createCredentials(props.agent);
+      await tuningsStore.createCredentials(props.agent.uuid);
     } else if (credentialsWithoutValue.value.length) {
       await tuningsStore.saveCredentials();
     }

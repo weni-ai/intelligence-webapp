@@ -3,10 +3,14 @@ import { computed, ref } from 'vue';
 import { cloneDeep } from 'lodash';
 
 import globalStore from '.';
+import { useAlertStore } from './Alert';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
+import i18n from '@/utils/plugins/i18n';
 
 export const useTuningsStore = defineStore('Tunings', () => {
+  const alertStore = useAlertStore();
+
   const connectProjectUuid = computed(
     () => globalStore.state.Auth.connectProjectUuid,
   );
@@ -72,20 +76,17 @@ export const useTuningsStore = defineStore('Tunings', () => {
     ];
   }
 
-  function updateCredentialValue(credentialName, value) {
-    const [index, type] = getCredentialIndex(credentialName);
+  function updateCredential(credential) {
+    const [index, type] = getCredentialIndex(credential.name);
 
     // If credential doesn't exist, create it
     if (index === -1 || !credentials.value.data[type][index]) {
       credentials.value.data[type] = credentials.value.data[type] || [];
-      credentials.value.data[type].push({
-        name: credentialName,
-        value: value,
-      });
+      credentials.value.data[type].push(credential);
       return;
     }
 
-    credentials.value.data[type][index].value = value;
+    credentials.value.data[type][index].value = credential.value;
   }
 
   async function fetchCredentials() {
@@ -107,6 +108,11 @@ export const useTuningsStore = defineStore('Tunings', () => {
       credentials.value.status = 'success';
     } catch (error) {
       credentials.value.status = 'error';
+
+      alertStore.add({
+        text: i18n.global.t('router.tunings.credentials.get_error'),
+        type: 'error',
+      });
     }
   }
 
@@ -134,15 +140,14 @@ export const useTuningsStore = defineStore('Tunings', () => {
     }
   }
 
-  async function createCredentials(agent) {
+  async function createCredentials(agentUuid) {
     try {
       credentials.value.status = 'loading';
 
       await nexusaiAPI.router.tunings.createCredentials({
         projectUuid: connectProjectUuid.value,
-        credentials: formatCredentials(credentials.value.data.officialAgents),
-        agent_uuid: agent.uuid,
-        is_confidential: agent.is_confidential,
+        credentials: credentials.value.data.officialAgents,
+        agent_uuid: agentUuid,
       });
 
       credentials.value.status = 'success';
@@ -156,7 +161,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
     isCredentialsValid,
     initialCredentials,
     getCredentialIndex,
-    updateCredentialValue,
+    updateCredential,
     fetchCredentials,
     saveCredentials,
     createCredentials,

@@ -1,10 +1,8 @@
-import { mount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 
 import { createTestingPinia } from '@pinia/testing';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
-
-import i18n from '@/utils/plugins/i18n';
 
 import ActiveTeam from '@/views/Brain/RouterAgentsTeam/ActiveTeam.vue';
 
@@ -13,7 +11,9 @@ const pinia = createTestingPinia({
     AgentsTeam: {
       activeTeam: {
         status: null,
-        data: [],
+        data: {
+          agents: [],
+        },
       },
       officialAgents: {
         status: null,
@@ -27,14 +27,42 @@ const pinia = createTestingPinia({
   },
 });
 
-describe('ActiveTeam component', () => {
+describe('ActiveTeam.vue', () => {
   let wrapper;
   const agentsTeamStore = useAgentsTeamStore();
 
+  const loadingCards = () =>
+    wrapper.findAllComponents('[data-testid="loading-card"]');
+  const teamCards = () =>
+    wrapper.findAllComponents('[data-testid="team-card"]');
+  const emptyState = () => wrapper.find('[data-testid="empty-state"]');
+  const assignAgentsLink = () =>
+    wrapper.find('[data-testid="assign-agents-link"]');
+
+  const mockAgents = [
+    {
+      uuid: 'uuid-1',
+      name: 'Agent 1',
+      description: 'Description 1',
+      skills: [{ name: 'Skill 1', icon: '🛒' }],
+    },
+    {
+      uuid: 'uuid-2',
+      name: 'Agent 2',
+      description: 'Description 2',
+      skills: [{ name: 'Skill 2', icon: '💬' }],
+    },
+  ];
+
   beforeEach(() => {
-    wrapper = mount(ActiveTeam, {
+    wrapper = shallowMount(ActiveTeam, {
       global: {
         plugins: [pinia],
+        stubs: {
+          'i18n-t': {
+            template: '<div><slot name="assign_agents" /></div>',
+          },
+        },
       },
     });
   });
@@ -43,61 +71,67 @@ describe('ActiveTeam component', () => {
     vi.clearAllMocks();
   });
 
-  it('should match snapshot', () => {
-    expect(wrapper.element).toMatchSnapshot();
+  describe('Component rendering', () => {
+    it('should match snapshot', () => {
+      expect(wrapper.element).toMatchSnapshot();
+    });
+
+    it('should load active team when mounted', () => {
+      expect(agentsTeamStore.loadActiveTeam).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it('renders the title', () => {
-    const title = wrapper.find('[data-testid="title"]');
-    expect(title.exists()).toBe(true);
-    expect(title.text()).toBe(
-      i18n.global.t('router.agents_team.active_team.title'),
-    );
+  describe('Loading state', () => {
+    it('should render loading cards when team is loading', async () => {
+      agentsTeamStore.activeTeam.status = 'loading';
+      await nextTick();
+
+      expect(loadingCards().length).toBe(3);
+    });
+
+    it('should not render empty state when loading', async () => {
+      agentsTeamStore.activeTeam.status = 'loading';
+      agentsTeamStore.activeTeam.data.agents = [];
+      await nextTick();
+
+      expect(emptyState().exists()).toBe(false);
+    });
   });
 
-  // TODO: Fix this test
+  describe('Active team state', () => {
+    it('should render team cards when there are active agents', async () => {
+      agentsTeamStore.activeTeam.status = 'complete';
+      agentsTeamStore.activeTeam.data.agents = mockAgents;
+      await nextTick();
 
-  // it('renders the loading state', async () => {
-  //   agentsTeamStore.activeTeam.status = 'loading';
-  //   agentsTeamStore.activeTeam.data.agents = [];
+      expect(teamCards().length).toBe(mockAgents.length);
+    });
 
-  //   await nextTick();
+    it('should not render empty state when there are active agents', async () => {
+      agentsTeamStore.activeTeam.status = 'complete';
+      agentsTeamStore.activeTeam.data.agents = [mockAgents[0]];
+      await nextTick();
 
-  //   const loadingCards = wrapper.findAllComponents(
-  //     '[data-testid="loading-card"]',
-  //   );
-  //   expect(loadingCards.length).toBe(3);
-  // });
-
-  // it('renders the active team cards', async () => {
-  //   const agents = [
-  //     {
-  //       uuid: 'uuid-1',
-  //       name: 'Agent 1',
-  //       description: 'Description 1',
-  //       skills: [{ name: 'Skill 1', icon: '🛒' }],
-  //     },
-  //   ];
-  //   agentsTeamStore.activeTeam.data.agents = agents;
-  //   agentsTeamStore.activeTeam.status = 'complete';
-
-  //   await nextTick();
-
-  //   const teamCards = wrapper.findAllComponents('[data-testid="team-card"]');
-  //   expect(teamCards.length).toBe(agents.length);
-  // });
-
-  it('renders the empty state', async () => {
-    agentsTeamStore.activeTeam.status = 'complete';
-    agentsTeamStore.activeTeam.data.agents = [];
-
-    await nextTick();
-
-    const emptyState = wrapper.find('[data-testid="empty-state"]');
-    expect(emptyState.exists()).toBe(true);
+      expect(emptyState().exists()).toBe(false);
+    });
   });
 
-  it('should load active team when mounted', async () => {
-    expect(agentsTeamStore.loadActiveTeam).toHaveBeenCalledTimes(1);
+  describe('Empty state', () => {
+    it('should render empty state when there are no agents', async () => {
+      agentsTeamStore.activeTeam.status = 'complete';
+      agentsTeamStore.activeTeam.data.agents = [];
+      await nextTick();
+
+      expect(emptyState().exists()).toBe(true);
+    });
+
+    it('should open agents gallery when clicking on assign agents link', async () => {
+      agentsTeamStore.activeTeam.status = 'complete';
+      agentsTeamStore.activeTeam.data.agents = [];
+      await nextTick();
+
+      await assignAgentsLink().trigger('click');
+      expect(agentsTeamStore.isAgentsGalleryOpen).toBe(true);
+    });
   });
 });
