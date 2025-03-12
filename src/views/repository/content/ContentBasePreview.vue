@@ -16,7 +16,6 @@
           v-for="(message, index) in messages"
           :key="index"
           :message="message"
-          :contentBaseUuid="contentBaseUuid"
         />
       </div>
     </div>

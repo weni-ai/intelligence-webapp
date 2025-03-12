@@ -50,8 +50,6 @@
         <BrainWarningBar v-if="!routerTunings.brainOn" />
         <Preview
           :key="refreshPreviewValue"
-          :contentBaseUuid="contentBaseUuid"
-          :contentBaseLanguage="contentBase.language"
           @messages="getPreviewMessages"
         />
       </section>

@@ -17,7 +17,6 @@
           v-for="(message, index) in messages"
           :key="index"
           :message="message"
-          :contentBaseUuid="contentBaseUuid"
           :shouldShowSources="true"
         >
           <template #quick-replies="{ message }">
@@ -101,19 +100,6 @@ export default {
 
   mixins: [FlowPreview],
 
-  props: {
-    contentBaseUuid: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    contentBaseLanguage: {
-      type: String,
-      required: false,
-      default: '',
-    },
-  },
-
   emits: ['messages'],
 
   setup() {
@@ -142,19 +128,6 @@ export default {
         this.profileStore.hasChanged ||
         this.$store.getters.hasBrainContentTextChanged
       );
-    },
-
-    language() {
-      const language = this.contentBaseLanguage;
-
-      if (!language) {
-        return null;
-      }
-
-      return language.indexOf('-') === -1
-        ? language
-        : language.slice(0, language.indexOf('-')) +
-            language.slice(language.indexOf('-')).toUpperCase();
     },
   },
 
@@ -371,7 +344,7 @@ export default {
             get(
               data,
               'message',
-              this.$t('quick_test.unable_to_find_an_answer', this.language),
+              this.$t('quick_test.unable_to_find_an_answer'),
             );
 
           answer.sources = get(data, 'fonts', []);

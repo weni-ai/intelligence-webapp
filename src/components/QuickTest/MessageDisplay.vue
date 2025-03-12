@@ -47,7 +47,7 @@
       <AnswerFeedback
         v-if="message.type === 'answer' && message.question_uuid"
         v-model:feedback="message.feedback"
-        :contentBaseUuid="contentBaseUuid"
+        :contentBaseUuid="$store.state.router.contentBaseUuid"
         :questionUuid="message.question_uuid"
       />
 
@@ -83,11 +83,6 @@ export default {
     message: {
       type: Object,
       required: true,
-    },
-    contentBaseUuid: {
-      type: String,
-      required: false,
-      default: '',
     },
     shouldShowSources: {
       type: Boolean,
