@@ -58,6 +58,7 @@
           <template #assign_agents>
             <p
               class="description__assign-agents"
+              data-testid="assign-agents-link"
               @click="handleAgentsGallery"
             >
               {{ $t('router.agents_team.assign_agents') }}
