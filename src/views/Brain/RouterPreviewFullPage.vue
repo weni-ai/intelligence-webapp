@@ -3,16 +3,16 @@
     class="preview"
     :style="{ height: `${height}px` }"
   >
-    <Tests usePreview />
+    <Preview usePreview />
   </section>
 </template>
 
 <script>
-import Tests from '../repository/content/Tests.vue';
+import Preview from '../repository/content/Preview.vue';
 
 export default {
   components: {
-    Tests,
+    Preview,
   },
 
   data() {

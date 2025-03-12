@@ -95,7 +95,7 @@
           {{ $t('content_bases.quick_test') }}
         </div>
 
-        <Tests
+        <Preview
           :contentBaseUuid="route.params.contentBaseUuid"
           :contentBaseLanguage="contentBase.language"
         />
@@ -127,7 +127,7 @@ import BaseSettingsForm from '@/components/BaseSettingsForm.vue';
 import BasesFormFiles from '@/views/repository/content/BasesFormFiles.vue';
 import BasesFormSites from '@/views/repository/content/BasesFormSites.vue';
 import BasesFormText from '@/views/repository/content/BasesFormText.vue';
-import Tests from '@/views/repository/content/Tests.vue';
+import Preview from '@/views/repository/content/Preview.vue';
 import { useFilesPagination } from './filesPagination';
 import { useSitesPagination } from './sitesPagination';
 

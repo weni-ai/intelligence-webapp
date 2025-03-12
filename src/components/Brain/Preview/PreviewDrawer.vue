@@ -38,7 +38,7 @@
           data-testid="preview-drawer-preview"
           class="content__preview"
         >
-          <Tests
+          <Preview
             :key="refreshPreviewValue"
             usePreview
           />
@@ -59,7 +59,7 @@
 import { computed, ref, watch } from 'vue';
 import { usePreviewStore } from '@/store/Preview';
 
-import Tests from '@/views/repository/content/Tests.vue';
+import Preview from '@/views/repository/content/Preview.vue';
 import PreviewDetails from './PreviewDetails.vue';
 import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
 import i18n from '@/utils/plugins/i18n';
