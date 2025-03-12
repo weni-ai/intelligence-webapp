@@ -51,10 +51,7 @@
         :questionUuid="message.question_uuid"
       />
 
-      <slot
-        name="quick-replies"
-        :message="message"
-      />
+      <slot name="components" />
     </template>
   </section>
 </template>

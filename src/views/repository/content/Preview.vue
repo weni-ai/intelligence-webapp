@@ -1,60 +1,63 @@
 <template>
-  <div class="preview">
+  <section class="preview">
     <PreviewPlaceholder
       v-if="shouldShowPreviewPlaceholder"
-      class="messages"
+      class="preview__placeholder"
+      data-testid="preview-placeholder"
     />
 
-    <div
+    <article
       v-else
-      class="messages"
+      ref="messagesRef"
+      class="preview__messages"
+      data-testid="messages-container"
     >
-      <div
-        ref="messagesRef"
-        class="messages__content"
+      <MessageDisplay
+        v-for="(message, index) in flowPreviewStore.messages"
+        :key="`message-${index}`"
+        :message="message"
+        :shouldShowSources="true"
+        data-testid="message-display"
       >
-        <MessageDisplay
-          v-for="(message, index) in flowPreviewStore?.messages"
-          :key="index"
-          :message="message"
-          :shouldShowSources="true"
-        >
-          <template #quick-replies="{ message }">
-            <section
-              v-if="shouldShowQuickReplies(message)"
-              class="quick-replies"
+        <template #components>
+          <section
+            v-if="shouldShowQuickReplies(message)"
+            class="quick-replies"
+            data-testid="quick-replies"
+          >
+            <UnnnicButton
+              v-for="(reply, index) in flowPreviewStore.preview.quickReplies"
+              :key="`reply-${index}`"
+              type="secondary"
+              size="small"
+              class="quick-replies__button"
+              data-testid="quick-reply-button"
+              @click="sendReply(reply)"
             >
-              <UnnnicButton
-                v-for="(reply, index) in flowPreviewStore?.preview.quickReplies"
-                :key="`reply-${index}`"
-                type="secondary"
-                size="small"
-                class="quick-replies__button"
-                @click="sendReply(reply)"
-              >
-                {{ reply }}
-              </UnnnicButton>
-            </section>
-          </template>
-        </MessageDisplay>
-      </div>
-    </div>
+              {{ reply }}
+            </UnnnicButton>
+          </section>
+        </template>
+      </MessageDisplay>
+    </article>
 
     <QuickTestWarn
       v-if="shouldShowRequireSaveWarn"
       icon="info"
       :text="$t('router.preview.save_changes_to_test_the_agent')"
+      data-testid="save-warning"
     />
 
-    <div class="write-message">
+    <footer class="preview__footer">
       <MessageInput
         v-model="message"
-        class="write-message__message-input"
+        class="footer__message-input"
         :placeholder="$t('webapp.home.bases.preview_tests_placeholder')"
+        data-testid="message-input"
         @send="sendMessage"
       />
-    </div>
-  </div>
+    </footer>
+  </section>
 </template>
 
 <script setup>
@@ -102,9 +105,10 @@ function isEventCardBrain(event) {
   }
 
   const url = new URL(event.url);
+  const apiBaseUrl = new URL(runtimeVariables.get('NEXUS_API_BASE_URL')).origin;
 
   return (
-    url.origin === new URL(runtimeVariables.get('NEXUS_API_BASE_URL')).origin &&
+    url.origin === apiBaseUrl &&
     url.pathname === '/messages' &&
     url.searchParams.has('token')
   );
@@ -348,26 +352,32 @@ onMounted(() => {
 }
 
 .preview {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+
   padding-top: $unnnic-spacing-sm;
+
+  display: grid;
+  grid-template-rows: 1fr auto;
   row-gap: $unnnic-spacing-xs;
 
-  .messages {
+  height: 100%;
+  width: 100%;
+
+  &__placeholder {
+    height: 100%;
+  }
+
+  &__messages {
     flex: 1;
     padding: 0 $unnnic-spacing-sm;
-
-    $scroll-size: $unnnic-inline-nano;
-
     overflow: hidden overlay;
 
-    &__content {
-      height: 0;
-      display: flex;
-      flex-direction: column;
-      row-gap: $unnnic-spacing-xs;
-    }
+    display: flex;
+    flex-direction: column;
+    row-gap: $unnnic-spacing-xs;
+
+    $scroll-size: $unnnic-inline-nano;
 
     &::-webkit-scrollbar {
       width: $scroll-size;
@@ -392,14 +402,13 @@ onMounted(() => {
     }
   }
 
-  .write-message {
+  &__footer {
     display: flex;
     column-gap: $unnnic-spacing-nano;
 
-    padding: $unnnic-spacing-sm;
-    padding-top: $unnnic-spacing-sm - $unnnic-spacing-xs;
+    padding: 0 $unnnic-spacing-sm $unnnic-spacing-sm;
 
-    &__message-input {
+    .footer__message-input {
       width: 100%;
     }
   }

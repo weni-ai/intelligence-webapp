@@ -114,6 +114,8 @@ function refreshPreview() {
     grid-template-columns: 1fr 1fr;
 
     .content__preview {
+      overflow: hidden;
+
       display: flex;
       border-right: $unnnic-border-width-thinner solid
         $unnnic-color-neutral-soft;
@@ -122,20 +124,15 @@ function refreshPreview() {
         padding: $unnnic-spacing-sm $unnnic-spacing-md;
         gap: $unnnic-spacing-xs;
 
-        .messages {
+        .preview__messages {
           padding: 0;
 
           margin-right: -$unnnic-spacing-ant;
           padding-right: $unnnic-spacing-ant;
         }
 
-        .write-message {
+        .preview__footer {
           padding: 0;
-        }
-
-        .message-input {
-          padding: $unnnic-spacing-sm;
-          padding-right: $unnnic-spacing-giant;
         }
       }
     }
