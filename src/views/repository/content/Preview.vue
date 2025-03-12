@@ -10,11 +10,11 @@
       class="messages"
     >
       <div
-        ref="messages"
+        ref="messagesRef"
         class="messages__content"
       >
         <MessageDisplay
-          v-for="(message, index) in messages"
+          v-for="(message, index) in flowPreviewStore?.messages"
           :key="index"
           :message="message"
           :shouldShowSources="true"
@@ -25,7 +25,7 @@
               class="quick-replies"
             >
               <UnnnicButton
-                v-for="(reply, index) in preview.quickReplies"
+                v-for="(reply, index) in flowPreviewStore?.preview.quickReplies"
                 :key="`reply-${index}`"
                 type="secondary"
                 size="small"
@@ -57,21 +57,44 @@
   </div>
 </template>
 
-<script>
-import { get, attempt } from 'lodash';
-import { reactive } from 'vue';
+<script setup>
+import { ref, computed, onMounted, watch, nextTick } from 'vue';
 
 import MessageDisplay from '@/components/QuickTest/MessageDisplay.vue';
-import DotTyping from '@/components/QuickTest/DotTyping.vue';
 import QuickTestWarn from '@/components/QuickTest/QuickTestWarn.vue';
 import PreviewPlaceholder from '../../Brain/Preview/Placeholder.vue';
 import MessageInput from './MessageInput.vue';
-import { useProfileStore } from '@/store/Profile';
 
-import FlowPreview from '@/utils/FlowPreview';
+import { useProfileStore } from '@/store/Profile';
+import { useFlowPreviewStore } from '@/store/FlowPreview';
+import { useStore } from 'vuex';
+
 import { getFileType } from '@/utils/medias';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
+import i18n from '@/utils/plugins/i18n';
+
+const emit = defineEmits(['messages']);
+
+const store = useStore();
+const profileStore = useProfileStore();
+const flowPreviewStore = useFlowPreviewStore();
+
+const message = ref('');
+const messages = ref(flowPreviewStore.messages);
+const messagesRef = ref(null);
+
+const shouldShowPreviewPlaceholder = computed(
+  () => messages.value.length === 0,
+);
+
+const shouldShowRequireSaveWarn = computed(() => {
+  return (
+    !store.getters.isBrainSaveButtonDisabled ||
+    profileStore.hasChanged ||
+    store.getters.hasBrainContentTextChanged
+  );
+});
 
 function isEventCardBrain(event) {
   if (event.type !== 'webhook_called' || !event.url) {
@@ -87,61 +110,38 @@ function isEventCardBrain(event) {
   );
 }
 
-export default {
-  name: 'Preview',
-
-  components: {
-    MessageDisplay,
-    QuickTestWarn,
-    PreviewPlaceholder,
-    MessageInput,
-    DotTyping,
+watch(
+  () => flowPreviewStore.messages,
+  (newMessages) => {
+    emit('messages', newMessages);
   },
+  { deep: true },
+);
 
-  mixins: [FlowPreview],
+watch(
+  () => flowPreviewStore.preview.session?.status,
+  (value, previous) => {
+    if (previous === 'waiting' && value === 'completed') {
+      flowPreviewStore.addMessage({
+        type: 'flowsend',
+        name: '',
+        question_uuid: null,
+        feedback: {
+          value: null,
+          reason: null,
+        },
+      });
 
-  emits: ['messages'],
+      const lastEvent =
+        flowPreviewStore.preview.events
+          .filter(({ type }) => !['info'].includes(type))
+          .at(-1) || {};
 
-  setup() {
-    const profileStore = useProfileStore();
+      const shouldForwardToBrain = isEventCardBrain(lastEvent);
 
-    return {
-      profileStore,
-    };
-  },
-
-  data() {
-    return {
-      message: '',
-      messages: [],
-    };
-  },
-
-  computed: {
-    shouldShowPreviewPlaceholder() {
-      return this.messages.length === 0;
-    },
-
-    shouldShowRequireSaveWarn() {
-      return (
-        !this.$store.getters.isBrainSaveButtonDisabled ||
-        this.profileStore.hasChanged ||
-        this.$store.getters.hasBrainContentTextChanged
-      );
-    },
-  },
-
-  watch: {
-    messages: {
-      deep: true,
-      handler(newMessages) {
-        this.$emit('messages', newMessages);
-      },
-    },
-    'preview.session.status'(value, previous) {
-      if (previous === 'waiting' && value === 'completed') {
-        this.messages.push({
-          type: 'flowsend',
+      if (shouldForwardToBrain) {
+        flowPreviewStore.addMessage({
+          type: 'message_forwarded_to_brain',
           name: '',
           question_uuid: null,
           feedback: {
@@ -150,243 +150,185 @@ export default {
           },
         });
 
-        const lastEvent =
-          this.preview.events
-            .filter(({ type }) => !['info'].includes(type))
-            .at(-1) || {};
+        const { text: lastQuestion } = flowPreviewStore.messages.findLast(
+          ({ type }) => type === 'question',
+        );
 
-        const shouldForwardToBrain = isEventCardBrain(lastEvent);
-
-        if (shouldForwardToBrain) {
-          this.messages.push({
-            type: 'message_forwarded_to_brain',
-            name: '',
-            question_uuid: null,
-            feedback: {
-              value: null,
-              reason: null,
-            },
-          });
-
-          const { text: lastQuestion } = this.messages.findLast(
-            ({ type }) => type === 'question',
-          );
-
-          this.answer(lastQuestion);
-        }
+        answer(lastQuestion);
       }
-    },
+    }
   },
+);
 
-  mounted() {
-    this.previewInit({
-      contentBaseUuid: this.$store.state.router.contentBaseUuid,
+function isMedia(message) {
+  return !!getFileType(message);
+}
+
+function isTheLastMessage(message) {
+  return messages.value.filter(() => ['answer', 'question']).at(-1) === message;
+}
+
+function shouldShowQuickReplies(message) {
+  return (
+    message.type === 'answer' &&
+    isTheLastMessage(message) &&
+    flowPreviewStore.preview.quickReplies?.length
+  );
+}
+
+function treatEvents(replace, events) {
+  const processedEvents = events
+    .filter(({ type }) => type === 'msg_created')
+    .map(({ type, msg }) => {
+      if (type === 'msg_created') {
+        return {
+          type: 'answer',
+          text: msg.text,
+          status: 'loaded',
+          question_uuid: null,
+          feedback: {
+            value: null,
+            reason: null,
+          },
+        };
+      }
     });
 
-    window.brainPreviewAddMessage = (message) => {
-      this.messages.push(message);
-    };
-  },
+  flowPreviewStore.replaceMessage(replace, processedEvents);
+  scrollToLastMessage();
+}
 
-  methods: {
-    shouldShowQuickReplies(message) {
-      return (
-        message.type === 'answer' &&
-        this.isTheLastMessage(message) &&
-        this.preview.quickReplies?.length
-      );
+async function flowResume(answer, { text }) {
+  const {
+    data: { events },
+  } = await flowPreviewStore.previewResume(text);
+
+  treatEvents(answer, events);
+}
+
+async function flowStart(answer, flow) {
+  const {
+    data: { events },
+  } = await flowPreviewStore.previewStart({
+    flowName: flow.name,
+    flowUuid: flow.uuid,
+    flowParams: flow.params,
+  });
+
+  treatEvents(answer, events);
+}
+
+function sendReply(replyText) {
+  message.value = replyText;
+  sendMessage();
+}
+
+function sendMessage() {
+  const isFileMessage = typeof message.value !== 'string';
+  const messageText = isFileMessage ? message.value : message.value.trim();
+
+  if (!messageText) {
+    return;
+  }
+
+  flowPreviewStore.addMessage({
+    type: 'question',
+    text: messageText,
+  });
+
+  message.value = '';
+  scrollToLastMessage();
+
+  setTimeout(() => answer(messageText), 400);
+}
+
+async function answer(question) {
+  const answer = {
+    type: 'answer',
+    text: '',
+    status: 'loading',
+    question_uuid: null,
+    feedback: {
+      value: null,
+      reason: null,
     },
+  };
 
-    isMedia(message) {
-      return !!getFileType(message);
-    },
+  flowPreviewStore.addMessage(answer);
+  scrollToLastMessage();
 
-    isTheLastMessage(message) {
-      return (
-        this.messages.filter(({ type }) => ['answer', 'question']).at(-1) ===
-        message
-      );
-    },
+  const handleError = () => {
+    flowPreviewStore.removeMessage(answer);
+  };
 
-    treatEvents(replace, events) {
-      this.messages.splice(
-        this.messages.indexOf(replace),
-        1,
-        ...events
-          .filter(({ type, text }) => type === 'msg_created')
-          .map(({ type, msg, text }) => {
-            if (type === 'msg_created') {
-              return {
-                type: 'answer',
-                text: msg.text,
-                status: 'loaded',
-                question_uuid: null,
-                feedback: {
-                  value: null,
-                  reason: null,
-                },
-              };
-            }
-          }),
-      );
+  if (flowPreviewStore.preview.session?.status === 'waiting') {
+    flowResume(answer, { text: question });
+    return;
+  }
 
-      this.scrollToLastMessage();
-    },
-
-    async flowResume(answer, { text }) {
-      const {
-        data: { events },
-      } = await this.previewResume(text);
-
-      this.treatEvents(answer, events);
-    },
-
-    async flowStart(answer, flow) {
-      const {
-        data: { events },
-      } = await this.previewStart({
-        flowName: flow.name,
-        flowUuid: flow.uuid,
-        flowParams: flow.params,
-      });
-
-      this.treatEvents(answer, events);
-    },
-
-    sendReply(message) {
-      this.message = message;
-
-      this.sendMessage();
-    },
-
-    sendMessage() {
-      const isFileMessage = typeof this.message !== 'string';
-      const message = isFileMessage ? this.message : this.message.trim();
-
-      if (!message) {
-        return;
-      }
-
-      this.messages.push({
-        type: 'question',
-        text: message,
-      });
-
-      this.message = '';
-
-      this.scrollToLastMessage();
-
-      setTimeout(() => this.answer(message), 400);
-    },
-
-    async answer(question) {
-      const answer = reactive({
-        type: 'answer',
-        text: '',
-        status: 'loading',
-        question_uuid: null,
-        feedback: {
-          value: null,
-          reason: null,
-        },
-      });
-
-      this.messages.push(answer);
-      this.scrollToLastMessage();
-
-      const handleError = () => {
-        this.messages.splice(this.messages.indexOf(answer), 1);
-      };
-
-      if (this.preview.session?.status === 'waiting') {
-        this.flowResume(answer, { text: question });
-        return;
-      }
-
-      let questionMediaUrl;
-      const isQuestionMedia = this.isMedia(question);
-      if (isQuestionMedia) {
-        try {
-          const isGeolocationMedia = typeof question === 'string';
-          if (isGeolocationMedia) {
-            questionMediaUrl = `geo:${question}`;
-          } else {
-            const {
-              data: { file_url },
-            } = await nexusaiAPI.router.preview.uploadFile({
-              projectUuid: this.$store.state.Auth.connectProjectUuid,
-              file: question,
-            });
-            questionMediaUrl = file_url;
-          }
-        } catch {
-          handleError();
-          return;
-        }
-      }
-
-      try {
-        const { data } = await nexusaiAPI.router.preview.create({
-          projectUuid: this.$store.state.Auth.connectProjectUuid,
-          text: isQuestionMedia ? '' : question,
-          attachments: questionMediaUrl ? [questionMediaUrl] : [],
-          contact_urn: this.preview.contact.urns[0],
+  let questionMediaUrl;
+  const isQuestionMedia = isMedia(question);
+  if (isQuestionMedia) {
+    try {
+      const isGeolocationMedia = typeof question === 'string';
+      if (isGeolocationMedia) {
+        questionMediaUrl = `geo:${question}`;
+      } else {
+        const {
+          data: { file_url },
+        } = await nexusaiAPI.router.preview.uploadFile({
+          projectUuid: store.state.Auth.connectProjectUuid,
+          file: question,
         });
-
-        if (data.type === 'broadcast') {
-          answer.status = 'loaded';
-
-          const safeParseMessage = attempt(JSON.parse.bind(null, data.message));
-          const textOfComponents = safeParseMessage?.msg?.text;
-
-          answer.text =
-            textOfComponents ||
-            get(
-              data,
-              'message',
-              this.$t('quick_test.unable_to_find_an_answer'),
-            );
-
-          answer.sources = get(data, 'fonts', []);
-
-          this.scrollToLastMessage();
-        } else if (data.type === 'flowstart') {
-          this.messages.splice(this.messages.indexOf(answer), 0, {
-            type: 'flowstart',
-            name: data.name,
-            question_uuid: null,
-            feedback: {
-              value: null,
-              reason: null,
-            },
-          });
-
-          this.flowStart(answer, {
-            name: data.name,
-            uuid: data.uuid,
-            params: data.params,
-          });
-        } else if (data.type === 'media_and_location_unavailable') {
-          answer.status = 'loaded';
-          answer.type = data.type;
-        } else if (data.type === 'cancelled') {
-          answer.status = 'loaded';
-          this.messages.splice(index, 1);
-        }
-      } catch {
-        handleError();
+        questionMediaUrl = file_url;
       }
-    },
+    } catch {
+      handleError();
+      return;
+    }
+  }
 
-    scrollToLastMessage() {
-      this.$nextTick(() => {
-        this.$refs.messages.lastElementChild.scrollIntoView({
-          behavior: 'smooth',
+  try {
+    const { data } = await nexusaiAPI.router.preview.create({
+      projectUuid: store.state.Auth.connectProjectUuid,
+      text: isQuestionMedia ? '' : question,
+      attachments: questionMediaUrl ? [questionMediaUrl] : [],
+      contact_urn: flowPreviewStore.preview.contact.urns[0],
+    });
+
+    flowPreviewStore.treatAnswerResponse(answer, data, {
+      onBroadcast: () => scrollToLastMessage(),
+      onFlowStart: (answer, data) => {
+        flowStart(answer, {
+          name: data.name,
+          uuid: data.uuid,
+          params: data.params,
         });
-      });
-    },
-  },
-};
+      },
+      fallbackMessage: i18n.global.t('quick_test.unable_to_find_an_answer'),
+    });
+  } catch {
+    handleError();
+  }
+}
+
+function scrollToLastMessage() {
+  nextTick(() => {
+    messagesRef.value?.lastElementChild?.scrollIntoView({
+      behavior: 'smooth',
+    });
+  });
+}
+
+onMounted(() => {
+  flowPreviewStore.previewInit({
+    contentBaseUuid: store.state.router.contentBaseUuid,
+  });
+
+  window.brainPreviewAddMessage = (messageData) => {
+    flowPreviewStore.addMessage(messageData);
+  };
+});
 </script>
 
 <style lang="scss" scoped>
