@@ -28,10 +28,7 @@
             { 'messages__is-media': isMedia(message.text) },
           ]"
         >
-          <div
-            v-if="message.status === 'loading'"
-            class="dot-typing"
-          ></div>
+          <DotTyping v-if="message.status === 'loading'" />
 
           <template v-else-if="isStatus(message)">
             <UnnnicIcon
@@ -120,6 +117,7 @@ import { reactive } from 'vue';
 
 import AnswerSources from '@/components/QuickTest/AnswerSources.vue';
 import AnswerFeedback from '@/components/QuickTest/AnswerFeedback.vue';
+import DotTyping from '@/components/QuickTest/DotTyping.vue';
 import Markdown from '@/components/Markdown.vue';
 import PreviewMedia from '@/components/PreviewMedia.vue';
 import QuickTestWarn from '@/components/QuickTest/QuickTestWarn.vue';
@@ -158,6 +156,7 @@ export default {
     QuickTestWarn,
     PreviewPlaceholder,
     MessageInput,
+    DotTyping,
   },
 
   mixins: [FlowPreview],
@@ -572,65 +571,6 @@ export default {
   fill: $unnnic-color-weni-600;
 }
 
-.dot-typing {
-  $dot-size: 0.3125 * $unnnic-font-size;
-  $dot-color: $unnnic-color-neutral-clean;
-  $dot-min-height: -$dot-size;
-  $dot-max-height: (
-      -$unnnic-font-size-body-md - $unnnic-line-height-md + $dot-size
-    ) * 0.65;
-
-  width: $dot-size;
-  height: $dot-size;
-  margin: 0 $dot-size * 1.75;
-  margin-top: $unnnic-font-size-body-md + $unnnic-line-height-md - $dot-size;
-
-  border-radius: calc($dot-size / 2);
-  background-color: transparent;
-  box-shadow:
-    -$dot-size * 1.75 ($dot-min-height) $dot-color,
-    0 ($dot-min-height) $dot-color,
-    $dot-size * 1.75 ($dot-min-height) $dot-color;
-  animation: dot-typing 1s infinite ease;
-
-  @keyframes dot-typing {
-    0% {
-      box-shadow:
-        -$dot-size * 1.75 ($dot-min-height) $dot-color,
-        0 ($dot-min-height) $dot-color,
-        $dot-size * 1.75 ($dot-min-height) $dot-color;
-    }
-
-    20% {
-      box-shadow:
-        -$dot-size * 1.75 ($dot-max-height) $dot-color,
-        0 ($dot-min-height) $dot-color,
-        $dot-size * 1.75 ($dot-min-height) $dot-color;
-    }
-
-    40% {
-      box-shadow:
-        -$dot-size * 1.75 ($dot-min-height) $dot-color,
-        0 ($dot-max-height) $dot-color,
-        $dot-size * 1.75 ($dot-min-height) $dot-color;
-    }
-
-    60% {
-      box-shadow:
-        -$dot-size * 1.75 ($dot-min-height) $dot-color,
-        0 ($dot-min-height) $dot-color,
-        $dot-size * 1.75 ($dot-max-height) $dot-color;
-    }
-
-    80% {
-      box-shadow:
-        -$dot-size * 1.75 ($dot-min-height) $dot-color,
-        0 ($dot-min-height) $dot-color,
-        $dot-size * 1.75 ($dot-min-height) $dot-color;
-    }
-  }
-}
-
 .quick-test {
   flex: 1;
   display: flex;
@@ -712,7 +652,7 @@ export default {
 
     &__answer {
       align-self: self-start;
-      background-color: $unnnic-color-neutral-light;
+      background-color: $unnnic-color-background-solo;
       margin-right: 1.875 * $unnnic-font-size;
     }
 
