@@ -18,7 +18,7 @@ describe('RouterPreviewFullPage.vue', () => {
   });
 
   test('applies the height style to the preview section', () => {
-    const previewSection = wrapper.find('.preview');
+    const previewSection = wrapper.find('.preview-full-page');
 
     expect(previewSection.attributes().style).toBe(
       `height: ${wrapper.vm.height}px;`,
@@ -35,7 +35,7 @@ describe('RouterPreviewFullPage.vue', () => {
 
     expect(wrapper.vm.height).toBe(newHeight);
 
-    const section = wrapper.find('.preview');
+    const section = wrapper.find('.preview-full-page');
     expect(section.attributes('style')).toContain(`height: ${newHeight}px;`);
   });
 
@@ -63,7 +63,7 @@ describe('RouterPreviewFullPage.vue', () => {
     await wrapper.vm.$nextTick();
 
     expect(wrapper.vm.height).toBe(newHeight);
-    expect(wrapper.find('.preview').attributes().style).toBe(
+    expect(wrapper.find('.preview-full-page').attributes().style).toBe(
       `height: ${newHeight}px;`,
     );
   });
