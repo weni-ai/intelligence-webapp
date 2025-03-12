@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ActiveTeam component > should match snapshot 1`] = `
+exports[`ActiveTeam.vue > Component rendering > should match snapshot 1`] = `
 <section
   class="active-team"
   data-v-ef307fb1=""
@@ -11,45 +11,47 @@ exports[`ActiveTeam component > should match snapshot 1`] = `
     data-testid="empty-state"
     data-v-ef307fb1=""
   >
-    <span
-      class="material-symbols-rounded unnnic-icon-scheme--neutral-soft unnnic-icon-size--xl material-symbols-rounded--filled empty__icon"
-      data-testid="material-icon"
-      data-v-9846e6db=""
+    <icon-stub
+      class="empty__icon"
+      clickable="false"
       data-v-ef307fb1=""
-      translate="no"
-    >
-      workspaces
-    </span>
-    <p
-      class="unnnic-text unnnic-text--size-body-lg unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-bold unnnic-text--color-neutral-dark"
-      data-v-ec8da4ad=""
+      filled="true"
+      icon="workspaces"
+      next="false"
+      scheme="neutral-soft"
+      size="xl"
+    />
+    <unnnic-intelligence-text-stub
+      color="neutral-dark"
       data-v-ef307fb1=""
-    >
-      
-      No agents assigned into the team
-      
-    </p>
+      family="secondary"
+      lineheight="md"
+      size="body-lg"
+      tag="p"
+      weight="bold"
+    />
     <section
       class="empty__description"
       data-v-ef307fb1=""
     >
       <!-- This comment prevents from auto-capitalizing i18n-t to I18nT which would break the component -->
       <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
-      <p
+      <div
         class="description__text"
         data-v-ef307fb1=""
+        keypath="router.agents_team.active_team.no_team_description"
+        tag="p"
       >
-        Go to 
         
         <p
           class="description__assign-agents"
+          data-testid="assign-agents-link"
           data-v-ef307fb1=""
         >
           Assign agents
         </p>
         
-         to view the gallery and add agents to your team
-      </p>
+      </div>
     </section>
   </section>
 </section>
