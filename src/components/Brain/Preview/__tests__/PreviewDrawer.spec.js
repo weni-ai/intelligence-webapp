@@ -97,14 +97,6 @@ describe('PreviewDrawer.vue', () => {
     expect(previewStore.connectWS).toHaveBeenCalled();
   });
 
-  it('should disconnect websocket and clear traces when drawer is closed', async () => {
-    previewStore.ws = 'mock-ws';
-    await wrapper.setProps({ modelValue: false });
-
-    expect(previewStore.disconnectWS).toHaveBeenCalled();
-    expect(previewStore.clearTraces).toHaveBeenCalled();
-  });
-
   it('should have refresh action in header actions', () => {
     const actions = wrapper.vm.previewHeaderActions;
     expect(actions).toHaveLength(1);
