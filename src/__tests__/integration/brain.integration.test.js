@@ -8,7 +8,7 @@ import RouterTunings from '@/views/Brain/RouterTunings.vue';
 import RouterProfile from '@/views/Brain/RouterProfile/index.vue';
 import ModalPreviewQRCode from '@/views/Brain/Preview/ModalPreviewQRCode.vue';
 import ModalSaveChangesError from '@/views/Brain/ModalSaveChangesError.vue';
-import Tests from '@/views/repository/content/Tests.vue';
+import Preview from '@/views/repository/content/Preview.vue';
 import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
 import BrainHeader from '@/components/Brain/BrainHeader.vue';
 import nexusaiAPI from '@/api/nexusaiAPI';
@@ -309,7 +309,7 @@ describe('Brain integration', () => {
           ModalSaveChangesError,
           ModalPreviewQRCode,
           RouterProfile,
-          Tests,
+          Preview,
         },
         stubs: {
           UnnnicSelectSmart: true,

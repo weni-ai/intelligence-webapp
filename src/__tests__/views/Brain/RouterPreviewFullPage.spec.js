@@ -8,8 +8,8 @@ describe('RouterPreviewFullPage.vue', () => {
     wrapper = mount(RouterPreviewFullPage, {
       global: {
         components: {
-          Tests: {
-            template: '<div class="tests-stub" :usePreview="true"></div>',
+          Preview: {
+            template: '<div class="preview-stub" :usePreview="true"></div>',
             props: ['usePreview'],
           },
         },
@@ -39,12 +39,12 @@ describe('RouterPreviewFullPage.vue', () => {
     expect(section.attributes('style')).toContain(`height: ${newHeight}px;`);
   });
 
-  test('contains Tests component with correct prop', () => {
-    const testsComponent = wrapper.findComponent({ name: 'Tests' });
+  test('contains Preview component with correct prop', () => {
+    const previewComponent = wrapper.findComponent({ name: 'Preview' });
 
-    expect(testsComponent.exists()).toBe(true);
+    expect(previewComponent.exists()).toBe(true);
 
-    expect(testsComponent.attributes().usepreview).toBe('true');
+    expect(previewComponent.attributes().usepreview).toBe('true');
   });
 
   test('sets overscroll-behavior style on mount', () => {
