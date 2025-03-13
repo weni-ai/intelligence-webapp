@@ -6,8 +6,8 @@ const elements = {
   categorySelect: '[data-test="category-select"]',
   nameInput: '[data-test="name-input"]',
   typesSkeletonLoading: '[data-test="types-skeleton-loading"]',
-  generativeRadio: '[data-test="generative-radio"]',
-  classificationRadio: '[data-test="classification-radio"]',
+  ownRadio: '[data-test="own-radio"]',
+  publicRadio: '[data-test="public-radio"]',
 };
 
 const store = createStore({
@@ -28,14 +28,21 @@ const store = createStore({
   },
 });
 
-const setup = ({ category, loadingType, showTypes } = {}) =>
+const setup = ({
+  category,
+  name = '',
+  type = '',
+  loadingType,
+  showTypes,
+} = {}) =>
   mount(IntelligencesFilter, {
     props: {
       category,
+      name,
+      type,
       loadingType,
       showTypes,
     },
-
     global: {
       plugins: [store],
     },
@@ -116,18 +123,14 @@ describe('IntelligencesFilter.vue', () => {
     it('shows types radios', () => {
       wrapper = setup();
 
-      expect(
-        wrapper.findComponent(elements.generativeRadio).exists(),
-      ).toBeTruthy();
+      expect(wrapper.findComponent(elements.ownRadio).exists()).toBeTruthy();
 
-      expect(
-        wrapper.findComponent(elements.classificationRadio).exists(),
-      ).toBeTruthy();
+      expect(wrapper.findComponent(elements.publicRadio).exists()).toBeTruthy();
     });
 
     describe.each([
-      { radio: elements.generativeRadio, expectedValue: 'generative' },
-      { radio: elements.classificationRadio, expectedValue: 'classification' },
+      { radio: elements.ownRadio, expectedValue: 'own' },
+      { radio: elements.publicRadio, expectedValue: 'public' },
     ])(
       'when the user clicks on $expectedValue radio',
       ({ radio, expectedValue }) => {
@@ -148,12 +151,10 @@ describe('IntelligencesFilter.vue', () => {
       it('shows types radios', () => {
         wrapper = setup({ showTypes: false });
 
-        expect(
-          wrapper.findComponent(elements.generativeRadio).exists(),
-        ).toBeFalsy();
+        expect(wrapper.findComponent(elements.ownRadio).exists()).toBeFalsy();
 
         expect(
-          wrapper.findComponent(elements.classificationRadio).exists(),
+          wrapper.findComponent(elements.publicRadio).exists(),
         ).toBeFalsy();
       });
     });
