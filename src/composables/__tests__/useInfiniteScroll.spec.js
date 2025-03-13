@@ -192,5 +192,112 @@ describe('useInfiniteScroll', () => {
 
       expect(loadMoreCallback).not.toHaveBeenCalled();
     });
+
+    it('uses setTimeout to setup IntersectionObserver on mount', () => {
+      const setTimeoutSpy = vi.spyOn(global, 'setTimeout');
+
+      vi.useFakeTimers();
+
+      useInfiniteScroll(loadMoreCallback);
+
+      expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 0);
+
+      vi.runAllTimers();
+
+      vi.useRealTimers();
+      setTimeoutSpy.mockRestore();
+    });
+
+    describe('cleanup function', () => {
+      it('unobserves element when element exists', async () => {
+        const unobserveSpy = vi.fn();
+
+        const originalUnobserve = MockIntersectionObserver.prototype.unobserve;
+        MockIntersectionObserver.prototype.unobserve = unobserveSpy;
+
+        try {
+          const { endOfListElement, cleanup, setupIntersectionObserver } =
+            useInfiniteScroll(loadMoreCallback);
+
+          endOfListElement.value = mockDiv;
+          await nextTick();
+          setupIntersectionObserver();
+
+          cleanup();
+
+          expect(unobserveSpy).toHaveBeenCalledWith(mockDiv);
+        } finally {
+          MockIntersectionObserver.prototype.unobserve = originalUnobserve;
+        }
+      });
+
+      it('does not attempt to unobserve when element is null', async () => {
+        const unobserveSpy = vi.fn();
+
+        const originalUnobserve = MockIntersectionObserver.prototype.unobserve;
+        MockIntersectionObserver.prototype.unobserve = unobserveSpy;
+
+        try {
+          const { cleanup, setupIntersectionObserver } =
+            useInfiniteScroll(loadMoreCallback);
+
+          await nextTick();
+          setupIntersectionObserver();
+
+          cleanup();
+
+          expect(unobserveSpy).not.toHaveBeenCalled();
+        } finally {
+          MockIntersectionObserver.prototype.unobserve = originalUnobserve;
+        }
+      });
+
+      it('disconnects observer when observer exists', async () => {
+        const disconnectSpy = vi.fn();
+
+        const originalDisconnect =
+          MockIntersectionObserver.prototype.disconnect;
+        MockIntersectionObserver.prototype.disconnect = disconnectSpy;
+
+        try {
+          const { endOfListElement, cleanup, setupIntersectionObserver } =
+            useInfiniteScroll(loadMoreCallback);
+
+          endOfListElement.value = mockDiv;
+          await nextTick();
+          setupIntersectionObserver();
+
+          cleanup();
+
+          expect(disconnectSpy).toHaveBeenCalled();
+        } finally {
+          MockIntersectionObserver.prototype.disconnect = originalDisconnect;
+        }
+      });
+
+      it('does nothing when observer does not exist', async () => {
+        const unobserveSpy = vi.fn();
+        const disconnectSpy = vi.fn();
+
+        const originalUnobserve = MockIntersectionObserver.prototype.unobserve;
+        const originalDisconnect =
+          MockIntersectionObserver.prototype.disconnect;
+
+        MockIntersectionObserver.prototype.unobserve = unobserveSpy;
+        MockIntersectionObserver.prototype.disconnect = disconnectSpy;
+
+        try {
+          const { cleanup } = useInfiniteScroll(loadMoreCallback);
+
+          cleanup();
+
+          expect(unobserveSpy).not.toHaveBeenCalled();
+          expect(disconnectSpy).not.toHaveBeenCalled();
+        } finally {
+          MockIntersectionObserver.prototype.unobserve = originalUnobserve;
+          MockIntersectionObserver.prototype.disconnect = originalDisconnect;
+        }
+      });
+    });
   });
 });

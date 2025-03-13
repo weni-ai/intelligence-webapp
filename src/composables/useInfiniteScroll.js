@@ -104,5 +104,7 @@ export default function useInfiniteScroll(loadMoreCallback) {
     endOfListElement,
     isShowingEndOfList,
     checkVisibilityAndLoad,
+    setupIntersectionObserver,
+    cleanup,
   };
 }
