@@ -2,7 +2,8 @@
   <section
     :class="[
       `messages__${message.type}`,
-      { 'messages__is-media': isMedia(message.text) },
+      { 'messages--with-components': hasRenderedComponent },
+      { 'messages__is-media': isMedia(text) },
     ]"
   >
     <DotTyping v-if="message.status === 'loading'" />
@@ -26,13 +27,13 @@
     </template>
     <template v-else>
       <PreviewMedia
-        v-if="isMedia(message.text)"
-        :media="message.text"
+        v-if="isMedia(text)"
+        :media="text"
       />
       <Markdown
         v-else
         :class="`messages__${message.type}__content`"
-        :content="message.text"
+        :content="text"
       />
 
       <AnswerSources
@@ -57,6 +58,7 @@
 </template>
 
 <script setup>
+import { computed, useSlots } from 'vue';
 import { useStore } from 'vuex';
 import { lowerFirstCapitalLetter } from '@/utils/handleLetters';
 import { getFileType } from '@/utils/medias';
@@ -80,6 +82,17 @@ const props = defineProps({
 });
 
 const store = useStore();
+
+const text = computed(() => {
+  return props.message?.response?.msg?.text || props.message.text;
+});
+
+const slots = useSlots();
+
+const hasRenderedComponent = computed(
+  // Based on the MessageComponentResolver, isValid is true when the component is rendered
+  () => slots?.components()[0].props?.isValid,
+);
 
 const isStatus = (message) => {
   return [
@@ -127,6 +140,10 @@ const statusDescription = (message) => {
 
 <style lang="scss" scoped>
 .messages {
+  &--with-components {
+    width: 100%;
+  }
+
   &__question,
   &__answer {
     max-width: 75%;

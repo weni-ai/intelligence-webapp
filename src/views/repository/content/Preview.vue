@@ -20,23 +20,10 @@
         data-testid="message-display"
       >
         <template #components>
-          <section
-            v-if="shouldShowQuickReplies(message)"
-            class="quick-replies"
-            data-testid="quick-replies"
-          >
-            <UnnnicButton
-              v-for="(reply, index) in flowPreviewStore.preview.quickReplies"
-              :key="`reply-${index}`"
-              type="secondary"
-              size="small"
-              class="quick-replies__button"
-              data-testid="quick-reply-button"
-              @click="sendReply(reply)"
-            >
-              {{ reply }}
-            </UnnnicButton>
-          </section>
+          <MessageComponentResolver
+            :message="message?.response?.msg"
+            @send-message="sendMessage"
+          />
         </template>
       </MessageDisplay>
     </article>
@@ -67,6 +54,7 @@ import MessageDisplay from '@/components/QuickTest/MessageDisplay.vue';
 import QuickTestWarn from '@/components/QuickTest/QuickTestWarn.vue';
 import PreviewPlaceholder from '../../Brain/Preview/Placeholder.vue';
 import MessageInput from './MessageInput.vue';
+import MessageComponentResolver from '@/components/MessageComponents/MessageComponentResolver.vue';
 
 import { useProfileStore } from '@/store/Profile';
 import { useFlowPreviewStore } from '@/store/FlowPreview';
@@ -168,18 +156,6 @@ function isMedia(message) {
   return !!getFileType(message);
 }
 
-function isTheLastMessage(message) {
-  return messages.value.filter(() => ['answer', 'question']).at(-1) === message;
-}
-
-function shouldShowQuickReplies(message) {
-  return (
-    message.type === 'answer' &&
-    isTheLastMessage(message) &&
-    flowPreviewStore.preview.quickReplies?.length
-  );
-}
-
 function treatEvents(replace, events) {
   const processedEvents = events
     .filter(({ type }) => type === 'msg_created')
@@ -187,7 +163,7 @@ function treatEvents(replace, events) {
       if (type === 'msg_created') {
         return {
           type: 'answer',
-          text: msg.text,
+          text: msg.response?.msg.text || msg.text,
           status: 'loaded',
           question_uuid: null,
           feedback: {
@@ -222,14 +198,15 @@ async function flowStart(answer, flow) {
   treatEvents(answer, events);
 }
 
-function sendReply(replyText) {
-  message.value = replyText;
-  sendMessage();
-}
+function sendMessage(messageContent) {
+  let messageText;
 
-function sendMessage() {
-  const isFileMessage = typeof message.value !== 'string';
-  const messageText = isFileMessage ? message.value : message.value.trim();
+  if (messageContent) {
+    messageText = messageContent;
+  } else {
+    const isFileMessage = typeof message.value !== 'string';
+    messageText = isFileMessage ? message.value : message.value.trim();
+  }
 
   if (!messageText) {
     return;
@@ -240,9 +217,11 @@ function sendMessage() {
     text: messageText,
   });
 
-  message.value = '';
-  scrollToLastMessage();
+  if (!messageContent) {
+    message.value = '';
+  }
 
+  scrollToLastMessage();
   setTimeout(() => answer(messageText), 400);
 }
 
@@ -336,17 +315,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.quick-replies {
-  margin-top: $unnnic-spacing-sm;
-  display: flex;
-  flex-direction: column;
-  row-gap: $unnnic-spacing-nano;
-
-  &__button {
-    color: $unnnic-color-weni-600;
-  }
-}
-
 .button-send-message :deep(svg .primary) {
   fill: $unnnic-color-weni-600;
 }
