@@ -90,8 +90,8 @@ const text = computed(() => {
 const slots = useSlots();
 
 const hasRenderedComponent = computed(
-  // Based on the MessageComponentResolver, isValid is true when the component is rendered
-  () => slots?.components()[0].props?.isValid,
+  // To ensure that the slot has a component rendered by the MessageComponentResolver
+  () => slots?.components()[0].props?.message?.text,
 );
 
 const isStatus = (message) => {

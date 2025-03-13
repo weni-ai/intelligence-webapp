@@ -2,10 +2,10 @@
   <component
     :is="resolvedComponent"
     v-if="shouldShowComponent"
-    :isValid="shouldShowComponent"
     :message="message"
     data-testid="message-component"
     @send-message="$emit('send-message', $event)"
+    @open-preview-menu="$emit('open-preview-menu')"
   />
 </template>
 
@@ -13,6 +13,7 @@
 import { computed, defineProps, defineEmits } from 'vue';
 
 import QuickRepliesComponent from './QuickReplies.vue';
+import ListMessageComponent from './ListMessage.vue';
 
 const props = defineProps({
   message: {
@@ -21,7 +22,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['send-message']);
+const emit = defineEmits(['send-message', 'open-preview-menu']);
 
 const parsedMessageData = computed(() => {
   if (!props.message) return null;
@@ -55,7 +56,7 @@ const resolvedComponent = computed(() => {
   }
 
   if (messageData.interaction_type === 'list' && messageData.list_message) {
-    return null; // ListMessageComponent
+    return ListMessageComponent;
   }
 
   if (messageData.interaction_type === 'cta_url' && messageData.cta_url) {
