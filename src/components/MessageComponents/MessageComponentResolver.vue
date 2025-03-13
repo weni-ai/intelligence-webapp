@@ -14,6 +14,7 @@ import { computed, defineProps, defineEmits } from 'vue';
 
 import QuickRepliesComponent from './QuickReplies.vue';
 import ListMessageComponent from './ListMessage.vue';
+import CtaMessageComponent from './CtaMessage.vue';
 
 const props = defineProps({
   message: {
@@ -60,7 +61,7 @@ const resolvedComponent = computed(() => {
   }
 
   if (messageData.interaction_type === 'cta_url' && messageData.cta_url) {
-    return null; // CtaMessageComponent
+    return CtaMessageComponent;
   }
 
   if (messageData.catalog_message) {
