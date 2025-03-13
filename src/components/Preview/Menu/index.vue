@@ -82,7 +82,6 @@ const resolvedComponent = computed(() => {
 
     background-color: $unnnic-color-weni-100;
     padding: $unnnic-spacing-sm $unnnic-spacing-md;
-    border-radius: $unnnic-border-radius-sm;
 
     .header__close-button {
       display: flex;
