@@ -404,6 +404,7 @@ export default function useFlowPreview() {
 
   return {
     preview,
+    previewAPI,
     previewInit,
     previewStart,
     previewUpdateEvents,
