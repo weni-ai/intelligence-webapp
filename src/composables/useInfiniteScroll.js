@@ -44,7 +44,6 @@ export default function useInfiniteScroll(loadMoreCallback) {
           isShowingEndOfList.value = entry.isIntersecting;
 
           if (entry.isIntersecting && loadMoreCallback) {
-            console.log('Intersection detected, loading more content');
             loadMoreCallback();
           }
         });
