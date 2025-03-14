@@ -48,11 +48,8 @@
           :previewActions="previewActions"
         />
         <BrainWarningBar v-if="!routerTunings.brainOn" />
-        <Tests
+        <Preview
           :key="refreshPreviewValue"
-          :contentBaseUuid="contentBaseUuid"
-          :contentBaseLanguage="contentBase.language"
-          :usePreview="true"
           @messages="getPreviewMessages"
         />
       </section>
@@ -77,7 +74,7 @@ import { useStore } from 'vuex';
 import { get } from 'lodash';
 import nexusaiAPI from '../../api/nexusaiAPI';
 import PageContainer from '../../components/PageContainer.vue';
-import Tests from '../repository/content/Tests.vue';
+import Preview from '../repository/content/Preview.vue';
 import RouterMonitoring from './RouterMonitoring/index.vue';
 import RouterAgentsTeam from './RouterAgentsTeam/index.vue';
 import RouterActions from './RouterActions.vue';
@@ -100,7 +97,7 @@ import { useTuningsStore } from '@/store/Tunings';
 export default {
   name: 'Brain',
   components: {
-    Tests,
+    Preview,
     PageContainer,
     RouterMonitoring,
     RouterActions,
@@ -570,6 +567,7 @@ export default {
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     &__card {

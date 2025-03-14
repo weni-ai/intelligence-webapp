@@ -6,7 +6,7 @@ import RouterActions from '@/views/Brain/RouterActions.vue';
 import RouterTunings from '@/views/Brain/RouterTunings.vue';
 import ModalPreviewQRCode from '@/views/Brain/Preview/ModalPreviewQRCode.vue';
 import ModalSaveChangesError from '@/views/Brain/ModalSaveChangesError.vue';
-import Tests from '@/views/repository/content/Tests.vue';
+import Preview from '@/views/repository/content/Preview.vue';
 import nexusaiAPI from '@/api/nexusaiAPI';
 import { expect } from 'vitest';
 import { useRoute } from 'vue-router';
@@ -116,7 +116,7 @@ describe('Brain Component', () => {
           RouterActions,
           RouterTunings,
           ModalSaveChangesError,
-          Tests,
+          Preview,
         },
         stubs: {
           RouterLink: true,
