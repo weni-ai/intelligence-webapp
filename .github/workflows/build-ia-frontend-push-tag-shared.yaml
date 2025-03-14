@@ -47,6 +47,8 @@ jobs:
           echo "MANIFESTS_REPOSITORY=weni-ai/kubernetes-manifests-connect" | tee -a "${GITHUB_ENV}"
           echo "MANIFESTS_APPLICATION=intelligence-webapp" | tee -a "${GITHUB_ENV}"
           echo "MANIFESTS_PATCH_TARGET=deployment.json" | tee -a "${GITHUB_ENV}"
+          platform=${{ matrix.platform }}
+          echo "PLATFORM_PAIR=${platform//\//-}" | tee -a "${GITHUB_ENV}"
 
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -81,10 +83,11 @@ jobs:
           push: true
           build-args: |
             OLD_IMAGE=${{env.OLD_IMAGE}}
-          tags: |
-            ${{env.IMAGE_TAG}}
-            ${{env.OLD_IMAGE}}
-          no-cache: true
+          # tags: |
+          #   ${{env.IMAGE_TAG}}
+          #   ${{env.OLD_IMAGE}}
+          # no-cache: true
+          outputs: type=image,name=${{ secrets.ECR }}/intelligence,push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
         run: |
