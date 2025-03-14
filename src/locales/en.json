@@ -15,8 +15,15 @@
   "internal_server_error": "Internal server error",
   "unexpected_error": "An unexpected error occurred",
   "intelligences": {
+    "content_intelligences": "Content Intelligence",
+    "classification_intelligences": "Classification Intelligences",
     "own_intelligences": "Own intelligences",
     "public_intelligences": "Public intelligences",
+    "classification": {
+      "deprecation_notice": "Stay tuned! Classification Intelligence will soon be discontinued",
+      "use_agents_builder": "For creating intelligent agents, please use {agents_builder_link}. If you have any questions, contact the support.",
+      "agents_builder": "Agents Builder"
+    },
     "create_button": "Create Intelligence",
     "search_intelligence_placeholder": "Search Intelligence",
     "categories_placeholder": "Categories",
