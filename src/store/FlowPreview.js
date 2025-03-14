@@ -60,10 +60,9 @@ export const useFlowPreviewStore = defineStore('flowPreview', () => {
     if (data.type === 'broadcast') {
       answer.status = 'loaded';
 
-      const safeParseMessage = attempt(JSON.parse.bind(null, data.message));
-      const textOfComponents = safeParseMessage?.msg?.text;
-
-      answer.text = textOfComponents || get(data, 'message', fallbackMessage);
+      const message = get(data, 'message', fallbackMessage);
+      const safeMessage = attempt(JSON.parse.bind(null, message));
+      answer.response = typeof safeMessage === 'object' ? safeMessage : message;
       answer.sources = get(data, 'fonts', []);
 
       if (onBroadcast) onBroadcast(answer);
