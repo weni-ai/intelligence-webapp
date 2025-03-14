@@ -84,7 +84,8 @@ const props = defineProps({
 const store = useStore();
 
 const text = computed(() => {
-  return props.message?.response?.msg?.text || props.message.text;
+  const { message } = props;
+  return message?.response?.msg?.text || message?.response || message.text;
 });
 
 const slots = useSlots();
