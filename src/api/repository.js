@@ -167,13 +167,16 @@ export default {
     return request.$http.get(`/v2/repository/repositories/?${queryString}`);
   },
 
-  listPublicIntelligences({ next, params }) {
+  listPublicIntelligences({ next, params, limit }) {
     if (next) {
       return request.$http.get(next);
     }
 
     return request.$http.get('v2/repository/repositories/', {
-      params,
+      params: {
+        ...params,
+        limit,
+      },
     });
   },
 

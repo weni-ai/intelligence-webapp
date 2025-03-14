@@ -187,7 +187,7 @@ const loadInitialData = async () => {
           hasMoreContentPages.value &&
           getPublicContentIntelligences.value.length > 0
         ) {
-          checkContentVisibility();
+          loadPublicIntelligences();
         }
       }, 200);
     } else {
@@ -237,7 +237,6 @@ const loadMoreClassification = () => {
     return;
   }
 
-  console.log('Loading more classification intelligences from scroll trigger');
   if (ownershipFilter.value === 'own') {
     loadClassificationIntelligences(true);
   } else if (hasMoreClassificationPages.value) {
