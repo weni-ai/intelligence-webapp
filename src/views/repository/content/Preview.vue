@@ -1,5 +1,16 @@
 <template>
-  <section class="preview">
+  <PreviewMenu
+    v-if="showPreviewMenu"
+    :modelValue="showPreviewMenu"
+    :message="previewMenuMessage"
+    @update:model-value="showPreviewMenu = false"
+    @send-message="sendMenuMessage"
+  />
+
+  <section
+    v-else
+    class="preview"
+  >
     <PreviewPlaceholder
       v-if="shouldShowPreviewPlaceholder"
       class="preview__placeholder"
@@ -23,6 +34,7 @@
           <MessageComponentResolver
             :message="message?.response?.msg"
             @send-message="sendMessage"
+            @open-preview-menu="openPreviewMenu(message?.response?.msg)"
           />
         </template>
       </MessageDisplay>
@@ -55,6 +67,7 @@ import QuickTestWarn from '@/components/QuickTest/QuickTestWarn.vue';
 import PreviewPlaceholder from '../../Brain/Preview/Placeholder.vue';
 import MessageInput from './MessageInput.vue';
 import MessageComponentResolver from '@/components/MessageComponents/MessageComponentResolver.vue';
+import PreviewMenu from '@/components/Preview/Menu/index.vue';
 
 import { useProfileStore } from '@/store/Profile';
 import { useFlowPreviewStore } from '@/store/FlowPreview';
@@ -75,6 +88,9 @@ const message = ref('');
 const messages = ref(flowPreviewStore.messages);
 const messagesRef = ref(null);
 
+const showPreviewMenu = ref(false);
+const previewMenuMessage = ref(null);
+
 const shouldShowPreviewPlaceholder = computed(
   () => messages.value.length === 0,
 );
@@ -86,6 +102,11 @@ const shouldShowRequireSaveWarn = computed(() => {
     store.getters.hasBrainContentTextChanged
   );
 });
+
+function openPreviewMenu(message) {
+  showPreviewMenu.value = true;
+  previewMenuMessage.value = message;
+}
 
 function isEventCardBrain(event) {
   if (event.type !== 'webhook_called' || !event.url) {
@@ -198,6 +219,13 @@ async function flowStart(answer, flow) {
   treatEvents(answer, events);
 }
 
+function sendMenuMessage(messageContent) {
+  previewMenuMessage.value = null;
+  showPreviewMenu.value = false;
+
+  sendMessage(messageContent);
+}
+
 function sendMessage(messageContent) {
   let messageText;
 
@@ -272,11 +300,23 @@ async function answer(question) {
   }
 
   try {
+    const temporaryComponents = [
+      'ATTACHMENT',
+      'TEXT_WITH_ATTACHMENT',
+      'QUICK_REPLIES',
+      'LIST_MESSAGE',
+      'CTA_MESSAGE',
+      'CATALOG',
+    ];
+
     const { data } = await nexusaiAPI.router.preview.create({
       projectUuid: store.state.Auth.connectProjectUuid,
       text: isQuestionMedia ? '' : question,
       attachments: questionMediaUrl ? [questionMediaUrl] : [],
       contact_urn: flowPreviewStore.preview.contact.urns[0],
+      temporary_component: temporaryComponents.includes(question)
+        ? question
+        : undefined,
     });
 
     flowPreviewStore.treatAnswerResponse(answer, data, {

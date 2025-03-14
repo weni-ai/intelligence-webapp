@@ -84,14 +84,15 @@ const props = defineProps({
 const store = useStore();
 
 const text = computed(() => {
-  return props.message?.response?.msg?.text || props.message.text;
+  const { message } = props;
+  return message?.response?.msg?.text || message?.response || message.text;
 });
 
 const slots = useSlots();
 
 const hasRenderedComponent = computed(
-  // Based on the MessageComponentResolver, isValid is true when the component is rendered
-  () => slots?.components()[0].props?.isValid,
+  // To ensure that the slot has a component rendered by the MessageComponentResolver
+  () => slots?.components()[0].props?.message?.text,
 );
 
 const isStatus = (message) => {
