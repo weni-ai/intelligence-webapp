@@ -32,7 +32,7 @@
       >
         <template #components>
           <MessageComponentResolver
-            :message="message?.response?.msg"
+            :message="treatMessageToComponents(message)"
             @send-message="sendMessage"
             @open-preview-menu="openPreviewMenu(message?.response?.msg)"
           />
@@ -102,6 +102,37 @@ const shouldShowRequireSaveWarn = computed(() => {
     store.getters.hasBrainContentTextChanged
   );
 });
+
+function messageHasDeprecatedQuickReplies(message) {
+  const isTheLastMessage =
+    messages.value
+      .filter((msg) => ['answer', 'question'].includes(msg.type))
+      .at(-1) === message;
+
+  return (
+    message.type === 'answer' &&
+    isTheLastMessage &&
+    flowPreviewStore.preview.quickReplies?.length > 0
+  );
+}
+
+function treatMessageToComponents(message) {
+  if (!messageHasDeprecatedQuickReplies(message)) {
+    return message?.response?.msg;
+  }
+
+  const treatedMessage = { ...(message?.response?.msg || {}) };
+
+  if (Object.keys(treatedMessage).length === 0 && message.text) {
+    treatedMessage.text = message.text;
+  }
+
+  if (flowPreviewStore.preview.quickReplies?.length) {
+    treatedMessage.quick_replies = flowPreviewStore.preview.quickReplies;
+  }
+
+  return treatedMessage;
+}
 
 function openPreviewMenu(message) {
   showPreviewMenu.value = true;
