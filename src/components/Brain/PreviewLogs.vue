@@ -1,11 +1,13 @@
 <template>
   <section
     ref="logList"
+    data-testid="preview-logs"
     :class="`preview-logs preview-logs--${props.logsSide}`"
   >
     <p
       v-if="!processedLogs.length"
       class="preview-logs__empty"
+      data-testid="preview-logs-empty"
     >
       {{ $t('router.preview.no_logs_registered') }}
     </p>
@@ -20,8 +22,12 @@
         v-for="(log, logIndex) in processedLogs"
         :key="logIndex"
         :class="`logs__log logs__log--${props.logsSide}`"
+        data-testid="preview-logs-log"
       >
-        <p :class="`log__agent-name log__agent-name--${props.logsSide}`">
+        <p
+          :class="`log__agent-name log__agent-name--${props.logsSide}`"
+          data-testid="preview-logs-log-agent-name"
+        >
           {{ log.agent_name }}
         </p>
 
@@ -35,10 +41,12 @@
             v-for="(step, stepIndex) in log.steps"
             :key="stepIndex"
             :class="`steps__step steps__step--${props.logsSide}`"
+            data-testid="preview-logs-log-step"
           >
             <p>{{ step.title }}</p>
             <button
               class="step__see-full"
+              data-testid="preview-logs-log-step-see-full"
               @click="openModalLogFullDetails(step.title, step.trace)"
             >
               {{ $t('router.preview.see_full_details') }}
@@ -50,12 +58,14 @@
 
     <article
       :class="`preview-logs__progress-bar preview-logs__progress-bar--${props.logsSide}`"
+      data-testid="preview-logs-progress-bar"
     />
 
     <PreviewLogsDetailsModal
       v-model="showDetailsModal"
       :title="selectedLog.summary"
       :trace="selectedLog.trace"
+      data-testid="preview-logs-details-modal"
     />
   </section>
 </template>
