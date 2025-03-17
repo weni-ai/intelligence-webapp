@@ -62,7 +62,8 @@ export const useFlowPreviewStore = defineStore('flowPreview', () => {
 
       const message = get(data, 'message', fallbackMessage);
       const safeMessage = attempt(JSON.parse.bind(null, message));
-      answer.response = typeof safeMessage === 'object' ? safeMessage : message;
+
+      answer.response = safeMessage instanceof Error ? message : safeMessage;
       answer.sources = get(data, 'fonts', []);
 
       if (onBroadcast) onBroadcast(answer);
