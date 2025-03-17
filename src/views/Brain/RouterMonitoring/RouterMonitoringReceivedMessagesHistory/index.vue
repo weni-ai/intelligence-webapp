@@ -31,6 +31,16 @@
         @click="close"
       />
     </header>
+
+    <UnnnicSwitch
+      v-if="featureFlagsStore.flags.agentsTeam"
+      class="received-messages-history__logs-switch"
+      :textRight="$t('router.monitoring.view_logs')"
+      size="small"
+      :modelValue="showAgentsLogs"
+      @update:model-value="showAgentsLogs = !showAgentsLogs"
+    />
+
     <section class="received-messages-history__messages">
       <MessageContext v-if="!isLoadingMessages" />
 
@@ -38,19 +48,26 @@
         data-testid="question-and-answer"
         :isLoading="isLoadingMessages"
         :data="inspectedAnswer"
+        :showLogs="showAgentsLogs"
       />
     </section>
   </section>
 </template>
 
 <script setup>
+import { computed, ref, watch } from 'vue';
+
 import { useMonitoringStore } from '@/store/Monitoring';
-import { computed, watch } from 'vue';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import MessageContext from './MessageContext.vue';
 import QuestionAndAnswer from './QuestionAndAnswer.vue';
 
 const monitoringStore = useMonitoringStore();
+const featureFlagsStore = useFeatureFlagsStore();
+
+const showAgentsLogs = ref(false);
+
 const inspectedAnswer = computed(
   () => monitoringStore.messages.inspectedAnswer,
 );
@@ -80,6 +97,9 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+$border-bottom: $unnnic-border-width-thinner solid
+  $unnnic-color-neutral-cleanest;
+
 .received-messages-history {
   box-sizing: border-box;
 
@@ -88,8 +108,7 @@ watch(
   gap: $unnnic-spacing-xs;
 
   &__header {
-    border-bottom: $unnnic-border-width-thinner solid
-      $unnnic-color-neutral-cleanest;
+    border-bottom: $border-bottom;
 
     padding: $unnnic-spacing-ant $unnnic-spacing-sm;
 
@@ -103,6 +122,12 @@ watch(
       overflow: hidden;
       text-overflow: ellipsis;
     }
+  }
+
+  &__logs-switch {
+    border-bottom: $border-bottom;
+
+    padding: 0 0 $unnnic-spacing-xs $unnnic-spacing-sm;
   }
 
   &__messages {

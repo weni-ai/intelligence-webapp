@@ -66,6 +66,8 @@
         v-else
         class="question-and-answer__answer"
       >
+        <PreviewLogs v-if="showLogs" />
+
         <Markdown
           data-testid="answer"
           :class="[
@@ -100,13 +102,16 @@ import { ref } from 'vue';
 
 import DrawerInspectAnswer from '@/components/Brain/Monitoring/DrawerInspectResponse/index.vue';
 import Markdown from '@/components/Markdown.vue';
-
+import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
 const props = defineProps({
   isLoading: {
     type: Boolean,
     default: true,
   },
-
+  showLogs: {
+    type: Boolean,
+    default: false,
+  },
   data: {
     type: Object,
     required: true,
@@ -143,7 +148,7 @@ const isDrawerInspectAnswerOpen = ref(false);
 
     padding: $unnnic-spacing-ant;
 
-    background-color: $unnnic-color-neutral-light;
+    background-color: $unnnic-color-background-solo;
 
     color: $unnnic-color-neutral-dark;
     font-family: $unnnic-font-family-secondary;
