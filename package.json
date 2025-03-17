@@ -13,6 +13,7 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@growthbook/growthbook": "^1.4.1",
     "@sentry/browser": "^5.29.2",
     "@sentry/integrations": "^5.29.2",
     "@sentry/vue": "^8.9.2",
