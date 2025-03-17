@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia';
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 
 import globalStore from '.';
+import { gbKey } from '../utils/Growthbook';
 
 export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
+  const growthbook = inject(gbKey);
+
   const getListAtEnv = (key) => {
     return runtimeVariables.get(key)?.split(',') || [];
   };
@@ -20,6 +23,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
 
   const flags = computed(() => ({
     agentsTeam:
+      growthbook?.isOn('agent_builder_2') ||
       isOrgEnabledForFlag('VITE_FF_ORGS_WITH_AGENTS_TEAM') ||
       isProjectEnabledForFlag('VITE_FF_PROJECTS_WITH_AGENTS_TEAM'),
   }));
