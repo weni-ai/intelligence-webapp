@@ -137,7 +137,8 @@
         "success_alert": "Content added successfully"
       },
       "new_messages_load": "{n} new message. Click to load. | {n} new messages. Click to load.",
-      "show_logs": "Show logs"
+      "show_logs": "Show logs",
+      "hide_logs": "Hide logs"
     },
     "actions": {
       "title": "Actions",

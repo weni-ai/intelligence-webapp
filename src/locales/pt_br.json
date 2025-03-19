@@ -136,7 +136,8 @@
         "success_alert": "Conteúdo adicionado com sucesso"
       },
       "new_messages_load": "{n} nova mensagem. Clique para carregar. | {n} novas mensagens. Clique para carregar.",
-      "show_logs": "Mostrar logs"
+      "show_logs": "Mostrar logs",
+      "hide_logs": "Esconder logs"
     },
     "actions": {
       "title": "Ações",
