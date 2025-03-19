@@ -79,9 +79,13 @@ import PreviewLogsDetailsModal from './Preview/PreviewLogsDetailsModal.vue';
 const emit = defineEmits(['scroll-to-bottom']);
 
 const props = defineProps({
+  logs: {
+    type: Array,
+    required: true,
+  },
   logsSide: {
     type: String,
-    default: 'right',
+    default: 'left',
     validator(value) {
       return ['left', 'right'].includes(value);
     },
@@ -100,8 +104,10 @@ const selectedLog = ref({
 const processedLogs = computed(() => {
   if (!agentsTeamStore.activeTeam.data) return [];
 
-  const { collaboratorsTraces: traces } = previewStore;
+  const traces = props.logs;
   const { agents: activeTeam, manager } = agentsTeamStore.activeTeam.data || {};
+
+  console.log('activeTeam', activeTeam);
 
   return traces.reduce((logsByAgent, trace) => {
     const agent = activeTeam.find(
@@ -120,6 +126,8 @@ const processedLogs = computed(() => {
       });
     }
 
+    console.log('trace', trace);
+
     logsByAgent.at(-1)?.steps.push({
       title: trace.summary || 'Unknown',
       trace,
@@ -133,7 +141,7 @@ const progressHeight = ref(0);
 onMounted(() => {
   updateProgressBarHeight('mount');
 
-  if (!agentsTeamStore.activeTeam.data) {
+  if (!agentsTeamStore.activeTeam.data?.manager) {
     agentsTeamStore.loadActiveTeam();
   }
 });

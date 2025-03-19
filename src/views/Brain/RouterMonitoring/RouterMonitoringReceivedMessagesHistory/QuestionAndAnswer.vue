@@ -66,28 +66,38 @@
         v-else
         class="question-and-answer__answer"
       >
-        <PreviewLogs v-if="showLogs" />
-
-        <Markdown
-          data-testid="answer"
-          :class="[
-            'question-and-answer__message',
-            'question-and-answer__answer-text',
-            `question-and-answer__answer-text--${data.llm.status}`,
-          ]"
-          :content="data.llm.response"
+        <PreviewLogs
+          v-if="showLogs"
+          :logs="logs"
+          logsSide="right"
         />
 
-        <button
-          v-if="featureFlagsStore.flags.agentsTeam"
-          class="answer__show-logs"
-          @click="showLogs = true"
+        <section
+          v-if="data.llm.response"
+          class="question-and-answer__message-container"
         >
-          {{ $t('router.monitoring.show_logs') }}
-        </button>
+          <Markdown
+            data-testid="answer"
+            :class="[
+              'question-and-answer__message',
+              'question-and-answer__answer-text',
+              `question-and-answer__answer-text--${data.llm.status}`,
+            ]"
+            :content="data.llm.response"
+          />
+
+          <button
+            v-if="isAgentsTeamActive"
+            class="answer__show-logs"
+            :disabled="logs.length"
+            @click="loadLogs"
+          >
+            {{ $t('router.monitoring.show_logs') }}
+          </button>
+        </section>
 
         <UnnnicButton
-          v-else
+          v-if="!isAgentsTeamActive"
           class="answer__inspect-response"
           data-testid="inspect-response"
           size="small"
@@ -107,12 +117,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import DrawerInspectAnswer from '@/components/Brain/Monitoring/DrawerInspectResponse/index.vue';
 import Markdown from '@/components/Markdown.vue';
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useMonitoringStore } from '@/store/Monitoring';
 
 const props = defineProps({
   isLoading: {
@@ -126,9 +137,30 @@ const props = defineProps({
 });
 
 const featureFlagsStore = useFeatureFlagsStore();
-const showLogs = ref(false);
+const monitoringStore = useMonitoringStore();
 
+const showLogs = ref(false);
+const loadingLogs = ref(false);
+const logs = ref([]);
 const isDrawerInspectAnswerOpen = ref(false);
+
+const isAgentsTeamActive = computed(() => {
+  return featureFlagsStore.flags.agentsTeam;
+});
+
+async function loadLogs() {
+  loadingLogs.value = true;
+
+  try {
+    logs.value = await monitoringStore.loadLogs();
+
+    showLogs.value = true;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loadingLogs.value = false;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -165,13 +197,15 @@ const isDrawerInspectAnswerOpen = ref(false);
     font-size: $unnnic-font-size-body-gt;
   }
 
+  &__message-container {
+    position: relative;
+  }
+
   &__question {
     font-weight: $unnnic-font-weight-bold;
   }
 
   &__answer {
-    position: relative;
-
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -217,6 +251,17 @@ const isDrawerInspectAnswerOpen = ref(false);
       line-height: $unnnic-line-height-md * 1.75;
 
       cursor: pointer;
+
+      &:active:not(:disabled) {
+        box-shadow: inset 0px 0px 8px 0 rgba(0, 0, 0, 0.08);
+      }
+
+      &:disabled {
+        box-shadow: inset 0px 0px 8px 0 rgba(0, 0, 0, 0.08);
+        background-color: $unnnic-color-neutral-soft;
+        color: $unnnic-color-neutral-clean;
+        cursor: not-allowed;
+      }
     }
   }
 
