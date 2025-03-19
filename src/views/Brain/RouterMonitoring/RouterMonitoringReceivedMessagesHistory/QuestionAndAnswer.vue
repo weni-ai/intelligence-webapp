@@ -149,6 +149,8 @@ const isAgentsTeamActive = computed(() => {
 });
 
 async function loadLogs() {
+  if (loadingLogs.value || logs.value.length) return;
+
   loadingLogs.value = true;
 
   try {
