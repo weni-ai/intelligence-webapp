@@ -138,10 +138,6 @@ onMounted(() => {
   nextTick(() => {
     updateProgressBarHeight('mount');
   });
-
-  if (!agentsTeamStore.activeTeam.data?.manager) {
-    agentsTeamStore.loadActiveTeam();
-  }
 });
 
 function openModalLogFullDetails(summary, trace) {

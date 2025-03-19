@@ -259,9 +259,6 @@ function highlightRow(index) {
 watch(
   () => route.query,
   () => getReceivedMessages(),
-  {
-    immediate: true,
-  },
 );
 
 watch(inspectedAnswerIndex, (newIndex) => {

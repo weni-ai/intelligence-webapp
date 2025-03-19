@@ -96,6 +96,7 @@ import BrainWarningBar from '@/components/Brain/BrainWarningBar.vue';
 import BrainHeaderPreview from '@/components/Brain/BrainHeaderPreview.vue';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useTuningsStore } from '@/store/Tunings';
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 export default {
   name: 'Brain',
@@ -271,6 +272,7 @@ export default {
       files.loadNext();
       sites.loadNext();
       useTuningsStore().fetchCredentials();
+      useAgentsTeamStore().loadActiveTeam();
       loadRouterOptions();
     });
 
