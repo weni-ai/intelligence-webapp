@@ -92,8 +92,8 @@
               'answer__show-logs',
               { 'answer__show-logs--loading': loadingLogs },
             ]"
-            :disabled="logs.length || loadingLogs"
-            @click="loadLogs"
+            :disabled="loadingLogs"
+            @click="handleShowLogs"
           >
             <section class="show-logs__icon-container">
               <UnnnicIconLoading
@@ -102,7 +102,11 @@
               />
             </section>
             <p class="show-logs__text">
-              {{ $t('router.monitoring.show_logs') }}
+              {{
+                logs.length && showLogs
+                  ? $t('router.monitoring.hide_logs')
+                  : $t('router.monitoring.show_logs')
+              }}
             </p>
           </button>
         </section>
@@ -159,9 +163,18 @@ const isAgentsTeamActive = computed(() => {
   return featureFlagsStore.flags.agentsTeam;
 });
 
-async function loadLogs() {
-  if (loadingLogs.value || logs.value.length) return;
+function handleShowLogs() {
+  if (loadingLogs.value) return;
 
+  if (logs.value.length) {
+    showLogs.value = !showLogs.value;
+    return;
+  }
+
+  loadLogs();
+}
+
+async function loadLogs() {
   loadingLogs.value = true;
 
   try {
