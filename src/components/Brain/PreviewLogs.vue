@@ -1,17 +1,19 @@
 <template>
   <section
     ref="logList"
-    class="preview-logs"
+    data-testid="preview-logs"
+    :class="`preview-logs preview-logs--${props.logsSide}`"
   >
     <p
       v-if="!processedLogs.length"
       class="preview-logs__empty"
+      data-testid="preview-logs-empty"
     >
       {{ $t('router.preview.no_logs_registered') }}
     </p>
 
     <TransitionGroup
-      class="preview-logs__logs"
+      :class="`preview-logs__logs preview-logs__logs--${props.logsSide}`"
       name="logs"
       tag="ol"
       @enter="updateProgressBarHeight('agent')"
@@ -19,9 +21,15 @@
       <li
         v-for="(log, logIndex) in processedLogs"
         :key="logIndex"
-        class="logs__log"
+        :class="`logs__log logs__log--${props.logsSide}`"
+        data-testid="preview-logs-log"
       >
-        <p class="log__agent-name">{{ log.agent_name }}</p>
+        <p
+          :class="`log__agent-name log__agent-name--${props.logsSide}`"
+          data-testid="preview-logs-log-agent-name"
+        >
+          {{ log.agent_name }}
+        </p>
 
         <TransitionGroup
           name="steps"
@@ -32,11 +40,13 @@
           <li
             v-for="(step, stepIndex) in log.steps"
             :key="stepIndex"
-            class="steps__step"
+            :class="`steps__step steps__step--${props.logsSide}`"
+            data-testid="preview-logs-log-step"
           >
             <p>{{ step.title }}</p>
             <button
               class="step__see-full"
+              data-testid="preview-logs-log-step-see-full"
               @click="openModalLogFullDetails(step.title, step.trace)"
             >
               {{ $t('router.preview.see_full_details') }}
@@ -46,12 +56,16 @@
       </li>
     </TransitionGroup>
 
-    <article class="preview-logs__progress-bar" />
+    <article
+      :class="`preview-logs__progress-bar preview-logs__progress-bar--${props.logsSide}`"
+      data-testid="preview-logs-progress-bar"
+    />
 
     <PreviewLogsDetailsModal
       v-model="showDetailsModal"
       :title="selectedLog.summary"
       :trace="selectedLog.trace"
+      data-testid="preview-logs-details-modal"
     />
   </section>
 </template>
@@ -63,6 +77,20 @@ import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import PreviewLogsDetailsModal from './Preview/PreviewLogsDetailsModal.vue';
 
 const emit = defineEmits(['scroll-to-bottom']);
+
+const props = defineProps({
+  logs: {
+    type: Array,
+    required: true,
+  },
+  logsSide: {
+    type: String,
+    default: 'left',
+    validator(value) {
+      return ['left', 'right'].includes(value);
+    },
+  },
+});
 
 const previewStore = usePreviewStore();
 const agentsTeamStore = useAgentsTeamStore();
@@ -76,8 +104,10 @@ const selectedLog = ref({
 const processedLogs = computed(() => {
   if (!agentsTeamStore.activeTeam.data) return [];
 
-  const { collaboratorsTraces: traces } = previewStore;
+  const traces = props.logs;
   const { agents: activeTeam, manager } = agentsTeamStore.activeTeam.data || {};
+
+  console.log('activeTeam', activeTeam);
 
   return traces.reduce((logsByAgent, trace) => {
     const agent = activeTeam.find(
@@ -96,6 +126,8 @@ const processedLogs = computed(() => {
       });
     }
 
+    console.log('trace', trace);
+
     logsByAgent.at(-1)?.steps.push({
       title: trace.summary || 'Unknown',
       trace,
@@ -109,7 +141,7 @@ const progressHeight = ref(0);
 onMounted(() => {
   updateProgressBarHeight('mount');
 
-  if (!agentsTeamStore.activeTeam.data) {
+  if (!agentsTeamStore.activeTeam.data?.manager) {
     agentsTeamStore.loadActiveTeam();
   }
 });
@@ -181,7 +213,9 @@ watch(
 .preview-logs {
   position: relative;
 
-  margin: 0 auto;
+  &--left {
+    margin: 0 auto;
+  }
 
   .preview-logs__empty {
     margin: 0;
@@ -197,11 +231,19 @@ watch(
     position: relative;
 
     margin: 0;
-    margin-left: $unnnic-spacing-sm;
 
     padding: 0;
 
     list-style: none;
+
+    &--left {
+      margin-left: $unnnic-spacing-sm;
+    }
+
+    &--right {
+      text-align: end;
+      margin-right: $unnnic-spacing-sm;
+    }
 
     .logs__log {
       margin-bottom: $unnnic-spacing-sm;
@@ -211,7 +253,6 @@ watch(
           content: '•';
 
           position: absolute;
-          left: -$unnnic-spacing-sm + -$unnnic-spacing-nano;
           z-index: 1;
 
           color: $unnnic-color-neutral-cleanest;
@@ -228,6 +269,18 @@ watch(
         line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 
         @extend %progressDot;
+
+        &--left {
+          &::before {
+            left: -$unnnic-spacing-sm + -$unnnic-spacing-nano;
+          }
+        }
+
+        &--right {
+          &::before {
+            right: -$unnnic-spacing-sm + -$unnnic-spacing-nano + 1;
+          }
+        }
       }
 
       .log__steps {
@@ -251,6 +304,18 @@ watch(
           line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 
           @extend %progressDot;
+
+          &--left {
+            &::before {
+              left: -$unnnic-spacing-sm + -$unnnic-spacing-nano;
+            }
+          }
+
+          &--right {
+            &::before {
+              right: -$unnnic-spacing-sm + -$unnnic-spacing-nano + 1;
+            }
+          }
 
           .step__see-full {
             padding: 0;
@@ -294,6 +359,10 @@ watch(
     background-color: $unnnic-color-neutral-cleanest;
 
     transition: height 0.6s ease;
+
+    &--right {
+      right: 0;
+    }
   }
 }
 </style>

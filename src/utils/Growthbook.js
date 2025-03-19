@@ -8,8 +8,8 @@ const gbInstance = reactive(
     apiHost: runtimeVariables.get('VITE_GROWTHBOOK_API_HOST'),
     clientKey: runtimeVariables.get('VITE_GROWTHBOOK_CLIENT_KEY'),
     attributes: {
-      weni_project: globalStore.state.Auth.connectProjectUuid,
-      weni_org: globalStore.state.Auth.connectOrgUuid,
+      weni_project: globalStore.state.Auth.connectProjectUuid || '',
+      weni_org: globalStore.state.Auth.connectOrgUuid || '',
     },
   }),
 );

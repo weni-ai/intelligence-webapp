@@ -87,6 +87,13 @@ import ReceivedMessagesHistory from '../RouterMonitoringReceivedMessagesHistory/
 
 import i18n from '@/utils/plugins/i18n';
 
+const props = defineProps({
+  showTags: {
+    type: Boolean,
+    default: true,
+  },
+});
+
 const route = useRoute();
 const monitoringStore = useMonitoringStore();
 const t = (key) => i18n.global.t(key);
@@ -166,21 +173,22 @@ const formattedMessagesRows = computed(() => {
   };
 
   return monitoringStore.messages.data.map(
-    ({ created_at, text, tag, action_name, id }) => ({
-      content: [
-        `${format(new Date(created_at), 'dd/MM/yyyy')}, ${format(new Date(created_at), 'HH:mm')}`,
-        text,
-        {
-          component: Unnnic.unnnicTag,
-          props: {
-            type: 'default',
-            ...getMessageTagProps(tag.toLowerCase(), action_name),
-          },
-          events: {},
+    ({ created_at, text, tag, action_name, id }) => {
+      const date = `${format(new Date(created_at), 'dd/MM/yyyy')}, ${format(new Date(created_at), 'HH:mm')}`;
+      const tagComponent = {
+        component: Unnnic.unnnicTag,
+        props: {
+          type: 'default',
+          ...getMessageTagProps(tag.toLowerCase(), action_name),
         },
-      ],
-      id,
-    }),
+        events: {},
+      };
+
+      return {
+        content: [date, text, props.showTags ? tagComponent : {}],
+        id,
+      };
+    },
   );
 });
 

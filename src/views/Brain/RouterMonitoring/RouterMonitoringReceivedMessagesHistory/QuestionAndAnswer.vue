@@ -66,17 +66,38 @@
         v-else
         class="question-and-answer__answer"
       >
-        <Markdown
-          data-testid="answer"
-          :class="[
-            'question-and-answer__message',
-            'question-and-answer__answer-text',
-            `question-and-answer__answer-text--${data.llm.status}`,
-          ]"
-          :content="data.llm.response"
+        <PreviewLogs
+          v-if="showLogs"
+          :logs="logs"
+          logsSide="right"
         />
 
+        <section
+          v-if="data.llm.response"
+          class="question-and-answer__message-container"
+        >
+          <Markdown
+            data-testid="answer"
+            :class="[
+              'question-and-answer__message',
+              'question-and-answer__answer-text',
+              `question-and-answer__answer-text--${data.llm.status}`,
+            ]"
+            :content="data.llm.response"
+          />
+
+          <button
+            v-if="isAgentsTeamActive"
+            class="answer__show-logs"
+            :disabled="logs.length"
+            @click="loadLogs"
+          >
+            {{ $t('router.monitoring.show_logs') }}
+          </button>
+        </section>
+
         <UnnnicButton
+          v-if="!isAgentsTeamActive"
           class="answer__inspect-response"
           data-testid="inspect-response"
           size="small"
@@ -96,24 +117,52 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import DrawerInspectAnswer from '@/components/Brain/Monitoring/DrawerInspectResponse/index.vue';
 import Markdown from '@/components/Markdown.vue';
+import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useMonitoringStore } from '@/store/Monitoring';
 
 const props = defineProps({
   isLoading: {
     type: Boolean,
     default: true,
   },
-
   data: {
     type: Object,
     required: true,
   },
 });
 
+const featureFlagsStore = useFeatureFlagsStore();
+const monitoringStore = useMonitoringStore();
+
+const showLogs = ref(false);
+const loadingLogs = ref(false);
+const logs = ref([]);
 const isDrawerInspectAnswerOpen = ref(false);
+
+const isAgentsTeamActive = computed(() => {
+  return featureFlagsStore.flags.agentsTeam;
+});
+
+async function loadLogs() {
+  if (loadingLogs.value || logs.value.length) return;
+
+  loadingLogs.value = true;
+
+  try {
+    logs.value = await monitoringStore.loadLogs();
+
+    showLogs.value = true;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loadingLogs.value = false;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -143,11 +192,15 @@ const isDrawerInspectAnswerOpen = ref(false);
 
     padding: $unnnic-spacing-ant;
 
-    background-color: $unnnic-color-neutral-light;
+    background-color: $unnnic-color-background-solo;
 
     color: $unnnic-color-neutral-dark;
     font-family: $unnnic-font-family-secondary;
     font-size: $unnnic-font-size-body-gt;
+  }
+
+  &__message-container {
+    position: relative;
   }
 
   &__question {
@@ -164,6 +217,7 @@ const isDrawerInspectAnswerOpen = ref(false);
 
     &-text {
       justify-self: flex-end;
+      padding: $unnnic-spacing-sm $unnnic-spacing-ant;
 
       &--success,
       &--action {
@@ -179,6 +233,37 @@ const isDrawerInspectAnswerOpen = ref(false);
 
     .answer__inspect-response {
       width: 100%;
+    }
+
+    .answer__show-logs {
+      position: absolute;
+      left: $unnnic-spacing-ant;
+      bottom: -($unnnic-spacing-xl) / 4;
+
+      border-radius: $unnnic-border-radius-pill;
+      border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+      background: $unnnic-color-neutral-white;
+      box-shadow: 0px 0px $unnnic-spacing-xs 0 rgba(0, 0, 0, 0.08);
+
+      padding: calc($unnnic-spacing-nano / 2) $unnnic-spacing-ant;
+
+      color: $unnnic-color-neutral-cloudy;
+      font-family: $unnnic-font-family-secondary;
+      font-size: $unnnic-font-size-body-md;
+      line-height: $unnnic-line-height-md * 1.75;
+
+      cursor: pointer;
+
+      &:active:not(:disabled) {
+        box-shadow: inset 0px 0px 8px 0 rgba(0, 0, 0, 0.08);
+      }
+
+      &:disabled {
+        box-shadow: inset 0px 0px 8px 0 rgba(0, 0, 0, 0.08);
+        background-color: $unnnic-color-neutral-soft;
+        color: $unnnic-color-neutral-clean;
+        cursor: not-allowed;
+      }
     }
   }
 

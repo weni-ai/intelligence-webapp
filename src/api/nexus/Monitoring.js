@@ -1,5 +1,11 @@
-import request from '@/api/nexusaiRequest';
 import { cleanParams } from '@/utils/http';
+import axios from 'axios';
+
+const request = {
+  $http: axios.create({
+    baseURL: 'https://nexus.apip.stg.cloud.weni.ai',
+  }),
+};
 
 export const Monitoring = {
   messages: {
@@ -56,7 +62,7 @@ export const Monitoring = {
 
     async detail({ projectUuid, id }) {
       const { data } = await request.$http.get(
-        `api/${projectUuid}/message-detail/${id}`,
+        `api/${projectUuid}/message-detail/${id}/`,
         { hideGenericErrorAlert: true },
       );
 
@@ -65,7 +71,7 @@ export const Monitoring = {
 
     async rateAnswer({ projectUuid, id, is_approved }) {
       const { data } = await request.$http.patch(
-        `api/${projectUuid}/message-detail/${id}`,
+        `api/${projectUuid}/message-detail/${id}/`,
         { is_approved },
       );
 
@@ -88,6 +94,14 @@ export const Monitoring = {
       );
 
       return data;
+    },
+
+    async getLogs({ projectUuid }) {
+      const { data } = await request.$http.get(
+        `api/agents/traces/?project=${projectUuid}`,
+      );
+
+      return data?.traces;
     },
   },
 };

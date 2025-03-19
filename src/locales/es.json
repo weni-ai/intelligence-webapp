@@ -135,7 +135,8 @@
         "add_another_site": "Agregar otro sitio",
         "success_alert": "Contenido agregado exitosamente"
       },
-      "new_messages_load": "{n} mensaje nuevo. Haz clic para cargar. | {n} mensajes nuevos. Haz clic para cargar."
+      "new_messages_load": "{n} mensaje nuevo. Haz clic para cargar. | {n} mensajes nuevos. Haz clic para cargar.",
+      "show_logs": "Mostrar logs"
     },
     "actions": {
       "title": "Acciones",
