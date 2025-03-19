@@ -136,7 +136,7 @@
         "success_alert": "Content added successfully"
       },
       "new_messages_load": "{n} new message. Click to load. | {n} new messages. Click to load.",
-      "view_logs": "View logs"
+      "show_logs": "Show logs"
     },
     "actions": {
       "title": "Actions",

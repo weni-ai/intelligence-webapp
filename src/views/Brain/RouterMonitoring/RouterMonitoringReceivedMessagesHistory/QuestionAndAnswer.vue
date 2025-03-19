@@ -78,7 +78,16 @@
           :content="data.llm.response"
         />
 
+        <button
+          v-if="featureFlagsStore.flags.agentsTeam"
+          class="answer__show-logs"
+          @click="showLogs = true"
+        >
+          {{ $t('router.monitoring.show_logs') }}
+        </button>
+
         <UnnnicButton
+          v-else
           class="answer__inspect-response"
           data-testid="inspect-response"
           size="small"
@@ -103,20 +112,21 @@ import { ref } from 'vue';
 import DrawerInspectAnswer from '@/components/Brain/Monitoring/DrawerInspectResponse/index.vue';
 import Markdown from '@/components/Markdown.vue';
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+
 const props = defineProps({
   isLoading: {
     type: Boolean,
     default: true,
-  },
-  showLogs: {
-    type: Boolean,
-    default: false,
   },
   data: {
     type: Object,
     required: true,
   },
 });
+
+const featureFlagsStore = useFeatureFlagsStore();
+const showLogs = ref(false);
 
 const isDrawerInspectAnswerOpen = ref(false);
 </script>
@@ -160,6 +170,8 @@ const isDrawerInspectAnswerOpen = ref(false);
   }
 
   &__answer {
+    position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -169,6 +181,7 @@ const isDrawerInspectAnswerOpen = ref(false);
 
     &-text {
       justify-self: flex-end;
+      padding: $unnnic-spacing-sm $unnnic-spacing-ant;
 
       &--success,
       &--action {
@@ -184,6 +197,26 @@ const isDrawerInspectAnswerOpen = ref(false);
 
     .answer__inspect-response {
       width: 100%;
+    }
+
+    .answer__show-logs {
+      position: absolute;
+      left: $unnnic-spacing-ant;
+      bottom: -($unnnic-spacing-xl) / 4;
+
+      border-radius: $unnnic-border-radius-pill;
+      border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+      background: $unnnic-color-neutral-white;
+      box-shadow: 0px 0px $unnnic-spacing-xs 0 rgba(0, 0, 0, 0.08);
+
+      padding: calc($unnnic-spacing-nano / 2) $unnnic-spacing-ant;
+
+      color: $unnnic-color-neutral-cloudy;
+      font-family: $unnnic-font-family-secondary;
+      font-size: $unnnic-font-size-body-md;
+      line-height: $unnnic-line-height-md * 1.75;
+
+      cursor: pointer;
     }
   }
 
