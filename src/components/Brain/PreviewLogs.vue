@@ -81,7 +81,7 @@ const emit = defineEmits(['scroll-to-bottom']);
 const props = defineProps({
   logsSide: {
     type: String,
-    default: 'right',
+    default: 'left',
     validator(value) {
       return ['left', 'right'].includes(value);
     },
