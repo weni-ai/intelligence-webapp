@@ -107,8 +107,6 @@ const processedLogs = computed(() => {
   const traces = props.logs;
   const { agents: activeTeam, manager } = agentsTeamStore.activeTeam.data || {};
 
-  console.log('activeTeam', activeTeam);
-
   return traces.reduce((logsByAgent, trace) => {
     const agent = activeTeam.find(
       (agent) => agent.external_id === trace.trace.agentId,
@@ -126,8 +124,6 @@ const processedLogs = computed(() => {
       });
     }
 
-    console.log('trace', trace);
-
     logsByAgent.at(-1)?.steps.push({
       title: trace.summary || 'Unknown',
       trace,
@@ -139,7 +135,9 @@ const processedLogs = computed(() => {
 const progressHeight = ref(0);
 
 onMounted(() => {
-  updateProgressBarHeight('mount');
+  nextTick(() => {
+    updateProgressBarHeight('mount');
+  });
 
   if (!agentsTeamStore.activeTeam.data?.manager) {
     agentsTeamStore.loadActiveTeam();

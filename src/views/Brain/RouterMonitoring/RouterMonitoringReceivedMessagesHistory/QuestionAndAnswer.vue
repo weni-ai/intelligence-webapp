@@ -88,11 +88,22 @@
 
           <button
             v-if="isAgentsTeamActive"
-            class="answer__show-logs"
-            :disabled="logs.length"
+            :class="[
+              'answer__show-logs',
+              { 'answer__show-logs--loading': loadingLogs },
+            ]"
+            :disabled="logs.length || loadingLogs"
             @click="loadLogs"
           >
-            {{ $t('router.monitoring.show_logs') }}
+            <section class="show-logs__icon-container">
+              <UnnnicIconLoading
+                size="sm"
+                class="show-logs__icon"
+              />
+            </section>
+            <p class="show-logs__text">
+              {{ $t('router.monitoring.show_logs') }}
+            </p>
           </button>
         </section>
 
@@ -247,10 +258,7 @@ async function loadLogs() {
 
       padding: calc($unnnic-spacing-nano / 2) $unnnic-spacing-ant;
 
-      color: $unnnic-color-neutral-cloudy;
-      font-family: $unnnic-font-family-secondary;
-      font-size: $unnnic-font-size-body-md;
-      line-height: $unnnic-line-height-md * 1.75;
+      display: flex;
 
       cursor: pointer;
 
@@ -263,6 +271,40 @@ async function loadLogs() {
         background-color: $unnnic-color-neutral-soft;
         color: $unnnic-color-neutral-clean;
         cursor: not-allowed;
+      }
+
+      .show-logs__text,
+      .show-logs__icon {
+        color: $unnnic-color-neutral-cloudy;
+        font-size: $unnnic-font-size-body-md;
+      }
+
+      .show-logs__text {
+        font-family: $unnnic-font-family-secondary;
+        line-height: $unnnic-line-height-md * 1.75;
+      }
+
+      .show-logs__icon {
+        opacity: 0;
+      }
+
+      .show-logs__icon-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        display: flex;
+      }
+
+      &--loading {
+        .show-logs__text {
+          opacity: 0;
+        }
+
+        .show-logs__icon {
+          opacity: 1;
+        }
       }
     }
   }
