@@ -240,6 +240,8 @@ watch(
     }
 
     .logs__log {
+      $progressDotOffset: -($unnnic-spacing-sm + $unnnic-spacing-nano) + 0.5;
+
       margin-bottom: $unnnic-spacing-sm;
 
       %progressDot {
@@ -266,13 +268,13 @@ watch(
 
         &--left {
           &::before {
-            left: -$unnnic-spacing-sm + -$unnnic-spacing-nano;
+            left: $progressDotOffset;
           }
         }
 
         &--right {
           &::before {
-            right: -$unnnic-spacing-sm + -$unnnic-spacing-nano + 1;
+            right: $progressDotOffset;
           }
         }
       }
@@ -301,13 +303,13 @@ watch(
 
           &--left {
             &::before {
-              left: -$unnnic-spacing-sm + -$unnnic-spacing-nano;
+              left: $progressDotOffset;
             }
           }
 
           &--right {
             &::before {
-              right: -$unnnic-spacing-sm + -$unnnic-spacing-nano + 1;
+              right: $progressDotOffset;
             }
           }
 
