@@ -19,29 +19,23 @@ const mockTeam = {
 const mockTraces = [
   {
     type: 'trace_update',
+    summary: 'First trace summary',
     trace: {
-      summary: 'First trace summary',
-      trace: {
-        agentId: 'agent-1',
-      },
+      agentId: 'agent-1',
     },
   },
   {
     type: 'trace_update',
+    summary: 'Second trace summary',
     trace: {
-      summary: 'Second trace summary',
-      trace: {
-        agentId: 'agent-1',
-      },
+      agentId: 'agent-1',
     },
   },
   {
     type: 'trace_update',
+    summary: 'Manager trace',
     trace: {
-      summary: 'Manager trace',
-      trace: {
-        agentId: 'manager-1',
-      },
+      agentId: 'manager-1',
     },
   },
 ];
@@ -64,6 +58,7 @@ const createWrapper = (props = {}) => {
 
   return mount(PreviewLogs, {
     props: {
+      logs: mockTraces,
       logsSide: 'left',
       ...props,
     },
@@ -134,9 +129,7 @@ describe('PreviewLogs.vue', () => {
     });
 
     it('displays empty message when no logs are available', async () => {
-      previewStore.traces = [];
-
-      await nextTick();
+      await wrapper.setProps({ logs: [] });
 
       expect(emptyMessage().exists()).toBe(true);
       expect(emptyMessage().text()).toBe(
@@ -156,26 +149,24 @@ describe('PreviewLogs.vue', () => {
       expect(processedLogs[1].steps.length).toBe(1);
     });
 
-    it('handles empty traces correctly', () => {
-      previewStore.traces = [];
+    it('handles empty traces correctly', async () => {
+      await wrapper.setProps({ logs: [] });
 
       expect(wrapper.vm.processedLogs).toEqual([]);
     });
 
-    it('handles missing agent correctly', () => {
+    it('handles missing agent correctly', async () => {
       const tracesWithUnknownAgent = [
         {
           type: 'trace_update',
+          summary: 'Unknown agent trace',
           trace: {
-            summary: 'Unknown agent trace',
-            trace: {
-              agentId: 'unknown-agent',
-            },
+            agentId: 'unknown-agent',
           },
         },
       ];
 
-      previewStore.traces = tracesWithUnknownAgent;
+      await wrapper.setProps({ logs: tracesWithUnknownAgent });
 
       expect(wrapper.vm.processedLogs.length).toBe(1);
       expect(wrapper.vm.processedLogs[0].external_id).toBe('manager-1');
@@ -199,7 +190,7 @@ describe('PreviewLogs.vue', () => {
       expect(modal().props('modelValue')).toBeTruthy();
 
       expect(modal().props('title')).toBe('First trace summary');
-      expect(modal().props('trace')).toEqual(mockTraces[0].trace);
+      expect(modal().props('trace')).toEqual(mockTraces[0]);
     });
 
     it('closes modal correctly', async () => {

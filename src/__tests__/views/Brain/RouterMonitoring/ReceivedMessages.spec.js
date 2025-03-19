@@ -162,11 +162,11 @@ describe('RouterMonitoringReceivedMessages.vue', () => {
       wrapper.vm.filters.text = 'New message';
       await wrapper.vm.$nextTick();
 
-      expect(monitoringStore.loadMessages).toHaveBeenCalledTimes(2);
+      expect(monitoringStore.loadMessages).toHaveBeenCalledTimes(1);
 
       wrapper.vm.filters.tag = [{ value: 'success' }];
       await wrapper.vm.$nextTick();
-      expect(monitoringStore.loadMessages).toHaveBeenCalledTimes(3);
+      expect(monitoringStore.loadMessages).toHaveBeenCalledTimes(2);
     });
 
     it('calls loadMessages on pagination change', async () => {
