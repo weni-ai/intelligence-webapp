@@ -1,4 +1,4 @@
-import { flushPromises, mount } from '@vue/test-utils';
+import { flushPromises, mount, shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import Brain from '@/views/Brain/Brain.vue';
 import RouterContentBase from '@/views/Brain/RouterContentBase.vue';
@@ -12,6 +12,7 @@ import { expect } from 'vitest';
 import { useRoute } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 const pinia = createTestingPinia({ stubActions: false });
 
@@ -100,7 +101,7 @@ vi.spyOn(nexusaiAPI.intelligences.contentBases.texts, 'list').mockResolvedValue(
 describe('Brain Component', () => {
   let wrapper;
   let agentsTeamStore;
-
+  let featureFlagsStore;
   let pushMock;
   beforeEach(() => {
     useRoute.mockImplementationOnce(() => ({
@@ -133,6 +134,7 @@ describe('Brain Component', () => {
     });
 
     agentsTeamStore = useAgentsTeamStore();
+    featureFlagsStore = useFeatureFlagsStore();
   });
 
   afterEach(() => {
@@ -374,7 +376,17 @@ describe('Brain Component', () => {
     }
   });
 
-  it('should load active team when mounted', () => {
-    expect(agentsTeamStore.loadActiveTeam).toHaveBeenCalledTimes(1);
+  it('should load active team when mounted if agents team is enabled', () => {
+    featureFlagsStore.flags.agentsTeam = true;
+
+    const loadActiveTeamSpy = vi.spyOn(agentsTeamStore, 'loadActiveTeam');
+
+    wrapper = shallowMount(Brain, {
+      global: {
+        plugins: [store, pinia],
+      },
+    });
+
+    expect(loadActiveTeamSpy).toHaveBeenCalledTimes(1);
   });
 });
