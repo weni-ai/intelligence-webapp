@@ -180,10 +180,11 @@ export const useMonitoringStore = defineStore('monitoring', () => {
     }
   }
 
-  async function loadLogs() {
+  async function loadLogs({ messageId }) {
     try {
       const response = await nexusaiAPI.router.monitoring.messages.getLogs({
         projectUuid: connectProjectUuid.value,
+        messageId,
       });
 
       return response

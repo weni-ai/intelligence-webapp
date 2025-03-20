@@ -96,9 +96,9 @@ export const Monitoring = {
       return data;
     },
 
-    async getLogs({ projectUuid }) {
+    async getLogs({ projectUuid, messageId }) {
       const { data } = await request.$http.get(
-        `api/agents/traces/?project=${projectUuid}`,
+        `api/agents/traces/?project=${projectUuid}&log_id=${messageId}`,
       );
 
       return data?.traces;

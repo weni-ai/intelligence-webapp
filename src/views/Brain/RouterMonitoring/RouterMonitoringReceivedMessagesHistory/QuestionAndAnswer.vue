@@ -178,7 +178,9 @@ async function loadLogs() {
   loadingLogs.value = true;
 
   try {
-    logs.value = await monitoringStore.loadLogs();
+    logs.value = await monitoringStore.loadLogs({
+      messageId: props.data.id,
+    });
 
     showLogs.value = true;
   } catch (error) {
