@@ -1,11 +1,5 @@
 import { cleanParams } from '@/utils/http';
-import axios from 'axios';
-
-const request = {
-  $http: axios.create({
-    baseURL: 'https://nexus.apip.stg.cloud.weni.ai',
-  }),
-};
+import request from '@/api/nexusaiRequest';
 
 export const Monitoring = {
   messages: {
@@ -96,9 +90,9 @@ export const Monitoring = {
       return data;
     },
 
-    async getLogs({ projectUuid }) {
+    async getLogs({ projectUuid, messageId }) {
       const { data } = await request.$http.get(
-        `api/agents/traces/?project=${projectUuid}`,
+        `api/agents/traces/?project=${projectUuid}&log_id=${messageId}`,
       );
 
       return data?.traces;

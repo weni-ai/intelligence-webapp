@@ -11,6 +11,7 @@ import nexusaiAPI from '@/api/nexusaiAPI';
 import { expect } from 'vitest';
 import { useRoute } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 const pinia = createTestingPinia({ stubActions: false });
 
@@ -98,6 +99,7 @@ vi.spyOn(nexusaiAPI.intelligences.contentBases.texts, 'list').mockResolvedValue(
 
 describe('Brain Component', () => {
   let wrapper;
+  let agentsTeamStore;
 
   let pushMock;
   beforeEach(() => {
@@ -129,6 +131,12 @@ describe('Brain Component', () => {
         },
       },
     });
+
+    agentsTeamStore = useAgentsTeamStore();
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   test('loads content base data correctly', async () => {
@@ -364,5 +372,9 @@ describe('Brain Component', () => {
         }
       });
     }
+  });
+
+  it('should load active team when mounted', () => {
+    expect(agentsTeamStore.loadActiveTeam).toHaveBeenCalledTimes(1);
   });
 });

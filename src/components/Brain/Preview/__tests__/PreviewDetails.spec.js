@@ -1,7 +1,9 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { createPinia } from 'pinia';
 import Unnnic from '@weni/unnnic-system';
 
+import { usePreviewStore } from '@/store/Preview';
 import i18n from '@/utils/plugins/i18n';
 
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
@@ -12,17 +14,24 @@ vi.mock('../PreviewVisualFlow.vue');
 
 describe('PreviewDetails.vue', () => {
   let wrapper;
+  let previewStore;
+
+  const pinia = createPinia();
 
   const createWrapper = (props = {}) => {
     return mount(PreviewDetails, {
       props: {
         ...props,
       },
+      global: {
+        plugins: [pinia],
+      },
     });
   };
 
   beforeEach(() => {
     wrapper = createWrapper();
+    previewStore = usePreviewStore();
   });
 
   const previewDetails = () => wrapper.find('[data-testid="preview-details"]');
