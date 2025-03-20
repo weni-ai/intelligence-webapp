@@ -92,10 +92,10 @@ export const Monitoring = {
 
     async getLogs({ projectUuid, messageId }) {
       const { data } = await request.$http.get(
-        `api/agents/traces/?project=${projectUuid}&log_id=${messageId}`,
+        `api/agents/traces/?project_uuid=${projectUuid}&log_id=${messageId}`,
       );
 
-      return data?.traces;
+      return data;
     },
   },
 };
