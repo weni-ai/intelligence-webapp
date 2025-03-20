@@ -37,15 +37,21 @@ export const useProfileStore = defineStore('profile', () => {
     old: '',
   });
 
+  const humanSupport = reactive({
+    current: '',
+    old: '',
+  });
+
   const errorRequiredFields = reactive({
     name: false,
     role: false,
     goal: false,
+    humanSupport: false,
   });
 
   const hasChanged = computed(() => {
     return (
-      [name, role, personality, goal].some(
+      [name, role, personality, goal, humanSupport].some(
         ({ current, old }) => current !== old,
       ) ||
       !!differenceBy(instructions.current, instructions.old, 'instruction')
@@ -65,8 +71,9 @@ export const useProfileStore = defineStore('profile', () => {
     role.old = role.current = data.agent?.['role'] || '';
     personality.old = personality.current = data.agent?.['personality'] || '';
     goal.old = goal.current = data.agent?.['goal'] || '';
-
     instructions.current = data.instructions || [];
+    humanSupport.old = humanSupport.current =
+      data.agent?.['human_support'] || '';
 
     if (instructions.current.length === 0) {
       instructions.current.push({
@@ -205,6 +212,7 @@ export const useProfileStore = defineStore('profile', () => {
     personality,
     goal,
     instructions,
+    humanSupport,
     errorRequiredFields,
     hasChanged,
     isSaveButtonDisabled,

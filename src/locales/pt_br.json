@@ -1799,6 +1799,19 @@
         "back_btn": "Cancelar",
         "remove_btn": "Remover"
       }
+    },
+    "human_support": {
+      "title": "Suporte humano",
+      "switch": {
+        "enabled": "Ativado",
+        "disabled": "Desativado"
+      },
+      "fields": {
+        "rules": {
+          "title": "Quando o agente deve transferir a conversa para um humano?",
+          "placeholder": "Se o usuário pedir suporte humano, o agente deve rotear para o suporte humano"
+        }
+      }
     }
   },
   "obstructive_error": {
