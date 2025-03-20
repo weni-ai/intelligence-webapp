@@ -11,7 +11,12 @@
       {{ $t('router.monitoring.received_messages') }}
     </UnnnicIntelligenceText>
 
-    <section class="received-messages__filters">
+    <section
+      :class="[
+        'received-messages__filters',
+        { 'received-messages__filters--agents-team': enableAgentsTeam },
+      ]"
+    >
       <UnnnicInput
         v-model="filters.text"
         iconLeft="search"
@@ -19,6 +24,7 @@
         data-test="filter-text"
       />
       <UnnnicSelectSmart
+        v-if="!enableAgentsTeam"
         v-model="filters.tag"
         :options="tags"
         orderedByIndex
@@ -81,6 +87,7 @@ import Unnnic from '@weni/unnnic-system';
 import { format } from 'date-fns';
 
 import { useMonitoringStore } from '@/store/Monitoring';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import NewMessages from './NewMessages.vue';
 import ReceivedMessagesHistory from '../RouterMonitoringReceivedMessagesHistory/index.vue';
@@ -96,8 +103,11 @@ const props = defineProps({
 
 const route = useRoute();
 const monitoringStore = useMonitoringStore();
-const t = (key) => i18n.global.t(key);
+const featureFlagsStore = useFeatureFlagsStore();
 
+const enableAgentsTeam = computed(() => featureFlagsStore.flags.agentsTeam);
+
+const t = (key) => i18n.global.t(key);
 const tags = computed(() => [
   {
     value: 'all',
@@ -301,6 +311,10 @@ watch(
     display: grid;
     grid-template-columns: 9fr 3fr;
     gap: $unnnic-spacing-sm;
+
+    &--agents-team {
+      grid-template-columns: 12fr;
+    }
   }
 
   .received-messages__content {
