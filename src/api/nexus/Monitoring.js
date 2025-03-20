@@ -1,11 +1,5 @@
 import { cleanParams } from '@/utils/http';
-import axios from 'axios';
-
-const request = {
-  $http: axios.create({
-    baseURL: 'https://nexus.apip.stg.cloud.weni.ai',
-  }),
-};
+import request from '@/api/nexusaiRequest';
 
 export const Monitoring = {
   messages: {
