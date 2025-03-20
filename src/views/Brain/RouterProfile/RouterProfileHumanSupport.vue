@@ -12,10 +12,10 @@
       </UnnnicIntelligenceText>
 
       <UnnnicSwitch
-        v-model="isHumanSupportEnabled"
+        v-model="profile.humanSupport.current"
         size="small"
         :textRight="
-          isHumanSupportEnabled
+          profile.humanSupport.current
             ? $t('profile.human_support.switch.enabled')
             : $t('profile.human_support.switch.disabled')
         "
@@ -30,17 +30,19 @@
       />
 
       <UnnnicFormElement
-        v-else-if="isHumanSupportEnabled"
+        v-else-if="profile.humanSupport.current"
         class="form__element"
         :label="$t('profile.human_support.fields.rules.title')"
         :error="
-          errorRequiredFields.humanSupport ? $t('profile.invalid_field') : ''
+          errorRequiredFields.humanSupportRules
+            ? $t('profile.invalid_field')
+            : ''
         "
       >
         <UnnnicTextArea
-          v-model="profile.humanSupport.current"
+          v-model="profile.humanSupportRules.current"
           :placeholder="$t('profile.human_support.fields.rules.placeholder')"
-          :type="errorRequiredFields.humanSupport ? 'error' : 'normal'"
+          :type="errorRequiredFields.humanSupportRules ? 'error' : 'normal'"
         />
       </UnnnicFormElement>
     </section>
@@ -48,7 +50,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 import { useProfileStore } from '@/store/Profile';
 
@@ -59,7 +61,14 @@ const profile = useProfileStore();
 const loading = computed(() => profile.status === 'loading');
 const errorRequiredFields = computed(() => profile.errorRequiredFields);
 
-const isHumanSupportEnabled = ref(!!profile.humanSupport.current);
+watch(
+  () => profile.humanSupport.current,
+  (newValue) => {
+    if (!newValue) {
+      profile.humanSupportRules.current = '';
+    }
+  },
+);
 </script>
 
 <style lang="scss" scoped>
