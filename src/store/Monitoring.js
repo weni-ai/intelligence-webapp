@@ -117,8 +117,10 @@ export const useMonitoringStore = defineStore('monitoring', () => {
           id: id,
         });
 
-      messages.inspectedAnswer.context.data =
-        response?.map(transformMessageData);
+      messages.inspectedAnswer.context.data = response?.map((item) => ({
+        id: item.id,
+        ...transformMessageData(item),
+      }));
       setStatus('complete');
     } catch (error) {
       setStatus('error');
@@ -187,9 +189,7 @@ export const useMonitoringStore = defineStore('monitoring', () => {
         messageId,
       });
 
-      return response
-        .filter((trace) => trace.type === 'trace_update')
-        .map((trace) => trace.trace);
+      return response;
     } catch (error) {
       console.error(error);
     }
