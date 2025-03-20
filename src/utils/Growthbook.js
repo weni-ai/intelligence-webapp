@@ -2,11 +2,14 @@ import { reactive } from 'vue';
 import { configureCache, GrowthBook } from '@growthbook/growthbook';
 import globalStore from '@/store';
 
+const gbClientKey = runtimeVariables.get('VITE_GROWTHBOOK_CLIENT_KEY');
+const gbApiHost = runtimeVariables.get('VITE_GROWTHBOOK_API_HOST');
+
 const gbKey = Symbol('growthbook');
 const gbInstance = reactive(
   new GrowthBook({
-    apiHost: runtimeVariables.get('VITE_GROWTHBOOK_API_HOST'),
-    clientKey: runtimeVariables.get('VITE_GROWTHBOOK_CLIENT_KEY'),
+    apiHost: gbApiHost,
+    clientKey: gbClientKey,
     attributes: {
       weni_project: globalStore.state.Auth.connectProjectUuid || '',
       weni_org: globalStore.state.Auth.connectOrgUuid || '',
@@ -20,6 +23,8 @@ configureCache({
 });
 
 const initializeGrowthBook = async () => {
+  if (!gbApiHost || !gbClientKey) return null;
+
   try {
     await gbInstance.init();
     return gbInstance;
