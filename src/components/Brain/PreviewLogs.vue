@@ -158,7 +158,7 @@ function getTraceSummary(trace) {
     return 'Unknown';
   }
 
-  const traceKey = findTraceKey(trace.trace);
+  const traceKey = findTraceKey(trace.trace.trace || trace.trace);
   return traceKey ? formatTraceKey(traceKey) : 'Unknown';
 }
 
