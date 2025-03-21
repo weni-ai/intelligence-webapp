@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from 'vue-router';
 import { useMonitoringStore } from '@/store/Monitoring';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import i18n from '@/utils/plugins/i18n';
 import RouterMonitoringReceivedMessages from '@/views/Brain/RouterMonitoring/RouterMonitoringReceivedMessages/index.vue';
 import { createTestingPinia } from '@pinia/testing';
@@ -32,11 +33,14 @@ const pinia = createTestingPinia({
 describe('RouterMonitoringReceivedMessages.vue', () => {
   let wrapper;
   const monitoringStore = useMonitoringStore();
+  let featureFlagsStore;
 
   beforeEach(() => {
     wrapper = mount(RouterMonitoringReceivedMessages, {
       global: { plugins: [pinia, router] },
     });
+
+    featureFlagsStore = useFeatureFlagsStore();
   });
 
   afterEach(() => {

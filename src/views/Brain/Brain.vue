@@ -160,9 +160,12 @@ export default {
     });
 
     const brainRoutes = useBrainRoutes();
+    const isAgentsTeamEnabled = computed(
+      () => useFeatureFlagsStore().flags.agentsTeam,
+    );
     const showPreview = computed(
       () =>
-        !useFeatureFlagsStore().flags.agentsTeam &&
+        !isAgentsTeamEnabled.value &&
         brainRoutes.value.find((mappedRoute) => mappedRoute.page === route.name)
           ?.preview,
     );
@@ -269,8 +272,10 @@ export default {
       files.loadNext();
       sites.loadNext();
       useTuningsStore().fetchCredentials();
-      useAgentsTeamStore().loadActiveTeam();
       loadRouterOptions();
+      if (isAgentsTeamEnabled.value) {
+        useAgentsTeamStore().loadActiveTeam();
+      }
     });
 
     const previewActions = computed(() => {

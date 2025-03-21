@@ -132,7 +132,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import DrawerInspectAnswer from '@/components/Brain/Monitoring/DrawerInspectResponse/index.vue';
 import Markdown from '@/components/Markdown.vue';
@@ -189,6 +189,14 @@ async function loadLogs() {
     loadingLogs.value = false;
   }
 }
+
+watch(
+  () => props.data.id,
+  () => {
+    showLogs.value = false;
+    logs.value = [];
+  },
+);
 </script>
 
 <style lang="scss" scoped>

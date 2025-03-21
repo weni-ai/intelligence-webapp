@@ -365,7 +365,7 @@ watch(
       }
 
       &--history-opened {
-        min-height: 25vh;
+        min-height: 65vh;
         height: 100%;
 
         overflow: hidden;
