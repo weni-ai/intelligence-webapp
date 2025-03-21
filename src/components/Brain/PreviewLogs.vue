@@ -125,12 +125,42 @@ const processedLogs = computed(() => {
     }
 
     logsByAgent.at(-1)?.steps.push({
-      title: trace.summary || 'Unknown',
+      title: getTraceSummary(trace) || 'Unknown',
       trace,
     });
     return logsByAgent;
   }, []);
 });
+
+function getTraceSummary(trace) {
+  if (trace.summary) {
+    return trace.summary;
+  }
+
+  function capitalizeWord(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }
+
+  function formatTraceKey(key) {
+    return key
+      .split(/(?=[A-Z])|_/)
+      .map(capitalizeWord)
+      .join(' ');
+  }
+
+  function findTraceKey(traceObject) {
+    return Object.keys(traceObject).find((key) =>
+      key.toLowerCase().includes('trace'),
+    );
+  }
+
+  if (!trace.trace || typeof trace.trace !== 'object') {
+    return 'Unknown';
+  }
+
+  const traceKey = findTraceKey(trace.trace);
+  return traceKey ? formatTraceKey(traceKey) : 'Unknown';
+}
 
 const progressHeight = ref(0);
 
