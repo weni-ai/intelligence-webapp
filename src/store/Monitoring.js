@@ -117,8 +117,10 @@ export const useMonitoringStore = defineStore('monitoring', () => {
           id: id,
         });
 
-      messages.inspectedAnswer.context.data =
-        response?.map(transformMessageData);
+      messages.inspectedAnswer.context.data = response?.map((item) => ({
+        id: item.id,
+        ...transformMessageData(item),
+      }));
       setStatus('complete');
     } catch (error) {
       setStatus('error');
@@ -180,6 +182,19 @@ export const useMonitoringStore = defineStore('monitoring', () => {
     }
   }
 
+  async function loadLogs({ messageId }) {
+    try {
+      const response = await nexusaiAPI.router.monitoring.messages.getLogs({
+        projectUuid: connectProjectUuid.value,
+        messageId,
+      });
+
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async function rateAnswer({ is_approved }) {
     try {
       const response = await nexusaiAPI.router.monitoring.messages.rateAnswer({
@@ -213,6 +228,7 @@ export const useMonitoringStore = defineStore('monitoring', () => {
     loadMessageContext,
     loadMessageDetails,
     loadMessagesPerformance,
+    loadLogs,
     rateAnswer,
     createNewMessage,
     updateMessagesSource,

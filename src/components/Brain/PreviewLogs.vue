@@ -79,6 +79,10 @@ import PreviewLogsDetailsModal from './Preview/PreviewLogsDetailsModal.vue';
 const emit = defineEmits(['scroll-to-bottom']);
 
 const props = defineProps({
+  logs: {
+    type: Array,
+    required: true,
+  },
   logsSide: {
     type: String,
     default: 'left',
@@ -100,7 +104,7 @@ const selectedLog = ref({
 const processedLogs = computed(() => {
   if (!agentsTeamStore.activeTeam.data) return [];
 
-  const { collaboratorsTraces: traces } = previewStore;
+  const traces = props.logs;
   const { agents: activeTeam, manager } = agentsTeamStore.activeTeam.data || {};
 
   return traces.reduce((logsByAgent, trace) => {
@@ -131,11 +135,9 @@ const processedLogs = computed(() => {
 const progressHeight = ref(0);
 
 onMounted(() => {
-  updateProgressBarHeight('mount');
-
-  if (!agentsTeamStore.activeTeam.data) {
-    agentsTeamStore.loadActiveTeam();
-  }
+  nextTick(() => {
+    updateProgressBarHeight('mount');
+  });
 });
 
 function openModalLogFullDetails(summary, trace) {
