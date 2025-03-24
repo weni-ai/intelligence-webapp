@@ -145,6 +145,7 @@ import useIntelligences from '../composables/useIntelligences';
 import useInfiniteScroll from '../composables/useInfiniteScroll';
 import repository from '../api/repository';
 import ClassificationDeprecationAlert from '../components/intelligences/ClassificationDeprecationAlert.vue';
+import nexusaiAPI from '@/api/nexusaiAPI';
 
 const store = useStore();
 const tab = ref('content_intelligences');
@@ -179,16 +180,10 @@ onMounted(() => {
 const loadInitialData = async () => {
   try {
     if (tab.value === 'content_intelligences') {
-      await loadPublicIntelligences();
+      await loadContentIntelligences();
 
       setTimeout(() => {
-        if (
-          contentEndOfListElement.value &&
-          hasMoreContentPages.value &&
-          getPublicContentIntelligences.value.length > 0
-        ) {
-          loadPublicIntelligences();
-        }
+        loadContentIntelligences();
       }, 200);
     } else {
       if (ownershipFilter.value === 'own') {
@@ -261,7 +256,7 @@ const getPublicContentIntelligences = computed(() => {
 
   return store.state.Repository.publicIntelligences.data.filter(
     (intelligence) =>
-      intelligence.repository_type === 'content' &&
+      intelligence.is_router === false &&
       intelligence.name.toLowerCase().includes(filterIntelligenceName.value),
   );
 });
@@ -311,6 +306,30 @@ const isClassificationEmpty = computed(() => {
     return isComplete && filteredClassificationIntelligences.value.length === 0;
   }
 });
+
+const loadContentIntelligences = async () => {
+  try {
+    contentLoading.value = true;
+    store.state.Repository.publicIntelligences.status = 'loading';
+
+    const { data } = await nexusaiAPI.listIntelligences({
+      next: store.state.Repository.publicIntelligences.next,
+      orgUuid: store.state.Auth.connectOrgUuid,
+    });
+
+    store.state.Repository.publicIntelligences.data = data.results;
+    store.state.Repository.publicIntelligences.next = data.next;
+    store.state.Repository.publicIntelligences.status = 'complete';
+    contentLoading.value = false;
+  } catch (error) {
+    console.error('Error loading content intelligences:', error);
+  } finally {
+    contentLoading.value = false;
+    if (store.state.Repository.publicIntelligences.status === 'loading') {
+      store.state.Repository.publicIntelligences.status = null;
+    }
+  }
+};
 
 const loadPublicIntelligences = async () => {
   if (
