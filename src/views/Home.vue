@@ -183,13 +183,7 @@ const loadInitialData = async () => {
       await loadContentIntelligences();
 
       setTimeout(() => {
-        // if (
-        //   contentEndOfListElement.value &&
-        //   hasMoreContentPages.value &&
-        //   getPublicContentIntelligences.value.length > 0
-        // ) {
         loadContentIntelligences();
-        // }
       }, 200);
     } else {
       if (ownershipFilter.value === 'own') {
