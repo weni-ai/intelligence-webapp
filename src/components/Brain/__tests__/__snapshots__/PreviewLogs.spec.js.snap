@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PreviewLogs.vue > Component rendering > matches snapshot 1`] = `
+"<section data-v-6e9a8500="" data-testid="preview-logs" class="preview-logs preview-logs--left">
+  <!--v-if-->
+  <ol data-v-6e9a8500="" class="preview-logs__logs preview-logs__logs--left">
+    <li data-v-6e9a8500="" class="logs__log logs__log--left" data-testid="preview-logs-log">
+      <p data-v-6e9a8500="" class="log__agent-name log__agent-name--left" data-testid="preview-logs-log-agent-name">Test Agent 1</p>
+      <ol data-v-6e9a8500="" class="log__steps">
+        <li data-v-6e9a8500="" class="steps__step steps__step--left" data-testid="preview-logs-log-step">
+          <p data-v-6e9a8500="">First trace summary</p><button data-v-6e9a8500="" class="step__see-full" data-testid="preview-logs-log-step-see-full">See full details</button>
+        </li>
+        <li data-v-6e9a8500="" class="steps__step steps__step--left" data-testid="preview-logs-log-step">
+          <p data-v-6e9a8500="">Second trace summary</p><button data-v-6e9a8500="" class="step__see-full" data-testid="preview-logs-log-step-see-full">See full details</button>
+        </li>
+      </ol>
+    </li>
+    <li data-v-6e9a8500="" class="logs__log logs__log--left" data-testid="preview-logs-log">
+      <p data-v-6e9a8500="" class="log__agent-name log__agent-name--left" data-testid="preview-logs-log-agent-name">Manager</p>
+      <ol data-v-6e9a8500="" class="log__steps">
+        <li data-v-6e9a8500="" class="steps__step steps__step--left" data-testid="preview-logs-log-step">
+          <p data-v-6e9a8500="">Manager trace</p><button data-v-6e9a8500="" class="step__see-full" data-testid="preview-logs-log-step-see-full">See full details</button>
+        </li>
+      </ol>
+    </li>
+  </ol>
+  <article data-v-6e9a8500="" class="preview-logs__progress-bar preview-logs__progress-bar--left" data-testid="preview-logs-progress-bar"></article>
+  <preview-logs-details-modal-stub data-v-6e9a8500="" title="" trace="" modelvalue="false" data-testid="preview-logs-details-modal"></preview-logs-details-modal-stub>
+</section>"
+`;

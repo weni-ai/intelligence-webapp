@@ -37,7 +37,10 @@
         data-testid="preview-details-logs"
         class="details__logs"
       >
-        <PreviewLogs @scroll-to-bottom="scrollContentToBottom" />
+        <PreviewLogs
+          :logs="previewStore.collaboratorsTraces"
+          @scroll-to-bottom="scrollContentToBottom"
+        />
       </section>
     </section>
   </section>
@@ -48,11 +51,14 @@ import { ref } from 'vue';
 
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
 import PreviewVisualFlow from './PreviewVisualFlow.vue';
+import { usePreviewStore } from '@/store/Preview';
 
 const selectedTab = ref('visual_flow');
 const detailTabs = ['visual_flow', 'logs'];
 
 const contentRef = ref(null);
+const previewStore = usePreviewStore();
+
 const scrollContentToBottom = () => {
   contentRef.value.scrollTo({
     top: contentRef.value.scrollHeight,

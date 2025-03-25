@@ -20,7 +20,7 @@
     </UnnnicIntelligenceText>
   </button>
 
-  <template v-if="inspectedAnswer.context?.data.length || isLoadingContext">
+  <template v-if="inspectedAnswer.context?.data?.length || isLoadingContext">
     <QuestionAndAnswer
       v-for="fragment of inspectedAnswer.context?.data"
       :key="fragment.id"

@@ -1,15 +1,26 @@
+import { describe } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
+import { createPinia } from 'pinia';
+
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useMonitoringStore } from '@/store/Monitoring';
 
 import QuestionAndAnswer from '@/views/Brain/RouterMonitoring/RouterMonitoringReceivedMessagesHistory/QuestionAndAnswer.vue';
-import { describe } from 'vitest';
 
 describe('Monitoring messages history QuestionAndAnswer component', () => {
   let wrapper;
+  let featureFlagsStore;
+  let monitoringStore;
+
+  const pinia = createPinia();
 
   beforeEach(() => {
     wrapper = mount(QuestionAndAnswer, {
-      global: { stubs: ['DrawerInspectAnswer'] },
+      global: {
+        stubs: ['DrawerInspectAnswer'],
+        plugins: [pinia],
+      },
       props: {
         isLoading: false,
         data: {
@@ -24,6 +35,9 @@ describe('Monitoring messages history QuestionAndAnswer component', () => {
         },
       },
     });
+
+    featureFlagsStore = useFeatureFlagsStore();
+    monitoringStore = useMonitoringStore();
   });
 
   it('renders response with appropriate class based on llm status', () => {

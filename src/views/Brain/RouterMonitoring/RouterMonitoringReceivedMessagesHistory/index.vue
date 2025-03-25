@@ -31,6 +31,7 @@
         @click="close"
       />
     </header>
+
     <section class="received-messages-history__messages">
       <MessageContext v-if="!isLoadingMessages" />
 
@@ -44,13 +45,17 @@
 </template>
 
 <script setup>
-import { useMonitoringStore } from '@/store/Monitoring';
 import { computed, watch } from 'vue';
+
+import { useMonitoringStore } from '@/store/Monitoring';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import MessageContext from './MessageContext.vue';
 import QuestionAndAnswer from './QuestionAndAnswer.vue';
 
 const monitoringStore = useMonitoringStore();
+const featureFlagsStore = useFeatureFlagsStore();
+
 const inspectedAnswer = computed(
   () => monitoringStore.messages.inspectedAnswer,
 );
@@ -80,6 +85,9 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+$border-bottom: $unnnic-border-width-thinner solid
+  $unnnic-color-neutral-cleanest;
+
 .received-messages-history {
   box-sizing: border-box;
 
@@ -88,8 +96,7 @@ watch(
   gap: $unnnic-spacing-xs;
 
   &__header {
-    border-bottom: $unnnic-border-width-thinner solid
-      $unnnic-color-neutral-cleanest;
+    border-bottom: $border-bottom;
 
     padding: $unnnic-spacing-ant $unnnic-spacing-sm;
 

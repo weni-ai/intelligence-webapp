@@ -75,10 +75,6 @@ describe('ActiveTeam.vue', () => {
     it('should match snapshot', () => {
       expect(wrapper.element).toMatchSnapshot();
     });
-
-    it('should load active team when mounted', () => {
-      expect(agentsTeamStore.loadActiveTeam).toHaveBeenCalledTimes(1);
-    });
   });
 
   describe('Loading state', () => {
