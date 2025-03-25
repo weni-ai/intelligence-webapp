@@ -34,15 +34,15 @@
         class="form__element"
         :label="$t('profile.human_support.fields.rules.title')"
         :error="
-          errorRequiredFields.humanSupportRules
+          errorRequiredFields.humanSupportPrompt
             ? $t('profile.invalid_field')
             : ''
         "
       >
         <UnnnicTextArea
-          v-model="profile.humanSupportRules.current"
+          v-model="profile.humanSupportPrompt.current"
           :placeholder="$t('profile.human_support.fields.rules.placeholder')"
-          :type="errorRequiredFields.humanSupportRules ? 'error' : 'normal'"
+          :type="errorRequiredFields.humanSupportPrompt ? 'error' : 'normal'"
         />
       </UnnnicFormElement>
     </section>
@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 
 import { useProfileStore } from '@/store/Profile';
 
@@ -65,7 +65,7 @@ watch(
   () => profile.humanSupport.current,
   (newValue) => {
     if (!newValue) {
-      profile.humanSupportRules.current = '';
+      profile.humanSupportPrompt.current = '';
     }
   },
 );
