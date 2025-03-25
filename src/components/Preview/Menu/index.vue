@@ -1,7 +1,11 @@
 <template>
   <section class="preview-menu">
-    <header class="preview-menu__header">
+    <header
+      class="preview-menu__header"
+      data-testid="menu-header"
+    >
       <UnnnicIntelligenceText
+        data-testid="menu-title"
         color="weni-600"
         family="secondary"
         weight="bold"
@@ -12,6 +16,7 @@
 
       <section
         class="header__close-button"
+        data-testid="menu-close-button"
         @click="emit('update:model-value', false)"
       >
         <UnnnicIcon
@@ -21,10 +26,14 @@
         />
       </section>
     </header>
-    <section class="preview-menu__content">
+    <section
+      class="preview-menu__content"
+      data-testid="menu-content"
+    >
       <component
         :is="resolvedComponent"
         :message="message"
+        data-testid="menu-content-component"
         @send-message="$emit('send-message', $event)"
       />
     </section>
