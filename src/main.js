@@ -11,41 +11,44 @@ import UnnnicDivider from './components/Divider.vue';
 import UnnnicIntelligenceHeader from './components/unnnic-intelligence/Header.vue';
 import UnnnicIntelligenceText from './components/unnnic-intelligence/Text.vue';
 import UnnnicSystemPlugin from './utils/UnnnicSystemPlugin.js';
-
+import { gbKey, initializeGrowthBook } from './utils/Growthbook';
 import './utils/HandlerObstructiveError.js';
 
-iframessa.register('ai');
+initializeGrowthBook().then((gbInstance) => {
+  iframessa.register('ai');
 
-const pinia = createPinia();
-const app = createApp(App);
+  const pinia = createPinia();
+  const app = createApp(App);
 
-app.use(store).use(pinia).use(router).use(UnnnicSystemPlugin).use(i18n);
+  app.use(store).use(pinia).use(router).use(UnnnicSystemPlugin).use(i18n);
 
-if (runtimeVariables.get('VITE_BOTHUB_WEBAPP_SENTRY')) {
-  Sentry.init({
-    app,
-    dsn: runtimeVariables.get('VITE_BOTHUB_WEBAPP_SENTRY'),
-    environment: runtimeVariables.get('SENTRY_ENVIRONMENT'),
-    integrations: [
-      Sentry.browserTracingIntegration({ router }),
-      Sentry.replayIntegration(),
-    ],
-    tracesSampleRate: 1.0,
-    replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 1.0,
-    trackComponents: true,
-    beforeSend: (event) => {
-      if (window.location.hostname === 'localhost') {
-        return null;
-      }
+  if (runtimeVariables.get('VITE_BOTHUB_WEBAPP_SENTRY')) {
+    Sentry.init({
+      app,
+      dsn: runtimeVariables.get('VITE_BOTHUB_WEBAPP_SENTRY'),
+      environment: runtimeVariables.get('SENTRY_ENVIRONMENT'),
+      integrations: [
+        Sentry.browserTracingIntegration({ router }),
+        Sentry.replayIntegration(),
+      ],
+      tracesSampleRate: 1.0,
+      replaysSessionSampleRate: 0.1,
+      replaysOnErrorSampleRate: 1.0,
+      trackComponents: true,
+      beforeSend: (event) => {
+        if (window.location.hostname === 'localhost') {
+          return null;
+        }
 
-      return event;
-    },
-  });
-}
+        return event;
+      },
+    });
+  }
 
-app.component('UnnnicDivider', UnnnicDivider);
-app.component('UnnnicIntelligenceHeader', UnnnicIntelligenceHeader);
-app.component('UnnnicIntelligenceText', UnnnicIntelligenceText);
+  app.component('UnnnicDivider', UnnnicDivider);
+  app.component('UnnnicIntelligenceHeader', UnnnicIntelligenceHeader);
+  app.component('UnnnicIntelligenceText', UnnnicIntelligenceText);
 
-app.mount('#app');
+  app.provide(gbKey, gbInstance);
+  app.mount('#app');
+});

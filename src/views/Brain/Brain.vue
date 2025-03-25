@@ -93,6 +93,7 @@ import BrainWarningBar from '@/components/Brain/BrainWarningBar.vue';
 import BrainHeaderPreview from '@/components/Brain/BrainHeaderPreview.vue';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useTuningsStore } from '@/store/Tunings';
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 export default {
   name: 'Brain',
@@ -159,9 +160,12 @@ export default {
     });
 
     const brainRoutes = useBrainRoutes();
+    const isAgentsTeamEnabled = computed(
+      () => useFeatureFlagsStore().flags.agentsTeam,
+    );
     const showPreview = computed(
       () =>
-        !useFeatureFlagsStore().flags.agentsTeam &&
+        !isAgentsTeamEnabled.value &&
         brainRoutes.value.find((mappedRoute) => mappedRoute.page === route.name)
           ?.preview,
     );
@@ -269,6 +273,9 @@ export default {
       sites.loadNext();
       useTuningsStore().fetchCredentials();
       loadRouterOptions();
+      if (isAgentsTeamEnabled.value) {
+        useAgentsTeamStore().loadActiveTeam();
+      }
     });
 
     const previewActions = computed(() => {
