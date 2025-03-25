@@ -1,5 +1,5 @@
-import request from '@/api/nexusaiRequest';
 import { cleanParams } from '@/utils/http';
+import request from '@/api/nexusaiRequest';
 
 export const Monitoring = {
   messages: {
@@ -56,7 +56,7 @@ export const Monitoring = {
 
     async detail({ projectUuid, id }) {
       const { data } = await request.$http.get(
-        `api/${projectUuid}/message-detail/${id}`,
+        `api/${projectUuid}/message-detail/${id}/`,
         { hideGenericErrorAlert: true },
       );
 
@@ -65,7 +65,7 @@ export const Monitoring = {
 
     async rateAnswer({ projectUuid, id, is_approved }) {
       const { data } = await request.$http.patch(
-        `api/${projectUuid}/message-detail/${id}`,
+        `api/${projectUuid}/message-detail/${id}/`,
         { is_approved },
       );
 
@@ -85,6 +85,14 @@ export const Monitoring = {
         {
           params,
         },
+      );
+
+      return data;
+    },
+
+    async getLogs({ projectUuid, messageId }) {
+      const { data } = await request.$http.get(
+        `api/agents/traces/?project_uuid=${projectUuid}&log_id=${messageId}`,
       );
 
       return data;

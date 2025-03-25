@@ -6,9 +6,15 @@
       class="router-monitoring__divider"
     />
 
-    <RouterMonitoringPerformance data-testid="performance" />
+    <RouterMonitoringPerformance
+      v-if="!enableAgentsTeam"
+      data-testid="performance"
+    />
 
-    <RouterMonitoringReceivedMessages data-testid="received-messages" />
+    <RouterMonitoringReceivedMessages
+      :showTags="!enableAgentsTeam"
+      data-testid="received-messages"
+    />
   </section>
 </template>
 
@@ -18,6 +24,7 @@ import WS from '@/websocket/setup';
 import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useMonitoringStore } from '@/store/Monitoring';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import RouterMonitoringPerformance from './RouterMonitoringPerformance.vue';
 import RouterMonitoringReceivedMessages from './RouterMonitoringReceivedMessages/index.vue';
@@ -26,6 +33,9 @@ const ws = ref(null);
 const store = useStore();
 const auth = computed(() => store.state.Auth);
 const monitoringStore = useMonitoringStore();
+const featureFlagsStore = useFeatureFlagsStore();
+
+const enableAgentsTeam = computed(() => featureFlagsStore.flags.agentsTeam);
 
 function connectMonitoringWS() {
   if (monitoringStore.ws) return;

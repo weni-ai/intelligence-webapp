@@ -151,7 +151,7 @@ describe('Monitoring API', () => {
       });
 
       expect(request.$http.get).toHaveBeenCalledWith(
-        'api/test-uuid/message-detail/123',
+        'api/test-uuid/message-detail/123/',
         {
           hideGenericErrorAlert: true,
         },
@@ -178,7 +178,7 @@ describe('Monitoring API', () => {
       });
 
       expect(request.$http.patch).toHaveBeenCalledWith(
-        'api/test-uuid/message-detail/123',
+        'api/test-uuid/message-detail/123/',
         {
           is_approved: true,
         },
