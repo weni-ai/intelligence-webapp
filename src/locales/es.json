@@ -15,8 +15,15 @@
   "internal_server_error": "Error interno del servidor",
   "unexpected_error": "Se ha producido un error inesperado",
   "intelligences": {
+    "content_intelligences": "Inteligencias de contenido",
+    "classification_intelligences": "Inteligencias de clasificación",
     "own_intelligences": "Inteligencias propias",
     "public_intelligences": "Inteligencias públicas",
+    "classification": {
+      "deprecation_notice": "¡Estén atentos! Las inteligencias de clasificación pronto quedarán obsoletas",
+      "use_agents_builder": "Para crear agentes inteligentes, utilice {agents_builder_link}. Si tiene alguna pregunta, comuníquese con el servicio de asistencia.",
+      "agents_builder": "Agents Builder"
+    },
     "create_button": "Crear Inteligencia",
     "search_intelligence_placeholder": "Buscar Inteligencia",
     "categories_placeholder": "Categorías",
@@ -128,7 +135,9 @@
         "add_another_site": "Agregar otro sitio",
         "success_alert": "Contenido agregado exitosamente"
       },
-      "new_messages_load": "{n} mensaje nuevo. Haz clic para cargar. | {n} mensajes nuevos. Haz clic para cargar."
+      "new_messages_load": "{n} mensaje nuevo. Haz clic para cargar. | {n} mensajes nuevos. Haz clic para cargar.",
+      "show_logs": "Mostrar logs",
+      "hide_logs": "Esconder logs"
     },
     "actions": {
       "title": "Acciones",

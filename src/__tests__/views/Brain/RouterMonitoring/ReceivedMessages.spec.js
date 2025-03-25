@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from 'vue-router';
 import { useMonitoringStore } from '@/store/Monitoring';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import i18n from '@/utils/plugins/i18n';
 import RouterMonitoringReceivedMessages from '@/views/Brain/RouterMonitoring/RouterMonitoringReceivedMessages/index.vue';
 import { createTestingPinia } from '@pinia/testing';
@@ -32,11 +33,14 @@ const pinia = createTestingPinia({
 describe('RouterMonitoringReceivedMessages.vue', () => {
   let wrapper;
   const monitoringStore = useMonitoringStore();
+  let featureFlagsStore;
 
   beforeEach(() => {
     wrapper = mount(RouterMonitoringReceivedMessages, {
       global: { plugins: [pinia, router] },
     });
+
+    featureFlagsStore = useFeatureFlagsStore();
   });
 
   afterEach(() => {
@@ -162,11 +166,11 @@ describe('RouterMonitoringReceivedMessages.vue', () => {
       wrapper.vm.filters.text = 'New message';
       await wrapper.vm.$nextTick();
 
-      expect(monitoringStore.loadMessages).toHaveBeenCalledTimes(2);
+      expect(monitoringStore.loadMessages).toHaveBeenCalledTimes(1);
 
       wrapper.vm.filters.tag = [{ value: 'success' }];
       await wrapper.vm.$nextTick();
-      expect(monitoringStore.loadMessages).toHaveBeenCalledTimes(3);
+      expect(monitoringStore.loadMessages).toHaveBeenCalledTimes(2);
     });
 
     it('calls loadMessages on pagination change', async () => {

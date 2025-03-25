@@ -89,10 +89,6 @@ const isLoadingTeam = computed(
 function handleAgentsGallery() {
   agentsTeamStore.isAgentsGalleryOpen = true;
 }
-
-onMounted(() => {
-  agentsTeamStore.loadActiveTeam();
-});
 </script>
 
 <style lang="scss" scoped>

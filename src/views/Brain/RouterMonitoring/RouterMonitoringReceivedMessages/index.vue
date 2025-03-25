@@ -11,7 +11,12 @@
       {{ $t('router.monitoring.received_messages') }}
     </UnnnicIntelligenceText>
 
-    <section class="received-messages__filters">
+    <section
+      :class="[
+        'received-messages__filters',
+        { 'received-messages__filters--agents-team': enableAgentsTeam },
+      ]"
+    >
       <UnnnicInput
         v-model="filters.text"
         iconLeft="search"
@@ -19,6 +24,7 @@
         data-test="filter-text"
       />
       <UnnnicSelectSmart
+        v-if="!enableAgentsTeam"
         v-model="filters.tag"
         :options="tags"
         orderedByIndex
@@ -81,16 +87,27 @@ import Unnnic from '@weni/unnnic-system';
 import { format } from 'date-fns';
 
 import { useMonitoringStore } from '@/store/Monitoring';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import NewMessages from './NewMessages.vue';
 import ReceivedMessagesHistory from '../RouterMonitoringReceivedMessagesHistory/index.vue';
 
 import i18n from '@/utils/plugins/i18n';
 
+const props = defineProps({
+  showTags: {
+    type: Boolean,
+    default: true,
+  },
+});
+
 const route = useRoute();
 const monitoringStore = useMonitoringStore();
-const t = (key) => i18n.global.t(key);
+const featureFlagsStore = useFeatureFlagsStore();
 
+const enableAgentsTeam = computed(() => featureFlagsStore.flags.agentsTeam);
+
+const t = (key) => i18n.global.t(key);
 const tags = computed(() => [
   {
     value: 'all',
@@ -166,21 +183,22 @@ const formattedMessagesRows = computed(() => {
   };
 
   return monitoringStore.messages.data.map(
-    ({ created_at, text, tag, action_name, id }) => ({
-      content: [
-        `${format(new Date(created_at), 'dd/MM/yyyy')}, ${format(new Date(created_at), 'HH:mm')}`,
-        text,
-        {
-          component: Unnnic.unnnicTag,
-          props: {
-            type: 'default',
-            ...getMessageTagProps(tag.toLowerCase(), action_name),
-          },
-          events: {},
+    ({ created_at, text, tag, action_name, id }) => {
+      const date = `${format(new Date(created_at), 'dd/MM/yyyy')}, ${format(new Date(created_at), 'HH:mm')}`;
+      const tagComponent = {
+        component: Unnnic.unnnicTag,
+        props: {
+          type: 'default',
+          ...getMessageTagProps(tag.toLowerCase(), action_name),
         },
-      ],
-      id,
-    }),
+        events: {},
+      };
+
+      return {
+        content: [date, text, props.showTags ? tagComponent : {}],
+        id,
+      };
+    },
   );
 });
 
@@ -251,9 +269,6 @@ function highlightRow(index) {
 watch(
   () => route.query,
   () => getReceivedMessages(),
-  {
-    immediate: true,
-  },
 );
 
 watch(inspectedAnswerIndex, (newIndex) => {
@@ -296,6 +311,10 @@ watch(
     display: grid;
     grid-template-columns: 9fr 3fr;
     gap: $unnnic-spacing-sm;
+
+    &--agents-team {
+      grid-template-columns: 12fr;
+    }
   }
 
   .received-messages__content {
@@ -346,7 +365,7 @@ watch(
       }
 
       &--history-opened {
-        min-height: 25vh;
+        min-height: 65vh;
         height: 100%;
 
         overflow: hidden;
