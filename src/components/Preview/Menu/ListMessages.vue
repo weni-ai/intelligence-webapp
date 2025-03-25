@@ -11,6 +11,7 @@
       family="secondary"
       weight="bold"
       size="body-gt"
+      data-testid="list-item-title"
     >
       {{ item.title }}
     </UnnnicIntelligenceText>
@@ -19,6 +20,7 @@
       family="secondary"
       weight="regular"
       size="body-md"
+      data-testid="list-item-description"
     >
       {{ item.description }}
     </UnnnicIntelligenceText>
