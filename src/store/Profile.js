@@ -42,7 +42,7 @@ export const useProfileStore = defineStore('profile', () => {
     old: false,
   });
 
-  const humanSupportRules = reactive({
+  const humanSupportPrompt = reactive({
     current: '',
     old: '',
   });
@@ -51,12 +51,12 @@ export const useProfileStore = defineStore('profile', () => {
     name: false,
     role: false,
     goal: false,
-    humanSupportRules: false,
+    humanSupportPrompt: false,
   });
 
   const hasChanged = computed(() => {
     return (
-      [name, role, personality, goal, humanSupport, humanSupportRules].some(
+      [name, role, personality, goal, humanSupport, humanSupportPrompt].some(
         ({ current, old }) => current !== old,
       ) ||
       !!differenceBy(instructions.current, instructions.old, 'instruction')
@@ -79,7 +79,7 @@ export const useProfileStore = defineStore('profile', () => {
     instructions.current = data.instructions || [];
     humanSupport.old = humanSupport.current =
       data.agent?.['human_support'] || false;
-    humanSupportRules.old = humanSupportRules.current =
+    humanSupportPrompt.old = humanSupportPrompt.current =
       data.agent?.['human_support_rules'] || '';
 
     if (instructions.current.length === 0) {
@@ -127,8 +127,8 @@ export const useProfileStore = defineStore('profile', () => {
       },
       humanSupport.current
         ? {
-            id: 'humanSupportRules',
-            field: humanSupportRules,
+            id: 'humanSupportPrompt',
+            field: humanSupportPrompt,
           }
         : null,
     ].filter(Boolean);
@@ -166,8 +166,10 @@ export const useProfileStore = defineStore('profile', () => {
           role: role.current,
           personality: personality.current,
           goal: goal.current,
-          human_support: humanSupport.current,
-          human_support_rules: humanSupportRules.current,
+          team_data: {
+            human_support: humanSupport.current,
+            human_support_prompt: humanSupportPrompt.current,
+          },
         },
         instructions: instructions.current.filter(
           ({ instruction }) => instruction,
@@ -228,7 +230,7 @@ export const useProfileStore = defineStore('profile', () => {
     goal,
     instructions,
     humanSupport,
-    humanSupportRules,
+    humanSupportPrompt,
     errorRequiredFields,
     hasChanged,
     isSaveButtonDisabled,
