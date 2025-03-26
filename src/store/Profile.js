@@ -78,9 +78,9 @@ export const useProfileStore = defineStore('profile', () => {
     goal.old = goal.current = data.agent?.['goal'] || '';
     instructions.current = data.instructions || [];
     humanSupport.old = humanSupport.current =
-      data.agent?.['human_support'] || false;
+      data.team?.['human_support'] || false;
     humanSupportPrompt.old = humanSupportPrompt.current =
-      data.agent?.['human_support_rules'] || '';
+      data.team?.['human_support_prompt'] || '';
 
     if (instructions.current.length === 0) {
       instructions.current.push({
@@ -167,7 +167,7 @@ export const useProfileStore = defineStore('profile', () => {
           personality: personality.current,
           goal: goal.current,
         },
-        team_data: {
+        team: {
           human_support: humanSupport.current,
           human_support_prompt: humanSupportPrompt.current,
         },
