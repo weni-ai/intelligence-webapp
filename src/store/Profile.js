@@ -166,10 +166,10 @@ export const useProfileStore = defineStore('profile', () => {
           role: role.current,
           personality: personality.current,
           goal: goal.current,
-          team_data: {
-            human_support: humanSupport.current,
-            human_support_prompt: humanSupportPrompt.current,
-          },
+        },
+        team_data: {
+          human_support: humanSupport.current,
+          human_support_prompt: humanSupportPrompt.current,
         },
         instructions: instructions.current.filter(
           ({ instruction }) => instruction,
