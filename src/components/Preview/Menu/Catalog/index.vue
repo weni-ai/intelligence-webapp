@@ -36,6 +36,12 @@
         @click="handleCartAction"
       />
     </section>
+
+    <CatalogCartModal
+      v-model="isCartOpen"
+      :products="cartItems"
+      @close="closeCart"
+    />
   </section>
 </template>
 
@@ -44,6 +50,7 @@ import { computed, ref } from 'vue';
 
 import CatalogProduct from './CatalogProduct.vue';
 import CatalogProductDetails from './CatalogProductDetails.vue';
+import CatalogCartModal from './CatalogCartModal.vue';
 
 const emit = defineEmits(['send-message']);
 
