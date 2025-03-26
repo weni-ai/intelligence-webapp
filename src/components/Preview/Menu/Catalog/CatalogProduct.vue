@@ -82,26 +82,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
 const props = defineProps({
   product: {
     type: Object,
     required: true,
   },
+  quantity: {
+    type: Number,
+    required: true,
+  },
 });
 
-defineEmits(['click']);
+const emit = defineEmits(['click', 'update:quantity']);
 
-const quantity = ref(0);
+const updateQuantity = (quantity) => {
+  emit('update:quantity', quantity);
+};
 
 const incrementQuantity = () => {
-  quantity.value++;
+  updateQuantity(props.quantity + 1);
 };
 
 const decrementQuantity = () => {
-  if (quantity.value > 0) {
-    quantity.value--;
+  if (props.quantity > 0) {
+    updateQuantity(props.quantity - 1);
   }
 };
 </script>

@@ -73,6 +73,7 @@ export const MOCK_COMPONENTS = {
           action_button_name: 'flow',
           products: [
             {
+              id: '1',
               product: 'Blue Textured Cotton Shirt',
               description:
                 "Men's shirt, made from cotton with a viscose texture",
@@ -81,6 +82,7 @@ export const MOCK_COMPONENTS = {
               product_retailer_ids: ['PAN789#a'],
             },
             {
+              id: '2',
               product: 'Cotton Boxy Shirt',
               description: "Men's boxy shirt made from cotton",
               price: 99,

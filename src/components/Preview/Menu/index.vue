@@ -44,6 +44,7 @@
 import { computed } from 'vue';
 
 import ListMessages from './ListMessages.vue';
+import Catalog from './Catalog/index.vue';
 
 const emit = defineEmits(['update:model-value', 'send-message']);
 
@@ -70,6 +71,10 @@ const resolvedComponent = computed(() => {
 
   if (messageData.interaction_type === 'list' && messageData.list_message) {
     return ListMessages;
+  }
+
+  if (messageData.catalog_message) {
+    return Catalog;
   }
 
   return null;
@@ -101,6 +106,8 @@ const resolvedComponent = computed(() => {
 
   &__content {
     overflow-y: auto;
+
+    height: 100%;
   }
 }
 </style>
