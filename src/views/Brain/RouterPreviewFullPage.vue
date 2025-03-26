@@ -1,18 +1,18 @@
 <template>
   <section
-    class="preview"
+    class="preview-full-page"
     :style="{ height: `${height}px` }"
   >
-    <Tests usePreview />
+    <Preview />
   </section>
 </template>
 
 <script>
-import Tests from '../repository/content/Tests.vue';
+import Preview from '../repository/content/Preview.vue';
 
 export default {
   components: {
-    Tests,
+    Preview,
   },
 
   data() {
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.preview {
+.preview-full-page {
   display: flex;
   height: 100%;
   overflow: hidden;
