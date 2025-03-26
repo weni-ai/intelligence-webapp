@@ -130,8 +130,6 @@ const decrementQuantity = () => {
     width: 100%;
     aspect-ratio: 1/1;
 
-    background-color: $unnnic-color-neutral-soft;
-
     .image__element {
       width: 100%;
       height: 100%;
