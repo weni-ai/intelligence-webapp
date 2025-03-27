@@ -1803,6 +1803,19 @@
         "back_btn": "Cancel",
         "remove_btn": "Remove"
       }
+    },
+    "human_support": {
+      "title": "Human support",
+      "switch": {
+        "enabled": "Enabled",
+        "disabled": "Disabled"
+      },
+      "fields": {
+        "rules": {
+          "title": "When should the agent transfer a conversation to a human?",
+          "placeholder": "If the user asks for a human support, the agent should route to the human support"
+        }
+      }
     }
   },
   "obstructive_error": {
