@@ -11,13 +11,13 @@
         weight="bold"
         size="body-lg"
       >
-        {{ title }}
+        {{ dynamicTitle }}
       </UnnnicIntelligenceText>
 
       <section
         class="header__close-button"
         data-testid="menu-close-button"
-        @click="emit('update:model-value', false)"
+        @click="handleClose"
       >
         <UnnnicIcon
           icon="close"
@@ -32,6 +32,7 @@
     >
       <component
         :is="resolvedComponent"
+        v-model:selectedProduct="selectedProduct"
         :message="message"
         data-testid="menu-content-component"
         @send-message="$emit('send-message', $event)"
@@ -42,12 +43,14 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 import ListMessages from './ListMessages.vue';
 import Catalog from './Catalog/index.vue';
+import i18n from '@/utils/plugins/i18n';
 
 const emit = defineEmits(['update:model-value', 'send-message', 'send-order']);
+const selectedProduct = ref(null);
 
 const props = defineProps({
   modelValue: {
@@ -80,6 +83,26 @@ const resolvedComponent = computed(() => {
 
   return null;
 });
+
+const dynamicTitle = computed(() => {
+  if (resolvedComponent.value === Catalog && selectedProduct.value) {
+    return selectedProduct.value.product;
+  }
+
+  if (resolvedComponent.value === Catalog) {
+    return i18n.global.t('router.preview.catalog.title');
+  }
+
+  return props.title;
+});
+
+const handleClose = () => {
+  if (resolvedComponent.value === Catalog && selectedProduct.value) {
+    selectedProduct.value = null;
+  } else {
+    emit('update:model-value', false);
+  }
+};
 </script>
 
 <style lang="scss" scoped>

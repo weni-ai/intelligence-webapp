@@ -1,8 +1,8 @@
 <template>
   <section class="catalog">
     <CatalogProductDetails
-      v-if="selectedProduct"
-      :product="selectedProduct"
+      v-if="localSelectedProduct"
+      :product="localSelectedProduct"
     />
     <section
       v-else
@@ -22,13 +22,13 @@
     </section>
 
     <section
-      v-if="selectedProduct || cartItemsQuantity > 0"
+      v-if="localSelectedProduct || cartItemsQuantity > 0"
       class="catalog__cart"
     >
       <UnnnicButton
         type="primary"
         :text="
-          selectedProduct
+          localSelectedProduct
             ? $t('router.preview.catalog.add_to_cart')
             : $tc('router.preview.catalog.view_cart', cartItemsQuantity, {
                 quantity: cartItemsQuantity,
@@ -56,18 +56,30 @@ import CatalogProduct from './CatalogProduct.vue';
 import CatalogProductDetails from './CatalogProductDetails.vue';
 import CatalogCartModal from './CatalogCartModal.vue';
 
-const emit = defineEmits(['send-message', 'send-order']);
+const emit = defineEmits([
+  'send-message',
+  'send-order',
+  'update:selectedProduct',
+]);
 
 const props = defineProps({
   message: {
     type: Object,
     required: true,
   },
+  selectedProduct: {
+    type: Object,
+    default: null,
+  },
 });
 
-const selectedProduct = ref(null);
+const localSelectedProduct = computed({
+  get: () => props.selectedProduct,
+  set: (value) => emit('update:selectedProduct', value),
+});
+
 function openProductDetails(product) {
-  selectedProduct.value = product;
+  localSelectedProduct.value = product;
 }
 
 const cartItems = ref([]);
@@ -128,12 +140,12 @@ const cartItemsQuantity = computed(() => {
 function addProductToCart(productId) {
   const id = productId;
   updateProductQuantity(id, getProductQuantity(id) + 1);
-  selectedProduct.value = null;
+  localSelectedProduct.value = null;
 }
 
 function handleCartAction() {
-  if (selectedProduct.value) {
-    addProductToCart(selectedProduct.value.id);
+  if (localSelectedProduct.value) {
+    addProductToCart(localSelectedProduct.value.id);
   } else {
     openCart();
   }
