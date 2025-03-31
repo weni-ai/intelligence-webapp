@@ -17,6 +17,7 @@
         :product="product"
         :quantity="product.quantity"
         :enableUpdateQuantity="enablePlaceOrder"
+        :enableRemoveProduct="enablePlaceOrder"
         @update:quantity="$emit('update:quantity', product.id, $event)"
       />
     </section>

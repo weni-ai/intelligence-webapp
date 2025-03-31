@@ -329,7 +329,8 @@
         "order_summary": "Resumo da compra",
         "order_details": "Detalhes da compra",
         "view_order_details": "Ver detalhes da compra",
-        "items": "item | itens"
+        "items": "item | itens",
+        "remove": "Remover"
       }
     }
   },

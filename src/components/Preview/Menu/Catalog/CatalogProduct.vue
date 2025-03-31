@@ -18,6 +18,7 @@
           family="secondary"
           weight="bold"
           size="body-gt"
+          class="header__title"
         >
           {{ product.product }}
           {{
@@ -35,6 +36,26 @@
         >
           {{ product.description }}
         </UnnnicIntelligenceText>
+
+        <button
+          v-if="enableRemoveProduct"
+          class="header__remove-product"
+          @click.stop="updateQuantity(0)"
+        >
+          <UnnnicIcon
+            icon="delete"
+            scheme="neutral-cloudy"
+            size="sm"
+          />
+
+          <UnnnicIntelligenceText
+            color="neutral-cloudy"
+            family="secondary"
+            size="body-md"
+          >
+            {{ $t('router.preview.catalog.remove') }}
+          </UnnnicIntelligenceText>
+        </button>
       </header>
 
       <footer class="content__footer">
@@ -102,6 +123,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  enableRemoveProduct: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['click', 'update:quantity']);
@@ -162,14 +187,38 @@ const decrementQuantity = () => {
     overflow: hidden;
 
     .content__header {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      grid-template-areas:
+        'title remove'
+        'description description';
+      gap: $unnnic-spacing-nano;
+
+      .header__title {
+        grid-area: title;
+      }
 
       .header__description {
+        grid-area: description;
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+      }
+
+      .header__remove-product {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+
+        grid-area: remove;
+
+        display: flex;
+        align-items: center;
+        gap: $unnnic-spacing-nano;
+
+        cursor: pointer;
       }
     }
 

@@ -331,7 +331,8 @@
         "order_summary": "Order Summary",
         "order_details": "Order Details",
         "view_order_details": "View order details",
-        "items": "item | items"
+        "items": "item | items",
+        "remove": "Remove"
       }
     }
   },
