@@ -1,5 +1,6 @@
 <template>
   <UnnnicIntelligenceText
+    data-testid="price-text"
     color="weni-600"
     family="secondary"
     weight="bold"
