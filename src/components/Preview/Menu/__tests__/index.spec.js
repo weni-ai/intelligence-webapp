@@ -1,8 +1,9 @@
 import { shallowMount } from '@vue/test-utils';
-import { describe, it, expect, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 import PreviewMenu from '../index.vue';
 import ListMessages from '../ListMessages.vue';
+import Catalog from '../Catalog/index.vue';
 import Text from '@/components/unnnic-intelligence/Text.vue';
 
 const mockListMessage = {
@@ -12,12 +13,24 @@ const mockListMessage = {
   },
 };
 
+const mockCatalogMessage = {
+  catalog_message: {
+    products: [
+      {
+        id: '1',
+        product: 'Product 1',
+        description: 'Description 1',
+        price: 100,
+      },
+    ],
+  },
+};
+
 describe('PreviewMenu.vue', () => {
   let wrapper;
 
-  const header = () => wrapper.find('[data-testid="menu-header"]');
-  const title = () => wrapper.find('[data-testid="menu-title"]');
-  const closeButton = () => wrapper.find('[data-testid="menu-close-button"]');
+  const headerComponent = () =>
+    wrapper.findComponent('[data-testid="menu-header"]');
   const content = () => wrapper.find('[data-testid="menu-content"]');
   const contentComponent = () =>
     wrapper.findComponent('[data-testid="menu-content-component"]');
@@ -33,6 +46,7 @@ describe('PreviewMenu.vue', () => {
       global: {
         stubs: {
           UnnnicIntelligenceText: Text,
+          MenuHeader: true,
         },
       },
     });
@@ -55,15 +69,15 @@ describe('PreviewMenu.vue', () => {
 
     it('renders correctly with required props', () => {
       expect(wrapper.exists()).toBe(true);
-      expect(header().exists()).toBe(true);
+      expect(headerComponent().exists()).toBe(true);
       expect(content().exists()).toBe(true);
     });
 
-    it('displays the provided title', async () => {
+    it('passes the dynamic title to MenuHeader component', async () => {
       const customTitle = 'Custom Menu Title';
       await wrapper.setProps({ title: customTitle });
 
-      expect(title().text()).toBe(customTitle);
+      expect(headerComponent().props('title')).toBe(customTitle);
     });
   });
 
@@ -72,6 +86,12 @@ describe('PreviewMenu.vue', () => {
       await wrapper.setProps({ message: mockListMessage });
 
       expect(wrapper.vm.resolvedComponent).toBe(ListMessages);
+    });
+
+    it('resolves to Catalog component for catalog message type', async () => {
+      await wrapper.setProps({ message: mockCatalogMessage });
+
+      expect(wrapper.vm.resolvedComponent).toBe(Catalog);
     });
 
     it('returns null for unsupported message types', async () => {
@@ -86,8 +106,8 @@ describe('PreviewMenu.vue', () => {
   });
 
   describe('Events', () => {
-    it('emits update:model-value event when close button is clicked', async () => {
-      await closeButton().trigger('click');
+    it('emits update:model-value event when close event is triggered from header', async () => {
+      await headerComponent().vm.$emit('close');
 
       expect(wrapper.emitted('update:model-value')).toBeTruthy();
       expect(wrapper.emitted('update:model-value')[0]).toEqual([false]);
@@ -100,6 +120,16 @@ describe('PreviewMenu.vue', () => {
 
       expect(wrapper.emitted('send-message')).toBeTruthy();
       expect(wrapper.emitted('send-message')[0]).toEqual(['Test message']);
+    });
+
+    it('forwards send-order event from content component', async () => {
+      await wrapper.setProps({ message: mockCatalogMessage });
+
+      const mockOrder = { products: [{ id: '1', quantity: 2 }], subtotal: 200 };
+      await contentComponent().vm.$emit('send-order', mockOrder);
+
+      expect(wrapper.emitted('send-order')).toBeTruthy();
+      expect(wrapper.emitted('send-order')[0]).toEqual([mockOrder]);
     });
   });
 });
