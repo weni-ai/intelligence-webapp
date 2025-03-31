@@ -69,12 +69,7 @@ function openProductDetails(product) {
   selectedProduct.value = product;
 }
 
-const cartItems = ref(
-  props.message.catalog_message.products.map((product) => ({
-    ...product,
-    quantity: 0,
-  })),
-);
+const cartItems = ref([]);
 
 const cartSubtotal = computed(() => {
   const subtotal = cartItems.value.reduce(
@@ -96,14 +91,33 @@ function getProductIndex(productId) {
 }
 
 function getProductQuantity(productId) {
-  return cartItems.value[getProductIndex(productId)]?.quantity || 0;
+  const productInCart = cartItems.value.find(
+    (product) => product.id === productId,
+  );
+  return productInCart?.quantity || 0;
 }
 
 function updateProductQuantity(productId, quantity) {
   const productIndex = getProductIndex(productId);
-  if (productIndex === -1) return;
 
-  cartItems.value[productIndex].quantity = quantity;
+  if (productIndex === -1 && quantity > 0) {
+    const productToAdd = props.message.catalog_message.products.find(
+      (product) => product.id === productId,
+    );
+    if (productToAdd) {
+      cartItems.value.push({ ...productToAdd, quantity });
+    }
+    return;
+  }
+
+  if (quantity === 0 && productIndex !== -1) {
+    cartItems.value.splice(productIndex, 1);
+    return;
+  }
+
+  if (productIndex !== -1) {
+    cartItems.value[productIndex].quantity = quantity;
+  }
 }
 
 const cartItemsQuantity = computed(() => {

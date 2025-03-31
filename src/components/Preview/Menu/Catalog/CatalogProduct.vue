@@ -1,6 +1,7 @@
 <template>
   <section
     class="catalog-product"
+    :class="{ 'catalog-product--actionable': enableUpdateQuantity }"
     @click="$emit('click')"
   >
     <section class="product__image">
@@ -131,10 +132,12 @@ const decrementQuantity = () => {
   gap: $unnnic-spacing-xs;
   align-items: center;
 
-  cursor: pointer;
+  &--actionable {
+    cursor: pointer;
 
-  &:hover {
-    background-color: $unnnic-color-neutral-lightest;
+    &:hover {
+      background-color: $unnnic-color-neutral-lightest;
+    }
   }
 
   .product__image {

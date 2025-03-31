@@ -39,7 +39,7 @@
         size="title-sm"
         weight="bold"
       >
-        {{ `${products[0].currency} ${subtotal}` }}
+        {{ `${products[0]?.currency} ${subtotal}` }}
       </UnnnicIntelligenceText>
     </section>
 
@@ -54,6 +54,8 @@
 </template>
 
 <script setup>
+import { watch } from 'vue';
+
 import CatalogProduct from './CatalogProduct.vue';
 
 const props = defineProps({
@@ -89,6 +91,15 @@ function placeOrder() {
   emit('place-order');
   close();
 }
+
+watch(
+  () => props.products.length,
+  (newProductsLength) => {
+    if (newProductsLength === 0) {
+      close();
+    }
+  },
+);
 </script>
 
 <style lang="scss" scoped>
