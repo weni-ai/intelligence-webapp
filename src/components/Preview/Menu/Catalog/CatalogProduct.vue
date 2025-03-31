@@ -1,7 +1,7 @@
 <template>
   <section
     class="catalog-product"
-    :class="{ 'catalog-product--actionable': enableUpdateQuantity }"
+    :class="{ 'catalog-product--selectable': enableSeeProductDetails }"
     @click="$emit('click')"
   >
     <section class="product__image">
@@ -119,6 +119,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  enableSeeProductDetails: {
+    type: Boolean,
+    default: false,
+  },
   enableUpdateQuantity: {
     type: Boolean,
     default: true,
@@ -157,7 +161,7 @@ const decrementQuantity = () => {
   gap: $unnnic-spacing-xs;
   align-items: center;
 
-  &--actionable {
+  &--selectable {
     cursor: pointer;
 
     &:hover {

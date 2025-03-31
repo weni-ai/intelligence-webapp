@@ -15,6 +15,7 @@
         data-testid="catalog-product"
         :product="product"
         :quantity="getProductQuantity(product.id)"
+        enableSeeProductDetails
         @click="openProductDetails(product)"
         @update:quantity="updateProductQuantity(product.id, $event)"
       />
