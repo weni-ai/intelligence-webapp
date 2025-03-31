@@ -3,7 +3,11 @@
     class="catalog-cart-modal"
     :modelValue="modelValue"
     showCloseIcon
-    :title="$t('router.preview.catalog.your_cart')"
+    :title="
+      enablePlaceOrder
+        ? $t('router.preview.catalog.your_cart')
+        : $t('router.preview.catalog.order_details')
+    "
     @update:model-value="close"
   >
     <section class="catalog-cart-modal__products">
@@ -12,6 +16,7 @@
         :key="product.id"
         :product="product"
         :quantity="product.quantity"
+        :enableUpdateQuantity="enablePlaceOrder"
         @update:quantity="$emit('update:quantity', product.id, $event)"
       />
     </section>
@@ -22,7 +27,7 @@
         color="neutral-dark"
         family="secondary"
         size="body-lg"
-        weight="black"
+        weight="bold"
       >
         {{ $t('router.preview.catalog.subtotal') }}
       </UnnnicIntelligenceText>
@@ -32,23 +37,23 @@
         color="weni-600"
         family="secondary"
         size="title-sm"
-        weight="black"
+        weight="bold"
       >
-        {{ `${products[0].currency} ${productsSubtotal}` }}
+        {{ `${products[0].currency} ${subtotal}` }}
       </UnnnicIntelligenceText>
     </section>
 
     <UnnnicButton
+      v-if="enablePlaceOrder"
       class="catalog-cart-modal__place-order"
       :text="$t('router.preview.catalog.place_order')"
-      :disabled="!productsSubtotal"
+      :disabled="!subtotal"
+      @click="placeOrder"
     />
   </UnnnicModalDialog>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-
 import CatalogProduct from './CatalogProduct.vue';
 
 const props = defineProps({
@@ -60,21 +65,29 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  subtotal: {
+    type: Number,
+    required: true,
+  },
+  enablePlaceOrder: {
+    type: Boolean,
+    default: true,
+  },
 });
 
-const emit = defineEmits(['update:modelValue', 'update:quantity']);
-
-const productsSubtotal = computed(() => {
-  const subtotal = props.products.reduce(
-    (acc, product) => acc + product.price * product.quantity,
-    0,
-  );
-
-  return subtotal % 1 === 0 ? subtotal : subtotal.toFixed(2);
-});
+const emit = defineEmits([
+  'update:modelValue',
+  'update:quantity',
+  'place-order',
+]);
 
 function close() {
   emit('update:modelValue', false);
+}
+
+function placeOrder() {
+  emit('place-order');
+  close();
 }
 </script>
 

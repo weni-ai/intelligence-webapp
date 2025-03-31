@@ -36,7 +36,7 @@ import { get } from 'lodash';
 import { reactive } from 'vue';
 
 import DotTyping from '@/components/QuickTest/DotTyping.vue';
-import MessageDisplay from '@/components/QuickTest/MessageDisplay.vue';
+import MessageDisplay from '@/components/QuickTest/MessageDisplay/index.vue';
 import MessageInput from './MessageInput.vue';
 
 import { getFileType } from '@/utils/medias';

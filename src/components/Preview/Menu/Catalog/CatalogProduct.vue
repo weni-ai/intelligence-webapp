@@ -19,6 +19,11 @@
           size="body-gt"
         >
           {{ product.product }}
+          {{
+            enableUpdateQuantity
+              ? ''
+              : `(${quantity} ${$tc('router.preview.catalog.items', quantity)})`
+          }}
         </UnnnicIntelligenceText>
         <UnnnicIntelligenceText
           class="header__description"
@@ -42,6 +47,7 @@
         </UnnnicIntelligenceText>
 
         <section
+          v-if="enableUpdateQuantity"
           class="content__actions"
           @click.stop
         >
@@ -90,6 +96,10 @@ const props = defineProps({
   quantity: {
     type: Number,
     required: true,
+  },
+  enableUpdateQuantity: {
+    type: Boolean,
+    default: true,
   },
 });
 

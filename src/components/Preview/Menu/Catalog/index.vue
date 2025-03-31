@@ -40,8 +40,10 @@
     <CatalogCartModal
       v-model="isCartOpen"
       :products="cartItems"
+      :subtotal="cartSubtotal"
       @update:quantity="updateProductQuantity"
       @close="closeCart"
+      @place-order="placeOrder"
     />
   </section>
 </template>
@@ -53,7 +55,7 @@ import CatalogProduct from './CatalogProduct.vue';
 import CatalogProductDetails from './CatalogProductDetails.vue';
 import CatalogCartModal from './CatalogCartModal.vue';
 
-const emit = defineEmits(['send-message']);
+const emit = defineEmits(['send-message', 'send-order']);
 
 const props = defineProps({
   message: {
@@ -73,6 +75,21 @@ const cartItems = ref(
     quantity: 0,
   })),
 );
+
+const cartSubtotal = computed(() => {
+  const subtotal = cartItems.value.reduce(
+    (acc, product) => acc + product.price * product.quantity,
+    0,
+  );
+
+  return subtotal % 1 === 0 ? subtotal : subtotal.toFixed(2);
+});
+
+const order = computed(() => ({
+  products: cartItems.value,
+  productsQuantity: cartItemsQuantity.value,
+  subtotal: cartSubtotal.value,
+}));
 
 function getProductIndex(productId) {
   return cartItems.value.findIndex((product) => product.id === productId);
@@ -113,6 +130,10 @@ function openCart() {
 }
 function closeCart() {
   isCartOpen.value = false;
+}
+
+function placeOrder() {
+  emit('send-order', order.value);
 }
 </script>
 

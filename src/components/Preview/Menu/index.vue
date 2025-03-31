@@ -35,6 +35,7 @@
         :message="message"
         data-testid="menu-content-component"
         @send-message="$emit('send-message', $event)"
+        @send-order="$emit('send-order', $event)"
       />
     </section>
   </section>
@@ -46,7 +47,7 @@ import { computed } from 'vue';
 import ListMessages from './ListMessages.vue';
 import Catalog from './Catalog/index.vue';
 
-const emit = defineEmits(['update:model-value', 'send-message']);
+const emit = defineEmits(['update:model-value', 'send-message', 'send-order']);
 
 const props = defineProps({
   modelValue: {

@@ -330,7 +330,8 @@
         "your_cart": "Your cart",
         "order_summary": "Order Summary",
         "order_details": "Order Details",
-        "view_order_details": "View order details"
+        "view_order_details": "View order details",
+        "items": "item | items"
       }
     }
   },
