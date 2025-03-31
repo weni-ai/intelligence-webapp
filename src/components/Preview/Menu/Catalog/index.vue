@@ -29,7 +29,7 @@
         :text="
           selectedProduct
             ? $t('router.preview.catalog.add_to_cart')
-            : $t('router.preview.catalog.view_cart', {
+            : $tc('router.preview.catalog.view_cart', cartItemsQuantity, {
                 quantity: cartItemsQuantity,
               })
         "
@@ -40,6 +40,7 @@
     <CatalogCartModal
       v-model="isCartOpen"
       :products="cartItems"
+      @update:quantity="updateProductQuantity"
       @close="closeCart"
     />
   </section>
