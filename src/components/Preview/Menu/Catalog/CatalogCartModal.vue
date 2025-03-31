@@ -3,11 +3,7 @@
     class="catalog-cart-modal"
     :modelValue="modelValue"
     showCloseIcon
-    :title="
-      enablePlaceOrder
-        ? $t('router.preview.catalog.your_cart')
-        : $t('router.preview.catalog.order_details')
-    "
+    :title="modalTitle"
     @update:model-value="close"
   >
     <section class="catalog-cart-modal__products">
@@ -40,7 +36,7 @@
         size="title-sm"
         weight="bold"
       >
-        {{ `${products[0]?.currency} ${subtotal}` }}
+        {{ formattedSubtotal }}
       </UnnnicIntelligenceText>
     </section>
 
@@ -55,7 +51,9 @@
 </template>
 
 <script setup>
-import { watch } from 'vue';
+import { computed, watch } from 'vue';
+
+import i18n from '@/utils/plugins/i18n';
 
 import CatalogProduct from './CatalogProduct.vue';
 
@@ -82,10 +80,23 @@ const emit = defineEmits([
   'update:modelValue',
   'update:quantity',
   'place-order',
+  'close',
 ]);
+
+const modalTitle = computed(() => {
+  return props.enablePlaceOrder
+    ? i18n.global.t('router.preview.catalog.your_cart')
+    : i18n.global.t('router.preview.catalog.order_details');
+});
+
+const formattedSubtotal = computed(() => {
+  const currency = props.products[0]?.currency || '$';
+  return `${currency} ${props.subtotal}`;
+});
 
 function close() {
   emit('update:modelValue', false);
+  emit('close');
 }
 
 function placeOrder() {
@@ -111,19 +122,16 @@ watch(
 
   &__subtotal {
     padding: $unnnic-spacing-sm $unnnic-spacing-md;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: $unnnic-spacing-xs;
-
     border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
   }
 
   &__place-order {
     margin: $unnnic-spacing-sm $unnnic-spacing-md $unnnic-spacing-md
       $unnnic-spacing-md;
-
     width: calc(100% - ($unnnic-spacing-md * 2));
   }
 }

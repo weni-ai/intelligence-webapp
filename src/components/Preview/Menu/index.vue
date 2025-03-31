@@ -1,31 +1,11 @@
 <template>
   <section class="preview-menu">
-    <header
-      class="preview-menu__header"
+    <MenuHeader
+      :title="dynamicTitle"
       data-testid="menu-header"
-    >
-      <UnnnicIntelligenceText
-        data-testid="menu-title"
-        color="weni-600"
-        family="secondary"
-        weight="bold"
-        size="body-lg"
-      >
-        {{ dynamicTitle }}
-      </UnnnicIntelligenceText>
+      @close="handleClose"
+    />
 
-      <section
-        class="header__close-button"
-        data-testid="menu-close-button"
-        @click="handleClose"
-      >
-        <UnnnicIcon
-          icon="close"
-          scheme="weni-600"
-          size="avatar-nano"
-        />
-      </section>
-    </header>
     <section
       class="preview-menu__content"
       data-testid="menu-content"
@@ -35,8 +15,8 @@
         v-model:selectedProduct="selectedProduct"
         :message="message"
         data-testid="menu-content-component"
-        @send-message="$emit('send-message', $event)"
-        @send-order="$emit('send-order', $event)"
+        @send-message="handleSendMessage"
+        @send-order="handleSendOrder"
       />
     </section>
   </section>
@@ -45,23 +25,22 @@
 <script setup>
 import { computed, ref } from 'vue';
 
-import ListMessages from './ListMessages.vue';
-import Catalog from './Catalog/index.vue';
 import i18n from '@/utils/plugins/i18n';
 
+import MenuHeader from './MenuHeader.vue';
+import ListMessages from './ListMessages.vue';
+import Catalog from './Catalog/index.vue';
+
 const emit = defineEmits(['update:model-value', 'send-message', 'send-order']);
-const selectedProduct = ref(null);
 
 const props = defineProps({
   modelValue: {
     type: Boolean,
     default: false,
-    required: false,
   },
   title: {
     type: String,
     default: 'Menu',
-    required: false,
   },
   message: {
     type: Object,
@@ -69,15 +48,16 @@ const props = defineProps({
   },
 });
 
-const resolvedComponent = computed(() => {
-  const messageData = props.message;
-  if (!messageData) return null;
+const selectedProduct = ref(null);
 
-  if (messageData.interaction_type === 'list' && messageData.list_message) {
+const resolvedComponent = computed(() => {
+  if (!props.message) return null;
+
+  if (props.message.interaction_type === 'list' && props.message.list_message) {
     return ListMessages;
   }
 
-  if (messageData.catalog_message) {
+  if (props.message.catalog_message) {
     return Catalog;
   }
 
@@ -96,41 +76,32 @@ const dynamicTitle = computed(() => {
   return props.title;
 });
 
-const handleClose = () => {
+function handleClose() {
   if (resolvedComponent.value === Catalog && selectedProduct.value) {
     selectedProduct.value = null;
   } else {
     emit('update:model-value', false);
   }
-};
+}
+
+function handleSendMessage(message) {
+  emit('send-message', message);
+}
+
+function handleSendOrder(order) {
+  emit('send-order', order);
+}
 </script>
 
 <style lang="scss" scoped>
 .preview-menu {
   width: 100%;
   height: 100%;
-
   display: flex;
   flex-direction: column;
 
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    background-color: $unnnic-color-weni-100;
-    padding: $unnnic-spacing-sm $unnnic-spacing-md;
-
-    .header__close-button {
-      display: flex;
-
-      cursor: pointer;
-    }
-  }
-
   &__content {
     overflow-y: auto;
-
     height: 100%;
   }
 }

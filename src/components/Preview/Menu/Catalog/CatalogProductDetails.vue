@@ -9,6 +9,7 @@
 
     <section class="product-details__content">
       <UnnnicIntelligenceText
+        class="product-details__title"
         color="neutral-dark"
         family="secondary"
         weight="bold"
@@ -16,6 +17,7 @@
       >
         {{ product.product }}
       </UnnnicIntelligenceText>
+
       <UnnnicIntelligenceText
         class="product-details__description"
         color="neutral-cloudy"
@@ -25,20 +27,20 @@
       >
         {{ product.description }}
       </UnnnicIntelligenceText>
-      <UnnnicIntelligenceText
+
+      <ProductPrice
         class="product-details__price"
-        color="weni-600"
-        family="secondary"
-        weight="bold"
+        :currency="product.currency"
+        :price="product.price"
         size="title-sm"
-      >
-        {{ product.currency || '$' }} {{ product.price }}
-      </UnnnicIntelligenceText>
+      />
     </section>
   </section>
 </template>
 
 <script setup>
+import ProductPrice from './ProductPrice.vue';
+
 const props = defineProps({
   product: {
     type: Object,
@@ -65,7 +67,6 @@ const props = defineProps({
 
   .product-details__content {
     padding: $unnnic-spacing-sm $unnnic-spacing-md;
-
     display: flex;
     flex-direction: column;
 

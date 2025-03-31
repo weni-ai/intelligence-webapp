@@ -24,8 +24,7 @@
         family="secondary"
         size="body-md"
       >
-        {{ order.productsQuantity }}
-        {{ $tc('router.preview.catalog.items', order.productsQuantity) }}
+        {{ itemsText }}
       </UnnnicIntelligenceText>
 
       <UnnnicIntelligenceText
@@ -35,8 +34,7 @@
         size="body-md"
         weight="bold"
       >
-        {{ $t('router.preview.catalog.subtotal') }}:
-        {{ `${getCurrencySymbol()} ${order.subtotal}` }}
+        {{ subtotalText }}
       </UnnnicIntelligenceText>
     </section>
 
@@ -53,14 +51,17 @@
       :products="order.products"
       :subtotal="order.subtotal"
       :enablePlaceOrder="false"
+      @close="handleCloseOrderDetails"
     />
   </section>
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import CatalogCartModal from '@/components/Preview/Menu/Catalog/CatalogCartModal.vue';
+
+import i18n from '@/utils/plugins/i18n';
 
 const props = defineProps({
   order: {
@@ -71,14 +72,29 @@ const props = defineProps({
 
 const emit = defineEmits(['view-details', 'close-order-details']);
 
+const isOrderDetailsOpen = ref(false);
+
+const itemsText = computed(() => {
+  return `${props.order.productsQuantity} ${i18n.global.tc('router.preview.catalog.items', props.order.productsQuantity)}`;
+});
+
+const subtotalText = computed(() => {
+  const currency = getCurrencySymbol();
+  return `${i18n.global.t('router.preview.catalog.subtotal')}: ${currency} ${props.order.subtotal}`;
+});
+
 function getCurrencySymbol() {
   return props.order.products[0]?.currency || '$';
 }
 
-const isOrderDetailsOpen = ref(false);
-
 function handleViewOrderDetails() {
-  isOrderDetailsOpen.value = !isOrderDetailsOpen.value;
+  isOrderDetailsOpen.value = true;
+  emit('view-details');
+}
+
+function handleCloseOrderDetails() {
+  isOrderDetailsOpen.value = false;
+  emit('close-order-details');
 }
 </script>
 
@@ -98,15 +114,12 @@ function handleViewOrderDetails() {
     display: flex;
     flex-direction: column;
     gap: $unnnic-spacing-nano;
-
     padding-bottom: $unnnic-spacing-ant;
-
     border-bottom: $unnnic-border-width-thinner solid $unnnic-color-weni-300;
   }
 
   &__view-details.unnnic-button {
     width: 100%;
-
     padding-left: $unnnic-spacing-xl;
     padding-right: $unnnic-spacing-xl;
   }

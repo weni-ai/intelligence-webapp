@@ -20,13 +20,9 @@
           size="body-gt"
           class="header__title"
         >
-          {{ product.product }}
-          {{
-            enableUpdateQuantity
-              ? ''
-              : `(${quantity} ${$tc('router.preview.catalog.items', quantity)})`
-          }}
+          {{ titleText }}
         </UnnnicIntelligenceText>
+
         <UnnnicIntelligenceText
           class="header__description"
           color="neutral-cloudy"
@@ -37,79 +33,36 @@
           {{ product.description }}
         </UnnnicIntelligenceText>
 
-        <button
+        <RemoveProductButton
           v-if="enableRemoveProduct"
-          class="header__remove-product"
-          @click.stop="updateQuantity(0)"
-        >
-          <UnnnicIcon
-            icon="delete"
-            scheme="neutral-cloudy"
-            size="sm"
-          />
-
-          <UnnnicIntelligenceText
-            color="neutral-cloudy"
-            family="secondary"
-            size="body-md"
-          >
-            {{ $t('router.preview.catalog.remove') }}
-          </UnnnicIntelligenceText>
-        </button>
+          @click="removeProduct"
+        />
       </header>
 
       <footer class="content__footer">
-        <UnnnicIntelligenceText
-          color="weni-600"
-          family="secondary"
-          weight="bold"
-          size="body-gt"
-        >
-          {{ product.currency || '$' }} {{ product.price }}
-        </UnnnicIntelligenceText>
+        <ProductPrice
+          :currency="product.currency"
+          :price="product.price"
+        />
 
-        <section
+        <QuantityCounter
           v-if="enableUpdateQuantity"
-          class="content__actions"
-          @click.stop
-        >
-          <button
-            class="actions__button"
-            @click.stop="decrementQuantity"
-          >
-            <UnnnicIcon
-              icon="check_indeterminate_small"
-              scheme="neutral-cloudy"
-              size="avatar-nano"
-            />
-          </button>
-
-          <UnnnicIntelligenceText
-            color="neutral-dark"
-            family="secondary"
-            weight="bold"
-            size="body-gt"
-          >
-            {{ quantity }}
-          </UnnnicIntelligenceText>
-
-          <button
-            class="actions__button"
-            @click.stop="incrementQuantity"
-          >
-            <UnnnicIcon
-              icon="add"
-              scheme="neutral-cloudy"
-              size="avatar-nano"
-            />
-          </button>
-        </section>
+          :quantity="quantity"
+          @increment="incrementQuantity"
+          @decrement="decrementQuantity"
+        />
       </footer>
     </section>
   </section>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import ProductPrice from './ProductPrice.vue';
+import QuantityCounter from './QuantityCounter.vue';
+import RemoveProductButton from './RemoveProductButton.vue';
+import i18n from '@/utils/plugins/i18n';
+
 const props = defineProps({
   product: {
     type: Object,
@@ -135,27 +88,37 @@ const props = defineProps({
 
 const emit = defineEmits(['click', 'update:quantity']);
 
-const updateQuantity = (quantity) => {
+const titleText = computed(() => {
+  if (props.enableUpdateQuantity) {
+    return props.product.product;
+  }
+
+  return `${props.product.product} (${props.quantity} ${i18n.global.tc('router.preview.catalog.items', props.quantity)})`;
+});
+
+function updateQuantity(quantity) {
   emit('update:quantity', quantity);
-};
+}
 
-const incrementQuantity = () => {
+function incrementQuantity() {
   updateQuantity(props.quantity + 1);
-};
+}
 
-const decrementQuantity = () => {
+function decrementQuantity() {
   if (props.quantity > 0) {
     updateQuantity(props.quantity - 1);
   }
-};
+}
+
+function removeProduct() {
+  updateQuantity(0);
+}
 </script>
 
 <style lang="scss" scoped>
 .catalog-product {
   border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-
   padding: $unnnic-spacing-sm $unnnic-spacing-md;
-
   display: grid;
   grid-template-columns: 1fr 4fr;
   gap: $unnnic-spacing-xs;
@@ -172,7 +135,6 @@ const decrementQuantity = () => {
   .product__image {
     border-radius: $unnnic-border-radius-sm;
     overflow: hidden;
-
     width: 100%;
     aspect-ratio: 1/1;
 
@@ -187,7 +149,6 @@ const decrementQuantity = () => {
     display: flex;
     flex-direction: column;
     gap: $unnnic-spacing-xs;
-
     overflow: hidden;
 
     .content__header {
@@ -210,41 +171,12 @@ const decrementQuantity = () => {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
       }
-
-      .header__remove-product {
-        padding: 0;
-        background-color: transparent;
-        border: none;
-
-        grid-area: remove;
-
-        display: flex;
-        align-items: center;
-        gap: $unnnic-spacing-nano;
-
-        cursor: pointer;
-      }
     }
 
     .content__footer {
       display: flex;
       justify-content: space-between;
       gap: $unnnic-spacing-xs;
-
-      .content__actions {
-        display: flex;
-        gap: $unnnic-spacing-ant;
-
-        .actions__button {
-          background-color: transparent;
-          border: none;
-          padding: 0;
-
-          display: flex;
-
-          cursor: pointer;
-        }
-      }
     }
   }
 }
