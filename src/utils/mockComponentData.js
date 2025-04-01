@@ -65,7 +65,7 @@ export const MOCK_COMPONENTS = {
     type: 'broadcast',
     message: JSON.stringify({
       msg: {
-        text: 'Check out our premium cookware line:',
+        text: 'I found some stylish shirts. Here are two options: a Blue Textured Cotton Shirt and a Cotton Boxy Shirt. Would you like to see any of these in detail?',
         header: { text: '🏆 Premium Line', type: 'text' },
         footer: 'Free shipping nationwide',
         catalog_message: {
@@ -73,15 +73,24 @@ export const MOCK_COMPONENTS = {
           action_button_name: 'flow',
           products: [
             {
-              product: 'Stainless Steel Cookware Set',
+              id: '1',
+              product: 'Blue Textured Cotton Shirt',
+              description:
+                "Men's shirt, made from cotton with a viscose texture",
+              price: 99,
+              currency: '$',
               product_retailer_ids: ['PAN789#a'],
             },
             {
-              product: 'Ceramic Cookware Set',
+              id: '2',
+              product: 'Cotton Boxy Shirt',
+              description: "Men's boxy shirt made from cotton",
+              price: 99,
+              currency: '$',
               product_retailer_ids: ['PAN101#a'],
             },
           ],
-          action_button_text: 'Learn more',
+          action_button_text: 'View catalog',
         },
       },
     }),

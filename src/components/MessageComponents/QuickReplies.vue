@@ -10,10 +10,9 @@
       size="large"
       class="quick-replies__button"
       data-testid="quick-reply-button"
+      :text="reply"
       @click="emitReply(reply)"
-    >
-      {{ reply }}
-    </UnnnicButton>
+    />
   </section>
 </template>
 

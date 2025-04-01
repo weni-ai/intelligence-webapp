@@ -5,6 +5,7 @@
     :message="previewMenuMessage"
     @update:model-value="showPreviewMenu = false"
     @send-message="sendMenuMessage"
+    @send-order="sendOrder"
   />
 
   <section
@@ -62,7 +63,7 @@
 <script setup>
 import { ref, computed, onMounted, watch, nextTick, reactive } from 'vue';
 
-import MessageDisplay from '@/components/QuickTest/MessageDisplay.vue';
+import MessageDisplay from '@/components/QuickTest/MessageDisplay/index.vue';
 import QuickTestWarn from '@/components/QuickTest/QuickTestWarn.vue';
 import PreviewPlaceholder from '../../Brain/Preview/Placeholder.vue';
 import MessageInput from './MessageInput.vue';
@@ -255,6 +256,23 @@ function sendMenuMessage(messageContent) {
   showPreviewMenu.value = false;
 
   sendMessage(messageContent);
+}
+
+function sendOrder(order) {
+  showPreviewMenu.value = false;
+
+  flowPreviewStore.addMessage({
+    type: 'order',
+    text: JSON.stringify(order),
+    status: 'loaded',
+    question_uuid: null,
+    feedback: {
+      value: null,
+      reason: null,
+    },
+  });
+
+  scrollToLastMessage();
 }
 
 function sendMessage(messageContent) {
