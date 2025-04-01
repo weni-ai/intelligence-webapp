@@ -17,36 +17,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/loginexternal/:token/:org/:project',
-      name: 'externalLogin',
-      component: null,
-      beforeEnter: async (to, from, next) => {
-        const { token, org, project } = to.params;
-        store.dispatch('externalLogin', { token: token.replace('+', ' ') });
-        store.dispatch('orgSelected', { org });
-        store.dispatch('projectSelected', { project });
-
-        store.state.Auth.connectOrgUuid = to.query?.org_uuid;
-        store.state.Auth.connectProjectUuid = to.query?.project_uuid;
-
-        sessionStorage.setItem('orgUuid', store.state.Auth.connectOrgUuid);
-
-        sessionStorage.setItem(
-          'projectUuid',
-          store.state.Auth.connectProjectUuid,
-        );
-
-        const nextPath = to.query.next || to.query.next_from_redirect;
-
-        if (nextPath) {
-          nextFromRedirect = to.query.next_from_redirect;
-          next({ path: nextPath, replace: true });
-        } else {
-          next({ path: '/home', replace: true });
-        }
-      },
-    },
-    {
       path: '/home',
       name: 'home',
       component: Home,
