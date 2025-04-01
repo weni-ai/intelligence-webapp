@@ -280,6 +280,10 @@ describe('Profile', () => {
             },
           },
           instructions: [],
+          team: {
+            human_support: false,
+            human_support_prompt: '',
+          },
         },
         projectUuid: '1234',
       });
