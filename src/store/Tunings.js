@@ -21,6 +21,12 @@ export const useTuningsStore = defineStore('Tunings', () => {
     data: null,
   });
 
+  const initialSettings = ref(null);
+  const settings = ref({
+    status: null,
+    data: null,
+  });
+
   function formatCredentials(credentials) {
     return credentials.reduce((acc, { name, value }) => {
       acc[name] = value;
@@ -52,6 +58,15 @@ export const useTuningsStore = defineStore('Tunings', () => {
     });
 
     return hasAllCredentials && hasChanges;
+  });
+
+  const hasSettingsChanges = computed(() => {
+    if (!settings.value.data || !initialSettings.value) return false;
+
+    return (
+      JSON.stringify(settings.value.data) !==
+      JSON.stringify(initialSettings.value)
+    );
   });
 
   function getCredentialIndex(credentialName) {
@@ -140,6 +155,40 @@ export const useTuningsStore = defineStore('Tunings', () => {
     }
   }
 
+  async function fetchSettings() {
+    try {
+      const { data } = await nexusaiAPI.router.tunings.getProgressiveFeedback({
+        projectUuid: connectProjectUuid.value,
+      });
+
+      settings.value.data = data;
+      initialSettings.value = cloneDeep(data);
+
+      settings.value.status = 'success';
+    } catch (error) {
+      settings.value.status = 'error';
+    }
+  }
+
+  async function saveSettings() {
+    try {
+      settings.value.status = 'loading';
+
+      await nexusaiAPI.router.tunings.editProgressiveFeedback({
+        projectUuid: connectProjectUuid.value,
+        values: settings.value.data,
+      });
+
+      initialSettings.value = cloneDeep(settings.value.data);
+      settings.value.status = 'success';
+
+      return true;
+    } catch (error) {
+      settings.value.status = 'error';
+      return false;
+    }
+  }
+
   async function createCredentials(agentUuid) {
     try {
       credentials.value.status = 'loading';
@@ -156,14 +205,56 @@ export const useTuningsStore = defineStore('Tunings', () => {
     }
   }
 
+  async function saveTunings() {
+    let hasCredentialsError = false;
+    let hasSettingsError = false;
+
+    if (isCredentialsValid.value) {
+      try {
+        await saveCredentials();
+      } catch (error) {
+        hasCredentialsError = true;
+        alertStore.add({
+          text: i18n.global.t('router.tunings.credentials.save_error'),
+          type: 'error',
+        });
+      }
+    }
+
+    if (hasSettingsChanges.value) {
+      try {
+        await saveSettings();
+      } catch (error) {
+        hasSettingsError = true;
+        alertStore.add({
+          text: i18n.global.t('router.tunings.settings.save_error'),
+          type: 'error',
+        });
+      }
+    }
+
+    if (!hasCredentialsError && !hasSettingsError) {
+      alertStore.add({
+        text: i18n.global.t('router.tunings.save_success'),
+        type: 'success',
+      });
+    }
+  }
+
   return {
     credentials,
+    settings,
     isCredentialsValid,
+    hasSettingsChanges,
     initialCredentials,
+    initialSettings,
     getCredentialIndex,
     updateCredential,
     fetchCredentials,
     saveCredentials,
+    saveSettings,
     createCredentials,
+    saveTunings,
+    fetchSettings,
   };
 });

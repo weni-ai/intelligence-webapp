@@ -185,6 +185,20 @@ export default {
         });
       },
 
+      getProgressiveFeedback({ projectUuid }) {
+        const response = request.$http.get(
+          `api/project/${projectUuid}/rationale`,
+        );
+        return response;
+      },
+
+      editProgressiveFeedback({ projectUuid, values }) {
+        return request.$http.patch(
+          `api/project/${projectUuid}/rationale`,
+          values,
+        );
+      },
+
       historyChanges: {
         read({ projectUuid, pageSize = 10, page = 1, filter = '' }) {
           let url = `api/${projectUuid}/activities/?page=${page}&page_size=${pageSize}`;
