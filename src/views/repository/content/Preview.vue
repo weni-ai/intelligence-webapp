@@ -1,5 +1,16 @@
 <template>
-  <section class="preview">
+  <PreviewMenu
+    v-if="showPreviewMenu"
+    :modelValue="showPreviewMenu"
+    :message="previewMenuMessage"
+    @update:model-value="showPreviewMenu = false"
+    @send-message="sendMenuMessage"
+  />
+
+  <section
+    v-else
+    class="preview"
+  >
     <PreviewPlaceholder
       v-if="shouldShowPreviewPlaceholder"
       class="preview__placeholder"
@@ -20,23 +31,11 @@
         data-testid="message-display"
       >
         <template #components>
-          <section
-            v-if="shouldShowQuickReplies(message)"
-            class="quick-replies"
-            data-testid="quick-replies"
-          >
-            <UnnnicButton
-              v-for="(reply, index) in flowPreviewStore.preview.quickReplies"
-              :key="`reply-${index}`"
-              type="secondary"
-              size="small"
-              class="quick-replies__button"
-              data-testid="quick-reply-button"
-              @click="sendReply(reply)"
-            >
-              {{ reply }}
-            </UnnnicButton>
-          </section>
+          <MessageComponentResolver
+            :message="treatMessageToComponents(message)"
+            @send-message="sendMessage"
+            @open-preview-menu="openPreviewMenu(message?.response?.msg)"
+          />
         </template>
       </MessageDisplay>
     </article>
@@ -67,6 +66,8 @@ import MessageDisplay from '@/components/QuickTest/MessageDisplay.vue';
 import QuickTestWarn from '@/components/QuickTest/QuickTestWarn.vue';
 import PreviewPlaceholder from '../../Brain/Preview/Placeholder.vue';
 import MessageInput from './MessageInput.vue';
+import MessageComponentResolver from '@/components/MessageComponents/MessageComponentResolver.vue';
+import PreviewMenu from '@/components/Preview/Menu/index.vue';
 
 import { useProfileStore } from '@/store/Profile';
 import { useFlowPreviewStore } from '@/store/FlowPreview';
@@ -87,6 +88,9 @@ const message = ref('');
 const messages = ref(flowPreviewStore.messages);
 const messagesRef = ref(null);
 
+const showPreviewMenu = ref(false);
+const previewMenuMessage = ref(null);
+
 const shouldShowPreviewPlaceholder = computed(
   () => messages.value.length === 0,
 );
@@ -98,6 +102,42 @@ const shouldShowRequireSaveWarn = computed(() => {
     store.getters.hasBrainContentTextChanged
   );
 });
+
+function messageHasDeprecatedQuickReplies(message) {
+  const isTheLastMessage =
+    messages.value
+      .filter((msg) => ['answer', 'question'].includes(msg.type))
+      .at(-1) === message;
+
+  return (
+    message.type === 'answer' &&
+    isTheLastMessage &&
+    flowPreviewStore.preview.quickReplies?.length > 0
+  );
+}
+
+function treatMessageToComponents(message) {
+  if (!messageHasDeprecatedQuickReplies(message)) {
+    return message?.response?.msg;
+  }
+
+  const treatedMessage = { ...(message?.response?.msg || {}) };
+
+  if (Object.keys(treatedMessage).length === 0 && message.text) {
+    treatedMessage.text = message.text;
+  }
+
+  if (flowPreviewStore.preview.quickReplies?.length) {
+    treatedMessage.quick_replies = flowPreviewStore.preview.quickReplies;
+  }
+
+  return treatedMessage;
+}
+
+function openPreviewMenu(message) {
+  showPreviewMenu.value = true;
+  previewMenuMessage.value = message;
+}
 
 function isEventCardBrain(event) {
   if (event.type !== 'webhook_called' || !event.url) {
@@ -168,18 +208,6 @@ function isMedia(message) {
   return !!getFileType(message);
 }
 
-function isTheLastMessage(message) {
-  return messages.value.filter(() => ['answer', 'question']).at(-1) === message;
-}
-
-function shouldShowQuickReplies(message) {
-  return (
-    message.type === 'answer' &&
-    isTheLastMessage(message) &&
-    flowPreviewStore.preview.quickReplies?.length
-  );
-}
-
 function treatEvents(replace, events) {
   const processedEvents = events
     .filter(({ type }) => type === 'msg_created')
@@ -187,7 +215,7 @@ function treatEvents(replace, events) {
       if (type === 'msg_created') {
         return {
           type: 'answer',
-          text: msg.text,
+          text: msg.response?.msg.text || msg.text,
           status: 'loaded',
           question_uuid: null,
           feedback: {
@@ -222,14 +250,22 @@ async function flowStart(answer, flow) {
   treatEvents(answer, events);
 }
 
-function sendReply(replyText) {
-  message.value = replyText;
-  sendMessage();
+function sendMenuMessage(messageContent) {
+  previewMenuMessage.value = null;
+  showPreviewMenu.value = false;
+
+  sendMessage(messageContent);
 }
 
-function sendMessage() {
-  const isFileMessage = typeof message.value !== 'string';
-  const messageText = isFileMessage ? message.value : message.value.trim();
+function sendMessage(messageContent) {
+  let messageText;
+
+  if (messageContent) {
+    messageText = messageContent;
+  } else {
+    const isFileMessage = typeof message.value !== 'string';
+    messageText = isFileMessage ? message.value : message.value.trim();
+  }
 
   if (!messageText) {
     return;
@@ -240,9 +276,11 @@ function sendMessage() {
     text: messageText,
   });
 
-  message.value = '';
-  scrollToLastMessage();
+  if (!messageContent) {
+    message.value = '';
+  }
 
+  scrollToLastMessage();
   setTimeout(() => answer(messageText), 400);
 }
 
@@ -336,17 +374,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.quick-replies {
-  margin-top: $unnnic-spacing-sm;
-  display: flex;
-  flex-direction: column;
-  row-gap: $unnnic-spacing-nano;
-
-  &__button {
-    color: $unnnic-color-weni-600;
-  }
-}
-
 .button-send-message :deep(svg .primary) {
   fill: $unnnic-color-weni-600;
 }
