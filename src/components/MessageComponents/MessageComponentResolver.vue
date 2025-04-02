@@ -15,6 +15,7 @@ import { computed, defineProps, defineEmits } from 'vue';
 import QuickRepliesComponent from './QuickReplies.vue';
 import ListMessageComponent from './ListMessage.vue';
 import CtaMessageComponent from './CtaMessage.vue';
+import CatalogComponent from './Catalog.vue';
 
 const props = defineProps({
   message: {
@@ -65,7 +66,7 @@ const resolvedComponent = computed(() => {
   }
 
   if (messageData.catalog_message) {
-    return null; // CatalogComponent
+    return CatalogComponent;
   }
 
   if (messageData.attachments?.length) {

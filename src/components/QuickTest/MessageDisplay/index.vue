@@ -25,6 +25,11 @@
         {{ statusDescription(message) }}
       </UnnnicIntelligenceText>
     </template>
+
+    <template v-else-if="message.type === 'order'">
+      <MessageCatalogOrder :order="JSON.parse(message.text)" />
+    </template>
+
     <template v-else>
       <PreviewMedia
         v-if="isMedia(text)"
@@ -60,14 +65,17 @@
 <script setup>
 import { computed, useSlots } from 'vue';
 import { useStore } from 'vuex';
+
 import { lowerFirstCapitalLetter } from '@/utils/handleLetters';
 import { getFileType } from '@/utils/medias';
+import i18n from '@/utils/plugins/i18n';
+
 import AnswerSources from '@/components/QuickTest/AnswerSources.vue';
 import AnswerFeedback from '@/components/QuickTest/AnswerFeedback.vue';
 import DotTyping from '@/components/QuickTest/DotTyping.vue';
 import Markdown from '@/components/Markdown.vue';
 import PreviewMedia from '@/components/PreviewMedia.vue';
-import i18n from '@/utils/plugins/i18n';
+import MessageCatalogOrder from './MessageCatalogOrder.vue';
 
 const props = defineProps({
   message: {
@@ -146,7 +154,8 @@ const statusDescription = (message) => {
   }
 
   &__question,
-  &__answer {
+  &__answer,
+  &__order {
     max-width: 75%;
     color: $unnnic-color-neutral-dark;
 
@@ -171,7 +180,8 @@ const statusDescription = (message) => {
     }
   }
 
-  &__question {
+  &__question,
+  &__order {
     align-self: self-end;
     color: $unnnic-color-neutral-white;
     background-color: $unnnic-color-weni-600;
