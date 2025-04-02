@@ -4,6 +4,8 @@ import { Actions } from './nexus/Actions';
 import { Monitoring } from './nexus/Monitoring';
 import { AgentsTeam } from './nexus/AgentsTeam';
 
+import { ProgressiveFeedbackAdapter } from './adapters/tunings/progressiveFeedback';
+
 import i18n from '@/utils/plugins/i18n';
 
 export default {
@@ -185,17 +187,18 @@ export default {
         });
       },
 
-      getProgressiveFeedback({ projectUuid }) {
-        const response = request.$http.get(
+      async getProgressiveFeedback({ projectUuid }) {
+        const response = await request.$http.get(
           `api/project/${projectUuid}/rationale`,
         );
-        return response;
+
+        return ProgressiveFeedbackAdapter.fromApi(response.data);
       },
 
-      editProgressiveFeedback({ projectUuid, values }) {
+      editProgressiveFeedback({ projectUuid, data }) {
         return request.$http.patch(
           `api/project/${projectUuid}/rationale`,
-          values,
+          ProgressiveFeedbackAdapter.toApi(data),
         );
       },
 

@@ -1,5 +1,5 @@
 <template>
-  <UnnnicSkeletonLoading v-if="tuningsStore.settings.status === 'loading'" />
+  <UnnnicSkeletonLoading v-if="!tuningsStore.settings.status" />
 
   <section
     v-else

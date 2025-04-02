@@ -14,7 +14,7 @@
     <form class="agents-preview__form">
       <section class="form__field">
         <UnnnicSwitch
-          v-model="tuningsStore.settings.data.rationale"
+          v-model="tuningsStore.settings.data.progressiveFeedback"
           :textRight="
             $t(
               'router.tunings.settings.agents_preview.agents_progressive_feedback.title',

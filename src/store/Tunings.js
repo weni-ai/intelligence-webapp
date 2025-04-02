@@ -24,7 +24,9 @@ export const useTuningsStore = defineStore('Tunings', () => {
   const initialSettings = ref(null);
   const settings = ref({
     status: null,
-    data: null,
+    data: {
+      progressiveFeedback: false,
+    },
   });
 
   function formatCredentials(credentials) {
@@ -157,12 +159,15 @@ export const useTuningsStore = defineStore('Tunings', () => {
 
   async function fetchSettings() {
     try {
-      const { data } = await nexusaiAPI.router.tunings.getProgressiveFeedback({
-        projectUuid: connectProjectUuid.value,
-      });
+      const { progressiveFeedback } =
+        await nexusaiAPI.router.tunings.getProgressiveFeedback({
+          projectUuid: connectProjectUuid.value,
+        });
 
-      settings.value.data = data;
-      initialSettings.value = cloneDeep(data);
+      settings.value.data = {
+        progressiveFeedback,
+      };
+      initialSettings.value = cloneDeep(settings.value.data);
 
       settings.value.status = 'success';
     } catch (error) {
@@ -176,7 +181,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
 
       await nexusaiAPI.router.tunings.editProgressiveFeedback({
         projectUuid: connectProjectUuid.value,
-        values: settings.value.data,
+        data: settings.value.data,
       });
 
       initialSettings.value = cloneDeep(settings.value.data);
