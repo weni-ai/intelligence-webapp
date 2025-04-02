@@ -35,13 +35,10 @@ function emitReply(replyText) {
 
 <style lang="scss" scoped>
 .quick-replies {
-  margin-top: $unnnic-spacing-sm;
+  margin-top: $unnnic-spacing-ant;
+
   display: flex;
   flex-direction: column;
   row-gap: $unnnic-spacing-nano;
-
-  &__button {
-    color: $unnnic-color-weni-600;
-  }
 }
 </style>

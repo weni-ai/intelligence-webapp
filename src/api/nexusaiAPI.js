@@ -5,7 +5,6 @@ import { Monitoring } from './nexus/Monitoring';
 import { AgentsTeam } from './nexus/AgentsTeam';
 
 import i18n from '@/utils/plugins/i18n';
-import { MOCK_COMPONENTS } from '@/utils/mockComponentData';
 
 export default {
   question: {
@@ -229,20 +228,7 @@ export default {
     },
 
     preview: {
-      create({
-        projectUuid,
-        text,
-        attachments,
-        contact_urn,
-        temporary_component,
-      }) {
-        // If temporary_component parameter is provided, return mock data instead of making an API call
-        if (temporary_component && MOCK_COMPONENTS[temporary_component]) {
-          return Promise.resolve({
-            data: MOCK_COMPONENTS[temporary_component],
-          });
-        }
-
+      create({ projectUuid, text, attachments, contact_urn }) {
         return request.$http.post(`api/${projectUuid}/preview/`, {
           text,
           attachments,
