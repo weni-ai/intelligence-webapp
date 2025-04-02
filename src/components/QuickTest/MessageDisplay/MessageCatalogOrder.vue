@@ -1,10 +1,14 @@
 <template>
   <section class="order-summary">
-    <header class="order-summary__header">
+    <header
+      class="order-summary__header"
+      data-testid="order-summary-header"
+    >
       <UnnnicIcon
         icon="shopping_bag"
         size="avatar-nano"
         scheme="neutral-white"
+        data-testid="order-summary-icon"
       />
       <UnnnicIntelligenceText
         tag="h2"
@@ -12,17 +16,22 @@
         family="secondary"
         size="body-gt"
         weight="bold"
+        data-testid="order-summary-title"
       >
         {{ $t('router.preview.catalog.order_summary') }}
       </UnnnicIntelligenceText>
     </header>
 
-    <section class="order-summary__content">
+    <section
+      class="order-summary__content"
+      data-testid="order-summary-content"
+    >
       <UnnnicIntelligenceText
         tag="p"
         color="neutral-white"
         family="secondary"
         size="body-md"
+        data-testid="order-summary-items-text"
       >
         {{ itemsText }}
       </UnnnicIntelligenceText>
@@ -33,6 +42,7 @@
         family="secondary"
         size="body-md"
         weight="bold"
+        data-testid="order-summary-subtotal-text"
       >
         {{ subtotalText }}
       </UnnnicIntelligenceText>
@@ -40,6 +50,7 @@
 
     <UnnnicButton
       class="order-summary__view-details"
+      data-testid="order-summary-view-details"
       type="primary"
       :text="$t('router.preview.catalog.view_order_details')"
       size="small"
@@ -48,6 +59,7 @@
 
     <CatalogCartModal
       v-model="isOrderDetailsOpen"
+      data-testid="order-summary-cart-modal"
       :products="order.products"
       :subtotal="order.subtotal"
       :enablePlaceOrder="false"

@@ -1,15 +1,20 @@
 <template>
   <UnnnicModalDialog
+    data-testid="modal"
     class="catalog-cart-modal"
     :modelValue="modelValue"
     showCloseIcon
     :title="modalTitle"
     @update:model-value="close"
   >
-    <section class="catalog-cart-modal__products">
+    <section
+      class="catalog-cart-modal__products"
+      data-testid="products"
+    >
       <CatalogProduct
         v-for="product in products"
         :key="product.id"
+        data-testid="product"
         :product="product"
         :quantity="product.quantity"
         :enableUpdateQuantity="enablePlaceOrder"
@@ -20,6 +25,7 @@
 
     <section class="catalog-cart-modal__subtotal">
       <UnnnicIntelligenceText
+        data-testid="subtotal-label"
         tag="p"
         color="neutral-dark"
         family="secondary"
@@ -30,6 +36,7 @@
       </UnnnicIntelligenceText>
 
       <UnnnicIntelligenceText
+        data-testid="subtotal-value"
         tag="p"
         color="weni-600"
         family="secondary"
@@ -42,6 +49,7 @@
 
     <UnnnicButton
       v-if="enablePlaceOrder"
+      data-testid="place-order-button"
       class="catalog-cart-modal__place-order"
       :text="$t('router.preview.catalog.place_order')"
       :disabled="!subtotal"

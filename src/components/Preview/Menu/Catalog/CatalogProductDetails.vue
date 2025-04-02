@@ -4,12 +4,17 @@
       <img
         class="image__element"
         src="#"
+        data-testid="product-image"
       />
     </section>
 
-    <section class="product-details__content">
+    <section
+      class="product-details__content"
+      data-testid="product-content"
+    >
       <UnnnicIntelligenceText
         class="product-details__title"
+        data-testid="product-title"
         color="neutral-dark"
         family="secondary"
         weight="bold"
@@ -20,6 +25,7 @@
 
       <UnnnicIntelligenceText
         class="product-details__description"
+        data-testid="product-description"
         color="neutral-cloudy"
         family="secondary"
         weight="regular"
@@ -30,6 +36,7 @@
 
       <ProductPrice
         class="product-details__price"
+        data-testid="product-price"
         :currency="product.currency"
         :price="product.price"
         size="title-sm"

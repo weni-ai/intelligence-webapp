@@ -1,6 +1,7 @@
 <template>
   <section
     class="catalog-product"
+    data-testid="catalog-product"
     :class="{ 'catalog-product--selectable': enableSeeProductDetails }"
     @click="$emit('click')"
   >
@@ -8,6 +9,7 @@
       <img
         class="image__element"
         src="#"
+        data-testid="product-image"
       />
     </section>
 
@@ -18,6 +20,7 @@
           family="secondary"
           weight="bold"
           size="body-gt"
+          data-testid="product-title"
           class="header__title"
         >
           {{ titleText }}
@@ -29,12 +32,14 @@
           family="secondary"
           weight="regular"
           size="body-md"
+          data-testid="product-description"
         >
           {{ product.description }}
         </UnnnicIntelligenceText>
 
         <RemoveProductButton
           v-if="enableRemoveProduct"
+          data-testid="remove-product-button"
           @click="removeProduct"
         />
       </header>
@@ -43,11 +48,13 @@
         <ProductPrice
           :currency="product.currency"
           :price="product.price"
+          data-testid="product-price"
         />
 
         <QuantityCounter
           v-if="enableUpdateQuantity"
           :quantity="quantity"
+          data-testid="quantity-counter"
           @increment="incrementQuantity"
           @decrement="decrementQuantity"
         />

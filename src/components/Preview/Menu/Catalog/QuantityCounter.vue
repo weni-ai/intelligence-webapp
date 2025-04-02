@@ -1,11 +1,13 @@
 <template>
   <section
     class="quantity-counter"
+    data-testid="quantity-counter"
     @click.stop
   >
     <button
       class="quantity-counter__button"
       aria-label="Decrease quantity"
+      data-testid="quantity-counter-decrement-button"
       @click.stop="$emit('decrement')"
     >
       <UnnnicIcon
@@ -16,6 +18,7 @@
     </button>
 
     <UnnnicIntelligenceText
+      data-testid="quantity-counter-value"
       class="quantity-counter__value"
       color="neutral-dark"
       family="secondary"
@@ -27,6 +30,7 @@
 
     <button
       class="quantity-counter__button"
+      data-testid="quantity-counter-increment-button"
       aria-label="Increase quantity"
       @click.stop="$emit('increment')"
     >
