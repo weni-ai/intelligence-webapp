@@ -331,23 +331,11 @@ async function answer(question) {
   }
 
   try {
-    const temporaryComponents = [
-      'ATTACHMENT',
-      'TEXT_WITH_ATTACHMENT',
-      'QUICK_REPLIES',
-      'LIST_MESSAGE',
-      'CTA_MESSAGE',
-      'CATALOG',
-    ];
-
     const { data } = await nexusaiAPI.router.preview.create({
       projectUuid: store.state.Auth.connectProjectUuid,
       text: isQuestionMedia ? '' : question,
       attachments: questionMediaUrl ? [questionMediaUrl] : [],
       contact_urn: flowPreviewStore.preview.contact.urns[0],
-      temporary_component: temporaryComponents.includes(question)
-        ? question
-        : undefined,
     });
 
     flowPreviewStore.treatAnswerResponse(answer, data, {
