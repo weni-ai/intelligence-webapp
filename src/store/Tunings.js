@@ -147,6 +147,9 @@ export const useTuningsStore = defineStore('Tunings', () => {
       await nexusaiAPI.router.tunings.editCredentials({
         projectUuid: connectProjectUuid.value,
         credentials: credentialsToSave,
+        requestOptions: {
+          hideGenericErrorAlert: true,
+        },
       });
 
       initialCredentials.value = cloneDeep(credentials.value.data);
@@ -179,10 +182,15 @@ export const useTuningsStore = defineStore('Tunings', () => {
     try {
       settings.value.status = 'loading';
 
-      await nexusaiAPI.router.tunings.editProgressiveFeedback({
+      const response = await nexusaiAPI.router.tunings.editProgressiveFeedback({
         projectUuid: connectProjectUuid.value,
         data: settings.value.data,
+        requestOptions: {
+          hideGenericErrorAlert: true,
+        },
       });
+
+      console.log(response);
 
       initialSettings.value = cloneDeep(settings.value.data);
       settings.value.status = 'success';
@@ -215,9 +223,9 @@ export const useTuningsStore = defineStore('Tunings', () => {
     let hasSettingsError = false;
 
     if (isCredentialsValid.value) {
-      try {
-        await saveCredentials();
-      } catch (error) {
+      await saveCredentials();
+
+      if (credentials.value.status === 'error') {
         hasCredentialsError = true;
         alertStore.add({
           text: i18n.global.t('router.tunings.credentials.save_error'),
@@ -227,9 +235,9 @@ export const useTuningsStore = defineStore('Tunings', () => {
     }
 
     if (hasSettingsChanges.value) {
-      try {
-        await saveSettings();
-      } catch (error) {
+      await saveSettings();
+
+      if (settings.value.status === 'error') {
         hasSettingsError = true;
         alertStore.add({
           text: i18n.global.t('router.tunings.settings.save_error'),

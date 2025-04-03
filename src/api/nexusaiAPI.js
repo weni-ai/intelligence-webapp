@@ -167,10 +167,11 @@ export default {
         });
       },
 
-      editCredentials({ projectUuid, credentials = {} }) {
+      editCredentials({ projectUuid, credentials = {}, requestOptions = {} }) {
         return request.$http.patch(
           `api/project/${projectUuid}/credentials`,
           credentials,
+          requestOptions,
         );
       },
 
@@ -195,10 +196,11 @@ export default {
         return ProgressiveFeedbackAdapter.fromApi(response.data);
       },
 
-      editProgressiveFeedback({ projectUuid, data }) {
+      editProgressiveFeedback({ projectUuid, data, requestOptions = {} }) {
         return request.$http.patch(
           `api/project/${projectUuid}/rationale`,
           ProgressiveFeedbackAdapter.toApi(data),
+          requestOptions,
         );
       },
 
