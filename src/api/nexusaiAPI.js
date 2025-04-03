@@ -4,6 +4,8 @@ import { Actions } from './nexus/Actions';
 import { Monitoring } from './nexus/Monitoring';
 import { AgentsTeam } from './nexus/AgentsTeam';
 
+import { ProgressiveFeedbackAdapter } from './adapters/tunings/progressiveFeedback';
+
 import i18n from '@/utils/plugins/i18n';
 
 export default {
@@ -165,10 +167,11 @@ export default {
         });
       },
 
-      editCredentials({ projectUuid, credentials = {} }) {
+      editCredentials({ projectUuid, credentials = {}, requestOptions = {} }) {
         return request.$http.patch(
           `api/project/${projectUuid}/credentials`,
           credentials,
+          requestOptions,
         );
       },
 
@@ -183,6 +186,22 @@ export default {
           agent_uuid,
           is_confidential,
         });
+      },
+
+      async getProgressiveFeedback({ projectUuid }) {
+        const response = await request.$http.get(
+          `api/project/${projectUuid}/rationale`,
+        );
+
+        return ProgressiveFeedbackAdapter.fromApi(response.data);
+      },
+
+      editProgressiveFeedback({ projectUuid, data, requestOptions = {} }) {
+        return request.$http.patch(
+          `api/project/${projectUuid}/rationale`,
+          ProgressiveFeedbackAdapter.toApi(data),
+          requestOptions,
+        );
       },
 
       historyChanges: {

@@ -17,10 +17,15 @@
     </section>
     <section>
       <Credentials v-if="activeTab === 'credentials'" />
-      <Settings
-        v-if="activeTab === 'config'"
-        :data="props.data"
-      />
+
+      <template v-if="activeTab === 'config'">
+        <SettingsAgentsTeam v-if="isAgentsTeamEnabled" />
+        <Settings
+          v-else
+          :data="props.data"
+        />
+      </template>
+
       <ChangesHistory v-if="activeTab === 'hist'" />
     </section>
   </section>
@@ -29,26 +34,27 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
+
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useTuningsStore } from '@/store/Tunings';
 
 import ChangesHistory from '@/components/Brain/Tunings/ChangesHistory.vue';
 import Settings from '@/components/Brain/Tunings/Settings.vue';
+import SettingsAgentsTeam from '@/components/Brain/Tunings/SettingsAgentsTeam/index.vue';
 import Credentials from '@/components/Brain/Tunings/Credentials/index.vue';
 
 const store = useStore();
-
 const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
 const tabs = ref(
   [
-    isAgentsTeamEnabled
-      ? { title: 'credentials', page: 'credentials' }
-      : { title: 'config', page: 'config' },
+    { title: 'config', page: 'config' },
+    isAgentsTeamEnabled ? { title: 'credentials', page: 'credentials' } : null,
     { title: 'history', page: 'hist' },
   ].filter((obj) => obj),
 );
 
-const activeTab = ref(isAgentsTeamEnabled ? 'credentials' : 'config');
+const activeTab = ref('config');
 
 const props = defineProps({
   data: {
@@ -61,7 +67,11 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  store.dispatch('loadBrainTunings');
+  if (isAgentsTeamEnabled) {
+    useTuningsStore().fetchSettings();
+  } else {
+    store.dispatch('loadBrainTunings');
+  }
 });
 
 const onTabChange = (newTab) => {

@@ -292,8 +292,20 @@
         "used_by": "Used by",
         "no_agents_using": "No agents using",
         "credentials_updated_successfully": "Credentials updated successfully",
-        "get_error": "Error getting credentials"
-      }
+        "get_error": "Error getting credentials",
+        "save_error": "Error saving credentials"
+      },
+      "settings": {
+        "save_error": "Error saving settings",
+        "agents_preview": {
+          "title": "Agents preview",
+          "agents_progressive_feedback": {
+            "title": "Agents progressive feedback",
+            "description": "The agent can provide brief updates while formulating the final response, helping the contact understand its process in real-time."
+          }
+        }
+      },
+      "save_success": "Tunings saved successfully"
     },
     "preview": {
       "title": "Agent preview",
