@@ -116,7 +116,7 @@ const store = useStore();
 
 const isTuningsSaveButtonDisabled = computed(() => {
   return isAgentsTeamEnabled
-    ? !tuningsStore.isCredentialsValid
+    ? !tuningsStore.isCredentialsValid && !tuningsStore.hasSettingsChanges
     : store.getters.isBrainSaveButtonDisabled;
 });
 
@@ -129,17 +129,7 @@ const isTuningsSaveButtonLoading = computed(() => {
 
 async function saveTunings() {
   if (isAgentsTeamEnabled) {
-    try {
-      await tuningsStore.saveCredentials();
-      useAlertStore().add({
-        text: i18n.global.t(
-          'router.tunings.credentials.credentials_updated_successfully',
-        ),
-        type: 'success',
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    tuningsStore.saveTunings();
   } else {
     store.dispatch('saveBrainChanges');
   }

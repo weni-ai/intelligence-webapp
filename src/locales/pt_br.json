@@ -290,8 +290,20 @@
         "used_by": "Usadas por",
         "no_agents_using": "Nenhum agente usando",
         "credentials_updated_successfully": "Credenciais atualizadas com sucesso",
-        "get_error": "Erro ao requisitar credenciais"
-      }
+        "get_error": "Erro ao requisitar credenciais",
+        "save_error": "Erro ao salvar credenciais"
+      },
+      "settings": {
+        "save_error": "Erro ao salvar configurações",
+        "agents_preview": {
+        "title": "Preview dos agentes",
+        "agents_progressive_feedback": {
+          "title": "Feedback progressivo dos agentes",
+          "description": "O agente pode fornecer atualizações breves enquanto formula a resposta final, ajudando o contato a entender seu processo em tempo real."
+          }
+        }
+      },
+      "save_success": "Configurações salvas com sucesso"
     },
     "preview": {
       "title": "Preview do agente",
