@@ -46,6 +46,15 @@ export const useFlowPreviewStore = defineStore('flowPreview', () => {
     }
   }
 
+  function extractJsonsFromMessage(message) {
+    if (!message) return [];
+
+    const jsonPattern = /{[^{}]*(?:{[^{}]*})*[^{}]*}/g;
+    const matches = message.match(jsonPattern) || [];
+
+    return matches;
+  }
+
   function treatAnswerResponse(
     answer,
     data,
@@ -61,10 +70,43 @@ export const useFlowPreviewStore = defineStore('flowPreview', () => {
       answer.status = 'loaded';
 
       const message = get(data, 'message', fallbackMessage);
-      const safeMessage = attempt(JSON.parse.bind(null, message));
+      const extractedJsons = extractJsonsFromMessage(message);
+      const safeJson = (json) => attempt(JSON.parse.bind(null, json));
 
-      answer.response = safeMessage instanceof Error ? message : safeMessage;
-      answer.sources = get(data, 'fonts', []);
+      console.log('extractedJsons', extractedJsons);
+
+      if (extractedJsons.length > 0) {
+        // Use the first JSON for the original answer
+        const firstJson = extractedJsons[0];
+
+        console.log('firstJson', firstJson);
+
+        answer.response = safeJson(firstJson);
+        answer.sources = get(data, 'fonts', []);
+
+        // Add additional messages for each subsequent JSON
+        for (let i = 1; i < extractedJsons.length; i++) {
+          const jsonItem = extractedJsons[i];
+
+          const additionalMessage = {
+            type: 'answer',
+            status: 'loaded',
+            response: safeJson(jsonItem),
+            question_uuid: answer.question_uuid,
+            sources: get(data, 'fonts', []),
+            feedback: {
+              value: null,
+              reason: null,
+            },
+          };
+          console.log('additionalMessage', additionalMessage);
+          addMessage(additionalMessage);
+        }
+      } else {
+        console.log('else message', message);
+        answer.response = message;
+        answer.sources = get(data, 'fonts', []);
+      }
 
       if (onBroadcast) onBroadcast(answer);
     } else if (data.type === 'flowstart') {
