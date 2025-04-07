@@ -1,8 +1,5 @@
 <template>
-  <header
-    class="header"
-    :class="{ 'header--agents-team': route.name === 'router-agents-team' }"
-  >
+  <header class="header">
     <section class="header__infos">
       <section class="infos__title">
         <p class="title__text">
@@ -19,7 +16,7 @@
       </UnnnicIntelligenceText>
     </section>
     <UnnnicButton
-      v-if="route.name === 'router-profile'"
+      v-if="route.name.includes('profile')"
       :disabled="profile.isSaveButtonDisabled"
       :loading="profile.isSaving"
       @click="profile.save"
@@ -27,7 +24,7 @@
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
     <UnnnicButton
-      v-else-if="route.name === 'router-tunings'"
+      v-else-if="route.name.includes('tunings')"
       :disabled="isTuningsSaveButtonDisabled"
       :loading="isTuningsSaveButtonLoading"
       @click="saveTunings"
@@ -179,15 +176,6 @@ const handleAgentsGallery = () => {
       }
     }
   }
-
-  &--agents-team {
-    grid-template-columns: 9fr 3fr 3fr;
-  }
-}
-
-.agents-team-actions {
-  display: flex;
-  gap: $unnnic-spacing-sm;
 }
 
 .monitoring-filters {
