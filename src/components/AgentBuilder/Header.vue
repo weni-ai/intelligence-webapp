@@ -70,6 +70,7 @@ const currentBrainRoute = computed(() => {
   display: grid;
   grid-template-columns: 9fr 3fr;
   gap: $unnnic-spacing-sm;
+  align-items: center;
 
   &__title {
     display: flex;

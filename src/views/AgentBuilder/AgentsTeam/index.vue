@@ -37,17 +37,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onUnmounted } from 'vue';
 
 import AgentBuilderHeader from '@/components/AgentBuilder/Header.vue';
 import PreviewDrawer from '@/components/Brain/Preview/PreviewDrawer.vue';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import { usePreviewStore } from '@/store/Preview';
 
 import ActiveTeam from './ActiveTeam.vue';
 import AgentsGalleryModal from './AgentsGalleryModal.vue';
 
 const isPreviewOpen = ref(false);
+
+const previewStore = usePreviewStore();
 
 const handleAgentsGallery = () => {
   useAgentsTeamStore().isAgentsGalleryOpen = true;
@@ -56,6 +59,13 @@ const handleAgentsGallery = () => {
 const handlePreview = () => {
   isPreviewOpen.value = true;
 };
+
+onUnmounted(() => {
+  if (previewStore.ws) {
+    previewStore.disconnectWS();
+    previewStore.clearTraces();
+  }
+});
 </script>
 
 <style lang="scss" scoped>

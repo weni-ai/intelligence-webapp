@@ -16,9 +16,9 @@ import { useRoute } from 'vue-router';
 import { useTuningsStore } from '@/store/Tunings';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-import RouterMonitoring from '@/views/Brain/RouterMonitoring/index.vue';
+import Supervisor from './Supervisor/index.vue';
 import AgentsTeam from './AgentsTeam/index.vue';
-import RouterContentBase from '@/views/Brain/RouterContentBase.vue';
+import ContentBase from '@/views/Brain/RouterContentBase.vue';
 import Profile from '@/views/AgentBuilder/Profile.vue';
 import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
 
@@ -26,8 +26,8 @@ const route = useRoute();
 
 const currentView = computed(() => {
   const views = {
-    content: RouterContentBase,
-    monitoring: RouterMonitoring,
+    content: ContentBase,
+    monitoring: Supervisor,
     'agents-team': AgentsTeam,
     profile: Profile,
     // 'router-tunings': RouterTunings,

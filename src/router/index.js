@@ -138,27 +138,27 @@ const router = createRouter({
         {
           path: 'monitoring',
           name: 'monitoring',
-          component: () => import('../views/Brain/RouterMonitoring/index.vue'),
+          component: () => import('@/views/AgentBuilder/Supervisor/index.vue'),
         },
         {
           path: 'profile',
           name: 'profile',
-          component: () => import('../views/Brain/RouterProfile/index.vue'),
+          component: () => import('@/views/AgentBuilder/Profile.vue'),
         },
         {
           path: 'agents-team',
           name: 'agents-team',
-          component: () => import('../views/AgentBuilder/AgentsTeam/index.vue'),
+          component: () => import('@/views/AgentBuilder/AgentsTeam/index.vue'),
         },
         {
           path: 'content',
           name: 'content',
-          component: () => import('../views/Brain/RouterContentBase.vue'),
+          component: () => import('@/views/Brain/RouterContentBase.vue'),
         },
         {
           path: 'tunings',
           name: 'tunings',
-          component: () => import('../views/Brain/RouterTunings.vue'),
+          component: () => import('@/views/Brain/RouterTunings.vue'),
         },
       ],
     },

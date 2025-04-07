@@ -84,7 +84,7 @@ const currentBrainRoute = computed(() => {
   );
 });
 
-const showDateFilter = computed(() => route.name === 'router-monitoring');
+const showDateFilter = computed(() => route.name.includes('monitoring'));
 
 const tuningsStore = useTuningsStore();
 const previewStore = usePreviewStore();
@@ -132,12 +132,6 @@ watch(
   currentBrainRoute,
   (currentBrainRoute) => {
     updateQueriesAtFilterDate();
-
-    const isAgentsTeamPage = currentBrainRoute.page === 'router-agents-team';
-    if (!isAgentsTeamPage && previewStore.ws) {
-      previewStore.disconnectWS();
-      previewStore.clearTraces();
-    }
   },
   {
     immediate: true,
