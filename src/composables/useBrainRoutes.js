@@ -7,12 +7,12 @@ export default function useBrainRoutes() {
 
   const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
-  return computed(() =>
-    [
+  if (isAgentsTeamEnabled) {
+    return computed(() => [
       {
         title: 'monitoring',
         description: t('router.monitoring.description'),
-        page: 'router-monitoring',
+        page: 'monitoring',
         icon: 'bar_chart',
         preview: false,
         tag: t('new'),
@@ -20,42 +20,70 @@ export default function useBrainRoutes() {
       {
         title: 'profile',
         description: t('profile.description'),
-        page: 'router-profile',
+        page: 'profile',
         icon: 'person',
         preview: true,
       },
-      isAgentsTeamEnabled
-        ? {
-            title: 'agents-team',
-            description: t('router.agents_team.description'),
-            page: 'router-agents-team',
-            icon: 'workspaces',
-            preview: false,
-          }
-        : null,
+      {
+        title: 'agents-team',
+        description: t('router.agents_team.description'),
+        page: 'agents-team',
+        icon: 'workspaces',
+        preview: false,
+      },
       {
         title: 'content',
         description: t('content_bases.description'),
-        page: 'router-content',
+        page: 'content',
         icon: 'article',
         preview: true,
       },
-      isAgentsTeamEnabled
-        ? null
-        : {
-            title: 'actions',
-            description: t('router.actions.description'),
-            page: 'router-actions',
-            icon: 'bolt',
-            preview: true,
-          },
       {
         title: 'tunings',
         description: t('router.tunings.description'),
-        page: 'router-tunings',
+        page: 'tunings',
         icon: 'settings',
         preview: true,
       },
-    ].filter((obj) => obj),
-  );
+    ]);
+  }
+
+  return computed(() => [
+    {
+      title: 'monitoring',
+      description: t('router.monitoring.description'),
+      page: 'router-monitoring',
+      icon: 'bar_chart',
+      preview: false,
+      tag: t('new'),
+    },
+    {
+      title: 'profile',
+      description: t('profile.description'),
+      page: 'router-profile',
+      icon: 'person',
+      preview: true,
+    },
+    {
+      title: 'content',
+      description: t('content_bases.description'),
+      page: 'router-content',
+      icon: 'article',
+      preview: true,
+    },
+    {
+      title: 'actions',
+      description: t('router.actions.description'),
+      page: 'router-actions',
+      icon: 'bolt',
+      preview: true,
+    },
+    {
+      title: 'tunings',
+      description: t('router.tunings.description'),
+      page: 'router-tunings',
+      icon: 'settings',
+      preview: true,
+    },
+  ]);
 }

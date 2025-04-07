@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
+import AgentBuilder from '../views/AgentBuilder/index.vue';
 import RepositoryContentBases from '../views/repository/content/Bases.vue';
 import ContentBasesForm from '@/views/ContentBases/Form.vue';
 import Brain from '../views/Brain/Brain.vue';
@@ -99,11 +100,6 @@ const router = createRouter({
           component: () => import('../views/Brain/RouterProfile/index.vue'),
         },
         {
-          path: 'agents-team',
-          name: 'router-agents-team',
-          component: () => import('../views/Brain/RouterAgentsTeam/index.vue'),
-        },
-        {
           path: 'content',
           name: 'router-content',
           component: () => import('../views/Brain/RouterContentBase.vue'),
@@ -116,6 +112,52 @@ const router = createRouter({
         {
           path: 'tunings',
           name: 'router-tunings',
+          component: () => import('../views/Brain/RouterTunings.vue'),
+        },
+      ],
+    },
+    {
+      path: '/',
+      name: 'agent-builder',
+      component: AgentBuilder,
+      redirect: () => {
+        return { name: 'monitoring' };
+      },
+      async beforeEnter(_to, _from, next) {
+        const { data } = await nexusaiAPI.router.read({
+          projectUuid: store.state.Auth.connectProjectUuid,
+          obstructiveErrorProducer: true,
+        });
+
+        store.state.router.contentBaseUuid = data.uuid;
+        store.state.router.intelligenceUuid = data.intelligence;
+
+        next();
+      },
+      children: [
+        {
+          path: 'monitoring',
+          name: 'monitoring',
+          component: () => import('../views/Brain/RouterMonitoring/index.vue'),
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('../views/Brain/RouterProfile/index.vue'),
+        },
+        {
+          path: 'agents-team',
+          name: 'agents-team',
+          component: () => import('../views/AgentBuilder/AgentsTeam/index.vue'),
+        },
+        {
+          path: 'content',
+          name: 'content',
+          component: () => import('../views/Brain/RouterContentBase.vue'),
+        },
+        {
+          path: 'tunings',
+          name: 'tunings',
           component: () => import('../views/Brain/RouterTunings.vue'),
         },
       ],

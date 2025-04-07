@@ -34,24 +34,6 @@
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
-    <template v-else-if="route.name === 'router-agents-team'">
-      <UnnnicButton
-        type="secondary"
-        iconLeft="add"
-        @click="handleAgentsGallery"
-      >
-        {{ $t('router.agents_team.assign_agents') }}
-      </UnnnicButton>
-
-      <UnnnicButton
-        type="primary"
-        iconLeft="play_arrow"
-        iconsFilled
-        @click="handlePreview"
-      >
-        {{ $t('router.agents_team.preview') }}
-      </UnnnicButton>
-    </template>
     <section
       v-else-if="showDateFilter"
       class="monitoring-filters"
@@ -65,8 +47,6 @@
       <MonitoringViewFilter />
     </section>
   </header>
-
-  <PreviewDrawer v-model="isPreviewOpen" />
 </template>
 
 <script setup>
@@ -81,13 +61,9 @@ import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useTuningsStore } from '@/store/Tunings';
 import { usePreviewStore } from '@/store/Preview';
-import { useAlertStore } from '@/store/Alert';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-import i18n from '@/utils/plugins/i18n';
-
 import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
-import PreviewDrawer from './Preview/PreviewDrawer.vue';
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
   start: format(subDays(new Date(), 30), 'yyyy-MM-dd'),
