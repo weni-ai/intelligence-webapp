@@ -18,7 +18,7 @@ import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 import Supervisor from './Supervisor/index.vue';
 import AgentsTeam from './AgentsTeam/index.vue';
-import ContentBase from '@/views/Brain/RouterContentBase.vue';
+import Knowledge from './Knowledge.vue';
 import Profile from '@/views/AgentBuilder/Profile.vue';
 import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
 
@@ -26,7 +26,7 @@ const route = useRoute();
 
 const currentView = computed(() => {
   const views = {
-    content: ContentBase,
+    content: Knowledge,
     monitoring: Supervisor,
     'agents-team': AgentsTeam,
     profile: Profile,
@@ -68,6 +68,9 @@ onMounted(() => {
 
     height: 100%;
     width: 100%;
+
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>
