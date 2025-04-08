@@ -190,8 +190,6 @@ export const useTuningsStore = defineStore('Tunings', () => {
         },
       });
 
-      console.log(response);
-
       initialSettings.value = cloneDeep(settings.value.data);
       settings.value.status = 'success';
 

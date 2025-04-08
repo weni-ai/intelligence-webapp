@@ -74,7 +74,7 @@
     "tabs": {
       "monitoring": "Supervisor",
       "profile": "Profile",
-      "agents-team": "Agents",
+      "agents": "Agents",
       "content": "Knowledge",
       "actions": "Actions",
       "tunings": "Tunings"
