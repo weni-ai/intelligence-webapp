@@ -182,6 +182,16 @@ export const useProfileStore = defineStore('profile', () => {
       });
 
       setInitialValues(data);
+
+      if (data?.team?.human_support !== humanSupport.old) {
+        window.parent.postMessage(
+          {
+            event: 'change-human-service-status',
+            value: JSON.stringify(humanSupport.current),
+          },
+          '*',
+        );
+      }
     } catch (error) {
       const tabWithError =
         get(error, 'tab') ||
