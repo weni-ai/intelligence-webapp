@@ -274,6 +274,10 @@ describe('Profile', () => {
             name: 'Test Name',
             personality: 'Test Personality',
             role: 'Test Role',
+            team_data: {
+              human_support: false,
+              human_support_prompt: '',
+            },
           },
           instructions: [],
           team: {

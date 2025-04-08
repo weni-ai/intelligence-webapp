@@ -25,7 +25,6 @@
               @update:files="(v) => (files = v)"
             />
             <RouterMonitoring v-else-if="route.name === 'router-monitoring'" />
-            <RouterAgentsTeam v-else-if="route.name === 'router-agents-team'" />
             <RouterActions v-else-if="route.name === 'router-actions'" />
             <RouterProfile v-else-if="route.name === 'router-profile'" />
             <RouterTunings
@@ -48,11 +47,8 @@
           :previewActions="previewActions"
         />
         <BrainWarningBar v-if="!routerTunings.brainOn" />
-        <Tests
+        <Preview
           :key="refreshPreviewValue"
-          :contentBaseUuid="contentBaseUuid"
-          :contentBaseLanguage="contentBase.language"
-          :usePreview="true"
           @messages="getPreviewMessages"
         />
       </section>
@@ -77,9 +73,8 @@ import { useStore } from 'vuex';
 import { get } from 'lodash';
 import nexusaiAPI from '../../api/nexusaiAPI';
 import PageContainer from '../../components/PageContainer.vue';
-import Tests from '../repository/content/Tests.vue';
+import Preview from '../repository/content/Preview.vue';
 import RouterMonitoring from './RouterMonitoring/index.vue';
-import RouterAgentsTeam from './RouterAgentsTeam/index.vue';
 import RouterActions from './RouterActions.vue';
 import RouterContentBase from './RouterContentBase.vue';
 import RouterProfile from './RouterProfile/index.vue';
@@ -94,18 +89,14 @@ import i18n from '@/utils/plugins/i18n';
 import useBrainRoutes from '@/composables/useBrainRoutes';
 import BrainWarningBar from '@/components/Brain/BrainWarningBar.vue';
 import BrainHeaderPreview from '@/components/Brain/BrainHeaderPreview.vue';
-import { useFeatureFlagsStore } from '@/store/FeatureFlags';
-import { useTuningsStore } from '@/store/Tunings';
-import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 export default {
   name: 'Brain',
   components: {
-    Tests,
+    Preview,
     PageContainer,
     RouterMonitoring,
     RouterActions,
-    RouterAgentsTeam,
     RouterContentBase,
     RouterProfile,
     RouterTunings,
@@ -163,12 +154,8 @@ export default {
     });
 
     const brainRoutes = useBrainRoutes();
-    const isAgentsTeamEnabled = computed(
-      () => useFeatureFlagsStore().flags.agentsTeam,
-    );
     const showPreview = computed(
       () =>
-        !isAgentsTeamEnabled.value &&
         brainRoutes.value.find((mappedRoute) => mappedRoute.page === route.name)
           ?.preview,
     );
@@ -274,11 +261,7 @@ export default {
     onMounted(() => {
       files.loadNext();
       sites.loadNext();
-      useTuningsStore().fetchCredentials();
       loadRouterOptions();
-      if (isAgentsTeamEnabled.value) {
-        useAgentsTeamStore().loadActiveTeam();
-      }
     });
 
     const previewActions = computed(() => {
@@ -577,6 +560,7 @@ export default {
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     &__card {

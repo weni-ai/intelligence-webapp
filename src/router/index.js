@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
+import AgentBuilder from '../views/AgentBuilder/index.vue';
 import RepositoryContentBases from '../views/repository/content/Bases.vue';
 import ContentBasesForm from '@/views/ContentBases/Form.vue';
 import Brain from '../views/Brain/Brain.vue';
@@ -9,8 +10,33 @@ import NotFound from '../views/NotFound.vue';
 
 import store from '../store';
 import nexusaiAPI from '../api/nexusaiAPI';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 let nextFromRedirect = '';
+
+const handleLogin = async (to, from, next) => {
+  const { token, org, project } = to.params;
+
+  store.dispatch('externalLogin', {
+    token: (token || localStorage.getItem('authToken')).replace('+', ' '),
+  });
+  store.dispatch('orgSelected', { org });
+  store.dispatch('projectSelected', { project });
+
+  store.state.Auth.connectOrgUuid = to.query?.org_uuid;
+  store.state.Auth.connectProjectUuid = to.query?.project_uuid;
+
+  sessionStorage.setItem('orgUuid', store.state.Auth.connectOrgUuid);
+  sessionStorage.setItem('projectUuid', store.state.Auth.connectProjectUuid);
+
+  const nextPath = to.query.next || to.query.next_from_redirect;
+
+  if (nextPath) {
+    next({ path: nextPath, replace: true });
+  } else {
+    next({ path: '/home', replace: true });
+  }
+};
 
 const router = createRouter({
   mode: 'history',
@@ -20,31 +46,13 @@ const router = createRouter({
       path: '/loginexternal/:token/:org/:project',
       name: 'externalLogin',
       component: null,
-      beforeEnter: async (to, from, next) => {
-        const { token, org, project } = to.params;
-        store.dispatch('externalLogin', { token: token.replace('+', ' ') });
-        store.dispatch('orgSelected', { org });
-        store.dispatch('projectSelected', { project });
-
-        store.state.Auth.connectOrgUuid = to.query?.org_uuid;
-        store.state.Auth.connectProjectUuid = to.query?.project_uuid;
-
-        sessionStorage.setItem('orgUuid', store.state.Auth.connectOrgUuid);
-
-        sessionStorage.setItem(
-          'projectUuid',
-          store.state.Auth.connectProjectUuid,
-        );
-
-        const nextPath = to.query.next || to.query.next_from_redirect;
-
-        if (nextPath) {
-          nextFromRedirect = to.query.next_from_redirect;
-          next({ path: nextPath, replace: true });
-        } else {
-          next({ path: '/home', replace: true });
-        }
-      },
+      beforeEnter: handleLogin,
+    },
+    {
+      path: '/:org/:project',
+      name: 'iframeLogin',
+      component: null,
+      beforeEnter: handleLogin,
     },
     {
       path: '/home',
@@ -77,6 +85,10 @@ const router = createRouter({
         return { name: 'router-monitoring' };
       },
       async beforeEnter(_to, _from, next) {
+        if (useFeatureFlagsStore().flags.agentsTeam) {
+          next({ name: 'agent-builder' });
+        }
+
         const { data } = await nexusaiAPI.router.read({
           projectUuid: store.state.Auth.connectProjectUuid,
           obstructiveErrorProducer: true,
@@ -99,11 +111,6 @@ const router = createRouter({
           component: () => import('../views/Brain/RouterProfile/index.vue'),
         },
         {
-          path: 'agents-team',
-          name: 'router-agents-team',
-          component: () => import('../views/Brain/RouterAgentsTeam/index.vue'),
-        },
-        {
           path: 'content',
           name: 'router-content',
           component: () => import('../views/Brain/RouterContentBase.vue'),
@@ -117,6 +124,52 @@ const router = createRouter({
           path: 'tunings',
           name: 'router-tunings',
           component: () => import('../views/Brain/RouterTunings.vue'),
+        },
+      ],
+    },
+    {
+      path: '/',
+      name: 'agent-builder',
+      component: AgentBuilder,
+      redirect: () => {
+        return { name: 'monitoring' };
+      },
+      async beforeEnter(_to, _from, next) {
+        const { data } = await nexusaiAPI.router.read({
+          projectUuid: store.state.Auth.connectProjectUuid,
+          obstructiveErrorProducer: true,
+        });
+
+        store.state.router.contentBaseUuid = data.uuid;
+        store.state.router.intelligenceUuid = data.intelligence;
+
+        next();
+      },
+      children: [
+        {
+          path: 'monitoring',
+          name: 'monitoring',
+          component: () => import('@/views/AgentBuilder/Supervisor/index.vue'),
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('@/views/AgentBuilder/Profile.vue'),
+        },
+        {
+          path: 'agents',
+          name: 'agents',
+          component: () => import('@/views/AgentBuilder/AgentsTeam/index.vue'),
+        },
+        {
+          path: 'knowledge',
+          name: 'content',
+          component: () => import('@/views/AgentBuilder/Knowledge.vue'),
+        },
+        {
+          path: 'tunings',
+          name: 'tunings',
+          component: () => import('@/views/AgentBuilder/Tunings.vue'),
         },
       ],
     },

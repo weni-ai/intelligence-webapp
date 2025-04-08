@@ -1,4 +1,5 @@
 {
+  "crowdin": "crowdin",
   "and": " and ",
   "delete": "Delete",
   "cancel": "Cancel",
@@ -73,7 +74,7 @@
     "tabs": {
       "monitoring": "Supervisor",
       "profile": "Profile",
-      "agents-team": "Agents",
+      "agents": "Agents",
       "content": "Knowledge",
       "actions": "Actions",
       "tunings": "Tunings"
@@ -332,7 +333,20 @@
       "flow_finished": "Flow finished",
       "message_forwarded_to_brain": "Message forwarded to Agent Builder",
       "media_and_location_unavailable": "There is no Media and Location action registered",
-      "standby": "Standby"
+      "standby": "Standby",
+      "catalog": {
+        "title": "Product Catalog",
+        "view_cart": "View cart ({quantity} item) | View cart ({quantity} items)",
+        "add_to_cart": "Add to cart",
+        "subtotal": "Subtotal",
+        "place_order": "Place order",
+        "your_cart": "Your cart",
+        "order_summary": "Order Summary",
+        "order_details": "Order Details",
+        "view_order_details": "View order details",
+        "items": "item | items",
+        "remove": "Remove"
+      }
     }
   },
   "content_bases": {
