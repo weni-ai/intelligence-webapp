@@ -20,6 +20,7 @@ import Supervisor from './Supervisor/index.vue';
 import AgentsTeam from './AgentsTeam/index.vue';
 import Knowledge from './Knowledge.vue';
 import Profile from '@/views/AgentBuilder/Profile.vue';
+import Tunings from '@/views/AgentBuilder/Tunings.vue';
 import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
 
 const route = useRoute();
@@ -28,9 +29,9 @@ const currentView = computed(() => {
   const views = {
     content: Knowledge,
     monitoring: Supervisor,
-    'agents-team': AgentsTeam,
+    agents: AgentsTeam,
     profile: Profile,
-    // 'router-tunings': RouterTunings,
+    tunings: Tunings,
   };
 
   return views[route.name];
@@ -38,7 +39,6 @@ const currentView = computed(() => {
 
 onMounted(() => {
   useTuningsStore().fetchCredentials();
-  // loadRouterOptions();
   useAgentsTeamStore().loadActiveTeam();
 });
 </script>

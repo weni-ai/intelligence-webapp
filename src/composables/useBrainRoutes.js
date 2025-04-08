@@ -25,9 +25,9 @@ export default function useBrainRoutes() {
         preview: true,
       },
       {
-        title: 'agents-team',
+        title: 'agents',
         description: t('router.agents_team.description'),
-        page: 'agents-team',
+        page: 'agents',
         icon: 'workspaces',
         preview: false,
       },

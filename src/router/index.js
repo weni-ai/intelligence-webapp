@@ -10,6 +10,7 @@ import NotFound from '../views/NotFound.vue';
 
 import store from '../store';
 import nexusaiAPI from '../api/nexusaiAPI';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 let nextFromRedirect = '';
 
@@ -78,6 +79,10 @@ const router = createRouter({
         return { name: 'router-monitoring' };
       },
       async beforeEnter(_to, _from, next) {
+        if (useFeatureFlagsStore().flags.agentsTeam) {
+          next({ name: 'agent-builder' });
+        }
+
         const { data } = await nexusaiAPI.router.read({
           projectUuid: store.state.Auth.connectProjectUuid,
           obstructiveErrorProducer: true,
@@ -146,19 +151,19 @@ const router = createRouter({
           component: () => import('@/views/AgentBuilder/Profile.vue'),
         },
         {
-          path: 'agents-team',
-          name: 'agents-team',
+          path: 'agents',
+          name: 'agents',
           component: () => import('@/views/AgentBuilder/AgentsTeam/index.vue'),
         },
         {
-          path: 'content',
+          path: 'knowledge',
           name: 'content',
-          component: () => import('@/views/Brain/RouterContentBase.vue'),
+          component: () => import('@/views/AgentBuilder/Knowledge.vue'),
         },
         {
           path: 'tunings',
           name: 'tunings',
-          component: () => import('@/views/Brain/RouterTunings.vue'),
+          component: () => import('@/views/AgentBuilder/Tunings.vue'),
         },
       ],
     },
