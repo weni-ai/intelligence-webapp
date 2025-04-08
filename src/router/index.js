@@ -16,7 +16,7 @@ const handleLogin = async (to, from, next) => {
   const { token, org, project } = to.params;
 
   store.dispatch('externalLogin', {
-    token: (localStorage.getItem('authToken') || token).replace('+', ' '),
+    token: (token || localStorage.getItem('authToken')).replace('+', ' '),
   });
   store.dispatch('orgSelected', { org });
   store.dispatch('projectSelected', { project });
