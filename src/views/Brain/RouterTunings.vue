@@ -48,13 +48,13 @@ const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
 const tabs = ref(
   [
-    { title: 'config', page: 'config' },
+    isAgentsTeamEnabled ? null : { title: 'config', page: 'config' },
     isAgentsTeamEnabled ? { title: 'credentials', page: 'credentials' } : null,
     { title: 'history', page: 'hist' },
   ].filter((obj) => obj),
 );
 
-const activeTab = ref('config');
+const activeTab = ref(isAgentsTeamEnabled ? 'credentials' : 'config');
 
 const props = defineProps({
   data: {
