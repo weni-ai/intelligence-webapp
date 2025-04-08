@@ -6,16 +6,24 @@
   "next": "Siguiente",
   "finish": "Finalizar",
   "speed": "Velocidad",
+  "new": "Nuevo",
   "save_changes": "Guardar los cambios",
   "announcements": {
-    "new_artificial_intelligence_module_is_here": "¡Ya está aquí el nuevo módulo de Inteligencia Artificial! Explora las novedades y aprende a crear chatbots aún más increíbles."
+    "new_artificial_intelligence_module_is_here": "¡Ya está aquí el nuevo módulo de Inteligencia Artificial! ¡Explora las novedades y aprende a crear chatbots aún más increíbles!"
   },
   "unauthorized": "No tienes permiso para realizar esta acción",
   "internal_server_error": "Error interno del servidor",
   "unexpected_error": "Se ha producido un error inesperado",
   "intelligences": {
+    "content_intelligences": "Inteligencias de contenido",
+    "classification_intelligences": "Inteligencias de clasificación",
     "own_intelligences": "Inteligencias propias",
     "public_intelligences": "Inteligencias públicas",
+    "classification": {
+      "deprecation_notice": "¡Estén atentos! Las inteligencias de clasificación pronto quedarán obsoletas",
+      "use_agents_builder": "Para crear agentes inteligentes, utilice {agents_builder_link}. Si tiene alguna pregunta, comuníquese con el servicio de asistencia.",
+      "agents_builder": "Agents Builder"
+    },
     "create_button": "Crear Inteligencia",
     "search_intelligence_placeholder": "Buscar Inteligencia",
     "categories_placeholder": "Categorías",
@@ -63,10 +71,73 @@
       "click_here": "ajustes"
     },
     "tabs": {
-      "personalization": "Personalidad",
+      "monitoring": "Supervisor",
+      "profile": "Perfil",
+      "agents-team": "Agentes",
       "content": "Conocimiento",
       "actions": "Acciones",
       "tunings": "Ajustes"
+    },
+    "monitoring": {
+      "description": "Realice un seguimiento de los mensajes recibidos por su agente y vea cómo respondió.",
+      "performance": "Actuación",
+      "received_messages": "Mensajes recibidos",
+      "success": {
+        "title": "Respuesta encontrada | Respuestas encontradas",
+        "tooltip": "Porcentaje de mensajes que el agente pudo responder según su conocimiento"
+      },
+      "failed": {
+        "title": "Respuesta no encontrada | Respuestas no encontradas",
+        "tooltip": "Porcentaje de mensajes que estaban fuera del conocimiento del agente y no pudo responder"
+      },
+      "action": {
+        "title": "Mensajes que desencadenaron acciones",
+        "tooltip": "Porcentaje de mensajes que desencadenaron una acción del agente"
+      },
+      "search_message": "Buscar mensaje",
+      "filters": {
+        "all_messages": "Todos los mensajes",
+        "answers_found": "Respuestas encontradas",
+        "answers_not_found": "Respuestas no encontradas",
+        "messages_that_trigger_actions": "Mensajes que desencadenaron acciones",
+        "view": {
+          "title": "Ver",
+          "channels": "Mensajes recibidos a través de canales",
+          "preview": "Mensajes de vista previa de Agent Builder"
+        }
+      },
+      "no_message_received": "Ningún mensaje recibido",
+      "load_previous_messages": "Cargar mensajes anteriores",
+      "activated_the_action": "activó la acción de {action}",
+      "error_loading_messages": "Error al cargar mensajes",
+      "error_loading_previous_messages": "Error al cargar mensajes anteriores",
+      "inspect_response": {
+        "title": "Inspeccionar respuesta",
+        "inpect": "Inspeccionar",
+        "intelligent_agent_response_details": "Detalles de la respuesta del agente inteligente",
+        "contact_message": "Mensaje de contacto",
+        "agent_response": "Respuesta del agente",
+        "rate_the_answer": "Califica la respuesta",
+        "i_liked": "Me gustó",
+        "i_didnt_like": "No me gustó",
+        "confidence_percentage": "{percentage}% de confianza",
+        "not_found": "No encontrado"
+      },
+      "improve_response": {
+        "title": "Mejorar la respuesta",
+        "agent_unable_respond": "El agente no pudo responder al contacto",
+        "add_new_content": "Agregar nuevo contenido",
+        "edit_action": "Editar acción {name}",
+        "add_new_action": "Agregar nueva acción"
+      },
+      "modal_add_content": {
+        "description": "Agregar contenido para mejorar la respuesta del agente",
+        "add_another_site": "Agregar otro sitio",
+        "success_alert": "Contenido agregado exitosamente"
+      },
+      "new_messages_load": "{n} mensaje nuevo. Haz clic para cargar. | {n} mensajes nuevos. Haz clic para cargar.",
+      "show_logs": "Mostrar logs",
+      "hide_logs": "Esconder logs"
     },
     "actions": {
       "title": "Acciones",
@@ -78,6 +149,45 @@
       "router_activated": "Agent Builder activado en {name}",
       "router_removed": "Agent Builder eliminado de {name}",
       "router_edited": "Descripción de {name} actualizada"
+    },
+    "agents_team": {
+      "description": "Construye el equipo de agentes perfecto.",
+      "card": {
+        "assign": "Asignar al equipo",
+        "assigned": "Asignado",
+        "success_assign_alert": "{agent} asignado al equipo con éxito",
+        "success_unassign_alert": "{agent} eliminado del equipo con éxito",
+        "error_alert": "Error al intentar actualizar el equipo",
+        "official": "Oficial",
+        "custom": "Personalizado",
+        "remove_agent": "Eliminar agente"
+      }, 
+      "drawer": {
+        "title": "Asignar {name} al equipo",
+        "description": "Ingrese las credenciales para asignar el agente",
+        "use_credentials": "Usar credenciales de Ajustes",
+        "assign": "Asignar",
+        "credentials_used_by_this_agent": "Credenciales usadas por este agente",
+        "credentials_shared_with_all_agents": "Estas credenciales serán compartidas para que todos los agentes tengan acceso"
+      },
+      "active_team": {
+        "title": "Equipo activo",
+        "no_team": "No hay agentes asignados al equipo",
+        "no_team_description": "Vaya a {assign_agents} para ver la galería y asignar agentes a su equipo"
+      },
+      "gallery": {
+        "title": "Galería de agentes",
+        "search_placeholder": "Buscar por agente o habilidad",
+        "official_agents": "Agentes oficiales",
+        "custom_agents": "Agentes personalizados",
+        "no_agent_found": "Ningún agente encontrado",
+        "custom_agents_description": "Los agentes personalizados son creados usando Weni CLI.",
+        "weni_cli_documentation": "Documentación de Weni CLI",
+        "weni_cli_documentation_description": "Consulte la {weni_cli_documentation} para obtener instrucciones detalladas."
+      },
+      "create_agent": "Crear agente",
+      "preview": "Vista previa",
+      "assign_agents": "Asignar agentes"
     },
     "content": {
       "fields": {
@@ -95,18 +205,19 @@
         "title": "Restaurar valores predeterminados",
         "description": "¿Está seguro de que desea restaurar la configuración predeterminada? Esta acción no se puede revertir",
         "cancel": "Cancelar",
-        "restaurar": "Restaurar"
+        "restore": "Restaurar"
       },
       "description": "Gestionar la configuración y realizar un seguimiento de los cambios realizados",
       "tabs": {
         "config": "Configuración",
+        "credentials": "Credenciales",
         "history": "Historial de cambios"
       },
       "history": {
         "no_changes": "No se realizaron cambios en Agent Builder.",
         "description": "Consulta el historial de cambios realizados en Agent builder",
         "sub_description": "Vea la lista completa o filtre por tipo de cambio",
-         "fields": {
+        "fields": {
           "change": "Cambio",
           "date": "Fecha",
           "all-changes": "Todos los cambios",
@@ -114,8 +225,8 @@
           "content-changes": "Cambios de contenido",
           "actions-changes": "Cambios de acción",
           "settings-changes": "Cambios de configuración",
-          "changes": "hecho {value} cambios",
           "add-action": "añade una acción ({value})",
+          "changes": "hecho {value} cambios",
           "update-name-action": "cambió una acción ({value})",
           "update-prompt-action": "cambia el prompt de una acción ({value})",
           "remove-action": "elimina una acción ({value})",
@@ -132,16 +243,13 @@
           "update-model": "cambió el modelo",
           "brain-on": "encender el Agent Builder",
           "brain-off": "apagado o Agent Builder"
-         }
+        }
       },
       "fields": {
         "model": "Seleccionar modelo",
         "token": "Token",
         "token_info": "Código necesario para acceder a los servicios de OpenAI. Obtén tu token creando una cuenta OpenAI y generando una clave API en el panel de control.",
         "version": "Versión",
-        "golfinho-1": "Utilícelo cuando necesite un equilibrio entre calidad y velocidad. Ideal para la mayoría de aplicaciones con respuestas rápidas y precisas.",
-        "shark-1": "Utilícelo cuando sea esencial la máxima precisión en la respuesta, aunque sea más lenta.",
-        "version-gpt": "Versión",
         "select-language": "Idioma",
         "language": "Selecciona el idioma por defecto",
         "languages": {
@@ -149,6 +257,9 @@
           "en": "Inglés",
           "es": "Español"
         },
+        "golfinho-1": "Utilícelo cuando necesite un equilibrio entre calidad y velocidad. Ideal para la mayoría de aplicaciones con respuestas rápidas y precisas.",
+        "shark-1": "Utilícelo cuando sea esencial la máxima precisión en la respuesta, aunque sea más lenta.",
+        "version-gpt": "Versión",
         "parameter": "Parámetros",
         "temperature": "Temperatura",
         "temperature_info": "Ajustar la Temperatura para controlar la diversidad de las respuestas generadas",
@@ -173,11 +284,38 @@
           "cancel": "Cancelar",
           "action": "Desactivar"
         }
-      }
+        },
+      "credentials": {
+        "no_credentials": "No hay credenciales insertadas",
+        "used_by_official_agents": "Credenciales usadas por los agentes oficiales",
+        "used_by_customized_agents": "Credenciales usadas por los agentes personalizados",
+        "used_by": "Usadas por",
+        "no_agents_using": "Ningún agente usando",
+        "credentials_updated_successfully": "Credenciales actualizadas con éxito",
+        "get_error": "Error al obtener credenciales",
+        "save_error": "Error al guardar credenciales"
+      },
+      "settings": {
+        "save_error": "Error al guardar ajustes",
+        "agents_preview": {
+          "title": "Vista previa de agentes",
+          "agents_progressive_feedback": {
+            "title": "Feedback progresivo de agentes",
+          "description": "El agente puede proporcionar actualizaciones breves mientras formula la respuesta final, ayudando al contacto a entender su proceso en tiempo real."
+          }
+        }
+      },
+      "save_success": "Ajustes guardados con éxito"
     },
     "preview": {
       "title": "Vista previa del agente",
       "active": "Agent Builder activo",
+      "no_logs_registered": "No hay registros de logs",
+      "see_full_details": "Ver detalles",
+      "manager_task": "Coordinando tareas del equipo",
+      "visual_flow": "Flujo visual",
+      "logs": "Logs",
+      "agents_preview": "Vista previa de agentes",
       "options": {
         "refresh": "Borrar conversaciones",
         "qr_code": "Ver desde móvil",
@@ -193,11 +331,12 @@
       "flow_started": "Flujo {name} iniciado",
       "flow_finished": "Flujo finalizado",
       "message_forwarded_to_brain": "Mensaje transmitido a Agent Builder",
-      "media_and_location_unavailable": "No hay ninguna acción de Medios y Ubicación registrada"
+      "media_and_location_unavailable": "No hay ninguna acción de Medios y Ubicación registrada",
+      "standby": "Standby"
     }
   },
   "content_bases": {
-    "description": "Introduzca el contenido que su agente utilizará para responder a las preguntas. Incluya toda la información, archivos y sitios web necesarios para que el agente proporcione respuestas precisas y útiles.",
+    "description": "Agregue conocimiento a través de archivos, enlaces o texto para que el agente pueda responder con precisión.",
     "quick_test": "Prueba rápida",
     "sidebar_quick_test_title": "Prueba rápida de la base {name}",
     "sidebar_quick_test_description": "Envíe un mensaje para probar esta base de contenidos y averiguar qué preguntas puede responder",
@@ -260,6 +399,9 @@
         "not_found": {
           "title": "No se ha podido visualizar el contenido del fichero",
           "description": "No se ha encontrado el contenido del archivo.<br />Por favor, elimine el archivo e intente añadirlo de nuevo."
+        },
+        "bedrock": {
+          "title": "La visualización de contenido no está disponible"
         }
       }
     },
@@ -412,8 +554,8 @@
         "confirm_modal_message": "Al hacer una copia de la inteligencia, puedes usarla en tu organización y también hacer los cambios que quieras.",
         "copy": "Copiar"
       },
-      "intelligence_force":"Fuerza",
-      "intelligence_force_tooltip":"La fuerza de la inteligencia es una forma sencilla de medir qué tan bien está diseñada la inteligencia. Se recomienda que la fuerza esté por encima del 80%",
+      "intelligence_force": "Fuerza",
+      "intelligence_force_tooltip": "La fuerza de la inteligencia es una forma sencilla de medir qué tan bien está diseñada la inteligencia. Se recomienda que la fuerza esté por encima del 80%",
       "integration_success_title": "Inteligencia integrada",
       "integration_success_description": "La inteligencia se integró conéxito 😉",
       "integration_error_title": "No se puede integrar la inteligencia",
@@ -550,7 +692,6 @@
       "login": "Inicia sesión en tu cuenta para editar esta inteligencia.",
       "all_intents": "Todas las Intenciones",
       "all_entities": "Todas las entidades",
-      "all_labels": "Todas las Categorias",
       "all_languages": "Todos los idiomas",
       "intent": "Intención",
       "no_versions": "No hay resultados para esta versión",
@@ -715,11 +856,11 @@
         "api_tabs_subtitle": "Ingrese los siguientes datos donde se le solicite en la plataforma:",
         "api_tabs_intelligence_id": "ID de la base de inteligencia",
         "api_guide": "Cómo integrarse y ejemplo de la respuesta de API",
+        "api_integrate": "Cómo integrar los flujos de Weni o Rapidpro",
         "api_body": "cuerpo",
         "api_tabs_post_lang": "Código de lenguaje",
         "api_tabs_post_text": "Su pregunta",
         "api_response": "Ejemplo de respuesta de API",
-        "api_integrate": "Cómo integrar los flujos de Weni o Rapidpro",
         "api_integrate_step_one": "Paso 1",
         "api_integrate_step_one_text": "En los flujos de Weni, abre el flujo deseado o cree un nuevo flujo.",
         "api_integrate_step_two": "Paso 2",
@@ -744,13 +885,12 @@
         "edit-base_modal_delete_placeholder": "Confirme el nombre de la base de conocimientos para eliminarla.",
         "edit-base_modal_delete_button_confirm": "Excluir la base",
         "edit-base_modal_delete_button_cancel": "Cancelar",
-        "edit-base_modal_delete_button_validation": "Escriba ${this.knowledgeBase.title} para confirmar la eliminación",
+        "see-all_bases": "Ver todas las bases",
+        "add_base": "+ Añadir base",
         "edit-base_modal_alert_title": "Salir de la base de contenidos",
         "edit-base_modal_alert_description": "¿Estás seguro de que quieres salir de la base de contenidos ahora? El contenido que no se guarde se descartará",
         "edit-base_modal_alert_save": "Salir",
-        "edit-base_modal_alert_discard": "Cancelar",
-        "see-all_bases": "Ver todas las bases",
-        "add_base": "+ Añadir base"
+        "edit-base_modal_alert_discard": "Cancelar"
       },
       "copy-intelligence": "Copiar inteligencia",
       "intelligence_filter": {
@@ -774,7 +914,7 @@
       "intent_question": "La INTENCIÓN es el deseo de que la inteligencia se dé cuenta de que el usuario tiene al enviar un mensaje específico. Por ejemplo: al enviar un \"gracias\", la intención del usuario es agradecer. Por lo tanto, la intención de la frase podría ser \"gracias\".",
       "entity_question": "La ENTIDAD es el sustantivo relacionado con el deseo que fue detectado por la inteligencia. Por ejemplo: si el usuario envió \"generar nuevo informe\", la entidad puede ser \"informe\" o \"nuevo informe\".",
       "entity_groups_info": "sustantivo relacionado con el deseo que fue detectado por la inteligencia. Por ejemplo: si la frase enviada por el usuario es “generar un nuevo informe”, la entidad puede ser “informe” o “nuevo informe”.",
-       "intents_list_info": "El deseo de que la inteligencia perciba que el usuario tiene al enviar un mensaje. Por ejemplo: al enviar “gracias” la intención del usuario es mostrar gratitud. Por lo tanto, la intención podría ser “gracias”.",
+      "intents_list_info": "El deseo de que la inteligencia perciba que el usuario tiene al enviar un mensaje. Por ejemplo: al enviar “gracias” la intención del usuario es mostrar gratitud. Por lo tanto, la intención podría ser “gracias”.",
       "intelligence_force": "Fuerza de inteligencia",
       "intelligence_force_low": "Débil",
       "intelligence_force_regular": "Regular",
@@ -906,9 +1046,9 @@
       "delete_button": "Borrar",
       "cancel_button": "Cancelar",
       "save_button": "Ahorrar",
-      "error_caracter_type": "La frase debe contener letras o números. Incluirlos para continuar.",
       "train_progress": "Entrenamiento en progreso",
       "empty_text_error": "Introduzca una oración",
+      "error_caracter_type": "La frase debe contener letras o números. Incluirlos para continuar.",
       "intent_error": "Entrar en una intención",
       "default_error": "Ocurrió algo mal, inténtalo de nuevo más tarde.",
       "more_than_200_words": "Límite de 200 palabras por frase alcanzado. Ajuste el texto si es necesario o divídalo en frases más pequeñas.",
@@ -995,7 +1135,7 @@
       "import_button_cancel": "Cancelar",
       "export_all_sentences": "Todas las oraciones",
       "export_only_translated": "Oraciones no traducidas",
-      "traductores": "Traductores | Traductor | Traductores",
+      "translators": "Traductores | Traductor | Traductores",
       "completed": "Traducciones completas | Traducción completa | Traducciones completas",
       "more_than_half": "Más del 50% traducido",
       "less_than_half": "Menos del 50% traducido",
@@ -1025,8 +1165,8 @@
       "create_new_token": "Generar enlace",
       "delete_confirm": "¿Realmente desea eliminar la traducción seleccionada? Una vez realizada la acción, no será posible revertirla.",
       "default_error": "Algo salió mal.",
-      "ok": "Ok",
-      "cancelar": "Cancelar",
+      "okay": "ok",
+      "cancel": "Cancelar",
       "send_to_translators": "Enviar a traductores",
       "tab_translated": "Frases traducidas",
       "tab_not_translated": "Oraciones no traducidas",
@@ -1074,8 +1214,12 @@
         "title": "Pagos",
         "history": "Historial",
         "info": "Información del Pago",
+        "payment": "{period} payment",
         "credit_payment": "Con tarjeta de crédito",
-        "coupon_payment": "Con cupón"
+        "coupon_payment": "Con cupón",
+        "submit": "Enviar",
+        "total": "Total:",
+        "no_payments": "Sin pagos"
       },
       "intelligences": {
         "title": "Inteligencias",
@@ -1143,7 +1287,7 @@
     },
     "menu": {
       "hide": "Encogerse",
-      "expand":"Expandir",
+      "expand": "Expandir",
       "created_by": "Criado por",
       "back_text": "Volver",
       "summary": "Resumen",
@@ -1173,10 +1317,11 @@
     "phrase-suggestion": {
       "title": "Generador de frases",
       "subtitle": "Genere hasta cientos de nuevas frases a partir de una sola frase. Puede ser muy útil para mejorar tu inteligencia artificial.",
+      "empty": "No hay frases sugeridas para esta intención",
       "confirm-edit": "Confirmar la edición",
       "cancel-edit": "Cancelar edición",
       "tooltip_alert": "Las palabras sugeridas se generan a través de contextos tomados de Internet, por lo que las sugerencias que huyen del control de nuestro equipo pueden suceder.",
-      "add_a_sentence":"Escriba la oración que desea usar",
+      "add_a_sentence": "Escriba la oración que desea usar",
       "submit": "Enviar frase",
       "select_words_title": "Seleccionar palabras",
       "select_method": "Selecciona el método que se usará para generar las oraciones.",
@@ -1282,8 +1427,8 @@
       "remove_log_button": "Eliminar una oración",
       "select_phrase": "Seleccione una frase",
       "select_all": "Seleccionar todo",
-      "error": "Error",
       "send_to_evaluate": "La intención y la frase ya existen",
+      "error": "Error",
       "add_log": {
         "add": "Agregar",
         "close": "Cerrar"
@@ -1390,7 +1535,8 @@
       "quick_test": {
         "step_0": "<strong> esta es la prueba rápida! </strong> <br> Aquí puede probar rápidamente las frases agregadas a la capacitación.",
         "step_1": "Ingrese su oración de prueba y confirme.",
-        "step_2": "Haga clic aquí para descubrir la relevancia de cada palabra en la oración dentro de la intención elegida."
+        "step_2": "Haga clic aquí para descubrir la relevancia de cada palabra en la oración dentro de la intención elegida.",
+        "step_3": "Click here to see the Raw."
       },
       "inbox": {
         "step_0": "<strong> ¡Esta es la bandeja de entrada! </strong> <br> Aquí puede agregar frases de interacciones de usuarios con su inteligencia en capacitación o pruebas.",
@@ -1444,7 +1590,11 @@
       "cancel": "Cancelar",
       "importar": "Confirmar",
       "import_success": "Importar con éxito.",
-      "import_error": "Ocurrió algo mal, inténtalo de nuevo más tarde."
+      "import_error": "Ocurrió algo mal, inténtalo de nuevo más tarde.",
+      "import_sentences_success_title": "¡Frases importadas con éxito!",
+      "import_sentences_success_message": "Frases importadas para el entrenamiento adicionadas. 😉",
+      "import_sentences_error_title": "Error importando sentencias",
+      "import_sentences_error_message": "Ocurrió algo mal, inténtalo de nuevo más tarde."
     },
     "weni_notification": {
       "title": "BUTTUB ahora es inteligencia artificial Weni.",
@@ -1455,6 +1605,19 @@
     "infinite_scroll": {
       "title": "Cargando"
     }
+  },
+  "upload_area": {
+    "title": {
+      "text": "Arrastre su archivo aquí, o",
+      "highlight": "buscarlo"
+    },
+    "subtitle": "Formatos soportados: ",
+    "invalid": {
+      "subtitle": "Archivo inválido"
+    }
+  },
+  "import_card": {
+    "importing": "Importando..."
   },
   "action_type_selector": {
     "title": "Seleccione el tipo de acción",
@@ -1500,6 +1663,10 @@
               "description": {
                 "label": "Descripción de la acción:"
               }
+            },
+            "send_response_to_flow": {
+              "title": "Enviar respuesta del modelo al flujo",
+              "tooltip": "Utilice {'@'}trigger.params.answer para insertar la respuesta del modelo en el flujo"
             }
           },
           "describe": {
@@ -1522,7 +1689,7 @@
                 "placeholder": "Buscar flujos"
               }
             },
-            "flow_already_in_use": "Este flujo ya está vinculado a una acción"
+            "flow_assigned_actions": "Este flujo ya ha sido asignado a {count} acción:\n{actions} | Este flujo ya se ha asignado a {count} acciones:\n{actions}"
           },
           "nominate_action": {
             "title": "Nombre acción",
@@ -1594,18 +1761,31 @@
       }
     }
   },
-  "customization": {
-    "title": "Persona del agente",
-    "sub_title": "Perfil de tu agente inteligente. Aquí es donde introducirás sus características y comportamientos",
+  "profile": {
+    "description": "Personaliza la información básica y el comportamiento del agente",
     "save_btn": "Guardar cambios",
     "invalid_field": "Campo obligatorio",
     "invalid_get_data": "Error al intentar obtener los datos",
     "fields": {
-      "name": "Nombre",
-      "occupation": "Ocupación",
-      "personality": "Personalidad",
-      "goal": "Objetivo",
-      "instruction": "Instrucción",
+      "name": {
+        "title": "¿Cómo se presenta el agente?",
+        "description": "Este es el nombre que se muestra durante interacciones con los usuarios",
+        "placeholder": "Tainá"
+      },
+      "occupation": {
+        "title": "¿Cuál es el rol principal del agente?",
+        "placeholder": "Asistente de soporte al cliente",
+        "description": "Define el rol principal del agente para que los usuarios comprendan cómo los ayuda"
+      },
+      "goal": {
+        "title": "¿Cuál es el objetivo principal del agente?",
+        "placeholder": "Responde preguntas de los clientes",
+        "description": "Esto ayuda a definir lo que el agente pretende lograr durante interacciones"
+      },
+      "personality": {
+        "title": "¿Cuál es el tono de voz del agente?",
+        "description": "Elige cómo se comunica el agente con los usuarios"
+      },
       "personalities": {
         "friendly": "Amistoso",
         "extrovert": "Extrovertido",
@@ -1619,16 +1799,14 @@
         "intellectual": "Intelectual"
       }
     },
-    "placeholders": {
-      "instruction": "Eres gracioso pero no haces bromas",
-      "name": "Tainá",
-      "occupation": "Experto en llamas", 
-      "goal": "Responder preguntas y dar información sobre llamas"
-    },
     "instructions": {
       "title": "Instrucciones generales",
       "sub_title": "Cómo quieres que se comporte el agente.",
       "add_instruction_btn": "Añadir instrucción",
+      "instruction": {
+        "title": "Instrucción",
+        "placeholder": "Eres gracioso pero no haces bromas"
+      },
       "modals": {
         "title": "Quitar instrucción",
         "description": "¿Estás seguro de que quieres eliminar la instrucción?",
@@ -1636,6 +1814,19 @@
         "error_message": "Error al eliminar la instrucción",
         "back_btn": "Cancelar",
         "remove_btn": "Eliminar"
+      }
+    },
+    "human_support": {
+      "title": "Soporte humano",
+      "switch": {
+        "enabled": "Habilitado",
+        "disabled": "Deshabilitado"
+      },
+      "fields": {
+        "rules": {
+          "title": "Cuando el agente debe transferir una conversación a un humano?",
+          "placeholder": "Si el usuario pide soporte humano, el agente debe enrutar al soporte humano"
+        }
       }
     }
   },

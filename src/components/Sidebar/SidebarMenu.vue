@@ -21,10 +21,8 @@ export default {
   color: $unnnic-color-neutral-cloudy;
   font-family: $unnnic-font-family-secondary;
   font-weight: $unnnic-font-weight-regular;
-  margin-bottom: $unnnic-spacing-stack-md;
 
   &__title {
-    margin: 0 0 $unnnic-spacing-stack-xs 0;
     font-size: $unnnic-font-size-body-md;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
   }

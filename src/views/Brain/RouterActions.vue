@@ -1,20 +1,9 @@
 <template>
-  <section
-    :style="{
-      minHeight: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-    }"
-  >
-    <UnnnicIntelligenceText
-      tag="p"
-      family="secondary"
-      size="body-gt"
-    >
-      {{ $t('router.actions.description') }}
-    </UnnnicIntelligenceText>
-
-    <UnnnicDivider ySpacing="md" />
+  <section class="router-actions">
+    <UnnnicDivider
+      ySpacing="md"
+      class="router-actions__divider"
+    />
 
     <ContentList
       :items="{
@@ -152,12 +141,14 @@ export default {
       const action = this.items.data.find((action) => action.uuid === uuid);
 
       this.currentActionEditing = {
-        uuid,
+        uuid: action.uuid,
+        flow_uuid: action.flow_uuid,
         type: action.type,
         name: action.name,
         editable: action.editable,
         description: action.prompt,
         group: action.group,
+        send_llm_response_to_flow: action.send_llm_response_to_flow,
         status: null,
       };
     },
@@ -193,7 +184,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.actions__container {
-  margin-top: $unnnic-spacing-xs;
+section.router-actions {
+  min-height: '100%';
+  display: 'flex';
+  flex-direction: 'column';
+
+  .router-actions__divider {
+    margin-top: 0;
+  }
 }
 </style>

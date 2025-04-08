@@ -1,6 +1,12 @@
 import request from '@/api/nexusaiRequest';
 import forceHttps from '@/api/utils/forceHttps';
 import { Actions } from './nexus/Actions';
+import { Monitoring } from './nexus/Monitoring';
+import { AgentsTeam } from './nexus/AgentsTeam';
+
+import { ProgressiveFeedbackAdapter } from './adapters/tunings/progressiveFeedback';
+
+import i18n from '@/utils/plugins/i18n';
 
 export default {
   question: {
@@ -124,7 +130,11 @@ export default {
       });
     },
 
+    monitoring: Monitoring,
+
     actions: Actions,
+
+    agents_team: AgentsTeam,
 
     tunings: {
       read({ projectUuid }) {
@@ -151,6 +161,49 @@ export default {
         );
       },
 
+      listCredentials({ projectUuid }) {
+        return request.$http.get(`api/project/${projectUuid}/credentials`, {
+          hideGenericErrorAlert: true,
+        });
+      },
+
+      editCredentials({ projectUuid, credentials = {}, requestOptions = {} }) {
+        return request.$http.patch(
+          `api/project/${projectUuid}/credentials`,
+          credentials,
+          requestOptions,
+        );
+      },
+
+      createCredentials({
+        projectUuid,
+        credentials = {},
+        agent_uuid,
+        is_confidential = true,
+      }) {
+        return request.$http.post(`api/project/${projectUuid}/credentials`, {
+          credentials,
+          agent_uuid,
+          is_confidential,
+        });
+      },
+
+      async getProgressiveFeedback({ projectUuid }) {
+        const response = await request.$http.get(
+          `api/project/${projectUuid}/rationale`,
+        );
+
+        return ProgressiveFeedbackAdapter.fromApi(response.data);
+      },
+
+      editProgressiveFeedback({ projectUuid, data, requestOptions = {} }) {
+        return request.$http.patch(
+          `api/project/${projectUuid}/rationale`,
+          ProgressiveFeedbackAdapter.toApi(data),
+          requestOptions,
+        );
+      },
+
       historyChanges: {
         read({ projectUuid, pageSize = 10, page = 1, filter = '' }) {
           let url = `api/${projectUuid}/activities/?page=${page}&page_size=${pageSize}`;
@@ -174,7 +227,7 @@ export default {
       },
     },
 
-    customization: {
+    profile: {
       read({ projectUuid }) {
         return request.$http.get(`api/${projectUuid}/customization/`);
       },
@@ -199,6 +252,7 @@ export default {
           text,
           attachments,
           contact_urn,
+          language: i18n.global.locale,
         });
       },
       uploadFile({ projectUuid, file }) {

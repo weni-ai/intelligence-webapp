@@ -41,6 +41,7 @@
               size="sm"
             />
             <UnnnicIntelligenceText
+              class="messages__status"
               color="neutral-cloudy"
               family="secondary"
               weight="regular"
@@ -114,7 +115,7 @@
 </template>
 
 <script>
-import { get } from 'lodash';
+import { get, attempt } from 'lodash';
 import { reactive } from 'vue';
 
 import AnswerSources from '@/components/QuickTest/AnswerSources.vue';
@@ -124,6 +125,7 @@ import PreviewMedia from '@/components/PreviewMedia.vue';
 import QuickTestWarn from '@/components/QuickTest/QuickTestWarn.vue';
 import PreviewPlaceholder from '../../Brain/Preview/Placeholder.vue';
 import MessageInput from './MessageInput.vue';
+import { useProfileStore } from '@/store/Profile';
 
 import FlowPreview from '@/utils/FlowPreview';
 import { lowerFirstCapitalLetter } from '@/utils/handleLetters';
@@ -180,6 +182,14 @@ export default {
 
   emits: ['messages'],
 
+  setup() {
+    const profileStore = useProfileStore();
+
+    return {
+      profileStore,
+    };
+  },
+
   data() {
     return {
       message: '',
@@ -194,7 +204,12 @@ export default {
     },
 
     shouldShowRequireSaveWarn() {
-      return this.usePreview && !this.$store.getters.isBrainSaveButtonDisabled;
+      return (
+        this.usePreview &&
+        (!this.$store.getters.isBrainSaveButtonDisabled ||
+          this.profileStore.hasChanged ||
+          this.$store.getters.hasBrainContentTextChanged)
+      );
     },
 
     language() {
@@ -375,6 +390,7 @@ export default {
       } = await this.previewStart({
         flowName: flow.name,
         flowUuid: flow.uuid,
+        flowParams: flow.params,
       });
 
       this.treatEvents(answer, events);
@@ -463,11 +479,20 @@ export default {
 
           if (data.type === 'broadcast') {
             answer.status = 'loaded';
-            answer.text = get(
-              data,
-              'message',
-              this.$t('quick_test.unable_to_find_an_answer', this.language),
+
+            const safeParseMessage = attempt(
+              JSON.parse.bind(null, data.message),
             );
+            const textOfComponents = safeParseMessage?.msg?.text;
+
+            answer.text =
+              textOfComponents ||
+              get(
+                data,
+                'message',
+                this.$t('quick_test.unable_to_find_an_answer', this.language),
+              );
+
             answer.sources = get(data, 'fonts', []);
 
             this.scrollToLastMessage();
@@ -482,10 +507,17 @@ export default {
               },
             });
 
-            this.flowStart(answer, { name: data.name, uuid: data.uuid });
+            this.flowStart(answer, {
+              name: data.name,
+              uuid: data.uuid,
+              params: data.params,
+            });
           } else if (data.type === 'media_and_location_unavailable') {
             answer.status = 'loaded';
             answer.type = data.type;
+          } else if (data.type === 'cancelled') {
+            answer.status = 'loaded';
+            this.messages.splice(index, 1);
           }
         } catch {
           handleError();
@@ -612,7 +644,7 @@ export default {
 
     $scroll-size: $unnnic-inline-nano;
 
-    overflow: overlay;
+    overflow: hidden overlay;
 
     &__content {
       height: 0;
@@ -666,6 +698,8 @@ export default {
 
       :deep(p) {
         margin: 0;
+
+        overflow-wrap: anywhere;
       }
     }
 
@@ -694,6 +728,10 @@ export default {
 
       + .messages__change {
         margin-top: -$unnnic-spacing-nano;
+      }
+
+      .messages__status {
+        overflow: hidden;
       }
     }
   }

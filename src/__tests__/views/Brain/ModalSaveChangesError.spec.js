@@ -6,7 +6,7 @@ const store = createStore({
   state() {
     return {
       Brain: {
-        tabsWithError: ['personalization', 'content', 'actions', 'tunings'],
+        tabsWithError: ['profile', 'content', 'actions', 'tunings'],
       },
     };
   },
@@ -29,7 +29,7 @@ describe('ModalSaveChangesError', () => {
     });
 
     tabNames = [
-      wrapper.vm.$t('router.tabs.personalization'),
+      wrapper.vm.$t('router.tabs.profile'),
       wrapper.vm.$t('router.tabs.content'),
       wrapper.vm.$t('router.tabs.actions'),
       wrapper.vm.$t('router.tabs.tunings'),

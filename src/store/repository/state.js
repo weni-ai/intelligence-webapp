@@ -8,7 +8,7 @@ export default {
   repositoryIsTraining: false,
   requirements: {},
   publicIntelligences: {
-    limit: 20,
+    limit: 40,
     offset: 0,
     data: [],
     next: null,

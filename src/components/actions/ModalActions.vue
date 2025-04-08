@@ -11,7 +11,7 @@
     :primaryButtonProps="{
       text: currentStep === lastStep ? $t('finish') : $t('next'),
       disabled: !isPrimaryButtonActive,
-      loading: isAdding,
+      loading: isLoading,
       'data-test': 'next-button',
     }"
     @secondary-button-click="goToPreviousStep"
@@ -19,28 +19,14 @@
     @update:model-value="$emit('update:modelValue', $event)"
   >
     <template #leftSidebar>
-      <LeftSidebar
-        v-bind="
-          isCustom
-            ? {
-                title: $t('modals.actions.add.title'),
-                description: $t('modals.actions.add.description'),
-              }
-            : {
-                title: $t('modals.actions.add.custom_title', {
-                  name: $t(`action_type_selector.types.${actionGroup}.title`),
-                }),
-                description: $t('modals.actions.add.custom_description'),
-              }
-        "
-        :steps="steps"
-      />
+      <LeftSidebar v-bind="leftSidebarProps" />
     </template>
 
     <section class="action-body">
       <StepSelectActionType
         v-if="currentStep.name === 'select_action_type'"
         v-model:templateUuid="templateUuid"
+        v-model:sendLlmToFlow="sendLlmToFlow"
         :group="actionGroup"
       />
 
@@ -48,6 +34,7 @@
         v-if="currentStep.name === 'describe'"
         v-model:description="description"
         v-model:actionType="actionType"
+        v-model:sendLlmToFlow="sendLlmToFlow"
       />
 
       <StepSelectFlow
@@ -93,6 +80,11 @@ export default {
       type: String,
       required: true,
     },
+
+    actionToEditUuid: {
+      type: String,
+      default: '',
+    },
   },
 
   emits: ['update:modelValue', 'added', 'previousStep'],
@@ -123,7 +115,7 @@ export default {
 
   data() {
     return {
-      isAdding: false,
+      isLoading: false,
 
       currentStepIndex: 0,
 
@@ -133,12 +125,48 @@ export default {
       actionType: 'custom',
       flowUuid: '',
       templateUuid: '',
+      sendLlmToFlow: false,
     };
   },
 
   computed: {
     isCustom() {
       return this.actionGroup === 'custom';
+    },
+
+    leftSidebarProps() {
+      const baseProps = {
+        steps: this.steps,
+      };
+
+      if (this.actionToEdit) {
+        return {
+          ...baseProps,
+          title: this.$t('content_bases.actions.edit_action'),
+          description: this.$t(
+            'router.monitoring.improve_response.edit_action',
+            {
+              name: this.actionToEdit.name,
+            },
+          ),
+        };
+      }
+
+      if (this.isCustom) {
+        return {
+          ...baseProps,
+          title: this.$t('modals.actions.add.title'),
+          description: this.$t('modals.actions.add.description'),
+        };
+      }
+
+      return {
+        ...baseProps,
+        title: this.$t('modals.actions.add.custom_title', {
+          name: this.$t(`action_type_selector.types.${this.actionGroup}.title`),
+        }),
+        description: this.$t('modals.actions.add.custom_description'),
+      };
     },
 
     steps() {
@@ -201,6 +229,18 @@ export default {
 
       return true;
     },
+
+    actionToEdit() {
+      return this.actionsStore.actions.data.find(
+        (action) => action.uuid === this.actionToEditUuid,
+      );
+    },
+  },
+
+  mounted() {
+    if (this.actionToEdit) {
+      this.syncDataActionToEdit();
+    }
   },
 
   methods: {
@@ -208,20 +248,28 @@ export default {
       this.$emit('update:modelValue', false);
     },
 
+    syncDataActionToEdit() {
+      this.description = this.actionToEdit.prompt;
+      this.flowUuid = this.actionToEdit.flow_uuid;
+      this.name = this.actionToEdit.name;
+    },
+
     async addAction() {
       try {
-        this.isAdding = true;
+        this.isLoading = true;
 
         const data = this.templateUuid
           ? {
               flowUuid: this.flowUuid,
               templateUuid: this.templateUuid,
+              send_llm_response_to_flow: this.sendLlmToFlow,
             }
           : {
               name: this.name,
               prompt: this.description,
               flowUuid: this.flowUuid,
               type: this.actionType,
+              send_llm_response_to_flow: this.sendLlmToFlow,
             };
 
         const { name } = await this.actionsStore.add(data);
@@ -233,7 +281,32 @@ export default {
           }),
         });
       } finally {
-        this.isAdding = false;
+        this.isLoading = false;
+
+        this.close();
+      }
+    },
+
+    async editAction() {
+      if (!this.actionToEdit) return;
+
+      try {
+        this.isLoading = true;
+        const action = await this.actionsStore.edit({
+          uuid: this.actionToEdit.uuid,
+          name: this.name,
+          flow_uuid: this.flowUuid,
+          prompt: this.description,
+        });
+
+        this.alertStore.add({
+          type: 'success',
+          text: this.$t('modals.actions.edit.messages.success', {
+            name: action.name,
+          }),
+        });
+      } finally {
+        this.isLoading = false;
 
         this.close();
       }
@@ -250,7 +323,7 @@ export default {
 
     goToNextStep() {
       if (this.currentStep === this.lastStep) {
-        this.addAction();
+        this.actionToEdit ? this.editAction() : this.addAction();
       } else {
         if (this.isNeedGenerateName()) this.generateActionName();
         this.currentStepIndex += 1;
@@ -282,7 +355,7 @@ export default {
     },
 
     isNeedGenerateName() {
-      return this.currentStep.name === 'select_flow';
+      return this.currentStep.name === 'select_flow' && !this.actionToEdit;
     },
   },
 };

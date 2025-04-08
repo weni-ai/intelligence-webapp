@@ -7,20 +7,27 @@
     <section class="repository-base-edit__wrapper">
       <BrainSideBar />
       <div class="repository-base-edit__wrapper__left-side">
-        <section class="content-base__container">
+        <section
+          :class="{
+            'content-base__container': true,
+            'content-base__container--scrollable': isRouteScrollable,
+          }"
+        >
           <BrainHeader />
-          <section class="scrollable">
+
+          <section :class="{ scrollable: !isRouteScrollable }">
             <RouterContentBase
               v-if="route.name === 'router-content'"
               :filesProp="files"
               :sitesProp="sites"
               :textProp="text"
+              :textLoading="text.status === 'loading'"
               @update:files="(v) => (files = v)"
             />
+            <RouterMonitoring v-else-if="route.name === 'router-monitoring'" />
+            <RouterAgentsTeam v-else-if="route.name === 'router-agents-team'" />
             <RouterActions v-else-if="route.name === 'router-actions'" />
-            <RouterCustomization
-              v-else-if="route.name === 'router-personalization'"
-            />
+            <RouterProfile v-else-if="route.name === 'router-profile'" />
             <RouterTunings
               v-else-if="route.name === 'router-tunings'"
               :data="routerTunings"
@@ -30,6 +37,7 @@
       </div>
 
       <section
+        v-if="showPreview"
         :class="[
           'repository-base-edit__wrapper__card',
           'repository-base-edit__wrapper__card-test-container',
@@ -70,9 +78,11 @@ import { get } from 'lodash';
 import nexusaiAPI from '../../api/nexusaiAPI';
 import PageContainer from '../../components/PageContainer.vue';
 import Tests from '../repository/content/Tests.vue';
+import RouterMonitoring from './RouterMonitoring/index.vue';
+import RouterAgentsTeam from './RouterAgentsTeam/index.vue';
 import RouterActions from './RouterActions.vue';
 import RouterContentBase from './RouterContentBase.vue';
-import RouterCustomization from './RouterCustomization.vue';
+import RouterProfile from './RouterProfile/index.vue';
 import RouterTunings from './RouterTunings.vue';
 import ModalPreviewQRCode from './Preview/ModalPreviewQRCode.vue';
 import ModalSaveChangesError from './ModalSaveChangesError.vue';
@@ -81,17 +91,23 @@ import { useSitesPagination } from '../ContentBases/sitesPagination';
 import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
 import BrainHeader from '@/components/Brain/BrainHeader.vue';
 import i18n from '@/utils/plugins/i18n';
+import useBrainRoutes from '@/composables/useBrainRoutes';
 import BrainWarningBar from '@/components/Brain/BrainWarningBar.vue';
 import BrainHeaderPreview from '@/components/Brain/BrainHeaderPreview.vue';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useTuningsStore } from '@/store/Tunings';
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 export default {
   name: 'Brain',
   components: {
     Tests,
     PageContainer,
+    RouterMonitoring,
     RouterActions,
+    RouterAgentsTeam,
     RouterContentBase,
-    RouterCustomization,
+    RouterProfile,
     RouterTunings,
     ModalPreviewQRCode,
     ModalSaveChangesError,
@@ -146,6 +162,20 @@ export default {
       contentBaseUuid: contentBaseUuid.value,
     });
 
+    const brainRoutes = useBrainRoutes();
+    const isAgentsTeamEnabled = computed(
+      () => useFeatureFlagsStore().flags.agentsTeam,
+    );
+    const showPreview = computed(
+      () =>
+        !isAgentsTeamEnabled.value &&
+        brainRoutes.value.find((mappedRoute) => mappedRoute.page === route.name)
+          ?.preview,
+    );
+    const isRouteScrollable = computed(
+      () => route.name === 'router-monitoring',
+    );
+
     const refreshPreview = () => {
       refreshPreviewValue.value += 1;
     };
@@ -189,6 +219,10 @@ export default {
       });
 
       routerTunings.value.brainOn = data.brain_on;
+      store.commit('updateTuning', {
+        name: 'indexer_database',
+        value: data.indexer_database,
+      });
     };
 
     const loadContentBase = async () => {
@@ -240,7 +274,11 @@ export default {
     onMounted(() => {
       files.loadNext();
       sites.loadNext();
+      useTuningsStore().fetchCredentials();
       loadRouterOptions();
+      if (isAgentsTeamEnabled.value) {
+        useAgentsTeamStore().loadActiveTeam();
+      }
     });
 
     const previewActions = computed(() => {
@@ -275,6 +313,7 @@ export default {
       files,
       sites,
       text,
+      showPreview,
       routerTunings,
       contentBase,
       contentBaseUuid,
@@ -284,6 +323,7 @@ export default {
       loadContentBase,
       getPreviewMessages,
       previewActions,
+      isRouteScrollable,
     };
   },
 };
@@ -346,9 +386,14 @@ export default {
 
     padding: $unnnic-spacing-sm;
 
-    flex: 1;
+    height: 100%;
+
     display: flex;
     flex-direction: column;
+
+    &--scrollable {
+      overflow-y: auto;
+    }
   }
 
   &__scrollable {
@@ -511,13 +556,20 @@ export default {
   }
 
   &__wrapper {
-    flex: 1;
-    display: flex;
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
 
     &__left-side {
-      flex: 1;
+      height: 100%;
+      width: 100%;
+
       display: flex;
       flex-direction: column;
+
+      overflow: hidden;
     }
 
     &__card-test-container {

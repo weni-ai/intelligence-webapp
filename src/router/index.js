@@ -74,7 +74,7 @@ const router = createRouter({
       name: 'router',
       component: Brain,
       redirect: () => {
-        return { name: 'router-personalization' };
+        return { name: 'router-monitoring' };
       },
       async beforeEnter(_to, _from, next) {
         const { data } = await nexusaiAPI.router.read({
@@ -89,14 +89,24 @@ const router = createRouter({
       },
       children: [
         {
-          path: 'personalization',
-          name: 'router-personalization',
-          component: () => import('../views/Brain/RouterCustomization.vue'),
+          path: 'monitoring',
+          name: 'router-monitoring',
+          component: () => import('../views/Brain/RouterMonitoring/index.vue'),
+        },
+        {
+          path: 'profile',
+          name: 'router-profile',
+          component: () => import('../views/Brain/RouterProfile/index.vue'),
+        },
+        {
+          path: 'agents-team',
+          name: 'router-agents-team',
+          component: () => import('../views/Brain/RouterAgentsTeam/index.vue'),
         },
         {
           path: 'content',
           name: 'router-content',
-          component: () => import('../views/Brain/RouterCustomization.vue'),
+          component: () => import('../views/Brain/RouterContentBase.vue'),
         },
         {
           path: 'actions',

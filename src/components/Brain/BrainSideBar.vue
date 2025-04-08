@@ -22,6 +22,7 @@
           :icon="nav.icon"
           :active="nav.page === activeNav"
           :iconFilled="nav.page === activeNav"
+          :tag="nav.tag"
           data-test="nav-router"
           @click="onNavChange(nav.page)"
         />
@@ -33,14 +34,13 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { BRAIN_ROUTES } from '@/utils';
+import useBrainRoutes from '@/composables/useBrainRoutes';
 import SideBarItem from '../Sidebar/SideBarItem.vue';
 import SidebarMenu from '../Sidebar/SidebarMenu.vue';
 
-const brainRoutes = ref(BRAIN_ROUTES);
-
 const route = useRoute();
 const router = useRouter();
+const brainRoutes = useBrainRoutes();
 
 const activeNav = computed(() => {
   return brainRoutes.value.find((e) => e.page === route.name)?.page;

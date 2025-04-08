@@ -1,4 +1,4 @@
-import { flushPromises, mount } from '@vue/test-utils';
+import { flushPromises, mount, shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import Brain from '@/views/Brain/Brain.vue';
 import RouterContentBase from '@/views/Brain/RouterContentBase.vue';
@@ -10,6 +10,11 @@ import Tests from '@/views/repository/content/Tests.vue';
 import nexusaiAPI from '@/api/nexusaiAPI';
 import { expect } from 'vitest';
 import { useRoute } from 'vue-router';
+import { createTestingPinia } from '@pinia/testing';
+import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+
+const pinia = createTestingPinia({ stubActions: false });
 
 const store = createStore({
   state() {
@@ -95,11 +100,12 @@ vi.spyOn(nexusaiAPI.intelligences.contentBases.texts, 'list').mockResolvedValue(
 
 describe('Brain Component', () => {
   let wrapper;
-
+  let agentsTeamStore;
+  let featureFlagsStore;
   let pushMock;
   beforeEach(() => {
     useRoute.mockImplementationOnce(() => ({
-      name: 'router-personalization',
+      name: 'router-profile',
       params: {
         contentBaseUuid: 'uuuid-01',
       },
@@ -107,7 +113,7 @@ describe('Brain Component', () => {
 
     wrapper = mount(Brain, {
       global: {
-        plugins: [store],
+        plugins: [store, pinia],
         components: {
           RouterContentBase,
           RouterActions,
@@ -118,7 +124,7 @@ describe('Brain Component', () => {
         stubs: {
           RouterLink: true,
           RouterView: true,
-          RouterCustomization: true,
+          RouterProfile: true,
           ModalPreviewQRCode: true,
           BrainSideBar: true,
           BrainHeader: true,
@@ -126,6 +132,13 @@ describe('Brain Component', () => {
         },
       },
     });
+
+    agentsTeamStore = useAgentsTeamStore();
+    featureFlagsStore = useFeatureFlagsStore();
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   test('loads content base data correctly', async () => {
@@ -162,7 +175,7 @@ describe('Brain Component', () => {
   });
 
   test('displays ModalSaveChangesError when tabsWithError is not null', async () => {
-    store.state.Brain.tabsWithError = ['personalization'];
+    store.state.Brain.tabsWithError = ['profile'];
     await flushPromises();
     expect(wrapper.findComponent(ModalSaveChangesError).exists()).toBe(true);
   });
@@ -312,9 +325,9 @@ describe('Brain Component', () => {
   test('check if router components are rendered correctly based on route.name', async () => {
     const routes = [
       {
-        title: 'personalization',
-        page: 'router-personalization',
-        component: 'RouterCustomization',
+        title: 'profile',
+        page: 'router-profile',
+        component: 'RouterProfile',
       },
       {
         title: 'content',
@@ -343,7 +356,7 @@ describe('Brain Component', () => {
           stubs: {
             RouterLink: true,
             RouterView: true,
-            RouterCustomization: true,
+            RouterProfile: true,
             RouterTunings: true,
             RouterActions: true,
             RouterContentBase: true,
@@ -361,5 +374,19 @@ describe('Brain Component', () => {
         }
       });
     }
+  });
+
+  it('should load active team when mounted if agents team is enabled', () => {
+    featureFlagsStore.flags.agentsTeam = true;
+
+    const loadActiveTeamSpy = vi.spyOn(agentsTeamStore, 'loadActiveTeam');
+
+    wrapper = shallowMount(Brain, {
+      global: {
+        plugins: [store, pinia],
+      },
+    });
+
+    expect(loadActiveTeamSpy).toHaveBeenCalledTimes(1);
   });
 });

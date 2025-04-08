@@ -1,10 +1,11 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import Brain from '@/views/Brain/Brain.vue';
+import RouterMonitoring from '@/views/Brain/RouterMonitoring/index.vue';
 import RouterContentBase from '@/views/Brain/RouterContentBase.vue';
 import RouterActions from '@/views/Brain/RouterActions.vue';
 import RouterTunings from '@/views/Brain/RouterTunings.vue';
-import RouterCustomization from '@/views/Brain/RouterCustomization.vue';
+import RouterProfile from '@/views/Brain/RouterProfile/index.vue';
 import ModalPreviewQRCode from '@/views/Brain/Preview/ModalPreviewQRCode.vue';
 import ModalSaveChangesError from '@/views/Brain/ModalSaveChangesError.vue';
 import Tests from '@/views/repository/content/Tests.vue';
@@ -16,6 +17,19 @@ import { createWebHistory, createRouter } from 'vue-router';
 import Home from '@/views/Home.vue';
 import { createTestingPinia } from '@pinia/testing';
 import { Actions as ActionsAPI } from '@/api/nexus/Actions';
+import { useProfileStore } from '@/store/Profile';
+
+vi.spyOn(nexusaiAPI.router.profile, 'read').mockResolvedValue({
+  data: {
+    agent: {
+      name: '',
+      role: '',
+      personality: '',
+      goal: '',
+    },
+    instructions: [],
+  },
+});
 
 const pinia = createTestingPinia({ stubActions: false });
 
@@ -39,8 +53,8 @@ const store = createStore({
           current: '',
           old: '',
         },
-        customizationStatus: 'idle',
-        customizationErrorRequiredFields: {
+        profileStatus: 'idle',
+        profileErrorRequiredFields: {
           name: false,
           role: false,
           goal: false,
@@ -74,7 +88,7 @@ const store = createStore({
   },
   actions: {
     saveBrainChanges: vi.fn(),
-    loadBrainCustomization: vi.fn(),
+    loadBrainProfile: vi.fn(),
     loadBrainTunings: vi.fn(),
 
     async loadActions({ state: { Actions: state } }) {
@@ -107,7 +121,7 @@ const router = createRouter({
       name: 'router',
       component: Brain,
       redirect: () => {
-        return { name: 'router-personalization' };
+        return { name: 'router-profile' };
       },
       async beforeEnter(_to, _from, next) {
         const { data } = await nexusaiAPI.router.read({
@@ -122,14 +136,24 @@ const router = createRouter({
       },
       children: [
         {
-          path: 'personalization',
-          name: 'router-personalization',
-          component: () => import('@/views/Brain/RouterCustomization.vue'),
+          path: 'monitoring',
+          name: 'router-monitoring',
+          component: () => import('@/views/Brain/RouterMonitoring/index.vue'),
+        },
+        {
+          path: 'profile',
+          name: 'router-profile',
+          component: () => import('@/views/Brain/RouterProfile/index.vue'),
+        },
+        {
+          path: 'agents-team',
+          name: 'router-agents-team',
+          component: () => import('@/views/Brain/RouterAgentsTeam/index.vue'),
         },
         {
           path: 'content',
           name: 'router-content',
-          component: () => import('@/views/Brain/RouterCustomization.vue'),
+          component: () => import('@/views/Brain/RouterContentBase.vue'),
         },
         {
           path: 'actions',
@@ -266,6 +290,7 @@ const removedRequest = vi
 describe('Brain integration', () => {
   let wrapper;
   let dispatchSpy;
+  let profileStore;
 
   beforeEach(async () => {
     router.push('/router');
@@ -283,36 +308,41 @@ describe('Brain integration', () => {
           RouterTunings,
           ModalSaveChangesError,
           ModalPreviewQRCode,
-          RouterCustomization,
+          RouterProfile,
           Tests,
+        },
+        stubs: {
+          UnnnicSelectSmart: true,
         },
       },
     });
+
+    profileStore = useProfileStore();
   });
 
   test('check if all routes render the correct component when accessed by tabs', async () => {
-    const customizationComponent = wrapper.findComponent(RouterCustomization);
-    expect(customizationComponent.exists()).toBe(true);
+    const profileComponent = wrapper.findComponent(RouterProfile);
+    expect(profileComponent.exists()).toBe(true);
 
     const navigation = wrapper.findAll('[data-test="nav-router"]');
 
-    expect(navigation.length).eq(4);
+    expect(navigation.length).eq(5);
 
-    await navigation.at(1).trigger('click');
+    await navigation.at(2).trigger('click');
 
     await flushPromises();
 
     const contentComponent = wrapper.findComponent(RouterContentBase);
     expect(contentComponent.exists()).toBe(true);
 
-    await navigation.at(2).trigger('click');
+    await navigation.at(3).trigger('click');
 
     await flushPromises();
 
     const actionsComponent = wrapper.findComponent(RouterActions);
     expect(actionsComponent.exists()).toBe(true);
 
-    await navigation.at(3).trigger('click');
+    await navigation.at(4).trigger('click');
 
     await flushPromises();
 
@@ -320,93 +350,10 @@ describe('Brain integration', () => {
     expect(tuningsComponent.exists()).toBe(true);
   });
 
-  test('checking that the personalization tab is saving the entries provided and performing the save', async () => {
-    const navigation = wrapper.findAll('[data-test="nav-router"]');
-
-    await navigation.at(0).trigger('click');
-
-    await flushPromises();
-
-    const customizationComponent = wrapper.findComponent(RouterCustomization);
-
-    expect(customizationComponent.exists()).toBe(true);
-
-    const nameInput = wrapper.findComponent('[data-test="input-name"]');
-    const roleInput = wrapper.findComponent('[data-test="input-role"]');
-    const personalitySelect = wrapper.findComponent(
-      '[data-test="select-personality"]',
-    );
-    const goalTextArea = wrapper.findComponent('[data-test="textarea"]');
-
-    await nameInput.setValue('Test Name');
-    await roleInput.setValue('Test Role');
-    await personalitySelect.vm.$emit('update:model-value', [
-      { value: 'Amigável' },
-    ]);
-    await goalTextArea.setValue('Test Goal');
-
-    expect(store.state.Brain.agent.name.current).toBe('Test Name');
-    expect(store.state.Brain.agent.role.current).toBe('Test Role');
-    expect(store.state.Brain.agent.personality.current).toBe('Amigável');
-    expect(store.state.Brain.agent.goal.current).toBe('Test Goal');
-
-    const addButton = wrapper.findComponent(
-      '[data-test="btn-add-instruction"]',
-    );
-
-    await addButton.trigger('click');
-
-    expect(store.state.Brain.instructions.current.length).toBe(1);
-
-    const firstInstructionInput = wrapper.findComponent(
-      '[data-test="instruction-0"]',
-    );
-    await firstInstructionInput.setValue('instruction 01');
-
-    expect(store.state.Brain.instructions.current[0].instruction).toBe(
-      'instruction 01',
-    );
-
-    const deleteButtonFirstInstruction = wrapper.findComponent(
-      '[data-test="btn-delete-inst-0"]',
-    );
-
-    await deleteButtonFirstInstruction.trigger('click');
-
-    const removeModal = wrapper.findComponent('[data-test="remove-modal"]');
-
-    expect(removeModal.exists()).toBe(true);
-
-    const removeInstructionBtn = wrapper.findComponent(
-      '[data-test="btn-remove-inst"]',
-    );
-
-    await removeInstructionBtn.trigger('click');
-
-    expect(store.state.Brain.instructions.current.length).toBe(1);
-
-    await addButton.trigger('click');
-
-    const secondInstInput = wrapper.findComponent(
-      '[data-test="instruction-0"]',
-    );
-    await secondInstInput.setValue('instruction 02');
-
-    expect(store.state.Brain.instructions.current[0].instruction).toBe(
-      'instruction 02',
-    );
-
-    const saveBtn = wrapper.findComponent('.save-button');
-
-    await saveBtn.trigger('click');
-
-    expect(dispatchSpy).toHaveBeenCalledWith('saveBrainChanges');
-  });
-
   test('checking that the content base tab is saving the entries provided and performing the save', async () => {
     const navigation = wrapper.findAll('[data-test="nav-router"]');
 
-    await navigation.at(1).trigger('click');
+    await navigation.at(2).trigger('click');
 
     await flushPromises();
 
@@ -418,7 +365,7 @@ describe('Brain integration', () => {
   test('checking that the actions tab is saving the entries provided and performing the save', async () => {
     const navigation = wrapper.findAll('[data-test="nav-router"]');
 
-    await navigation.at(2).trigger('click');
+    await navigation.at(3).trigger('click');
 
     await flushPromises();
 

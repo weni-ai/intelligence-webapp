@@ -38,6 +38,7 @@
           :placeholder="
             $t('content_bases.sites.sidebar_add.fields.link.placeholder')
           "
+          @input="onInput"
         ></UnnnicInput>
       </UnnnicFormElement>
     </section>
@@ -47,6 +48,7 @@
 <script setup>
 import nexusaiAPI from '@/api/nexusaiAPI.js';
 import i18n from '@/utils/plugins/i18n.js';
+import { normalizeURL, validURL } from '@/utils/sites';
 import { ref, computed, reactive } from 'vue';
 import { useStore } from 'vuex';
 
@@ -63,21 +65,12 @@ const props = defineProps({
 
 const site = ref('');
 
+const onInput = (event) => {
+  const siteWithoutSpaces = event.target.value.trim().split(/\s+/).join('');
+  site.value = siteWithoutSpaces;
+};
+
 const submitDisabled = computed(() => !validURL(site.value));
-
-function validURL(url) {
-  // eslint-disable-next-line no-useless-escape
-  return /^[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/i.test(
-    url.trim(),
-  );
-}
-
-function normalizeURL(url) {
-  if (url.startsWith('https://') || url.startsWith('http://')) {
-    return url;
-  }
-  return `https://${url}`;
-}
 
 function addSite() {
   if (validURL(site.value)) {

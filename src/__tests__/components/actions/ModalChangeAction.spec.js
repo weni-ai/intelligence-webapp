@@ -83,11 +83,13 @@ global.runtimeVariables = {
 const pinia = createTestingPinia({ stubActions: false });
 
 const actionEditable = {
-  uuid: '1234',
+  uuid: 'abcd',
+  flow_uuid: '1234',
   name: 'Action Name',
   description: 'Action Description',
   group: 'custom',
   editable: true,
+  send_llm_response_to_flow: true,
 };
 
 const actionNonEditable = {
@@ -129,14 +131,16 @@ describe('ModalChangeAction', () => {
     wrapper = setup();
 
     const name = wrapper.find('[data-test="name-input"]');
-    const description = wrapper.find('[data-test="description-textarea"]');
+    const description = wrapper.findComponent(
+      '[data-test="description-textarea"]',
+    );
 
     await wrapper.setProps({
       action: actionNonEditable,
     });
 
     expect(name.attributes('disabled')).toBe('true');
-    expect(description.classes()).toContain('disabled');
+    expect(description.props().disabled).toBe(true);
   });
 
   it('displays the flow name', async () => {
@@ -212,7 +216,7 @@ describe('ModalChangeAction', () => {
           projectUuid: 'test2323test',
           name: 'Action Name Edited',
           prompt: 'Action Description Edited',
-          actionUuid: '1234',
+          actionUuid: 'abcd',
         }),
       );
     });

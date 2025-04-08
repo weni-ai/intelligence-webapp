@@ -1,7 +1,12 @@
 <template>
   <section class="message-input__container">
-    <section :class="['message-input__action', 'message-input__left-button']">
+    <section
+      :class="['message-input__action', 'message-input__left-button']"
+      data-test="message-input-left-button"
+    >
       <ContentItemActions
+        v-if="!isAgentsTeamEnabled"
+        data-test="content-item-actions"
         triggerIcon="add"
         triggerSize="md"
         popoverPositionHorizontal="left-left"
@@ -11,6 +16,7 @@
       <input
         v-show="false"
         ref="file"
+        data-test="file-input"
         type="file"
         :accept="currentAllowedMediaFormats"
         @change="handleFileChange"
@@ -19,16 +25,21 @@
 
     <input
       v-show="!isRecordingAudio"
+      data-test="text-input"
       :value="typeof modelValue === 'string' ? modelValue : ''"
       :placeholder="placeholder"
       type="text"
-      class="message-input"
+      :class="[
+        'message-input',
+        { 'message-input--without-actions': isAgentsTeamEnabled },
+      ]"
       @input="updateModelValue($event.target.value)"
       @keypress.enter="emitSend"
     />
     <UnnnicAudioRecorder
       v-show="isRecordingAudio"
       ref="audioRecorder"
+      data-test="audio-recorder"
       :modelValue="audioValue"
       :class="['message-input', 'message-input--audio']"
       @update:model-value="updateAudioModelValue"
@@ -36,6 +47,7 @@
     />
 
     <UnnnicIcon
+      data-test="right-button"
       :class="['message-input__action', 'message-input__right-button']"
       :icon="rightButtonType"
       filled
@@ -50,6 +62,7 @@
 <script setup>
 import { computed, nextTick, ref, useTemplateRef } from 'vue';
 import { useStore } from 'vuex';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
 
@@ -62,6 +75,8 @@ const props = defineProps({
     default: '',
   },
 });
+
+const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
 const modelValue = defineModel('modelValue', {
   type: [String, File],
@@ -152,16 +167,15 @@ const audioRecorder = ref(null);
 const audioRecorderStatus = ref(null);
 
 const isRecordingAudio = computed(() =>
-  ['recording', 'recorded', 'playing', 'paused'].includes(
-    audioRecorderStatus.value,
-  ),
+  ['recording', 'playing', 'paused'].includes(audioRecorderStatus.value),
 );
 const audioValue = computed(() =>
   modelValue.value instanceof HTMLAudioElement ? modelValue.value : null,
 );
 const rightButtonType = computed(() =>
   isRecordingAudio.value ||
-  (modelValue.value && typeof modelValue.value === 'string')
+  (modelValue.value && typeof modelValue.value === 'string') ||
+  isAgentsTeamEnabled
     ? 'send'
     : 'mic',
 );
@@ -169,7 +183,7 @@ const rightButtonType = computed(() =>
 function handleRightButton() {
   if (rightButtonType.value === 'send') {
     if (isRecordingAudio.value) {
-      audioRecorder.value?.discard();
+      audioRecorder.value?.stop();
       return;
     }
     emitSend();
@@ -188,7 +202,10 @@ async function updateAudioModelValue(value) {
   });
 
   updateModelValue(audio);
-  nextTick(emitSend);
+  if (audioRecorderStatus.value === 'recorded') {
+    nextTick(emitSend);
+    audioRecorder.value?.discard();
+  }
 }
 
 function updateModelValue(value) {
@@ -222,6 +239,10 @@ function emitSend() {
 
   border-radius: $unnnic-border-radius-md;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
+
+  &--without-actions {
+    padding: $unnnic-spacing-sm;
+  }
 
   &::placeholder {
     color: $unnnic-color-neutral-clean;

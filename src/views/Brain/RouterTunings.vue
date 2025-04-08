@@ -1,15 +1,6 @@
 <template>
-  <section class="tunings__container">
-    <header class="tunings__container_header">
-      <UnnnicIntelligenceText
-        tag="p"
-        family="secondary"
-        size="body-gt"
-      >
-        {{ $t('router.tunings.description') }}
-      </UnnnicIntelligenceText>
-    </header>
-    <section class="tunings__container_tabs">
+  <section class="tunings">
+    <section class="tunings__tabs">
       <UnnnicTab
         :tabs="tabs.map((e) => e.page)"
         :activeTab="activeTab"
@@ -25,26 +16,43 @@
       </UnnnicTab>
     </section>
     <section>
-      <Settings
-        v-if="activeTab === 'config'"
-        :data="props.data"
-      />
+      <Credentials v-if="activeTab === 'credentials'" />
+
+      <template v-if="activeTab === 'config'">
+        <SettingsAgentsTeam v-if="isAgentsTeamEnabled" />
+        <Settings
+          v-else
+          :data="props.data"
+        />
+      </template>
+
       <ChangesHistory v-if="activeTab === 'hist'" />
     </section>
   </section>
 </template>
 
 <script setup>
-import ChangesHistory from '@/components/Brain/Tunings/ChangesHistory.vue';
-import Settings from '@/components/Brain/Tunings/Settings.vue';
 import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useTuningsStore } from '@/store/Tunings';
+
+import ChangesHistory from '@/components/Brain/Tunings/ChangesHistory.vue';
+import Settings from '@/components/Brain/Tunings/Settings.vue';
+import SettingsAgentsTeam from '@/components/Brain/Tunings/SettingsAgentsTeam/index.vue';
+import Credentials from '@/components/Brain/Tunings/Credentials/index.vue';
+
 const store = useStore();
-const tabs = ref([
-  { title: 'config', page: 'config' },
-  { title: 'history', page: 'hist' },
-]);
+const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
+
+const tabs = ref(
+  [
+    { title: 'config', page: 'config' },
+    isAgentsTeamEnabled ? { title: 'credentials', page: 'credentials' } : null,
+    { title: 'history', page: 'hist' },
+  ].filter((obj) => obj),
+);
 
 const activeTab = ref('config');
 
@@ -59,7 +67,11 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  store.dispatch('loadBrainTunings');
+  if (isAgentsTeamEnabled) {
+    useTuningsStore().fetchSettings();
+  } else {
+    store.dispatch('loadBrainTunings');
+  }
 });
 
 const onTabChange = (newTab) => {
@@ -68,15 +80,8 @@ const onTabChange = (newTab) => {
 </script>
 
 <style lang="scss" scoped>
-.tunings__container {
-  &_header {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &_tabs {
-    margin: $unnnic-spacing-md 0 0 0;
-
+.tunings {
+  &__tabs {
     :deep(.tab-header) {
       margin-bottom: $unnnic-spacing-md;
     }
