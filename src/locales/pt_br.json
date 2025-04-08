@@ -330,7 +330,20 @@
       "flow_finished": "Fluxo finalizado",
       "message_forwarded_to_brain": "Mensagem redirecionada para o Agent Builder",
       "media_and_location_unavailable": "Não há ação de Mídias e Localização cadastrada",
-      "standby": "Standby"
+      "standby": "Standby",
+      "catalog": {
+        "title": "Catálogo de produtos",
+        "view_cart": "Ver carrinho ({quantity} item) | Ver carrinho ({quantity} itens)",
+        "add_to_cart": "Adicionar ao carrinho",
+        "subtotal": "Subtotal",
+        "place_order": "Finalizar compra",
+        "your_cart": "Seu carrinho",
+        "order_summary": "Resumo da compra",
+        "order_details": "Detalhes da compra",
+        "view_order_details": "Ver detalhes da compra",
+        "items": "item | itens",
+        "remove": "Remover"
+      }
     }
   },
   "content_bases": {
