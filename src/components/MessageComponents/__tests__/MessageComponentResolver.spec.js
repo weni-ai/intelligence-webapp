@@ -5,6 +5,7 @@ import MessageComponentResolver from '../MessageComponentResolver.vue';
 import QuickRepliesComponent from '../QuickReplies.vue';
 import ListMessageComponent from '../ListMessage.vue';
 import CtaMessageComponent from '../CtaMessage.vue';
+import CatalogComponent from '../Catalog.vue';
 
 describe('MessageComponentResolver.vue', () => {
   let wrapper;
@@ -63,6 +64,33 @@ describe('MessageComponentResolver.vue', () => {
       expect(wrapper.findComponent(CtaMessageComponent).exists()).toBe(true);
     });
 
+    it('renders CatalogComponent when message has catalog_message', () => {
+      const message = {
+        catalog_message: {
+          action_button_text: 'View Catalog',
+          products: [{ id: '1', product: 'Product 1' }],
+        },
+      };
+      setupWrapper(message);
+
+      expect(messageComponent().exists()).toBe(true);
+      expect(wrapper.findComponent(CatalogComponent).exists()).toBe(true);
+    });
+
+    it('renders CatalogComponent when message has header and catalog_message', () => {
+      const message = {
+        header: { text: 'Catalog Header' },
+        catalog_message: {
+          action_button_text: 'View Catalog',
+          products: [{ id: '1', product: 'Product 1' }],
+        },
+      };
+      setupWrapper(message);
+
+      expect(messageComponent().exists()).toBe(true);
+      expect(wrapper.findComponent(CatalogComponent).exists()).toBe(true);
+    });
+
     it('does not render simple text messages', () => {
       const message = {
         text: 'Hello world',
@@ -118,6 +146,18 @@ describe('MessageComponentResolver.vue', () => {
       const message = 'not an object';
       setupWrapper(message);
 
+      expect(messageComponent().exists()).toBe(false);
+    });
+
+    it('handles message data that throws error during parsing', () => {
+      const message = {};
+      Object.defineProperty(message, 'problematic', {
+        get: () => {
+          throw new Error('Error accessing property');
+        },
+      });
+
+      setupWrapper(message);
       expect(messageComponent().exists()).toBe(false);
     });
   });

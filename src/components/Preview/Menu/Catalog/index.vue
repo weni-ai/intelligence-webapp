@@ -2,11 +2,13 @@
   <section class="catalog">
     <CatalogProductDetails
       v-if="localSelectedProduct"
+      data-testid="catalog-product-details"
       :product="localSelectedProduct"
     />
     <section
       v-else
       class="catalog__products"
+      data-testid="catalog-products"
     >
       <CatalogProduct
         v-for="(product, index) in products"
@@ -24,9 +26,11 @@
     <section
       v-if="localSelectedProduct || cartItemsQuantity > 0"
       class="catalog__cart"
+      data-testid="catalog-cart"
     >
       <UnnnicButton
         type="primary"
+        data-testid="catalog-cart-button"
         :text="cartButtonText"
         @click="handleCartAction"
       />
@@ -34,6 +38,7 @@
 
     <CatalogCartModal
       v-model="isCartOpen"
+      data-testid="catalog-cart-modal"
       :products="cartItems"
       :subtotal="cartSubtotal"
       @update:quantity="updateProductQuantity"

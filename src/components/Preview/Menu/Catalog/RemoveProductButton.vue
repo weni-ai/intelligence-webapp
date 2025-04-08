@@ -1,15 +1,18 @@
 <template>
   <button
     class="remove-product-button"
+    data-testid="remove-product-button"
     @click.stop="$emit('click')"
   >
     <UnnnicIcon
+      data-testid="remove-product-button-icon"
       icon="delete"
       scheme="neutral-cloudy"
       size="sm"
     />
 
     <UnnnicIntelligenceText
+      data-testid="remove-product-button-text"
       color="neutral-cloudy"
       family="secondary"
       size="body-md"
