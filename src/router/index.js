@@ -14,9 +14,10 @@ let nextFromRedirect = '';
 
 const handleLogin = async (to, from, next) => {
   const { token, org, project } = to.params;
-  if (token) {
-    store.dispatch('externalLogin', { token: token.replace('+', ' ') });
-  }
+
+  store.dispatch('externalLogin', {
+    token: (localStorage.getItem('authToken') || token).replace('+', ' '),
+  });
   store.dispatch('orgSelected', { org });
   store.dispatch('projectSelected', { project });
 
