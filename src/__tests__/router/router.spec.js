@@ -1,7 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { createTestingPinia } from '@pinia/testing';
 import router from '@/router';
 import store from '@/store';
 import nexusaiAPI from '@/api/nexusaiAPI';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 vi.mock('@/views/Home.vue', () => ({
   default: {
@@ -66,9 +68,14 @@ global.location = {
 };
 
 describe('router', () => {
+  let featureFlagsStore;
+
   beforeEach(() => {
     vi.clearAllMocks();
     vi.spyOn(store, 'dispatch').mockImplementation(() => Promise.resolve());
+    createTestingPinia();
+
+    featureFlagsStore = useFeatureFlagsStore();
   });
 
   it('should create router with history mode', () => {

@@ -1,4 +1,5 @@
 <template>
+  <BrainHeader />
   <section class="tunings">
     <section class="tunings__tabs">
       <UnnnicTab
@@ -27,22 +28,22 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useStore } from 'vuex';
 
+import { useTuningsStore } from '@/store/Tunings';
+
+import BrainHeader from '@/components/Brain/BrainHeader.vue';
 import ChangesHistory from '@/components/Brain/Tunings/ChangesHistory.vue';
-import Settings from '@/components/Brain/Tunings/Settings.vue';
+import Settings from '@/components/Brain/Tunings/SettingsAgentsTeam/index.vue';
 import Credentials from '@/components/Brain/Tunings/Credentials/index.vue';
-
-const store = useStore();
 
 const tabs = ref(
   [
-    { title: 'config', page: 'config' },
+    { title: 'credentials', page: 'credentials' },
     { title: 'history', page: 'hist' },
   ].filter((obj) => obj),
 );
 
-const activeTab = ref('config');
+const activeTab = ref('credentials');
 
 const props = defineProps({
   data: {
@@ -55,7 +56,7 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  store.dispatch('loadBrainTunings');
+  useTuningsStore().fetchSettings();
 });
 
 const onTabChange = (newTab) => {
