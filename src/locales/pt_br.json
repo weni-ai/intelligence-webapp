@@ -61,6 +61,30 @@
       "delete": "Excluir base"
     }
   },
+  "agent_builder": {
+    "tabs": {
+      "supervisor": {
+        "title": "Supervisor",
+        "description": "Analise e revise conversas entre agentes e clientes."
+      },
+      "profile": {
+        "title": "Perfil",
+        "description": "Personalize as informações básicas e o comportamento do agente."
+      },
+      "agents": {
+        "title": "Agentes",
+        "description": "Crie a equipe de agentes perfeita."
+      },
+      "knowledge": {
+        "title": "Conhecimento",
+        "description": "Adicione conhecimento através de arquivos, links ou texto para que o agente possa responder com precisão."
+      },
+      "tunings": {
+        "title": "Ajustes",
+        "description": "Gerencie as configurações e acompanhe as alterações realizadas."
+      }
+    }
+  },
   "router": {
     "modal_save_changes_error": {
       "title": "Erro ao salvar as alterações",
@@ -73,7 +97,6 @@
     "tabs": {
       "monitoring": "Supervisor",
       "profile": "Perfil",
-      "agents": "Agentes",
       "content": "Conhecimento",
       "actions": "Ações",
       "tunings": "Ajustes"

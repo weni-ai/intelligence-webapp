@@ -3,7 +3,7 @@
     <section class="header__infos">
       <section class="infos__title">
         <p class="title__text">
-          {{ $t(`router.tabs.${currentBrainRoute?.title}`) }}
+          {{ currentBrainRoute?.title }}
         </p>
       </section>
       <UnnnicIntelligenceText
@@ -16,7 +16,7 @@
       </UnnnicIntelligenceText>
     </section>
     <UnnnicButton
-      v-if="currentBrainRoute?.title.includes('profile')"
+      v-if="currentBrainRoute?.page.includes('profile')"
       :disabled="profile.isSaveButtonDisabled"
       :loading="profile.isSaving"
       @click="profile.save"
@@ -24,7 +24,7 @@
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
     <UnnnicButton
-      v-else-if="currentBrainRoute?.title.includes('tunings')"
+      v-else-if="currentBrainRoute?.page.includes('tunings')"
       :disabled="isTuningsSaveButtonDisabled"
       :loading="isTuningsSaveButtonLoading"
       @click="saveTunings"

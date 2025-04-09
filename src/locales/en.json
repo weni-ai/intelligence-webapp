@@ -61,6 +61,30 @@
       "delete": "Delete base"
     }
   },
+  "agent_builder": {
+    "tabs": {
+      "supervisor": {
+        "title": "Supervisor",
+        "description": "Analyze and review conversations between agents and customers."
+      },
+      "profile": {
+        "title": "Profile",
+        "description": "Customize the agent’s basic information and behavior."
+      },
+      "agents": {
+        "title": "Agents",
+        "description": "Build the perfect agent team."
+      },
+      "knowledge": {
+        "title": "Knowledge",
+        "description": "Add knowledge through files, links, or text so the agent can respond accurately."
+      },
+      "tunings": {
+        "title": "Tunings",
+        "description": "Manage settings and track changes made."
+      }
+    }
+  },
   "router": {
     "modal_save_changes_error": {
       "title": "Error saving changes",
@@ -73,7 +97,6 @@
     "tabs": {
       "monitoring": "Supervisor",
       "profile": "Profile",
-      "agents": "Agents",
       "content": "Knowledge",
       "actions": "Actions",
       "tunings": "Tunings"

@@ -1,8 +1,6 @@
 <template>
   <section class="agents-team">
     <AgentBuilderHeader
-      title="Agents Team"
-      subtitle="Assign agents to your team"
       withDivider
       actionsSize="lg"
       data-testid="agents-team-header"

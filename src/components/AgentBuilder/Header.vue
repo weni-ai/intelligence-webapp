@@ -13,7 +13,7 @@
         weight="bold"
         color="neutral-darkest"
       >
-        {{ $t(`router.tabs.${currentBrainRoute?.title}`) }}
+        {{ currentBrainRoute?.title }}
       </UnnnicIntelligenceText>
       <UnnnicIntelligenceText
         tag="h2"

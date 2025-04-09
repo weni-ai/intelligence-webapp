@@ -132,7 +132,7 @@ const router = createRouter({
       name: 'agent-builder',
       component: AgentBuilder,
       redirect: () => {
-        return { name: 'monitoring' };
+        return { name: 'supervisor' };
       },
       async beforeEnter(_to, _from, next) {
         const { data } = await nexusaiAPI.router.read({
@@ -147,8 +147,8 @@ const router = createRouter({
       },
       children: [
         {
-          path: 'monitoring',
-          name: 'monitoring',
+          path: 'supervisor',
+          name: 'supervisor',
           component: () => import('@/views/AgentBuilder/Supervisor/index.vue'),
         },
         {
@@ -163,7 +163,7 @@ const router = createRouter({
         },
         {
           path: 'knowledge',
-          name: 'content',
+          name: 'knowledge',
           component: () => import('@/views/AgentBuilder/Knowledge.vue'),
         },
         {

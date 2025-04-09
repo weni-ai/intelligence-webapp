@@ -27,8 +27,8 @@ const route = useRoute();
 
 const currentView = computed(() => {
   const views = {
-    content: Knowledge,
-    monitoring: Supervisor,
+    knowledge: Knowledge,
+    supervisor: Supervisor,
     agents: AgentsTeam,
     profile: Profile,
     tunings: Tunings,
