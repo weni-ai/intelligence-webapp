@@ -3,6 +3,7 @@ import forceHttps from '@/api/utils/forceHttps';
 import { Actions } from './nexus/Actions';
 import { Monitoring } from './nexus/Monitoring';
 import { AgentsTeam } from './nexus/AgentsTeam';
+import { Supervisor } from './nexus/Supervisor';
 
 import { ProgressiveFeedbackAdapter } from './adapters/tunings/progressiveFeedback';
 
@@ -121,6 +122,10 @@ export default {
     return request.$http.delete(
       `api/${intelligenceUuid}/content-bases/${contentBaseUuid}/`,
     );
+  },
+
+  agent_builder: {
+    supervisor: Supervisor,
   },
 
   router: {

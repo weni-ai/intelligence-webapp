@@ -42,7 +42,7 @@
     <UnnnicIntelligenceText
       v-else
       tag="p"
-      family="secondary"
+      family="primary"
       size="title-md"
       color="neutral-darkest"
       weight="bold"
@@ -93,11 +93,15 @@ const formattedValue = computed(() => {
 .performance-card {
   overflow: hidden;
 
-  padding: $unnnic-spacing-md $unnnic-spacing-sm;
+  padding: $unnnic-spacing-sm;
 
   border-radius: $unnnic-border-radius-sm;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
   border-left-width: $unnnic-border-width-thick;
+
+  display: flex;
+  flex-direction: column;
+  gap: $unnnic-spacing-nano;
 
   &--green {
     border-left-color: $unnnic-color-aux-green-300;
