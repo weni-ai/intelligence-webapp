@@ -38,10 +38,7 @@
           data-testid="preview-drawer-preview"
           class="content__preview"
         >
-          <Tests
-            :key="refreshPreviewValue"
-            usePreview
-          />
+          <Preview :key="refreshPreviewValue" />
         </section>
 
         <section
@@ -59,7 +56,7 @@
 import { computed, ref, watch } from 'vue';
 import { usePreviewStore } from '@/store/Preview';
 
-import Tests from '@/views/repository/content/Tests.vue';
+import Preview from '@/views/repository/content/Preview.vue';
 import PreviewDetails from './PreviewDetails.vue';
 import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
 import i18n from '@/utils/plugins/i18n';
@@ -117,28 +114,25 @@ function refreshPreview() {
     grid-template-columns: 1fr 1fr;
 
     .content__preview {
+      overflow: hidden;
+
       display: flex;
       border-right: $unnnic-border-width-thinner solid
         $unnnic-color-neutral-soft;
 
-      :deep(.quick-test) {
+      :deep(.preview) {
         padding: $unnnic-spacing-sm $unnnic-spacing-md;
         gap: $unnnic-spacing-xs;
 
-        .messages {
+        .preview__messages {
           padding: 0;
 
           margin-right: -$unnnic-spacing-ant;
           padding-right: $unnnic-spacing-ant;
         }
 
-        .write-message {
+        .preview__footer {
           padding: 0;
-        }
-
-        .message-input {
-          padding: $unnnic-spacing-sm;
-          padding-right: $unnnic-spacing-giant;
         }
       }
     }

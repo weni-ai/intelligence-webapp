@@ -14,6 +14,30 @@ import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 let nextFromRedirect = '';
 
+const handleLogin = async (to, from, next) => {
+  const { token, org, project } = to.params;
+
+  store.dispatch('externalLogin', {
+    token: (token || localStorage.getItem('authToken')).replace('+', ' '),
+  });
+  store.dispatch('orgSelected', { org });
+  store.dispatch('projectSelected', { project });
+
+  store.state.Auth.connectOrgUuid = to.query?.org_uuid;
+  store.state.Auth.connectProjectUuid = to.query?.project_uuid;
+
+  sessionStorage.setItem('orgUuid', store.state.Auth.connectOrgUuid);
+  sessionStorage.setItem('projectUuid', store.state.Auth.connectProjectUuid);
+
+  const nextPath = to.query.next || to.query.next_from_redirect;
+
+  if (nextPath) {
+    next({ path: nextPath, replace: true });
+  } else {
+    next({ path: '/home', replace: true });
+  }
+};
+
 const router = createRouter({
   mode: 'history',
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,31 +46,13 @@ const router = createRouter({
       path: '/loginexternal/:token/:org/:project',
       name: 'externalLogin',
       component: null,
-      beforeEnter: async (to, from, next) => {
-        const { token, org, project } = to.params;
-        store.dispatch('externalLogin', { token: token.replace('+', ' ') });
-        store.dispatch('orgSelected', { org });
-        store.dispatch('projectSelected', { project });
-
-        store.state.Auth.connectOrgUuid = to.query?.org_uuid;
-        store.state.Auth.connectProjectUuid = to.query?.project_uuid;
-
-        sessionStorage.setItem('orgUuid', store.state.Auth.connectOrgUuid);
-
-        sessionStorage.setItem(
-          'projectUuid',
-          store.state.Auth.connectProjectUuid,
-        );
-
-        const nextPath = to.query.next || to.query.next_from_redirect;
-
-        if (nextPath) {
-          nextFromRedirect = to.query.next_from_redirect;
-          next({ path: nextPath, replace: true });
-        } else {
-          next({ path: '/home', replace: true });
-        }
-      },
+      beforeEnter: handleLogin,
+    },
+    {
+      path: '/:org/:project',
+      name: 'iframeLogin',
+      component: null,
+      beforeEnter: handleLogin,
     },
     {
       path: '/home',

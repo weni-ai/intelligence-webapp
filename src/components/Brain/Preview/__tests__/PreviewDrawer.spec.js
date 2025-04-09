@@ -46,7 +46,7 @@ describe('PreviewDrawer.vue', () => {
         plugins: [pinia],
         stubs: {
           PreviewDetails: true,
-          Tests: true,
+          Preview: true,
         },
       },
     });
