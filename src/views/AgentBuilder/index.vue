@@ -5,6 +5,11 @@
     <main class="agent-builder__content">
       <component :is="currentView" />
     </main>
+
+    <ModalSaveChangesError
+      v-if="store.state.Brain.tabsWithError"
+      @close="store.state.Brain.tabsWithError = null"
+    />
   </section>
 </template>
 
@@ -12,6 +17,7 @@
 import { computed, onMounted } from 'vue';
 
 import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 
 import { useTuningsStore } from '@/store/Tunings';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
@@ -22,8 +28,10 @@ import Knowledge from './Knowledge.vue';
 import Profile from '@/views/AgentBuilder/Profile.vue';
 import Tunings from '@/views/AgentBuilder/Tunings.vue';
 import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
+import ModalSaveChangesError from '../Brain/ModalSaveChangesError.vue';
 
 const route = useRoute();
+const store = useStore();
 
 const currentView = computed(() => {
   const views = {
