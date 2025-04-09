@@ -1,0 +1,131 @@
+<template>
+  <section
+    :class="['performance-card', `performance-card--${scheme}`]"
+    data-test="card"
+  >
+    <header class="card__header">
+      <UnnnicIntelligenceText
+        tag="h3"
+        family="secondary"
+        size="body-gt"
+        color="neutral-darkest"
+        class="header__title"
+        data-test="card-title"
+      >
+        {{ title }}
+      </UnnnicIntelligenceText>
+
+      <UnnnicToolTip
+        side="top"
+        :text="tooltip"
+        enabled
+        maxWidth="18rem"
+        class="header__tooltip"
+        data-test="card-tooltip"
+      >
+        <UnnnicIcon
+          icon="info"
+          size="sm"
+          scheme="neutral-cleanest"
+          filled
+        />
+      </UnnnicToolTip>
+    </header>
+
+    <UnnnicSkeletonLoading
+      v-if="isLoading"
+      data-test="card-value-skeleton"
+      tag="div"
+      width="50px"
+      height="31px"
+    />
+    <UnnnicIntelligenceText
+      v-else
+      tag="p"
+      family="secondary"
+      size="title-md"
+      color="neutral-darkest"
+      weight="bold"
+      data-test="card-value"
+    >
+      {{ formattedValue }}%
+    </UnnnicIntelligenceText>
+  </section>
+</template>
+
+<script setup>
+import { computed } from 'vue';
+import i18n from '@/utils/plugins/i18n';
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
+  },
+  tooltip: {
+    type: String,
+    required: true,
+  },
+  value: {
+    type: Number,
+    required: true,
+  },
+  scheme: {
+    type: String,
+    required: true,
+    validator: (value) => ['green', 'red', 'blue'].includes(value),
+  },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const formattedValue = computed(() => {
+  return new Intl.NumberFormat(i18n.global.locale, {
+    minimumFractionDigits: props.value % 1 === 0 ? 0 : 1,
+    maximumFractionDigits: 1,
+  }).format(props.value);
+});
+</script>
+
+<style lang="scss" scoped>
+.performance-card {
+  overflow: hidden;
+
+  padding: $unnnic-spacing-md $unnnic-spacing-sm;
+
+  border-radius: $unnnic-border-radius-sm;
+  border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
+  border-left-width: $unnnic-border-width-thick;
+
+  &--green {
+    border-left-color: $unnnic-color-aux-green-300;
+  }
+
+  &--red {
+    border-left-color: $unnnic-color-aux-red-300;
+  }
+
+  &--blue {
+    border-left-color: $unnnic-color-aux-blue-300;
+  }
+
+  .card__header {
+    display: flex;
+    gap: $unnnic-spacing-xs;
+    align-items: center;
+
+    .header__title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .header__tooltip {
+      display: flex;
+      cursor: default;
+    }
+  }
+}
+</style>

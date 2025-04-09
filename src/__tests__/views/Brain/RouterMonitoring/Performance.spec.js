@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useMonitoringStore } from '@/store/Monitoring';
 import i18n from '@/utils/plugins/i18n';
 import RouterMonitoringPerformance from '@/views/Brain/RouterMonitoring/RouterMonitoringPerformance.vue';
+import PerformanceCard from '@/components/Brain/Monitoring/PerformanceCard.vue';
 import { createTestingPinia } from '@pinia/testing';
 
 const routes = [
@@ -34,6 +35,9 @@ describe('RouterMonitoringPerformance.vue', () => {
   let wrapper;
   const monitoringStore = useMonitoringStore();
 
+  const performanceCards = () =>
+    wrapper.findAllComponents('[data-test="monitoring-performance-card"]');
+
   beforeEach(async () => {
     wrapper = mount(RouterMonitoringPerformance, {
       global: { plugins: [pinia, router] },
@@ -51,93 +55,55 @@ describe('RouterMonitoringPerformance.vue', () => {
       expect(title.text()).toBe(i18n.global.t('router.monitoring.performance'));
     });
 
-    it('renders cards for each answer type', () => {
-      const cards = wrapper.findAll('[data-test="card"]');
-      expect(cards.length).toBe(3); // success, failed, action
+    it('renders PerformanceCard components for each answer type', () => {
+      expect(performanceCards().length).toBe(3); // success, failed, action
     });
 
-    it('displays tooltip with correct text', () => {
-      const card = wrapper.find('.performance__card--success');
-      const tooltip = card.findComponent('[data-test="card-tooltip"]');
-      expect(tooltip.props('text')).toBe(
+    it('passes correct props to PerformanceCard components', () => {
+      const cards = performanceCards();
+
+      const successCard = cards.find(
+        (card) => card.props('scheme') === 'green',
+      );
+      expect(successCard.exists()).toBe(true);
+      expect(successCard.props('title')).toBe(
+        i18n.global.t('router.monitoring.success.title', { count: 2 }),
+      );
+      expect(successCard.props('tooltip')).toBe(
         i18n.global.t('router.monitoring.success.tooltip'),
       );
-    });
-  });
+      expect(successCard.props('value')).toBe(75.3);
+      expect(successCard.props('isLoading')).toBe(false);
 
-  describe('Card Content', () => {
-    it.each([
-      ['success', 75.3],
-      ['failed', 20],
-      ['action', 5.7],
-    ])('displays correct title and value for %s', async (type, value) => {
-      await nextTick();
-      const card = wrapper.find(`.performance__card--${type}`);
-      const title = card.find('[data-test="card-title"]');
-      const cardValue = card.find('[data-test="card-value"]');
+      const failedCard = cards.find((card) => card.props('scheme') === 'red');
+      expect(failedCard.exists()).toBe(true);
+      expect(failedCard.props('value')).toBe(20);
 
-      expect(title.text()).toBe(
-        i18n.global.t(`router.monitoring.${type}.title`, { count: 2 }),
-      );
-      expect(cardValue.text()).toBe(`${wrapper.vm.formatLocaleNumber(value)}%`);
-    });
-
-    describe('formatLocaleNumber', () => {
-      const formatLocaleNumber = (num) => wrapper.vm.formatLocaleNumber(num);
-
-      it('should format integer numbers without decimal places', () => {
-        expect(formatLocaleNumber(1000)).toBe('1,000');
-        expect(formatLocaleNumber(500)).toBe('500');
-        expect(formatLocaleNumber(12345)).toBe('12,345');
-      });
-
-      it('should format decimal numbers with one decimal place', () => {
-        expect(formatLocaleNumber(1000.5)).toBe('1,000.5');
-        expect(formatLocaleNumber(500.8)).toBe('500.8');
-        expect(formatLocaleNumber(12345.3)).toBe('12,345.3');
-      });
-
-      it('should handle edge cases', () => {
-        expect(formatLocaleNumber(0)).toBe('0');
-        expect(formatLocaleNumber(-12345.6)).toBe('-12,345.6');
-        expect(formatLocaleNumber(0.0)).toBe('0');
-      });
-
-      it('should use the specified locale for formatting', () => {
-        i18n.global.locale = 'pt-BR';
-
-        expect(formatLocaleNumber(1000)).toBe('1.000');
-        expect(formatLocaleNumber(1000.5)).toBe('1.000,5');
-
-        i18n.global.locale = 'en-US';
-      });
+      const actionCard = cards.find((card) => card.props('scheme') === 'blue');
+      expect(actionCard.exists()).toBe(true);
+      expect(actionCard.props('value')).toBe(5.7);
     });
   });
 
   describe('Loading State', () => {
-    it('shows skeleton loading while loading performance data', async () => {
+    it('passes isLoading prop to PerformanceCard components when loading', async () => {
       monitoringStore.messages.performance.status = 'loading';
       await nextTick();
 
-      const skeleton = wrapper.findComponent(
-        '[data-test="card-value-skeleton"]',
-      );
-
-      expect(skeleton.exists()).toBe(true);
-
-      const cardValue = wrapper.find('[data-test="card-value"]');
-      expect(cardValue.exists()).toBe(false);
+      const cards = performanceCards();
+      cards.forEach((card) => {
+        expect(card.props('isLoading')).toBe(true);
+      });
     });
 
-    it('does not show skeleton when performance data is loaded', async () => {
+    it('passes isLoading=false to PerformanceCard components when data is loaded', async () => {
       monitoringStore.messages.performance.status = 'loaded';
       await nextTick();
 
-      const skeleton = wrapper.findComponent({ name: 'UnnnicSkeletonLoading' });
-      expect(skeleton.exists()).toBe(false);
-
-      const cardValue = wrapper.find('[data-test="card-value"]');
-      expect(cardValue.exists()).toBe(true);
+      const cards = performanceCards();
+      cards.forEach((card) => {
+        expect(card.props('isLoading')).toBe(false);
+      });
     });
   });
 
