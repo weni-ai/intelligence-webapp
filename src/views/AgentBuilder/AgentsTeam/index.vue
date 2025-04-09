@@ -5,10 +5,12 @@
       subtitle="Assign agents to your team"
       withDivider
       actionsSize="lg"
+      data-testid="agents-team-header"
     >
       <template #actions>
         <section class="agents-team__actions">
           <UnnnicButton
+            data-testid="assign-agents-button"
             type="secondary"
             iconLeft="add"
             @click="handleAgentsGallery"
@@ -17,6 +19,7 @@
           </UnnnicButton>
 
           <UnnnicButton
+            data-testid="preview-button"
             type="primary"
             iconLeft="play_arrow"
             iconsFilled
@@ -28,11 +31,14 @@
       </template>
     </AgentBuilderHeader>
 
-    <ActiveTeam />
+    <ActiveTeam data-testid="active-team" />
 
-    <AgentsGalleryModal />
+    <AgentsGalleryModal data-testid="agents-gallery-modal" />
 
-    <PreviewDrawer v-model="isPreviewOpen" />
+    <PreviewDrawer
+      v-model="isPreviewOpen"
+      data-testid="preview-drawer"
+    />
   </section>
 </template>
 

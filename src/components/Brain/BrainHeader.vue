@@ -16,7 +16,7 @@
       </UnnnicIntelligenceText>
     </section>
     <UnnnicButton
-      v-if="route.name.includes('profile')"
+      v-if="currentBrainRoute?.title.includes('profile')"
       :disabled="profile.isSaveButtonDisabled"
       :loading="profile.isSaving"
       @click="profile.save"
@@ -24,7 +24,7 @@
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
     <UnnnicButton
-      v-else-if="route.name.includes('tunings')"
+      v-else-if="currentBrainRoute?.title.includes('tunings')"
       :disabled="isTuningsSaveButtonDisabled"
       :loading="isTuningsSaveButtonLoading"
       @click="saveTunings"
@@ -81,7 +81,7 @@ const currentBrainRoute = computed(() => {
   );
 });
 
-const showDateFilter = computed(() => route.name.includes('monitoring'));
+const showDateFilter = computed(() => route.name?.includes('monitoring'));
 
 const tuningsStore = useTuningsStore();
 const previewStore = usePreviewStore();
