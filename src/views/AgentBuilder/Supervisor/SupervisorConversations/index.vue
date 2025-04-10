@@ -1,6 +1,6 @@
 <template>
   <section class="conversations">
-    <SupervisorPerformance class="conversations__performance" />
+    <SupervisorPerformance />
 
     <ConversationsTable />
   </section>
@@ -8,7 +8,7 @@
 
 <script setup>
 import SupervisorPerformance from '../SupervisorPerformance.vue';
-import ConversationsTable from './ConversationsTable.vue';
+import ConversationsTable from './ConversationsTable/index.vue';
 </script>
 
 <style scoped lang="scss">
