@@ -57,8 +57,43 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     }
   }
 
+  async function loadSelectedConversationData() {
+    try {
+      selectedConversation.value.data.status = 'loading';
+      const response = await supervisorApi.conversations.getById({
+        projectUuid: projectUuid.value,
+        conversationId: selectedConversation.value.id,
+      });
+
+      selectedConversation.value.data = {
+        ...selectedConversation.value.data,
+        ...response,
+      };
+
+      selectedConversation.value.data.status = 'complete';
+    } catch (error) {
+      console.error(error);
+
+      selectedConversation.value.data.status = 'error';
+    }
+  }
+
   function selectConversation(conversationId) {
-    selectedConversation.value = conversationId;
+    if (!conversationId) {
+      selectedConversation.value = null;
+      return;
+    }
+
+    const conversation = conversations.data.results.find(
+      (conversation) => conversation.id === conversationId,
+    );
+
+    selectedConversation.value = {
+      ...conversation,
+      data: {
+        status: null,
+      },
+    };
   }
 
   return {
@@ -66,6 +101,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     loadForwardStats,
     conversations,
     loadConversations,
+    loadSelectedConversationData,
     selectConversation,
     selectedConversation,
   };

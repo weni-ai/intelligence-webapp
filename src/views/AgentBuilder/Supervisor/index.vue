@@ -19,7 +19,7 @@ import { computed } from 'vue';
 
 import BrainHeader from '@/components/Brain/BrainHeader.vue';
 import SupervisorConversations from '@/views/AgentBuilder/Supervisor/SupervisorConversations/index.vue';
-import Conversation from '@/views/AgentBuilder/Supervisor/SupervisorConversations/Conversation.vue';
+import Conversation from '@/views/AgentBuilder/Supervisor/SupervisorConversations/Conversation/index.vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
@@ -32,19 +32,26 @@ const selectedConversation = computed(() => {
 
 <style scoped lang="scss">
 .supervisor {
+  margin: -$unnnic-spacing-sm;
+
   display: grid;
 
   &--with-conversation {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr;
+    column-gap: $unnnic-spacing-sm;
   }
 
   &__header {
+    padding: $unnnic-spacing-sm 0 0 $unnnic-spacing-sm;
+
     grid-column: 1 / 1;
     grid-row: 1 / 2;
   }
 
   &__conversations {
+    padding-left: $unnnic-spacing-sm;
+
     grid-column: 1 / 1;
     grid-row: 2 / 3;
   }

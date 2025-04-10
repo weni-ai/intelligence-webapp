@@ -101,7 +101,8 @@ const table = computed(() => {
 
 const selectedConversationIndex = computed(() =>
   conversations.value.results?.findIndex(
-    (conversation) => conversation.id === supervisorStore.selectedConversation,
+    (conversation) =>
+      conversation.id === supervisorStore.selectedConversation?.id,
   ),
 );
 
