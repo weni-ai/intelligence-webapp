@@ -1,10 +1,11 @@
 <template>
-  <BrainHeader />
-
-  <SupervisorPerformance />
+  <section class="supervisor">
+    <BrainHeader />
+    <SupervisorConversations />
+  </section>
 </template>
 
 <script setup>
 import BrainHeader from '@/components/Brain/BrainHeader.vue';
-import SupervisorPerformance from '@/views/AgentBuilder/Supervisor/SupervisorPerformance.vue';
+import SupervisorConversations from '@/views/AgentBuilder/Supervisor/SupervisorConversations/index.vue';
 </script>

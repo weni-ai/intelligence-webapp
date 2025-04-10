@@ -6,6 +6,14 @@ const request = axios.create({
 
 export const Supervisor = {
   conversations: {
+    async list({ projectUuid, start, end }) {
+      const { data } = await request.get(
+        `/api/${projectUuid}/conversations/?start=${start}&end=${end}`,
+      );
+
+      return data;
+    },
+
     async forwardStats({ projectUuid, start, end }) {
       const { data } = await request.get(
         `/api/${projectUuid}/conversations/forward-stats/?start=${start}&end=${end}`,

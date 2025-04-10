@@ -18,6 +18,27 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     },
   });
 
+  const conversations = reactive({
+    status: null,
+    data: [],
+  });
+
+  async function loadConversations() {
+    conversations.status = 'loading';
+    try {
+      const response = await supervisorApi.conversations.list({
+        projectUuid: projectUuid.value,
+        start: '2025-01-01',
+        end: '2025-05-01',
+      });
+
+      conversations.status = 'complete';
+      conversations.data = response;
+    } catch (error) {
+      conversations.status = 'error';
+    }
+  }
+
   async function loadForwardStats() {
     forwardStats.status = 'loading';
     try {
@@ -37,5 +58,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   return {
     forwardStats,
     loadForwardStats,
+    conversations,
+    loadConversations,
   };
 });
