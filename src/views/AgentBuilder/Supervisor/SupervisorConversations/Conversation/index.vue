@@ -22,6 +22,15 @@
         />
       </button>
     </header>
+
+    <section class="conversation__messages">
+      <QuestionAndAnswer
+        v-for="message in conversation.data.results"
+        :key="message.id"
+        :data="message"
+        :isLoading="conversation.data.status === 'loading'"
+      />
+    </section>
   </section>
 </template>
 
@@ -29,6 +38,8 @@
 import { computed, onMounted } from 'vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
+
+import QuestionAndAnswer from './QuestionAndAnswer/index.vue';
 
 const supervisorStore = useSupervisorStore();
 
@@ -45,7 +56,6 @@ $conversation-border: $unnnic-border-width-thinner solid
 .conversation {
   display: flex;
   flex-direction: column;
-  gap: $unnnic-spacing-md;
 
   border-left: $conversation-border;
 
@@ -66,6 +76,10 @@ $conversation-border: $unnnic-border-width-thinner solid
 
       cursor: pointer;
     }
+  }
+
+  &__messages {
+    padding: $unnnic-spacing-sm;
   }
 }
 </style>
