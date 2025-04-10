@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import globalStore from '.';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
@@ -23,21 +23,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     data: [],
   });
 
-  async function loadConversations() {
-    conversations.status = 'loading';
-    try {
-      const response = await supervisorApi.conversations.list({
-        projectUuid: projectUuid.value,
-        start: '2025-01-01',
-        end: '2025-05-01',
-      });
-
-      conversations.status = 'complete';
-      conversations.data = response;
-    } catch (error) {
-      conversations.status = 'error';
-    }
-  }
+  const selectedConversation = ref(null);
 
   async function loadForwardStats() {
     forwardStats.status = 'loading';
@@ -55,10 +41,32 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     }
   }
 
+  async function loadConversations() {
+    conversations.status = 'loading';
+    try {
+      const response = await supervisorApi.conversations.list({
+        projectUuid: projectUuid.value,
+        start: '2025-01-01',
+        end: '2025-05-01',
+      });
+
+      conversations.status = 'complete';
+      conversations.data = response;
+    } catch (error) {
+      conversations.status = 'error';
+    }
+  }
+
+  function selectConversation(conversationId) {
+    selectedConversation.value = conversationId;
+  }
+
   return {
     forwardStats,
     loadForwardStats,
     conversations,
     loadConversations,
+    selectConversation,
+    selectedConversation,
   };
 });

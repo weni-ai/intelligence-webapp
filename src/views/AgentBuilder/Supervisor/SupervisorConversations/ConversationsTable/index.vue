@@ -1,18 +1,24 @@
 <template>
   <UnnnicTableNext
     v-model:pagination="pagination.page"
-    class="conversations-table"
+    :class="{
+      'conversations-table': true,
+      'conversations-table--with-results':
+        supervisorStore.conversations.status === 'complete' &&
+        conversations.results.length,
+    }"
     hideHeaders
     :headers="table.headers"
     :rows="table.rows"
     :paginationTotal="pagination.total"
     :paginationInterval="pagination.interval"
     :isLoading="supervisorStore.conversations.status === 'loading'"
+    @row-click="handleRowClick"
   />
 </template>
 
 <script setup>
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, computed, ref, watch } from 'vue';
 import Unnnic from '@weni/unnnic-system';
 
 import { useSupervisorStore } from '@/store/Supervisor';
@@ -32,6 +38,10 @@ const pagination = ref({
   interval: 15,
   total: conversations.value.count || 0,
 });
+
+function handleRowClick(row) {
+  supervisorStore.selectConversation(row.id);
+}
 
 const table = computed(() => {
   const getTagProps = (human_support) => {
@@ -70,7 +80,6 @@ const table = computed(() => {
             type: 'default',
             ...getTagProps(human_support),
           },
-          events: {},
         };
 
         const infoComponent = {
@@ -88,6 +97,31 @@ const table = computed(() => {
       },
     ),
   };
+});
+
+const selectedConversationIndex = computed(() =>
+  conversations.value.results?.findIndex(
+    (conversation) => conversation.id === supervisorStore.selectedConversation,
+  ),
+);
+
+function highlightRow(index) {
+  const rowsElements = document.querySelectorAll(
+    '.unnnic-table-next__body-row',
+  );
+
+  rowsElements.forEach((row) => {
+    row.style.backgroundColor = '';
+  });
+
+  if (rowsElements[index]) {
+    const UNNNIC_COLOR_BACKGROUND_SKY = '#F4F6F8';
+    rowsElements[index].style.backgroundColor = UNNNIC_COLOR_BACKGROUND_SKY;
+  }
+}
+
+watch(selectedConversationIndex, (newConversation) => {
+  highlightRow(newConversation);
 });
 
 onMounted(() => {
@@ -112,6 +146,14 @@ onMounted(() => {
 
     .unnnic-table-next__body-cell:nth-child(2) {
       padding: $unnnic-spacing-ant 0;
+    }
+  }
+
+  &--with-results {
+    :deep(.unnnic-table-next__body-row):hover {
+      background-color: $unnnic-color-background-sky;
+
+      cursor: pointer;
     }
   }
 }
