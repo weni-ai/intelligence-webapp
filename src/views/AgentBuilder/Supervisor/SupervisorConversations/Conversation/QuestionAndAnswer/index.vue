@@ -17,27 +17,10 @@
       />
     </template>
 
-    <section
+    <ForwardedHumanSupport
       v-else-if="data.forwarded_human_support"
-      class="question-and-answer__action-started"
-      data-testid="action"
-    >
-      <UnnnicIcon
-        data-testid="action-icon"
-        icon="forward"
-        size="sm"
-        scheme="neutral-cloudy"
-      />
-      <UnnnicIntelligenceText
-        data-testid="action-name"
-        color="neutral-cloudy"
-        family="secondary"
-        size="body-md"
-        tag="p"
-      >
-        {{ $t('agent_builder.supervisor.forwarded_human_support.title') }}
-      </UnnnicIntelligenceText>
-    </section>
+      class="question-and-answer__forwarded-human-support"
+    />
 
     <template v-else>
       <Markdown
@@ -167,6 +150,8 @@ watch(
 
 <style lang="scss" scoped>
 .question-and-answer {
+  margin-bottom: $unnnic-spacing-sm;
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(auto, 1fr);
@@ -296,6 +281,10 @@ watch(
         }
       }
     }
+  }
+
+  &__forwarded-human-support {
+    grid-column: 1 / 4;
   }
 }
 </style>
