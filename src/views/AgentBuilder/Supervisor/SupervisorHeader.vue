@@ -1,5 +1,5 @@
 <template>
-  <AgentBuilderHeader>
+  <AgentBuilderHeader :withDivider="false">
     <template #actions>
       <UnnnicInputDatePicker
         v-model="dateFilter"
