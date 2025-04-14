@@ -92,7 +92,9 @@
       "forwarded_human_support": {
         "title": "Encaminado a soporte humano",
         "tooltip": "Conversaciones encaminadas a soporte humano"
-      }
+      },
+      "view_logs": "Ver logs",
+      "hide_logs": "Esconder logs"
     }
   },
   "router": {
