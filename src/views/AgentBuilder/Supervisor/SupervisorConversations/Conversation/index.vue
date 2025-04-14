@@ -30,6 +30,8 @@
         :data="message"
         :isLoading="conversation.data.status === 'loading'"
       />
+
+      <ForwardedHumanSupport v-if="conversation.human_support" />
     </section>
   </section>
 </template>
@@ -40,6 +42,7 @@ import { computed, onMounted } from 'vue';
 import { useSupervisorStore } from '@/store/Supervisor';
 
 import QuestionAndAnswer from './QuestionAndAnswer/index.vue';
+import ForwardedHumanSupport from './QuestionAndAnswer/ForwardedHumanSupport.vue';
 
 const supervisorStore = useSupervisorStore();
 
