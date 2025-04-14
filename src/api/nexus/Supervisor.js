@@ -6,9 +6,15 @@ const request = axios.create({
 
 export const Supervisor = {
   conversations: {
-    async list({ projectUuid, start, end }) {
+    async list({ projectUuid, start, end, search }) {
+      const params = {
+        start,
+        end,
+        search,
+      };
+
       const { data } = await request.get(
-        `/api/${projectUuid}/conversations/?start=${start}&end=${end}`,
+        `/api/${projectUuid}/conversations/?${new URLSearchParams(params)}`,
       );
 
       return data;

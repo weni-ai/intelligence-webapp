@@ -25,6 +25,12 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
   const selectedConversation = ref(null);
 
+  const filters = reactive({
+    start: '2025-01-01',
+    end: '2025-05-01',
+    search: '',
+  });
+
   async function loadForwardStats() {
     forwardStats.status = 'loading';
     try {
@@ -46,8 +52,9 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     try {
       const response = await supervisorApi.conversations.list({
         projectUuid: projectUuid.value,
-        start: '2025-01-01',
-        end: '2025-05-01',
+        start: filters.start,
+        end: filters.end,
+        search: filters.search,
       });
 
       conversations.status = 'complete';
@@ -104,5 +111,6 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     loadSelectedConversationData,
     selectConversation,
     selectedConversation,
+    filters,
   };
 });

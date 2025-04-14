@@ -94,7 +94,8 @@
         "tooltip": "Conversas encaminhadas para suporte humano"
       },
       "view_logs": "Visualizar logs",
-      "hide_logs": "Esconder logs"
+      "hide_logs": "Esconder logs",
+      "search": "Pesquisar"
     }
   },
   "router": {

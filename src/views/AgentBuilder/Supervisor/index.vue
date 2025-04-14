@@ -15,7 +15,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 import BrainHeader from '@/components/Brain/BrainHeader.vue';
 import SupervisorConversations from '@/views/AgentBuilder/Supervisor/SupervisorConversations/index.vue';
@@ -24,10 +25,25 @@ import Conversation from '@/views/AgentBuilder/Supervisor/SupervisorConversation
 import { useSupervisorStore } from '@/store/Supervisor';
 
 const supervisorStore = useSupervisorStore();
+const route = useRoute();
+const router = useRouter();
 
 const selectedConversation = computed(() => {
   return supervisorStore.selectedConversation;
 });
+
+watch(
+  () => supervisorStore.filters,
+  (filters) => {
+    router.replace({
+      query: {
+        ...route.query,
+        ...filters,
+      },
+    });
+  },
+  { immediate: true, deep: true },
+);
 </script>
 
 <style scoped lang="scss">
