@@ -20,7 +20,6 @@ watch(
   () => search.value,
   debounce(() => {
     supervisorStore.filters.search = search.value;
-    supervisorStore.loadConversations();
   }, 300),
 );
 </script>

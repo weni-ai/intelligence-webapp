@@ -5,7 +5,7 @@
       { 'supervisor--with-conversation': selectedConversation },
     ]"
   >
-    <BrainHeader class="supervisor__header" />
+    <SupervisorHeader class="supervisor__header" />
     <SupervisorConversations class="supervisor__conversations" />
     <Conversation
       v-if="selectedConversation"
@@ -18,9 +18,9 @@
 import { computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import BrainHeader from '@/components/Brain/BrainHeader.vue';
-import SupervisorConversations from '@/views/AgentBuilder/Supervisor/SupervisorConversations/index.vue';
-import Conversation from '@/views/AgentBuilder/Supervisor/SupervisorConversations/Conversation/index.vue';
+import SupervisorHeader from './SupervisorHeader.vue';
+import SupervisorConversations from './SupervisorConversations/index.vue';
+import Conversation from './SupervisorConversations/Conversation/index.vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
@@ -42,11 +42,11 @@ watch(
       },
     });
   },
-  { immediate: true, deep: true },
+  { deep: true },
 );
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .supervisor {
   margin: -$unnnic-spacing-sm;
 
@@ -59,7 +59,7 @@ watch(
 
   &__header {
     padding: $unnnic-spacing-sm;
-    padding-bottom: 0;
+    padding-bottom: $unnnic-spacing-md;
 
     grid-column: 1 / 1;
     grid-row: 1 / 2;

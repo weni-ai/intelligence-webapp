@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import Unnnic from '@weni/unnnic-system';
 
 import { useSupervisorStore } from '@/store/Supervisor';
@@ -130,9 +130,13 @@ watch(selectedConversationIndex, (newConversation) => {
   highlightRow(newConversation);
 });
 
-onMounted(() => {
-  supervisorStore.loadConversations();
-});
+watch(
+  () => supervisorStore.filters,
+  () => {
+    supervisorStore.loadConversations();
+  },
+  { immediate: true, deep: true },
+);
 </script>
 
 <style scoped lang="scss">

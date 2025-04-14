@@ -3,6 +3,7 @@
     :class="[
       'agent-builder-header',
       { 'agent-builder-header--actions-lg': actionsSize === 'lg' },
+      props.class,
     ]"
   >
     <section class="agent-builder-header__title">
@@ -43,6 +44,11 @@ import useBrainRoutes from '@/composables/useBrainRoutes';
 const route = useRoute();
 
 const props = defineProps({
+  class: {
+    type: String,
+    default: '',
+  },
+
   withDivider: {
     type: Boolean,
     default: true,

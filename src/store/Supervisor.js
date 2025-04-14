@@ -26,8 +26,8 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const selectedConversation = ref(null);
 
   const filters = reactive({
-    start: '2025-01-01',
-    end: '2025-05-01',
+    start: '',
+    end: '',
     search: '',
   });
 
