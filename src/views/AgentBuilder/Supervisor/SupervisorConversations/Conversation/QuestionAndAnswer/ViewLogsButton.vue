@@ -20,7 +20,7 @@
 
     <section class="view-logs-button__content">
       <UnnnicIcon
-        icon="visibility"
+        :icon="active ? 'visibility_off' : 'visibility'"
         size="xs"
         scheme="weni-300"
         class="view-logs-button__icon-visibility"
