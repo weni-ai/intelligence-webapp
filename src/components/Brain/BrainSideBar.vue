@@ -18,7 +18,7 @@
         <SideBarItem
           v-for="nav in brainRoutes"
           :key="nav.page"
-          :text="$t(`router.tabs.${nav.title}`)"
+          :text="nav.title"
           :icon="nav.icon"
           :active="nav.page === activeNav"
           :iconFilled="nav.page === activeNav"

@@ -1,12 +1,9 @@
 <template>
-  <header
-    class="header"
-    :class="{ 'header--agents-team': route.name === 'router-agents-team' }"
-  >
+  <header class="header">
     <section class="header__infos">
       <section class="infos__title">
         <p class="title__text">
-          {{ $t(`router.tabs.${currentBrainRoute?.title}`) }}
+          {{ currentBrainRoute?.title }}
         </p>
       </section>
       <UnnnicIntelligenceText
@@ -19,7 +16,7 @@
       </UnnnicIntelligenceText>
     </section>
     <UnnnicButton
-      v-if="route.name === 'router-profile'"
+      v-if="currentBrainRoute?.page.includes('profile')"
       :disabled="profile.isSaveButtonDisabled"
       :loading="profile.isSaving"
       @click="profile.save"
@@ -27,31 +24,13 @@
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
     <UnnnicButton
-      v-else-if="route.name === 'router-tunings'"
+      v-else-if="currentBrainRoute?.page.includes('tunings')"
       :disabled="isTuningsSaveButtonDisabled"
       :loading="isTuningsSaveButtonLoading"
       @click="saveTunings"
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
-    <template v-else-if="route.name === 'router-agents-team'">
-      <UnnnicButton
-        type="secondary"
-        iconLeft="add"
-        @click="handleAgentsGallery"
-      >
-        {{ $t('router.agents_team.assign_agents') }}
-      </UnnnicButton>
-
-      <UnnnicButton
-        type="primary"
-        iconLeft="play_arrow"
-        iconsFilled
-        @click="handlePreview"
-      >
-        {{ $t('router.agents_team.preview') }}
-      </UnnnicButton>
-    </template>
     <section
       v-else-if="showDateFilter"
       class="monitoring-filters"
@@ -65,8 +44,6 @@
       <MonitoringViewFilter />
     </section>
   </header>
-
-  <PreviewDrawer v-model="isPreviewOpen" />
 </template>
 
 <script setup>
@@ -81,13 +58,9 @@ import { useProfileStore } from '@/store/Profile';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useTuningsStore } from '@/store/Tunings';
 import { usePreviewStore } from '@/store/Preview';
-import { useAlertStore } from '@/store/Alert';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-import i18n from '@/utils/plugins/i18n';
-
 import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
-import PreviewDrawer from './Preview/PreviewDrawer.vue';
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
   start: format(subDays(new Date(), 30), 'yyyy-MM-dd'),
@@ -108,7 +81,7 @@ const currentBrainRoute = computed(() => {
   );
 });
 
-const showDateFilter = computed(() => route.name === 'router-monitoring');
+const showDateFilter = computed(() => route.name?.includes('monitoring'));
 
 const tuningsStore = useTuningsStore();
 const previewStore = usePreviewStore();
@@ -156,12 +129,6 @@ watch(
   currentBrainRoute,
   (currentBrainRoute) => {
     updateQueriesAtFilterDate();
-
-    const isAgentsTeamPage = currentBrainRoute.page === 'router-agents-team';
-    if (!isAgentsTeamPage && previewStore.ws) {
-      previewStore.disconnectWS();
-      previewStore.clearTraces();
-    }
   },
   {
     immediate: true,
@@ -209,15 +176,6 @@ const handleAgentsGallery = () => {
       }
     }
   }
-
-  &--agents-team {
-    grid-template-columns: 9fr 3fr 3fr;
-  }
-}
-
-.agents-team-actions {
-  display: flex;
-  gap: $unnnic-spacing-sm;
 }
 
 .monitoring-filters {
