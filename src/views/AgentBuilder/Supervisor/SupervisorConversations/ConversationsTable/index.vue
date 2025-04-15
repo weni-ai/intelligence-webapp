@@ -2,6 +2,7 @@
   <UnnnicTableNext
     v-model:pagination="pagination.page"
     class="conversations-table"
+    data-testid="conversations-table"
     hideHeaders
     :headers="table.headers"
     :rows="table.rows"
