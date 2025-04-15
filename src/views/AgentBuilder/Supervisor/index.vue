@@ -1,7 +1,7 @@
 <template>
-  <BrainHeader />
+  <BrainHeader data-testid="header" />
 
-  <SupervisorPerformance />
+  <SupervisorPerformance data-testid="supervisor-performance" />
 </template>
 
 <script setup>
