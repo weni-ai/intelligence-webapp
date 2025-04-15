@@ -1,13 +1,23 @@
 <template>
   <section class="agent-builder">
-    <BrainSideBar class="agent-builder__sidebar" />
+    <BrainSideBar
+      class="agent-builder__sidebar"
+      data-testid="agent-builder-sidebar"
+    />
 
-    <main class="agent-builder__content">
-      <component :is="currentView" />
+    <main
+      class="agent-builder__content"
+      data-testid="agent-builder-content"
+    >
+      <component
+        :is="currentView"
+        data-testid="agent-builder-content-view"
+      />
     </main>
 
     <ModalSaveChangesError
       v-if="store.state.Brain.tabsWithError"
+      data-testid="agent-builder-modal-save-changes-error"
       @close="store.state.Brain.tabsWithError = null"
     />
   </section>
