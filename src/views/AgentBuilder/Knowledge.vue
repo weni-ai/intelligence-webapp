@@ -1,8 +1,9 @@
 <template>
-  <BrainHeader />
+  <BrainHeader data-testid="brain-header" />
 
   <section class="knowledge">
     <RouterContentBase
+      data-testid="router-content-base"
       :filesProp="files"
       :sitesProp="sites"
       :textProp="text"

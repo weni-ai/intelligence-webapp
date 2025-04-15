@@ -1,7 +1,7 @@
 <template>
   <section class="supervisor">
-    <BrainHeader />
-    <SupervisorConversations />
+    <BrainHeader data-testid="header" />
+    <SupervisorConversations data-testid="supervisor-conversations" />
   </section>
 </template>
 
