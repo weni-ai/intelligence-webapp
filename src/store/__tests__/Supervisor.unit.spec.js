@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
 import { useSupervisorStore } from '../Supervisor';
 import nexusaiAPI from '@/api/nexusaiAPI';
+import { PerformanceAdapter } from '@/api/adapters/supervisor/performance';
 
 vi.mock('@/api/nexusaiAPI', () => ({
   default: {
@@ -9,6 +10,7 @@ vi.mock('@/api/nexusaiAPI', () => ({
       supervisor: {
         conversations: {
           forwardStats: vi.fn(),
+          list: vi.fn(),
         },
       },
     },
@@ -37,13 +39,38 @@ describe('Supervisor Store', () => {
   });
 
   describe('Initial state', () => {
-    it('has the correct initial state', () => {
+    it('has the correct initial state for forwardStats', () => {
       expect(store.forwardStats).toEqual({
         status: null,
         data: {
           attendedByAgent: 0,
           forwardedHumanSupport: 0,
         },
+      });
+    });
+
+    it('has the correct initial state for conversations', () => {
+      expect(store.conversations).toEqual({
+        status: null,
+        data: [],
+      });
+    });
+  });
+
+  describe('Adapters', () => {
+    describe('PerformanceAdapter', () => {
+      it('transforms API data to the correct format', () => {
+        const apiData = {
+          attended_by_agent: 15,
+          forwarded_human_support: 8,
+        };
+
+        const result = PerformanceAdapter.fromApi(apiData);
+
+        expect(result).toEqual({
+          attendedByAgent: 15,
+          forwardedHumanSupport: 8,
+        });
       });
     });
   });
@@ -103,6 +130,55 @@ describe('Supervisor Store', () => {
           attendedByAgent: 0,
           forwardedHumanSupport: 0,
         });
+      });
+    });
+
+    describe('loadConversations', () => {
+      it('sets status to loading when started', async () => {
+        nexusaiAPI.agent_builder.supervisor.conversations.list.mockReturnValue(
+          new Promise(() => {}),
+        );
+
+        store.loadConversations();
+
+        expect(store.conversations.status).toBe('loading');
+
+        await Promise.resolve();
+      });
+
+      it('fetches conversations successfully', async () => {
+        const mockApiResponse = [
+          { id: 1, title: 'Conversation 1' },
+          { id: 2, title: 'Conversation 2' },
+        ];
+
+        nexusaiAPI.agent_builder.supervisor.conversations.list.mockResolvedValue(
+          mockApiResponse,
+        );
+
+        await store.loadConversations();
+
+        expect(
+          nexusaiAPI.agent_builder.supervisor.conversations.list,
+        ).toHaveBeenCalledWith({
+          projectUuid: 'test-project-uuid',
+          start: '2025-01-01',
+          end: '2025-05-01',
+        });
+
+        expect(store.conversations.status).toBe('complete');
+        expect(store.conversations.data).toEqual(mockApiResponse);
+      });
+
+      it('handles errors when fetching conversations', async () => {
+        nexusaiAPI.agent_builder.supervisor.conversations.list.mockRejectedValue(
+          new Error('API Error'),
+        );
+
+        await store.loadConversations();
+
+        expect(store.conversations.status).toBe('error');
+        expect(store.conversations.data).toEqual([]);
       });
     });
   });
