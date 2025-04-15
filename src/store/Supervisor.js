@@ -29,6 +29,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     start: '',
     end: '',
     search: '',
+    type: '',
   });
 
   async function loadForwardStats() {
