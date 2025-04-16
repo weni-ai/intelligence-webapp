@@ -1,5 +1,6 @@
 <template>
   <UnnnicIntelligenceText
+    data-testid="conversation-date"
     tag="p"
     color="neutral-cloudy"
     family="secondary"

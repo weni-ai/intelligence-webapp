@@ -1,6 +1,7 @@
 <template>
   <section class="conversation-infos">
     <UnnnicIntelligenceText
+      data-testid="conversation-urn"
       class="conversation-infos__urn"
       tag="h3"
       color="neutral-darkest"
@@ -11,6 +12,7 @@
       {{ urn }}
     </UnnnicIntelligenceText>
     <UnnnicIntelligenceText
+      data-testid="conversation-last-message"
       class="conversation-infos__last-message"
       tag="p"
       color="neutral-cloudy"

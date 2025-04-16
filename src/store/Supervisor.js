@@ -34,8 +34,21 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
         end: '2025-05-01',
       });
 
+      const adaptedData = PerformanceAdapter.fromApi(response);
+      const total =
+        adaptedData.attendedByAgent + adaptedData.forwardedHumanSupport;
+
+      const calculatePercentage = (value) =>
+        total === 0 ? 0 : Math.round((value / total) * 100);
+
+      forwardStats.data = {
+        attendedByAgent: calculatePercentage(adaptedData.attendedByAgent),
+        forwardedHumanSupport: calculatePercentage(
+          adaptedData.forwardedHumanSupport,
+        ),
+      };
+
       forwardStats.status = 'complete';
-      forwardStats.data = PerformanceAdapter.fromApi(response);
     } catch (error) {
       forwardStats.status = 'error';
     }

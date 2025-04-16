@@ -1,8 +1,8 @@
 <template>
   <section class="conversations">
-    <SupervisorPerformance />
+    <SupervisorPerformance data-testid="supervisor-performance" />
 
-    <ConversationsTable />
+    <ConversationsTable data-testid="conversations-table" />
   </section>
 </template>
 

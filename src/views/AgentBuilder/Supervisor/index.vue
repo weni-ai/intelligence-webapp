@@ -5,8 +5,14 @@
       { 'supervisor--with-conversation': selectedConversation },
     ]"
   >
-    <BrainHeader class="supervisor__header" />
-    <SupervisorConversations class="supervisor__conversations" />
+    <BrainHeader
+      class="supervisor__header"
+      data-testid="header"
+    />
+    <SupervisorConversations
+      class="supervisor__conversations"
+      data-testid="supervisor-conversations"
+    />
     <Conversation
       v-if="selectedConversation"
       class="supervisor__conversation"
