@@ -12,9 +12,9 @@
       v-else
       class="assign-agent-card__content"
     >
-      <img
-        v-if="agent.icon && agentIcon"
-        :src="agentIcon"
+      <AgentIcon
+        v-if="agent.icon"
+        :icon="agent.icon"
         class="content__icon"
         data-testid="agent-icon"
       />
@@ -131,12 +131,7 @@ import AssignAgentCardSkeleton from './AssignAgentCardSkeleton.vue';
 import AssignAgentDrawer from './AssignAgentDrawer.vue';
 import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
 import Skill from './Skill.vue';
-
-import OrdersAgent from '@/assets/icons/agents/OrdersAgent.svg';
-
-const agentIcons = {
-  OrdersAgent,
-};
+import AgentIcon from './AgentIcon.vue';
 
 const props = defineProps({
   loading: {
@@ -211,12 +206,6 @@ async function toggleDrawerAssigning() {
   isDrawerAssigning.value = false;
   toggleDrawer();
 }
-
-const agentIcon = computed(() => {
-  if (!props.agent.icon) return;
-
-  return agentIcons[props.agent.icon] || null;
-});
 </script>
 
 <style lang="scss" scoped>
