@@ -28,13 +28,23 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
   const isAgentsGalleryOpen = ref(false);
 
+  const officialIcons = {
+    'Orders Agent': 'OrdersAgent',
+  };
+
   async function loadActiveTeam() {
     try {
       activeTeam.status = 'loading';
 
       const { data } = await nexusaiAPI.router.agents_team.listActiveTeam();
 
-      activeTeam.data = data;
+      activeTeam.data = {
+        manager: data.manager,
+        agents: data.agents?.map((agent) => ({
+          ...agent,
+          icon: officialIcons[agent.name] || null,
+        })),
+      };
       activeTeam.status = 'complete';
     } catch (error) {
       console.error('error', error);
@@ -51,7 +61,10 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         search,
       });
 
-      officialAgents.data = data;
+      officialAgents.data = data?.map((agent) => ({
+        ...agent,
+        icon: officialIcons[agent.name] || null,
+      }));
       officialAgents.status = 'complete';
     } catch (error) {
       console.error('error', error);
