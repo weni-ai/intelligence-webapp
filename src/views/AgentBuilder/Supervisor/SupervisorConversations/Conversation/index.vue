@@ -31,7 +31,10 @@
         :isLoading="conversation.data.status === 'loading'"
       />
 
-      <ForwardedHumanSupport v-if="conversation.human_support" />
+      <ForwardedHumanSupport
+        v-if="conversation.human_support"
+        class="conversation__forwarded-human-support"
+      />
     </section>
   </section>
 </template>
@@ -83,6 +86,10 @@ $conversation-border: $unnnic-border-width-thinner solid
 
   &__messages {
     padding: $unnnic-spacing-sm;
+  }
+
+  &__forwarded-human-support {
+    margin-top: $unnnic-spacing-sm;
   }
 }
 </style>
