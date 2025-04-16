@@ -24,11 +24,15 @@
 
     <template v-else>
       <Message
+        v-if="data?.source_type === 'user'"
         class="question-and-answer__question"
         :text="data?.text"
       />
 
-      <section class="question-and-answer__answer">
+      <section
+        v-if="data?.source_type === 'agent'"
+        class="question-and-answer__answer"
+      >
         <PreviewLogs
           v-if="showLogs"
           :logs="logs"
@@ -37,7 +41,7 @@
 
         <Message
           class="question-and-answer__answer-text"
-          :text="data.llm_response"
+          :text="data?.text"
           scheme="success"
         >
           <ViewLogsButton
@@ -116,12 +120,10 @@ watch(
 
 <style lang="scss" scoped>
 .question-and-answer {
-  margin-bottom: $unnnic-spacing-sm;
+  margin-bottom: $unnnic-spacing-xs;
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(auto, 1fr);
-  gap: $unnnic-spacing-xs;
 
   &__question,
   &__skeleton-question {

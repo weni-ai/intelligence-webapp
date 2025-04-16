@@ -10,6 +10,7 @@
           supervisorStore.conversations.status === 'complete' &&
           conversations.results.length,
       }"
+      data-testid="conversations-table"
       hideHeaders
       :headers="table.headers"
       :rows="table.rows"

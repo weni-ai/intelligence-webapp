@@ -5,6 +5,7 @@
       { 'agent-builder-header--actions-lg': actionsSize === 'lg' },
       props.class,
     ]"
+    data-testid="agent-builder-header"
   >
     <section class="agent-builder-header__title">
       <UnnnicIntelligenceText
@@ -13,6 +14,7 @@
         family="secondary"
         weight="bold"
         color="neutral-darkest"
+        data-testid="agent-builder-header-title"
       >
         {{ currentBrainRoute?.title }}
       </UnnnicIntelligenceText>
@@ -21,6 +23,7 @@
         size="body-gt"
         family="secondary"
         color="neutral-cloudy"
+        data-testid="agent-builder-header-description"
       >
         {{ currentBrainRoute?.description }}
       </UnnnicIntelligenceText>
@@ -32,6 +35,7 @@
   <UnnnicDivider
     v-if="withDivider"
     ySpacing="md"
+    data-testid="agent-builder-header-divider"
   />
 </template>
 

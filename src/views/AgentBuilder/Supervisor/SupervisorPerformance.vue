@@ -3,7 +3,7 @@
     <PerformanceCard
       v-for="stat in performanceStats"
       :key="stat.title"
-      data-test="monitoring-performance-card"
+      data-testid="performance-card"
       :title="stat.title"
       :tooltip="stat.tooltip"
       :value="stat.value"

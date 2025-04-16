@@ -75,17 +75,15 @@ describe('PerformanceCard.vue', () => {
       const wrapper = createWrapper({ value: 75.3 });
       const value = wrapper.find('[data-test="card-value"]');
 
-      // Check that it ends with % and contains the digits 75
       expect(value.text()).toMatch(/%$/);
       expect(value.text()).toContain('75');
     });
 
     it('formats values according to the component logic', () => {
-      // Using a spy to check the actual implementation
       const formatterSpy = vi.spyOn(Intl, 'NumberFormat');
 
-      // Integer value
-      createWrapper({ value: 75 }).find('[data-test="card-value"]');
+      const integerValue = 75;
+      createWrapper({ value: integerValue }).find('[data-test="card-value"]');
       expect(formatterSpy).toHaveBeenCalledWith(expect.any(String), {
         minimumFractionDigits: 0,
         maximumFractionDigits: 1,
@@ -93,8 +91,8 @@ describe('PerformanceCard.vue', () => {
 
       formatterSpy.mockClear();
 
-      // Decimal value
-      createWrapper({ value: 75.3 }).find('[data-test="card-value"]');
+      const decimalValue = 75.3;
+      createWrapper({ value: decimalValue }).find('[data-test="card-value"]');
       expect(formatterSpy).toHaveBeenCalledWith(expect.any(String), {
         minimumFractionDigits: 1,
         maximumFractionDigits: 1,
@@ -104,16 +102,13 @@ describe('PerformanceCard.vue', () => {
     });
 
     it('uses the current locale for number formatting', () => {
-      // Save original locale
       const originalLocale = i18n.global.locale;
 
-      // Mock Intl.NumberFormat to verify locale is being passed
       const formatSpy = vi.fn().mockReturnValue('formatted-number');
       vi.spyOn(Intl, 'NumberFormat').mockImplementation(() => ({
         format: formatSpy,
       }));
 
-      // Test with US locale
       i18n.global.locale = 'en-US';
       createWrapper({ value: 1234.5 });
       expect(Intl.NumberFormat).toHaveBeenCalledWith(
@@ -121,7 +116,6 @@ describe('PerformanceCard.vue', () => {
         expect.any(Object),
       );
 
-      // Test with Brazilian locale
       i18n.global.locale = 'pt-BR';
       createWrapper({ value: 1234.5 });
       expect(Intl.NumberFormat).toHaveBeenCalledWith(
@@ -129,7 +123,6 @@ describe('PerformanceCard.vue', () => {
         expect.any(Object),
       );
 
-      // Restore
       vi.mocked(Intl.NumberFormat).mockRestore();
       i18n.global.locale = originalLocale;
     });
