@@ -28,9 +28,46 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
   const isAgentsGalleryOpen = ref(false);
 
-  const officialIcons = {
-    'Orders Agent': 'OrdersAgent',
-  };
+  const agentIconService = (() => {
+    const officialIcons = {
+      'Orders Agent': 'OrdersAgent',
+    };
+
+    const customIcons = Array.from(
+      { length: 24 },
+      (_, index) => `CustomIcon${index + 1}`,
+    );
+
+    const iconAssignments = new Map();
+    let nextCustomIconIndex = 0;
+
+    return {
+      getIconForAgent(agent) {
+        const { name, external_id } = agent;
+
+        if (officialIcons[name]) {
+          return officialIcons[name];
+        }
+
+        if (iconAssignments.has(external_id)) {
+          return iconAssignments.get(external_id);
+        }
+
+        const icon = customIcons[nextCustomIconIndex];
+        nextCustomIconIndex = (nextCustomIconIndex + 1) % customIcons.length;
+        iconAssignments.set(external_id, icon);
+
+        return icon;
+      },
+
+      applyIconToAgent(agent) {
+        return {
+          ...agent,
+          icon: this.getIconForAgent(agent),
+        };
+      },
+    };
+  })();
 
   async function loadActiveTeam() {
     try {
@@ -40,10 +77,10 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
       activeTeam.data = {
         manager: data.manager,
-        agents: data.agents?.map((agent) => ({
-          ...agent,
-          icon: officialIcons[agent.name] || null,
-        })),
+        agents:
+          data.agents?.map((agent) =>
+            agentIconService.applyIconToAgent(agent),
+          ) || [],
       };
       activeTeam.status = 'complete';
     } catch (error) {
@@ -61,10 +98,8 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         search,
       });
 
-      officialAgents.data = data?.map((agent) => ({
-        ...agent,
-        icon: officialIcons[agent.name] || null,
-      }));
+      officialAgents.data =
+        data?.map((agent) => agentIconService.applyIconToAgent(agent)) || [];
       officialAgents.status = 'complete';
     } catch (error) {
       console.error('error', error);
@@ -81,7 +116,8 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         search,
       });
 
-      myAgents.data = data;
+      myAgents.data =
+        data?.map((agent) => agentIconService.applyIconToAgent(agent)) || [];
       myAgents.status = 'complete';
     } catch (error) {
       console.error('error', error);
