@@ -302,6 +302,10 @@
           "agents_progressive_feedback": {
             "title": "Agents progressive feedback",
             "description": "The agent can provide brief updates while formulating the final response, helping the contact understand its process in real-time."
+          },
+          "multiple_message_format": {
+            "title": "Multiple message format",
+            "description": "With this function enabled, the agent will be able to send multiple messages formats, like Quick Replies, List Message, CTA and Catalog."
           }
         }
       },
