@@ -14,10 +14,10 @@
     <form class="agents-preview__form">
       <section class="form__field">
         <UnnnicSwitch
-          v-model="tuningsStore.settings.data.progressiveFeedback"
+          v-model="tuningsStore.settings.data.components"
           :textRight="
             $t(
-              'router.tunings.settings.agents_preview.agents_progressive_feedback.title',
+              'router.tunings.settings.agents_preview.multiple_message_format.title',
             )
           "
         />
@@ -31,7 +31,7 @@
         >
           {{
             $t(
-              'router.tunings.settings.agents_preview.agents_progressive_feedback.description',
+              'router.tunings.settings.agents_preview.multiple_message_format.description',
             )
           }}
         </UnnnicIntelligenceText>
