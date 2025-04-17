@@ -14,7 +14,7 @@
       hideHeaders
       :headers="table.headers"
       :rows="table.rows"
-      :paginationTotal="pagination.total"
+      :paginationTotal="conversations.count"
       :paginationInterval="pagination.interval"
       :isLoading="supervisorStore.conversations.status === 'loading'"
       @row-click="handleRowClick"
@@ -42,7 +42,6 @@ const conversations = computed(() => supervisorStore.conversations.data);
 const pagination = ref({
   page: 1,
   interval: 15,
-  total: conversations.value.count || 0,
 });
 
 function handleRowClick(row) {
@@ -137,6 +136,26 @@ watch(
     supervisorStore.loadConversations();
   },
   { immediate: true, deep: true },
+);
+
+watch(
+  [
+    () => supervisorStore.filters.search,
+    () => supervisorStore.filters.start,
+    () => supervisorStore.filters.end,
+  ],
+  ([newSearch, newStart, newEnd], [oldSearch, oldStart, oldEnd]) => {
+    if (newSearch !== oldSearch || newStart !== oldStart || newEnd !== oldEnd) {
+      pagination.value.page = 1;
+    }
+  },
+);
+
+watch(
+  () => pagination.value.page,
+  (newPage) => {
+    supervisorStore.loadConversations(newPage);
+  },
 );
 </script>
 

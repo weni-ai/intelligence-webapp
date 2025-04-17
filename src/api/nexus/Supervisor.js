@@ -3,8 +3,9 @@ import nexusRequest from '../nexusaiRequest';
 
 export const Supervisor = {
   conversations: {
-    async list({ projectUuid, start, end, search }) {
+    async list({ projectUuid, page, start, end, search }) {
       const params = {
+        page,
         start,
         end,
         search,
