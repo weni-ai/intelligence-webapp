@@ -3,12 +3,13 @@ import nexusRequest from '../nexusaiRequest';
 
 export const Supervisor = {
   conversations: {
-    async list({ projectUuid, page, start, end, search }) {
+    async list({ projectUuid, page, start, end, search, type }) {
       const params = {
         page,
         start,
         end,
-        search,
+        ...(search && { search }),
+        ...(type && { human_support: type === 'forwarded_human_support' }),
       };
 
       const { data } = await billingRequest.$http.get(

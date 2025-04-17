@@ -71,6 +71,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
         start: format(parseISO(filters.start), 'dd-MM-yyyy'),
         end: format(parseISO(filters.end), 'dd-MM-yyyy'),
         search: filters.search,
+        type: filters.type,
       });
 
       conversations.status = 'complete';
