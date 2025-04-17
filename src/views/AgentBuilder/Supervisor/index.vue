@@ -1,9 +1,10 @@
 <template>
-  <BrainHeader />
-  <RouterMonitoring />
+  <BrainHeader data-testid="header" />
+
+  <SupervisorPerformance data-testid="supervisor-performance" />
 </template>
 
 <script setup>
 import BrainHeader from '@/components/Brain/BrainHeader.vue';
-import RouterMonitoring from '@/views/Brain/RouterMonitoring/index.vue';
+import SupervisorPerformance from '@/views/AgentBuilder/Supervisor/SupervisorPerformance.vue';
 </script>
