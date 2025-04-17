@@ -62,14 +62,16 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     }
   }
 
-  async function loadConversations() {
+  async function loadConversations(page = 1) {
     conversations.status = 'loading';
     try {
       const response = await supervisorApi.conversations.list({
         projectUuid: projectUuid.value,
+        page,
         start: format(parseISO(filters.start), 'dd-MM-yyyy'),
         end: format(parseISO(filters.end), 'dd-MM-yyyy'),
         search: filters.search,
+        type: filters.type,
       });
 
       conversations.status = 'complete';
