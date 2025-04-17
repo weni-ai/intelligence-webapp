@@ -27,7 +27,7 @@ export const Supervisor = {
 
     async getById({ projectUuid, conversationId }) {
       const { data } = await nexusRequest.$http.get(
-        `/api/${projectUuid}/conversatiSons/${conversationId}`,
+        `/api/${projectUuid}/conversations/${conversationId}`,
       );
 
       return data;
