@@ -32,10 +32,10 @@ describe('PreviewStore', () => {
       activeTeam: {
         data: {
           agents: [
-            { external_id: 'agent-1', name: 'Agent 1' },
-            { external_id: 'agent-2', name: 'Agent 2' },
+            { id: 'agent-1', name: 'Agent 1' },
+            { id: 'agent-2', name: 'Agent 2' },
           ],
-          manager: { external_id: 'manager', name: 'Manager' },
+          manager: { id: 'manager', name: 'Manager' },
         },
       },
     };
@@ -76,8 +76,34 @@ describe('PreviewStore', () => {
 
     it('should return the active agent based on the last trace', () => {
       store.traces = [
-        { trace: { trace: { agentId: 'agent-1' }, summary: 'Task 1' } },
-        { trace: { trace: { agentId: 'agent-2' }, summary: 'Task 2' } },
+        {
+          trace: {
+            trace: {
+              orchestrationTrace: {
+                observation: {
+                  agentCollaboratorInvocationOutput: {
+                    agentCollaboratorName: 'agent-1',
+                  },
+                },
+              },
+            },
+            summary: 'Task 1',
+          },
+        },
+        {
+          trace: {
+            trace: {
+              orchestrationTrace: {
+                observation: {
+                  agentCollaboratorInvocationOutput: {
+                    agentCollaboratorName: 'agent-2',
+                  },
+                },
+              },
+            },
+            summary: 'Task 2',
+          },
+        },
       ];
 
       expect(store.activeAgent).toEqual({
@@ -88,9 +114,21 @@ describe('PreviewStore', () => {
 
     it('should return the manager when agent not found', () => {
       store.traces = [
-        { trace: { trace: { agentId: 'unknown-agent' }, summary: 'Task X' } },
+        {
+          trace: {
+            trace: {
+              orchestrationTrace: {
+                observation: {
+                  agentCollaboratorInvocationOutput: {
+                    agentCollaboratorName: 'unknown-agent',
+                  },
+                },
+              },
+            },
+            summary: 'Task X',
+          },
+        },
       ];
-
       expect(store.activeAgent).toEqual({
         ...mockAgentsTeamStore.activeTeam.data.manager,
         currentTask: 'Task X',
