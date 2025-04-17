@@ -109,16 +109,19 @@ const processedLogs = computed(() => {
 
   return traces.reduce((logsByAgent, trace) => {
     const agent = activeTeam.find(
-      (agent) => agent.external_id === trace.trace.agentId,
+      (agent) =>
+        agent.id ===
+        trace?.trace?.orchestrationTrace?.observation
+          ?.agentCollaboratorInvocationOutput?.agentCollaboratorName,
     );
 
     const agentToLog = agent || manager;
     if (!agentToLog) return logsByAgent;
 
     const lastLog = logsByAgent.at(-1);
-    if (lastLog?.external_id !== agentToLog.external_id) {
+    if (lastLog?.id !== agentToLog.id) {
       logsByAgent.push({
-        external_id: agentToLog.external_id,
+        id: agentToLog.id,
         agent_name: agentToLog.name || 'Manager',
         steps: [],
       });
