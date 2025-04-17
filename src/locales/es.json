@@ -292,8 +292,20 @@
         "used_by": "Usadas por",
         "no_agents_using": "Ningún agente usando",
         "credentials_updated_successfully": "Credenciales actualizadas con éxito",
-        "get_error": "Error al obtener credenciales"
-      }
+        "get_error": "Error al obtener credenciales",
+        "save_error": "Error al guardar credenciales"
+      },
+      "settings": {
+        "save_error": "Error al guardar ajustes",
+        "agents_preview": {
+          "title": "Vista previa de agentes",
+          "agents_progressive_feedback": {
+            "title": "Feedback progresivo de agentes",
+          "description": "El agente puede proporcionar actualizaciones breves mientras formula la respuesta final, ayudando al contacto a entender su proceso en tiempo real."
+          }
+        }
+      },
+      "save_success": "Ajustes guardados con éxito"
     },
     "preview": {
       "title": "Vista previa del agente",
@@ -1815,6 +1827,19 @@
         "error_message": "Error al eliminar la instrucción",
         "back_btn": "Cancelar",
         "remove_btn": "Eliminar"
+      }
+    },
+    "human_support": {
+      "title": "Soporte humano",
+      "switch": {
+        "enabled": "Habilitado",
+        "disabled": "Deshabilitado"
+      },
+      "fields": {
+        "rules": {
+          "title": "Cuando el agente debe transferir una conversación a un humano?",
+          "placeholder": "Si el usuario pide soporte humano, el agente debe enrutar al soporte humano"
+        }
       }
     }
   },
