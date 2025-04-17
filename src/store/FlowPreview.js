@@ -46,15 +46,6 @@ export const useFlowPreviewStore = defineStore('flowPreview', () => {
     }
   }
 
-  function extractJsonsFromMessage(message) {
-    if (!message) return [];
-
-    const jsonPattern = /{[^{}]*(?:{[^{}]*})*[^{}]*}/g;
-    const matches = message.match(jsonPattern) || [];
-
-    return matches;
-  }
-
   function treatAnswerResponse(
     answer,
     data,
@@ -67,48 +58,7 @@ export const useFlowPreviewStore = defineStore('flowPreview', () => {
     },
   ) {
     if (data.type === 'broadcast') {
-      answer.status = 'loaded';
-
-      const message = get(data, 'message', fallbackMessage);
-      const extractedJsons = extractJsonsFromMessage(message);
-      const safeJson = (json) => attempt(JSON.parse.bind(null, json));
-
-      console.log('extractedJsons', extractedJsons);
-
-      if (extractedJsons.length > 0) {
-        // Use the first JSON for the original answer
-        const firstJson = extractedJsons[0];
-
-        console.log('firstJson', firstJson);
-
-        answer.response = safeJson(firstJson);
-        answer.sources = get(data, 'fonts', []);
-
-        // Add additional messages for each subsequent JSON
-        for (let i = 1; i < extractedJsons.length; i++) {
-          const jsonItem = extractedJsons[i];
-
-          const additionalMessage = {
-            type: 'answer',
-            status: 'loaded',
-            response: safeJson(jsonItem),
-            question_uuid: answer.question_uuid,
-            sources: get(data, 'fonts', []),
-            feedback: {
-              value: null,
-              reason: null,
-            },
-          };
-          console.log('additionalMessage', additionalMessage);
-          addMessage(additionalMessage);
-        }
-      } else {
-        console.log('else message', message);
-        answer.response = message;
-        answer.sources = get(data, 'fonts', []);
-      }
-
-      if (onBroadcast) onBroadcast(answer);
+      handleBroadcastResponse(answer, data, fallbackMessage, onBroadcast);
     } else if (data.type === 'flowstart') {
       // Insert a flowstart message before the answer
       const answerIndex = messages.value.indexOf(answer);
@@ -134,6 +84,57 @@ export const useFlowPreviewStore = defineStore('flowPreview', () => {
 
       if (onCancelled) onCancelled();
     }
+  }
+
+  function handleBroadcastResponse(answer, data, fallbackMessage, onBroadcast) {
+    answer.status = 'loaded';
+
+    const extractArrayFromMessage = (message) => {
+      if (!message) return [];
+
+      const arrayPattern = /\[\s*(?:.|\n)*\s*\]/g;
+      const matches = message.match(arrayPattern) || [];
+
+      const safeJson = (json) => attempt(JSON.parse.bind(null, json));
+      return matches.length > 0 ? safeJson(matches[0]) : [];
+    };
+
+    const message = get(data, 'message', fallbackMessage);
+    const sources = get(data, 'fonts', []);
+    const extractedArray = extractArrayFromMessage(message);
+
+    if (extractedArray.length > 0) {
+      answer.response = extractedArray[0];
+      answer.sources = sources;
+
+      createAdditionalMessages(
+        extractedArray.slice(1),
+        answer.question_uuid,
+        sources,
+      );
+    } else {
+      answer.response = message;
+      answer.sources = sources;
+    }
+
+    if (onBroadcast) onBroadcast(answer);
+  }
+
+  function createAdditionalMessages(items, questionUuid, sources) {
+    items.forEach((item) => {
+      const additionalMessage = {
+        type: 'answer',
+        status: 'loaded',
+        response: item,
+        question_uuid: questionUuid,
+        sources,
+        feedback: {
+          value: null,
+          reason: null,
+        },
+      };
+      addMessage(additionalMessage);
+    });
   }
 
   return {
