@@ -1,14 +1,10 @@
-import axios from 'axios';
-
-const request = axios.create({
-  baseURL: 'https://nexus.apip.stg.cloud.weni.ai/',
-});
+import billingRequest from '../billingRequest';
 
 export const Supervisor = {
   conversations: {
-    async forwardStats({ projectUuid, start, end }) {
-      const { data } = await request.get(
-        `/api/${projectUuid}/conversations/forward-stats/?start=${start}&end=${end}`,
+    async forwardStats({ projectUuid }) {
+      const { data } = await billingRequest.$http.get(
+        `${projectUuid}/forward-stats/`,
       );
 
       return data;

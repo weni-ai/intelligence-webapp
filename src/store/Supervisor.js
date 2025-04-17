@@ -23,8 +23,6 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     try {
       const response = await supervisorApi.conversations.forwardStats({
         projectUuid: projectUuid.value,
-        start: '2025-01-01',
-        end: '2025-05-01',
       });
 
       const adaptedData = PerformanceAdapter.fromApi(response);
