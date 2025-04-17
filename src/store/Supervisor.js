@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
+import { format, parseISO } from 'date-fns';
 import globalStore from '.';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
@@ -37,8 +38,8 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     try {
       const response = await supervisorApi.conversations.forwardStats({
         projectUuid: projectUuid.value,
-        start: '2025-01-01',
-        end: '2025-05-01',
+        start: format(parseISO(filters.start), 'dd-MM-yyyy'),
+        end: format(parseISO(filters.end), 'dd-MM-yyyy'),
       });
 
       const adaptedData = PerformanceAdapter.fromApi(response);

@@ -1,8 +1,5 @@
-import axios from 'axios';
-
-const request = axios.create({
-  baseURL: 'https://nexus.apip.stg.cloud.weni.ai/',
-});
+import billingRequest from '../billingRequest';
+import nexusRequest from '../nexusaiRequest';
 
 export const Supervisor = {
   conversations: {
@@ -13,24 +10,24 @@ export const Supervisor = {
         search,
       };
 
-      const { data } = await request.get(
-        `/api/${projectUuid}/conversations/?${new URLSearchParams(params)}`,
+      const { data } = await billingRequest.$http.get(
+        `${projectUuid}/conversations/?${new URLSearchParams(params)}`,
       );
 
       return data;
     },
 
     async forwardStats({ projectUuid, start, end }) {
-      const { data } = await request.get(
-        `/api/${projectUuid}/conversations/forward-stats/?start=${start}&end=${end}`,
+      const { data } = await billingRequest.$http.get(
+        `${projectUuid}/forward-stats/?start=${start}&end=${end}`,
       );
 
       return data;
     },
 
     async getById({ projectUuid, conversationId }) {
-      const { data } = await request.get(
-        `/api/${projectUuid}/conversations/${conversationId}`,
+      const { data } = await nexusRequest.$http.get(
+        `/api/${projectUuid}/conversatiSons/${conversationId}`,
       );
 
       return data;
