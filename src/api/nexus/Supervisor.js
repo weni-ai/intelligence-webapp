@@ -1,25 +1,32 @@
 import billingRequest from '../billingRequest';
+import nexusRequest from '../nexusaiRequest';
 
 export const Supervisor = {
   conversations: {
-    async list({ projectUuid }) {
+    async list({ projectUuid, start, end, search }) {
+      const params = {
+        start,
+        end,
+        search,
+      };
+
       const { data } = await billingRequest.$http.get(
-        `${projectUuid}/conversations/`,
+        `${projectUuid}/conversations/?${new URLSearchParams(params)}`,
       );
 
       return data;
     },
 
-    async forwardStats({ projectUuid }) {
+    async forwardStats({ projectUuid, start, end }) {
       const { data } = await billingRequest.$http.get(
-        `${projectUuid}/forward-stats/`,
+        `${projectUuid}/forward-stats/?start=${start}&end=${end}`,
       );
 
       return data;
     },
 
     async getById({ projectUuid, conversationId }) {
-      const { data } = await request.get(
+      const { data } = await nexusRequest.$http.get(
         `/api/${projectUuid}/conversations/${conversationId}`,
       );
 

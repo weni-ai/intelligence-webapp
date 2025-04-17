@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
+import { format, parseISO } from 'date-fns';
 import globalStore from '.';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
@@ -25,11 +26,20 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
   const selectedConversation = ref(null);
 
+  const filters = reactive({
+    start: '',
+    end: '',
+    search: '',
+    type: '',
+  });
+
   async function loadForwardStats() {
     forwardStats.status = 'loading';
     try {
       const response = await supervisorApi.conversations.forwardStats({
         projectUuid: projectUuid.value,
+        start: format(parseISO(filters.start), 'dd-MM-yyyy'),
+        end: format(parseISO(filters.end), 'dd-MM-yyyy'),
       });
 
       const adaptedData = PerformanceAdapter.fromApi(response);
@@ -57,6 +67,9 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     try {
       const response = await supervisorApi.conversations.list({
         projectUuid: projectUuid.value,
+        start: format(parseISO(filters.start), 'dd-MM-yyyy'),
+        end: format(parseISO(filters.end), 'dd-MM-yyyy'),
+        search: filters.search,
       });
 
       conversations.status = 'complete';
@@ -113,5 +126,6 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     loadSelectedConversationData,
     selectConversation,
     selectedConversation,
+    filters,
   };
 });

@@ -94,7 +94,8 @@
         "tooltip": "Conversations forwarded to human support"
       },
       "view_logs": "View logs",
-      "hide_logs": "Hide logs"
+      "hide_logs": "Hide logs",
+      "search": "Search"
     }
   },
   "router": {
