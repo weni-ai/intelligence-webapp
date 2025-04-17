@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import globalStore from '.';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
@@ -23,19 +23,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     data: [],
   });
 
-  async function loadConversations() {
-    conversations.status = 'loading';
-    try {
-      const response = await supervisorApi.conversations.list({
-        projectUuid: projectUuid.value,
-      });
-
-      conversations.status = 'complete';
-      conversations.data = response;
-    } catch (error) {
-      conversations.status = 'error';
-    }
-  }
+  const selectedConversation = ref(null);
 
   async function loadForwardStats() {
     forwardStats.status = 'loading';
@@ -64,10 +52,66 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     }
   }
 
+  async function loadConversations() {
+    conversations.status = 'loading';
+    try {
+      const response = await supervisorApi.conversations.list({
+        projectUuid: projectUuid.value,
+      });
+
+      conversations.status = 'complete';
+      conversations.data = response;
+    } catch (error) {
+      conversations.status = 'error';
+    }
+  }
+
+  async function loadSelectedConversationData() {
+    try {
+      selectedConversation.value.data.status = 'loading';
+      const response = await supervisorApi.conversations.getById({
+        projectUuid: projectUuid.value,
+        conversationId: selectedConversation.value.id,
+      });
+
+      selectedConversation.value.data = {
+        ...selectedConversation.value.data,
+        ...response,
+      };
+
+      selectedConversation.value.data.status = 'complete';
+    } catch (error) {
+      console.error(error);
+
+      selectedConversation.value.data.status = 'error';
+    }
+  }
+
+  function selectConversation(conversationId) {
+    if (!conversationId) {
+      selectedConversation.value = null;
+      return;
+    }
+
+    const conversation = conversations.data.results.find(
+      (conversation) => conversation.id === conversationId,
+    );
+
+    selectedConversation.value = {
+      ...conversation,
+      data: {
+        status: null,
+      },
+    };
+  }
+
   return {
     forwardStats,
     loadForwardStats,
     conversations,
     loadConversations,
+    loadSelectedConversationData,
+    selectConversation,
+    selectedConversation,
   };
 });

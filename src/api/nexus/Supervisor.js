@@ -17,5 +17,13 @@ export const Supervisor = {
 
       return data;
     },
+
+    async getById({ projectUuid, conversationId }) {
+      const { data } = await request.get(
+        `/api/${projectUuid}/conversations/${conversationId}`,
+      );
+
+      return data;
+    },
   },
 };
