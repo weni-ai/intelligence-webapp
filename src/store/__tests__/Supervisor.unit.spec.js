@@ -69,8 +69,8 @@ describe('Supervisor Store', () => {
         };
 
         const expectedData = {
-          attendedByAgent: 10,
-          forwardedHumanSupport: 5,
+          attendedByAgent: 67, // 10 / 15 * 100 (15 is the total of metrics)
+          forwardedHumanSupport: 33, // 5 / 15 * 100 (15 is the total of metrics)
         };
 
         nexusaiAPI.agent_builder.supervisor.conversations.forwardStats.mockResolvedValue(
@@ -83,8 +83,6 @@ describe('Supervisor Store', () => {
           nexusaiAPI.agent_builder.supervisor.conversations.forwardStats,
         ).toHaveBeenCalledWith({
           projectUuid: 'test-project-uuid',
-          start: '2025-01-01',
-          end: '2025-05-01',
         });
 
         expect(store.forwardStats.status).toBe('complete');
