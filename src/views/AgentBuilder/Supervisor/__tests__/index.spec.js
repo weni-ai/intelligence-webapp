@@ -31,7 +31,9 @@ describe('Supervisor view', () => {
 
   it('renders SupervisorPerformance component', () => {
     expect(
-      wrapper.findComponent('[data-testid="supervisor-performance"]').exists(),
+      wrapper
+        .findComponent('[data-testid="supervisor-conversations"]')
+        .exists(),
     ).toBe(true);
   });
 });
