@@ -67,8 +67,8 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     try {
       const response = await supervisorApi.conversations.list({
         projectUuid: projectUuid.value,
-        start: filters.start,
-        end: filters.end,
+        start: format(parseISO(filters.start), 'dd-MM-yyyy'),
+        end: format(parseISO(filters.end), 'dd-MM-yyyy'),
         search: filters.search,
       });
 
