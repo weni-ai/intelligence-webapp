@@ -9,6 +9,8 @@
       :value="stat.value"
       :scheme="stat.scheme"
       :isLoading="supervisorStore.forwardStats.status === 'loading'"
+      clickable
+      :clicked="supervisorStore.filters.type === stat.type"
       @click="handleCardClick(stat.type)"
     />
   </section>
@@ -51,7 +53,8 @@ onMounted(() => {
 });
 
 function handleCardClick(type) {
-  supervisorStore.filters.type = type;
+  supervisorStore.filters.type =
+    supervisorStore.filters.type === type ? null : type;
 }
 </script>
 
