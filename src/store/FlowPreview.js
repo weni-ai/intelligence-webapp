@@ -89,29 +89,14 @@ export const useFlowPreviewStore = defineStore('flowPreview', () => {
   function handleBroadcastResponse(answer, data, fallbackMessage, onBroadcast) {
     answer.status = 'loaded';
 
-    const extractArrayFromMessage = (message) => {
-      if (!message) return [];
-
-      const arrayPattern = /\[\s*(?:.|\n)*\s*\]/g;
-      const matches = message.match(arrayPattern) || [];
-
-      const safeJson = (json) => attempt(JSON.parse.bind(null, json));
-      return matches.length > 0 ? safeJson(matches[0]) : [];
-    };
-
     const message = get(data, 'message', fallbackMessage);
     const sources = get(data, 'fonts', []);
-    const extractedArray = extractArrayFromMessage(message);
 
-    if (extractedArray.length > 0) {
-      answer.response = extractedArray[0];
+    if (Array.isArray(message) && message.length > 0) {
+      answer.response = message[0];
       answer.sources = sources;
 
-      createAdditionalMessages(
-        extractedArray.slice(1),
-        answer.question_uuid,
-        sources,
-      );
+      createAdditionalMessages(message.slice(1), answer.question_uuid, sources);
     } else {
       answer.response = message;
       answer.sources = sources;
