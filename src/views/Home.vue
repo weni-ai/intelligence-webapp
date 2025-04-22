@@ -145,6 +145,7 @@ import useIntelligences from '../composables/useIntelligences';
 import useInfiniteScroll from '../composables/useInfiniteScroll';
 import repository from '../api/repository';
 import ClassificationDeprecationAlert from '../components/intelligences/ClassificationDeprecationAlert.vue';
+import nexusaiAPI from '@/api/nexusaiAPI';
 
 const store = useStore();
 const tab = ref('content_intelligences');
@@ -172,52 +173,7 @@ onMounted(() => {
       status: null,
     };
   }
-
-  loadInitialData();
 });
-
-const loadInitialData = async () => {
-  try {
-    if (tab.value === 'content_intelligences') {
-      await loadPublicIntelligences();
-
-      setTimeout(() => {
-        if (
-          contentEndOfListElement.value &&
-          hasMoreContentPages.value &&
-          getPublicContentIntelligences.value.length > 0
-        ) {
-          loadPublicIntelligences();
-        }
-      }, 200);
-    } else {
-      if (ownershipFilter.value === 'own') {
-        await loadClassificationIntelligences();
-        setTimeout(() => {
-          if (
-            classificationEndOfListElement.value &&
-            filteredClassificationIntelligences.value.length > 0
-          ) {
-            checkClassificationVisibility();
-          }
-        }, 200);
-      } else {
-        await loadPublicIntelligences();
-        setTimeout(() => {
-          if (
-            classificationEndOfListElement.value &&
-            hasMoreClassificationPages.value &&
-            filteredClassificationIntelligences.value.length > 0
-          ) {
-            checkClassificationVisibility();
-          }
-        }, 200);
-      }
-    }
-  } catch (error) {
-    console.error('Error loading initial data:', error);
-  }
-};
 
 const loadMoreContent = () => {
   if (
@@ -225,7 +181,7 @@ const loadMoreContent = () => {
     hasMoreContentPages.value &&
     !contentLoading.value
   ) {
-    loadPublicIntelligences();
+    loadContentIntelligences();
   }
 };
 
@@ -238,7 +194,7 @@ const loadMoreClassification = () => {
   }
 
   if (ownershipFilter.value === 'own') {
-    loadClassificationIntelligences(true);
+    loadClassificationIntelligences();
   } else if (hasMoreClassificationPages.value) {
     loadPublicIntelligences();
   }
@@ -261,7 +217,7 @@ const getPublicContentIntelligences = computed(() => {
 
   return store.state.Repository.publicIntelligences.data.filter(
     (intelligence) =>
-      intelligence.repository_type === 'content' &&
+      intelligence.is_router === false &&
       intelligence.name.toLowerCase().includes(filterIntelligenceName.value),
   );
 });
@@ -311,6 +267,30 @@ const isClassificationEmpty = computed(() => {
     return isComplete && filteredClassificationIntelligences.value.length === 0;
   }
 });
+
+const loadContentIntelligences = async () => {
+  try {
+    contentLoading.value = true;
+    store.state.Repository.publicIntelligences.status = 'loading';
+
+    const { data } = await nexusaiAPI.listIntelligences({
+      next: store.state.Repository.publicIntelligences.next,
+      orgUuid: store.state.Auth.connectOrgUuid,
+    });
+
+    store.state.Repository.publicIntelligences.data = data.results;
+    store.state.Repository.publicIntelligences.next = data.next;
+    store.state.Repository.publicIntelligences.status = 'complete';
+    contentLoading.value = false;
+  } catch (error) {
+    console.error('Error loading content intelligences:', error);
+  } finally {
+    contentLoading.value = false;
+    if (store.state.Repository.publicIntelligences.status === 'loading') {
+      store.state.Repository.publicIntelligences.status = null;
+    }
+  }
+};
 
 const loadPublicIntelligences = async () => {
   if (
@@ -369,101 +349,58 @@ const createNewIntelligence = () => {
   openModal.value = true;
 };
 
-watch(tab, (newTab) => {
-  if (newTab === 'content_intelligences') {
-    if (!getPublicContentIntelligences.value.length) {
-      loadPublicIntelligences().then(() => {
-        setTimeout(() => {
-          if (
-            contentEndOfListElement.value &&
-            hasMoreContentPages.value &&
-            getPublicContentIntelligences.value.length > 0
-          ) {
-            checkContentVisibility();
-          }
-        }, 200);
-      });
-    } else if (hasMoreContentPages.value) {
-      setTimeout(() => {
-        checkContentVisibility();
-      }, 200);
-    }
-  } else if (newTab === 'classification_intelligences') {
-    if (
-      ownershipFilter.value === 'own' &&
-      !intelligencesState.value.classification.fromProject.data.length
-    ) {
-      loadClassificationIntelligences().then(() => {
-        setTimeout(() => {
-          if (
-            classificationEndOfListElement.value &&
-            filteredClassificationIntelligences.value.length > 0
-          ) {
-            checkClassificationVisibility();
-          }
-        }, 200);
-      });
-    } else if (
-      ownershipFilter.value === 'public' &&
-      !filteredClassificationIntelligences.value.length
-    ) {
-      loadPublicIntelligences().then(() => {
-        setTimeout(() => {
-          if (
-            classificationEndOfListElement.value &&
-            hasMoreClassificationPages.value &&
-            filteredClassificationIntelligences.value.length > 0
-          ) {
-            checkClassificationVisibility();
-          }
-        }, 200);
-      });
-    } else {
-      setTimeout(() => {
-        checkClassificationVisibility();
-      }, 200);
-    }
-  }
-});
+watch(
+  tab,
+  (newTab) => {
+    resetPublicIntelligences();
 
-watch(ownershipFilter, () => {
-  if (tab.value === 'classification_intelligences') {
-    if (ownershipFilter.value === 'own') {
-      if (!intelligencesState.value.classification.fromProject.data.length) {
+    if (newTab === 'content_intelligences') {
+      loadContentIntelligences().then(() => {
+        setTimeout(() => {
+          if (hasMoreContentPages.value) {
+            loadContentIntelligences();
+          }
+        }, 200);
+      });
+    } else if (newTab === 'classification_intelligences') {
+      if (ownershipFilter.value === 'own') {
         loadClassificationIntelligences().then(() => {
           setTimeout(() => {
-            if (
-              classificationEndOfListElement.value &&
-              filteredClassificationIntelligences.value.length > 0
-            ) {
-              checkClassificationVisibility();
-            }
+            loadClassificationIntelligences();
           }, 200);
         });
-      } else {
-        setTimeout(() => {
-          checkClassificationVisibility();
-        }, 200);
+      } else if (ownershipFilter.value === 'public') {
+        loadPublicIntelligences().then(() => {
+          setTimeout(() => {
+            loadPublicIntelligences();
+          }, 200);
+        });
       }
-    } else if (!filteredClassificationIntelligences.value.length) {
-      loadPublicIntelligences().then(() => {
-        setTimeout(() => {
-          if (
-            classificationEndOfListElement.value &&
-            hasMoreClassificationPages.value &&
-            filteredClassificationIntelligences.value.length > 0
-          ) {
-            checkClassificationVisibility();
-          }
-        }, 200);
-      });
-    } else {
-      setTimeout(() => {
-        checkClassificationVisibility();
-      }, 200);
     }
-  }
-});
+  },
+  { immediate: true },
+);
+
+watch(
+  () => ownershipFilter.value,
+  () => {
+    if (tab.value === 'classification_intelligences') {
+      if (ownershipFilter.value === 'own') {
+        loadClassificationIntelligences().then(() => {
+          setTimeout(() => {
+            loadClassificationIntelligences();
+          }, 200);
+        });
+      } else if (ownershipFilter.value === 'public') {
+        loadPublicIntelligences().then(() => {
+          setTimeout(() => {
+            loadPublicIntelligences();
+          }, 200);
+        });
+      }
+    }
+  },
+);
 
 watch(filterIntelligenceCategory, () => {
   if (tab.value === 'classification_intelligences') {

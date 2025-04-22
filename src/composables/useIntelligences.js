@@ -147,14 +147,14 @@ export default function useIntelligences() {
     }
   };
 
-  const loadClassificationIntelligences = async (isEndOfList = false) => {
+  const loadClassificationIntelligences = async () => {
     const { classification } = intelligencesState.value;
     const isFirstLoad = classification?.fromProject.status === null;
     try {
       if (isFirstLoad) {
         await loadIntelligencesFromProject();
         return loadIntelligencesFromOrg();
-      } else if (isEndOfList && classification?.fromOrg.status !== 'complete') {
+      } else if (classification?.fromOrg.status !== 'complete') {
         return loadIntelligencesFromOrg();
       }
       return Promise.resolve();

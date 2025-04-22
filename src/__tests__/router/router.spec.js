@@ -90,7 +90,7 @@ describe('router', () => {
       query: { token: 'token', project_uuid: 'project_uuid' },
     };
     const next = vi.fn();
-    await router.options.routes[2].beforeEnter(to, null, next);
+    await router.options.routes[3].beforeEnter(to, null, next);
     expect(store.dispatch).toHaveBeenCalledWith('externalLogin', {
       token: 'Bearer token',
     });
@@ -107,7 +107,7 @@ describe('router', () => {
     };
     vi.spyOn(nexusaiAPI.router, 'read').mockResolvedValue({ data });
     const next = vi.fn();
-    await router.options.routes[3].beforeEnter({}, {}, next);
+    await router.options.routes[4].beforeEnter({}, {}, next);
     expect(store.state.router.contentBaseUuid).toBe(data.uuid);
     expect(store.state.router.intelligenceUuid).toBe(data.intelligence);
     expect(next).toHaveBeenCalled();
@@ -162,16 +162,16 @@ describe('router', () => {
     const from = {};
     const next = vi.fn();
 
-    await router.options.routes[3].beforeEnter(to, from, next);
+    await router.options.routes[4].beforeEnter(to, from, next);
 
     expect(next).toHaveBeenCalled();
-    expect(router.options.routes[3].redirect()).toStrictEqual({
+    expect(router.options.routes[4].redirect()).toStrictEqual({
       name: 'router-monitoring',
     });
   });
 
   it('should redirect 404 route to next()', async () => {
-    const to = { fullPath: '/redirect-path' };
+    const to = { fullPath: '' };
     const from = {};
     const next = vi.fn();
 

@@ -150,7 +150,6 @@ describe('MessageComponentResolver.vue', () => {
     });
 
     it('handles message data that throws error during parsing', () => {
-      // Create a message object with a property that throws when accessed
       const message = {};
       Object.defineProperty(message, 'problematic', {
         get: () => {
@@ -158,7 +157,6 @@ describe('MessageComponentResolver.vue', () => {
         },
       });
 
-      // This shouldn't throw, the component should handle it gracefully
       setupWrapper(message);
       expect(messageComponent().exists()).toBe(false);
     });
