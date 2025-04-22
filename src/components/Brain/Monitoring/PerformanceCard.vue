@@ -1,6 +1,11 @@
 <template>
   <section
-    :class="['performance-card', `performance-card--${scheme}`]"
+    :class="[
+      'performance-card',
+      `performance-card--${scheme}`,
+      { 'performance-card--clickable': clickable },
+      { 'performance-card--clicked': clickable && clicked },
+    ]"
     data-test="card"
   >
     <header class="card__header">
@@ -79,6 +84,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  clickable: {
+    type: Boolean,
+    default: false,
+  },
+  clicked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const formattedValue = computed(() => {
@@ -108,8 +121,6 @@ $blue: $unnnic-color-aux-blue-300;
   flex-direction: column;
   gap: $unnnic-spacing-nano;
 
-  cursor: pointer;
-
   &::after {
     content: '';
 
@@ -128,7 +139,8 @@ $blue: $unnnic-color-aux-blue-300;
       background-color: $green;
     }
 
-    &:hover {
+    &.performance-card--clickable:hover,
+    &.performance-card--clicked {
       border-color: $green;
     }
   }
@@ -138,7 +150,8 @@ $blue: $unnnic-color-aux-blue-300;
       background-color: $red;
     }
 
-    &:hover {
+    &.performance-card--clickable:hover,
+    &.performance-card--clicked {
       border-color: $red;
     }
   }
@@ -148,9 +161,14 @@ $blue: $unnnic-color-aux-blue-300;
       background-color: $blue;
     }
 
-    &:hover {
+    &.performance-card--clickable:hover,
+    &.performance-card--clicked {
       border-color: $blue;
     }
+  }
+
+  &--clickable {
+    cursor: pointer;
   }
 
   .card__header {
