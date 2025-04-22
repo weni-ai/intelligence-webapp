@@ -15,6 +15,13 @@ export const useTuningsStore = defineStore('Tunings', () => {
     () => globalStore.state.Auth.connectProjectUuid,
   );
 
+  const isLoadingTunings = computed(() => {
+    return (
+      credentials.value.status === 'loading' ||
+      settings.value.status === 'loading'
+    );
+  });
+
   const initialCredentials = ref(null);
   const credentials = ref({
     status: null,
@@ -252,6 +259,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
   }
 
   return {
+    isLoadingTunings,
     credentials,
     settings,
     isCredentialsValid,
