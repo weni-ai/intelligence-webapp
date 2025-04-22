@@ -61,6 +61,43 @@
       "delete": "Excluir base"
     }
   },
+  "agent_builder": {
+    "tabs": {
+      "supervisor": {
+        "title": "Supervisor",
+        "description": "Analise e revise conversas entre agentes e clientes."
+      },
+      "profile": {
+        "title": "Perfil",
+        "description": "Personalize as informações básicas e o comportamento do agente."
+      },
+      "agents": {
+        "title": "Agentes",
+        "description": "Crie a equipe de agentes perfeita."
+      },
+      "knowledge": {
+        "title": "Conhecimento",
+        "description": "Adicione conhecimento através de arquivos, links ou texto para que o agente possa responder com precisão."
+      },
+      "tunings": {
+        "title": "Ajustes",
+        "description": "Gerencie as configurações e acompanhe as alterações realizadas."
+      }
+    },
+    "supervisor": {
+      "attended_by_agent": {
+        "title": "Atendido pelo agente",
+        "tooltip": "Conversas resolvidas pelo agente"
+      },
+      "forwarded_human_support": {
+        "title": "Encaminhado para suporte humano",
+        "tooltip": "Conversas encaminhadas para suporte humano"
+      },
+      "view_logs": "Visualizar logs",
+      "hide_logs": "Esconder logs",
+      "search": "Pesquisar"
+    }
+  },
   "router": {
     "modal_save_changes_error": {
       "title": "Erro ao salvar as alterações",
@@ -73,7 +110,6 @@
     "tabs": {
       "monitoring": "Supervisor",
       "profile": "Perfil",
-      "agents-team": "Agentes",
       "content": "Conhecimento",
       "actions": "Ações",
       "tunings": "Ajustes"
