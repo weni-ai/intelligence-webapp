@@ -106,20 +106,20 @@ exports[`AgentsGalleryModal.vue > Component rendering > should match snapshot 1`
               class="unnnic-form md"
               data-testid="search-input"
               data-v-02909c7e=""
-              data-v-29b8feb1=""
+              data-v-24f2d284=""
             >
               <!---->
               <div
                 class="text-input size--md text-input--icon-right-size-sm unnnic-form-input"
                 data-testid="search-input"
-                data-v-29b8feb1=""
+                data-v-24f2d284=""
                 data-v-c1401a33=""
                 mask=""
               >
                 <input
                   class="unnnic-form-input input-itself input size-md normal input--has-icon-left unnnic-form-input input-itself"
                   data-testid="search-input"
-                  data-v-244e8315=""
+                  data-v-0caa2ccb=""
                   data-v-c1401a33=""
                   hascloudycolor="false"
                   iconleft="search"
