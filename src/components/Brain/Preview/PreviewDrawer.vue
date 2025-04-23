@@ -54,6 +54,8 @@
 
 <script setup>
 import { computed, watch } from 'vue';
+import { useStore } from 'vuex';
+
 import { usePreviewStore } from '@/store/Preview';
 import { useFlowPreviewStore } from '@/store/FlowPreview';
 
@@ -71,6 +73,7 @@ const props = defineProps({
 
 defineEmits(['update:modelValue']);
 
+const store = useStore();
 const previewStore = usePreviewStore();
 const flowPreviewStore = useFlowPreviewStore();
 watch(
@@ -92,6 +95,9 @@ const previewHeaderActions = computed(() => [
 function refreshPreview() {
   previewStore.clearTraces();
   flowPreviewStore.clearMessages();
+  flowPreviewStore.previewInit({
+    contentBaseUuid: store.state.router.contentBaseUuid,
+  });
 }
 </script>
 
