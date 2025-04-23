@@ -33,6 +33,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
     status: null,
     data: {
       components: false,
+      progressiveFeedback: false,
     },
   });
 
@@ -169,12 +170,18 @@ export const useTuningsStore = defineStore('Tunings', () => {
 
   async function fetchSettings() {
     try {
+      const { progressiveFeedback } =
+        await nexusaiAPI.router.tunings.getProgressiveFeedback({
+          projectUuid: connectProjectUuid.value,
+        });
+
       const { components } = await nexusaiAPI.router.tunings.getComponents({
         projectUuid: connectProjectUuid.value,
       });
 
       settings.value.data = {
         components,
+        progressiveFeedback,
       };
       initialSettings.value = cloneDeep(settings.value.data);
 
@@ -188,13 +195,36 @@ export const useTuningsStore = defineStore('Tunings', () => {
     try {
       settings.value.status = 'loading';
 
-      await nexusaiAPI.router.tunings.editComponents({
-        projectUuid: connectProjectUuid.value,
-        data: settings.value.data,
-        requestOptions: {
-          hideGenericErrorAlert: true,
-        },
-      });
+      const hasProgressiveFeedbackChanges =
+        initialSettings.value.progressiveFeedback !==
+        settings.value.data.progressiveFeedback;
+
+      if (hasProgressiveFeedbackChanges) {
+        await nexusaiAPI.router.tunings.editProgressiveFeedback({
+          projectUuid: connectProjectUuid.value,
+          data: {
+            progressiveFeedback: settings.value.data.progressiveFeedback,
+          },
+          requestOptions: {
+            hideGenericErrorAlert: true,
+          },
+        });
+      }
+
+      const hasComponentsChanges =
+        initialSettings.value.components !== settings.value.data.components;
+
+      if (hasComponentsChanges) {
+        await nexusaiAPI.router.tunings.editComponents({
+          projectUuid: connectProjectUuid.value,
+          data: {
+            components: settings.value.data.components,
+          },
+          requestOptions: {
+            hideGenericErrorAlert: true,
+          },
+        });
+      }
 
       initialSettings.value = cloneDeep(settings.value.data);
       settings.value.status = 'success';
