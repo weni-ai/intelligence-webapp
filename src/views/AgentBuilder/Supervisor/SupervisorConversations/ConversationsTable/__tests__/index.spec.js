@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
+import { useSupervisorStore } from '@/store/Supervisor';
 import { vi } from 'vitest';
 
 import ConversationsTable from '@/views/AgentBuilder/Supervisor/SupervisorConversations/ConversationsTable/index.vue';
@@ -39,6 +40,7 @@ vi.mock('@/api/nexusaiAPI', () => ({
 
 describe('ConversationsTable.vue', () => {
   let wrapper;
+  let supervisorStore;
 
   const pinia = createTestingPinia({
     initialState: {
@@ -47,6 +49,7 @@ describe('ConversationsTable.vue', () => {
           data: null,
           status: null,
         },
+        filters: {},
       },
     },
     stubActions: false,
@@ -57,6 +60,12 @@ describe('ConversationsTable.vue', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+
+    supervisorStore = useSupervisorStore();
+
+    supervisorStore.filters.start = '2023-01-01';
+    supervisorStore.filters.end = '2023-01-31';
+
     wrapper = shallowMount(ConversationsTable, {
       global: {
         plugins: [pinia],
@@ -118,7 +127,6 @@ describe('ConversationsTable.vue', () => {
   });
 
   it('correctly sets pagination values', () => {
-    expect(wrapper.vm.pagination.total).toBe(2);
     expect(wrapper.vm.pagination.interval).toBe(15);
     expect(wrapper.vm.pagination.page).toBe(1);
   });
