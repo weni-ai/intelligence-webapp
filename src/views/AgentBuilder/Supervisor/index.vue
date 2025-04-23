@@ -16,6 +16,7 @@
     <Conversation
       v-if="selectedConversation"
       class="supervisor__conversation"
+      data-testid="supervisor-conversation"
     />
   </section>
 </template>
