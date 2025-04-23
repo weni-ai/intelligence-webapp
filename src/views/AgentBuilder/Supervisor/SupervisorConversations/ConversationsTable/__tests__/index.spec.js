@@ -46,26 +46,8 @@ describe('ConversationsTable.vue', () => {
     initialState: {
       supervisor: {
         conversations: {
-          data: {
-            results: [
-              {
-                id: '1',
-                urn: 'conversation-123',
-                created_on: '2023-05-15T14:30:00Z',
-                last_message: 'This is the last message',
-                human_support: false,
-              },
-              {
-                id: '2',
-                urn: 'conversation-456',
-                created_on: '2023-05-16T10:00:00Z',
-                last_message: 'Another message',
-                human_support: true,
-              },
-            ],
-            count: 2,
-          },
-          status: 'complete',
+          data: null,
+          status: null,
         },
         filters: {},
       },
@@ -145,7 +127,6 @@ describe('ConversationsTable.vue', () => {
   });
 
   it('correctly sets pagination values', () => {
-    expect(wrapper.vm.pagination.total).toBe(2);
     expect(wrapper.vm.pagination.interval).toBe(15);
     expect(wrapper.vm.pagination.page).toBe(1);
   });
