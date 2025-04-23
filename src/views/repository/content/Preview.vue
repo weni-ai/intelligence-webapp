@@ -380,7 +380,9 @@ function scrollToLastMessage() {
   });
 }
 
-onMounted(() => {
+function initPreview() {
+  if (flowPreviewStore.preview.contact.uuid) return;
+
   flowPreviewStore.previewInit({
     contentBaseUuid: store.state.router.contentBaseUuid,
   });
@@ -388,6 +390,10 @@ onMounted(() => {
   window.brainPreviewAddMessage = (messageData) => {
     flowPreviewStore.addMessage(messageData);
   };
+}
+
+onMounted(() => {
+  initPreview();
 });
 </script>
 
