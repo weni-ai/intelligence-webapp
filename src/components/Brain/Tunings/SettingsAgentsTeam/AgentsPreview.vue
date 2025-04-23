@@ -12,30 +12,33 @@
     </UnnnicIntelligenceText>
 
     <form class="agents-preview__form">
-      <section class="form__field">
-        <UnnnicSwitch
-          v-model="tuningsStore.settings.data.components"
-          :textRight="
-            $t(
-              'router.tunings.settings.agents_preview.multiple_message_format.title',
-            )
-          "
-        />
+      <SettingsField
+        v-model="tuningsStore.settings.data.progressiveFeedback"
+        :textRight="
+          $t(
+            'router.tunings.settings.agents_preview.agents_progressive_feedback.title',
+          )
+        "
+        :description="
+          $t(
+            'router.tunings.settings.agents_preview.agents_progressive_feedback.description',
+          )
+        "
+      />
 
-        <UnnnicIntelligenceText
-          tag="p"
-          family="secondary"
-          size="body-gt"
-          color="neutral-clean"
-          class="form__description"
-        >
-          {{
-            $t(
-              'router.tunings.settings.agents_preview.multiple_message_format.description',
-            )
-          }}
-        </UnnnicIntelligenceText>
-      </section>
+      <SettingsField
+        v-model="tuningsStore.settings.data.components"
+        :textRight="
+          $t(
+            'router.tunings.settings.agents_preview.multiple_message_format.title',
+          )
+        "
+        :description="
+          $t(
+            'router.tunings.settings.agents_preview.multiple_message_format.description',
+          )
+        "
+      />
     </form>
   </section>
 </template>
@@ -43,6 +46,7 @@
 <script setup>
 import { useTuningsStore } from '@/store/Tunings';
 
+import SettingsField from './SettingsField.vue';
 const tuningsStore = useTuningsStore();
 </script>
 
