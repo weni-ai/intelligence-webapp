@@ -296,10 +296,14 @@
       "settings": {
         "save_error": "Erro ao salvar configurações",
         "agents_preview": {
-        "title": "Preview dos agentes",
-        "agents_progressive_feedback": {
-          "title": "Feedback progressivo dos agentes",
-          "description": "O agente pode fornecer atualizações breves enquanto formula a resposta final, ajudando o contato a entender seu processo em tempo real."
+          "title": "Preview dos agentes",
+          "agents_progressive_feedback": {
+            "title": "Feedback progressivo dos agentes",
+            "description": "O agente pode fornecer atualizações breves enquanto formula a resposta final, ajudando o contato a entender seu processo em tempo real."
+          },
+          "multiple_message_format": {
+            "title": "Formato de mensagem múltipla",
+            "description": "O agente pode enviar várias mensagens formatadas, como Quick Replies, List Message, CTA e Catálogo."
           }
         }
       },

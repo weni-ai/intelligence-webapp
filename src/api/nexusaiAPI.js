@@ -5,7 +5,7 @@ import { Monitoring } from './nexus/Monitoring';
 import { AgentsTeam } from './nexus/AgentsTeam';
 
 import { ProgressiveFeedbackAdapter } from './adapters/tunings/progressiveFeedback';
-
+import { ComponentsAdapter } from './adapters/tunings/components';
 import i18n from '@/utils/plugins/i18n';
 
 export default {
@@ -200,6 +200,22 @@ export default {
         return request.$http.patch(
           `api/project/${projectUuid}/rationale`,
           ProgressiveFeedbackAdapter.toApi(data),
+          requestOptions,
+        );
+      },
+
+      async getComponents({ projectUuid }) {
+        const response = await request.$http.get(
+          `api/project/${projectUuid}/components`,
+        );
+
+        return ComponentsAdapter.fromApi(response.data);
+      },
+
+      editComponents({ projectUuid, data, requestOptions = {} }) {
+        return request.$http.patch(
+          `api/project/${projectUuid}/components`,
+          ComponentsAdapter.toApi(data),
           requestOptions,
         );
       },

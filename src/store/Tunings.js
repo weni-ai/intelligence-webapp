@@ -15,6 +15,13 @@ export const useTuningsStore = defineStore('Tunings', () => {
     () => globalStore.state.Auth.connectProjectUuid,
   );
 
+  const isLoadingTunings = computed(() => {
+    return (
+      credentials.value.status === 'loading' ||
+      settings.value.status === 'loading'
+    );
+  });
+
   const initialCredentials = ref(null);
   const credentials = ref({
     status: null,
@@ -25,7 +32,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
   const settings = ref({
     status: null,
     data: {
-      progressiveFeedback: false,
+      components: false,
     },
   });
 
@@ -162,13 +169,12 @@ export const useTuningsStore = defineStore('Tunings', () => {
 
   async function fetchSettings() {
     try {
-      const { progressiveFeedback } =
-        await nexusaiAPI.router.tunings.getProgressiveFeedback({
-          projectUuid: connectProjectUuid.value,
-        });
+      const { components } = await nexusaiAPI.router.tunings.getComponents({
+        projectUuid: connectProjectUuid.value,
+      });
 
       settings.value.data = {
-        progressiveFeedback,
+        components,
       };
       initialSettings.value = cloneDeep(settings.value.data);
 
@@ -182,7 +188,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
     try {
       settings.value.status = 'loading';
 
-      const response = await nexusaiAPI.router.tunings.editProgressiveFeedback({
+      await nexusaiAPI.router.tunings.editComponents({
         projectUuid: connectProjectUuid.value,
         data: settings.value.data,
         requestOptions: {
@@ -253,6 +259,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
   }
 
   return {
+    isLoadingTunings,
     credentials,
     settings,
     isCredentialsValid,
