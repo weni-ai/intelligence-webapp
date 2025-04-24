@@ -75,7 +75,8 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 section.agents-team {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  height: 100%;
 
   .agents-team__actions {
     display: grid;
