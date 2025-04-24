@@ -1,16 +1,10 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import Brain from '@/views/Brain/Brain.vue';
-import RouterMonitoring from '@/views/Brain/RouterMonitoring/index.vue';
 import RouterContentBase from '@/views/Brain/RouterContentBase.vue';
 import RouterActions from '@/views/Brain/RouterActions.vue';
 import RouterTunings from '@/views/Brain/RouterTunings.vue';
 import RouterProfile from '@/views/Brain/RouterProfile/index.vue';
-import ModalPreviewQRCode from '@/views/Brain/Preview/ModalPreviewQRCode.vue';
-import ModalSaveChangesError from '@/views/Brain/ModalSaveChangesError.vue';
-import Preview from '@/views/repository/content/Preview.vue';
-import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
-import BrainHeader from '@/components/Brain/BrainHeader.vue';
 import nexusaiAPI from '@/api/nexusaiAPI';
 import { expect } from 'vitest';
 import { createWebHistory, createRouter } from 'vue-router';
@@ -144,11 +138,6 @@ const router = createRouter({
           path: 'profile',
           name: 'router-profile',
           component: () => import('@/views/Brain/RouterProfile/index.vue'),
-        },
-        {
-          path: 'agents-team',
-          name: 'router-agents-team',
-          component: () => import('@/views/Brain/RouterAgentsTeam/index.vue'),
         },
         {
           path: 'content',
@@ -300,17 +289,6 @@ describe('Brain integration', () => {
     wrapper = mount(Brain, {
       global: {
         plugins: [store, router, pinia],
-        components: {
-          BrainSideBar,
-          BrainHeader,
-          RouterContentBase,
-          RouterActions,
-          RouterTunings,
-          ModalSaveChangesError,
-          ModalPreviewQRCode,
-          RouterProfile,
-          Preview,
-        },
         stubs: {
           UnnnicSelectSmart: true,
         },
