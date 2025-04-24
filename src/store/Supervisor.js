@@ -18,6 +18,25 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     },
   });
 
+  const conversations = reactive({
+    status: null,
+    data: [],
+  });
+
+  async function loadConversations() {
+    conversations.status = 'loading';
+    try {
+      const response = await supervisorApi.conversations.list({
+        projectUuid: projectUuid.value,
+      });
+
+      conversations.status = 'complete';
+      conversations.data = response;
+    } catch (error) {
+      conversations.status = 'error';
+    }
+  }
+
   async function loadForwardStats() {
     forwardStats.status = 'loading';
     try {
@@ -48,5 +67,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   return {
     forwardStats,
     loadForwardStats,
+    conversations,
+    loadConversations,
   };
 });
