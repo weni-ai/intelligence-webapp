@@ -9,6 +9,9 @@
       :value="stat.value"
       :scheme="stat.scheme"
       :isLoading="supervisorStore.forwardStats.status === 'loading'"
+      clickable
+      :clicked="supervisorStore.filters.type === stat.type"
+      @click="handleCardClick(stat.type)"
     />
   </section>
 </template>
@@ -33,12 +36,14 @@ const performanceStats = computed(() => {
       tooltip: t('agent_builder.supervisor.attended_by_agent.tooltip'),
       value: stats.attendedByAgent,
       scheme: 'green',
+      type: 'attended_by_agent',
     },
     {
       title: t('agent_builder.supervisor.forwarded_human_support.title'),
       tooltip: t('agent_builder.supervisor.forwarded_human_support.tooltip'),
       value: stats.forwardedHumanSupport,
       scheme: 'blue',
+      type: 'forwarded_human_support',
     },
   ];
 });
@@ -46,6 +51,11 @@ const performanceStats = computed(() => {
 onMounted(() => {
   supervisorStore.loadForwardStats();
 });
+
+function handleCardClick(type) {
+  supervisorStore.filters.type =
+    supervisorStore.filters.type === type ? null : type;
+}
 </script>
 
 <style lang="scss" scoped>

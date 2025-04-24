@@ -1,6 +1,11 @@
 <template>
   <section
-    :class="['performance-card', `performance-card--${scheme}`]"
+    :class="[
+      'performance-card',
+      `performance-card--${scheme}`,
+      { 'performance-card--clickable': clickable },
+      { 'performance-card--clicked': clickable && clicked },
+    ]"
     data-test="card"
   >
     <header class="card__header">
@@ -79,6 +84,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  clickable: {
+    type: Boolean,
+    default: false,
+  },
+  clicked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const formattedValue = computed(() => {
@@ -90,29 +103,72 @@ const formattedValue = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+$red: $unnnic-color-aux-red-300;
+$green: $unnnic-color-aux-green-300;
+$blue: $unnnic-color-aux-blue-300;
+
 .performance-card {
+  position: relative;
+
   overflow: hidden;
 
   padding: $unnnic-spacing-sm;
 
-  border-radius: $unnnic-border-radius-sm;
+  border-radius: $unnnic-border-radius-md;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
-  border-left-width: $unnnic-border-width-thick;
 
   display: flex;
   flex-direction: column;
   gap: $unnnic-spacing-nano;
 
+  &::after {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: $unnnic-border-width-thick;
+    height: 100%;
+    background-color: $unnnic-color-neutral-cleanest;
+    border-radius: $unnnic-border-radius-sm;
+  }
+
   &--green {
-    border-left-color: $unnnic-color-aux-green-300;
+    &::after {
+      background-color: $green;
+    }
+
+    &.performance-card--clickable:hover,
+    &.performance-card--clicked {
+      border-color: $green;
+    }
   }
 
   &--red {
-    border-left-color: $unnnic-color-aux-red-300;
+    &::after {
+      background-color: $red;
+    }
+
+    &.performance-card--clickable:hover,
+    &.performance-card--clicked {
+      border-color: $red;
+    }
   }
 
   &--blue {
-    border-left-color: $unnnic-color-aux-blue-300;
+    &::after {
+      background-color: $blue;
+    }
+
+    &.performance-card--clickable:hover,
+    &.performance-card--clicked {
+      border-color: $blue;
+    }
+  }
+
+  &--clickable {
+    cursor: pointer;
   }
 
   .card__header {

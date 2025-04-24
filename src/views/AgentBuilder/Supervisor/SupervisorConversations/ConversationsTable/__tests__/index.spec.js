@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
+import { useSupervisorStore } from '@/store/Supervisor';
 import { vi } from 'vitest';
 
 import ConversationsTable from '@/views/AgentBuilder/Supervisor/SupervisorConversations/ConversationsTable/index.vue';
@@ -39,14 +40,34 @@ vi.mock('@/api/nexusaiAPI', () => ({
 
 describe('ConversationsTable.vue', () => {
   let wrapper;
+  let supervisorStore;
 
   const pinia = createTestingPinia({
     initialState: {
       supervisor: {
         conversations: {
-          data: null,
-          status: null,
+          data: {
+            results: [
+              {
+                id: '1',
+                urn: 'conversation-123',
+                created_on: '2023-05-15T14:30:00Z',
+                last_message: 'This is the last message',
+                human_support: false,
+              },
+              {
+                id: '2',
+                urn: 'conversation-456',
+                created_on: '2023-05-16T10:00:00Z',
+                last_message: 'Another message',
+                human_support: true,
+              },
+            ],
+            count: 2,
+          },
+          status: 'complete',
         },
+        filters: {},
       },
     },
     stubActions: false,
@@ -57,6 +78,12 @@ describe('ConversationsTable.vue', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+
+    supervisorStore = useSupervisorStore();
+
+    supervisorStore.filters.start = '2023-01-01';
+    supervisorStore.filters.end = '2023-01-31';
+
     wrapper = shallowMount(ConversationsTable, {
       global: {
         plugins: [pinia],

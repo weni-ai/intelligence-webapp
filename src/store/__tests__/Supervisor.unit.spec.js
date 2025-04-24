@@ -36,6 +36,9 @@ describe('Supervisor Store', () => {
     vi.clearAllMocks();
 
     store = useSupervisorStore();
+
+    store.filters.start = '2023-01-01';
+    store.filters.end = '2023-01-31';
   });
 
   describe('Initial state', () => {
@@ -85,8 +88,6 @@ describe('Supervisor Store', () => {
         store.loadForwardStats();
 
         expect(store.forwardStats.status).toBe('loading');
-
-        await Promise.resolve();
       });
 
       it('fetches forward stats successfully', async () => {
@@ -110,6 +111,8 @@ describe('Supervisor Store', () => {
           nexusaiAPI.agent_builder.supervisor.conversations.forwardStats,
         ).toHaveBeenCalledWith({
           projectUuid: 'test-project-uuid',
+          start: '01-01-2023',
+          end: '31-01-2023',
         });
 
         expect(store.forwardStats.status).toBe('complete');
@@ -140,8 +143,6 @@ describe('Supervisor Store', () => {
         store.loadConversations();
 
         expect(store.conversations.status).toBe('loading');
-
-        await Promise.resolve();
       });
 
       it('fetches conversations successfully', async () => {
@@ -160,6 +161,9 @@ describe('Supervisor Store', () => {
           nexusaiAPI.agent_builder.supervisor.conversations.list,
         ).toHaveBeenCalledWith({
           projectUuid: 'test-project-uuid',
+          start: '01-01-2023',
+          end: '31-01-2023',
+          search: '',
         });
 
         expect(store.conversations.status).toBe('complete');

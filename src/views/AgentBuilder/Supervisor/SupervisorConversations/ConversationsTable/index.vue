@@ -1,25 +1,29 @@
 <template>
-  <UnnnicTableNext
-    v-model:pagination="pagination.page"
-    :class="{
-      'conversations-table': true,
-      'conversations-table--with-results':
-        supervisorStore.conversations.status === 'complete' &&
-        conversations.results.length,
-    }"
-    data-testid="conversations-table"
-    hideHeaders
-    :headers="table.headers"
-    :rows="table.rows"
-    :paginationTotal="pagination.total"
-    :paginationInterval="pagination.interval"
-    :isLoading="supervisorStore.conversations.status === 'loading'"
-    @row-click="handleRowClick"
-  />
+  <section class="conversations-table">
+    <ConversationsSearch />
+
+    <UnnnicTableNext
+      v-model:pagination="pagination.page"
+      :class="{
+        'conversations-table__table': true,
+        'conversations-table__table--with-results':
+          supervisorStore.conversations.status === 'complete' &&
+          conversations.results.length,
+      }"
+      data-testid="conversations-table"
+      hideHeaders
+      :headers="table.headers"
+      :rows="table.rows"
+      :paginationTotal="pagination.total"
+      :paginationInterval="pagination.interval"
+      :isLoading="supervisorStore.conversations.status === 'loading'"
+      @row-click="handleRowClick"
+    />
+  </section>
 </template>
 
 <script setup>
-import { onMounted, computed, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import Unnnic from '@weni/unnnic-system';
 
 import { useSupervisorStore } from '@/store/Supervisor';
@@ -28,6 +32,7 @@ import i18n from '@/utils/plugins/i18n';
 
 import ConversationInfos from './ConversationInfos.vue';
 import ConversationDate from './ConversationDate.vue';
+import ConversationsSearch from './ConversationsSearch.vue';
 
 const t = (key) => i18n.global.t(key);
 const supervisorStore = useSupervisorStore();
@@ -126,36 +131,45 @@ watch(selectedConversationIndex, (newConversation) => {
   highlightRow(newConversation);
 });
 
-onMounted(() => {
-  supervisorStore.loadConversations();
-});
+watch(
+  () => supervisorStore.filters,
+  () => {
+    supervisorStore.loadConversations();
+  },
+  { immediate: true, deep: true },
+);
 </script>
 
 <style scoped lang="scss">
 .conversations-table {
-  :deep(.unnnic-table-next__body) {
-    .unnnic-table-next__body-row {
-      $table-radius: $unnnic-border-radius-md;
+  display: grid;
+  gap: $unnnic-spacing-xs;
 
-      &:first-child {
-        border-radius: $table-radius $table-radius 0 0;
+  &__table {
+    :deep(.unnnic-table-next__body) {
+      .unnnic-table-next__body-row {
+        $table-radius: $unnnic-border-radius-md;
+
+        &:first-child {
+          border-radius: $table-radius $table-radius 0 0;
+        }
+
+        &:last-child {
+          border-radius: 0 0 $table-radius $table-radius;
+        }
       }
 
-      &:last-child {
-        border-radius: 0 0 $table-radius $table-radius;
+      .unnnic-table-next__body-cell:nth-child(2) {
+        padding: $unnnic-spacing-ant 0;
       }
     }
 
-    .unnnic-table-next__body-cell:nth-child(2) {
-      padding: $unnnic-spacing-ant 0;
-    }
-  }
+    &--with-results {
+      :deep(.unnnic-table-next__body-row):hover {
+        background-color: $unnnic-color-background-sky;
 
-  &--with-results {
-    :deep(.unnnic-table-next__body-row):hover {
-      background-color: $unnnic-color-background-sky;
-
-      cursor: pointer;
+        cursor: pointer;
+      }
     }
   }
 }

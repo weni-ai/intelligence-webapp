@@ -5,7 +5,7 @@
       { 'supervisor--with-conversation': selectedConversation },
     ]"
   >
-    <BrainHeader
+    <SupervisorHeader
       class="supervisor__header"
       data-testid="header"
     />
@@ -16,27 +16,44 @@
     <Conversation
       v-if="selectedConversation"
       class="supervisor__conversation"
+      data-testid="supervisor-conversation"
     />
   </section>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
-import BrainHeader from '@/components/Brain/BrainHeader.vue';
-import SupervisorConversations from '@/views/AgentBuilder/Supervisor/SupervisorConversations/index.vue';
-import Conversation from '@/views/AgentBuilder/Supervisor/SupervisorConversations/Conversation/index.vue';
+import SupervisorHeader from './SupervisorHeader.vue';
+import SupervisorConversations from './SupervisorConversations/index.vue';
+import Conversation from './SupervisorConversations/Conversation/index.vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
 const supervisorStore = useSupervisorStore();
+const route = useRoute();
+const router = useRouter();
 
 const selectedConversation = computed(() => {
   return supervisorStore.selectedConversation;
 });
+
+watch(
+  () => supervisorStore.filters,
+  (filters) => {
+    router.replace({
+      query: {
+        ...route.query,
+        ...filters,
+      },
+    });
+  },
+  { deep: true },
+);
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .supervisor {
   margin: -$unnnic-spacing-sm;
 
@@ -49,7 +66,7 @@ const selectedConversation = computed(() => {
 
   &__header {
     padding: $unnnic-spacing-sm;
-    padding-bottom: 0;
+    padding-bottom: $unnnic-spacing-md;
 
     grid-column: 1 / 1;
     grid-row: 1 / 2;
