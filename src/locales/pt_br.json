@@ -83,6 +83,16 @@
         "title": "Ajustes",
         "description": "Gerencie as configurações e acompanhe as alterações realizadas."
       }
+    },
+    "supervisor": {
+      "attended_by_agent": {
+        "title": "Atendido pelo agente",
+        "tooltip": "Conversas resolvidas pelo agente"
+      },
+      "forwarded_human_support": {
+        "title": "Encaminhado para suporte humano",
+        "tooltip": "Conversas encaminhadas para suporte humano"
+      }
     }
   },
   "router": {

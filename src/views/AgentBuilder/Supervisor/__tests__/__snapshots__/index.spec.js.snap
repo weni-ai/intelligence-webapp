@@ -1,0 +1,6 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Supervisor view > matches snapshot 1`] = `
+"<brain-header-stub data-testid="header"></brain-header-stub>
+<supervisor-performance-stub data-testid="supervisor-performance"></supervisor-performance-stub>"
+`;
