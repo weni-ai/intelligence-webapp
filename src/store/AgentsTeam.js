@@ -28,13 +28,64 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
   const isAgentsGalleryOpen = ref(false);
 
+  const agentIconService = (() => {
+    const officialIcons = {
+      Order: 'OrdersAgent',
+    };
+
+    const customIcons = Array.from(
+      { length: 24 },
+      (_, index) => `CustomIcon${index + 1}`,
+    );
+
+    const iconAssignments = new Map();
+    let nextCustomIconIndex = 0;
+
+    return {
+      getIconForAgent(agent) {
+        const { name, uuid } = agent;
+
+        const matchedOfficialIcon = Object.keys(officialIcons).find((key) =>
+          name.includes(key),
+        );
+
+        if (matchedOfficialIcon) {
+          return officialIcons[matchedOfficialIcon];
+        }
+
+        if (iconAssignments.has(uuid)) {
+          return iconAssignments.get(uuid);
+        }
+
+        const icon = customIcons[nextCustomIconIndex];
+        nextCustomIconIndex = (nextCustomIconIndex + 1) % customIcons.length;
+        iconAssignments.set(uuid, icon);
+
+        return icon;
+      },
+
+      applyIconToAgent(agent) {
+        return {
+          ...agent,
+          icon: this.getIconForAgent(agent),
+        };
+      },
+    };
+  })();
+
   async function loadActiveTeam() {
     try {
       activeTeam.status = 'loading';
 
       const { data } = await nexusaiAPI.router.agents_team.listActiveTeam();
 
-      activeTeam.data = data;
+      activeTeam.data = {
+        manager: data.manager,
+        agents:
+          data.agents?.map((agent) =>
+            agentIconService.applyIconToAgent(agent),
+          ) || [],
+      };
       activeTeam.status = 'complete';
     } catch (error) {
       console.error('error', error);
@@ -51,7 +102,8 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         search,
       });
 
-      officialAgents.data = data;
+      officialAgents.data =
+        data?.map((agent) => agentIconService.applyIconToAgent(agent)) || [];
       officialAgents.status = 'complete';
     } catch (error) {
       console.error('error', error);
@@ -68,7 +120,8 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         search,
       });
 
-      myAgents.data = data;
+      myAgents.data =
+        data?.map((agent) => agentIconService.applyIconToAgent(agent)) || [];
       myAgents.status = 'complete';
     } catch (error) {
       console.error('error', error);

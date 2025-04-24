@@ -39,6 +39,7 @@
         :ref="(el) => (agentRefs[index] = el)"
         data-testid="visual-flow-agent"
         :name="agent.name"
+        :icon="agent.icon"
         :active="isActiveAgent(agent)"
         :currentTask="
           isActiveAgent(agent)
