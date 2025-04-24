@@ -30,7 +30,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
   const agentIconService = (() => {
     const officialIcons = {
-      'Orders Agent': 'OrdersAgent',
+      Order: 'OrdersAgent',
     };
 
     const customIcons = Array.from(
@@ -43,19 +43,23 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
     return {
       getIconForAgent(agent) {
-        const { name, external_id } = agent;
+        const { name, uuid } = agent;
 
-        if (officialIcons[name]) {
-          return officialIcons[name];
+        const matchedOfficialIcon = Object.keys(officialIcons).find((key) =>
+          name.includes(key),
+        );
+
+        if (matchedOfficialIcon) {
+          return officialIcons[matchedOfficialIcon];
         }
 
-        if (iconAssignments.has(external_id)) {
-          return iconAssignments.get(external_id);
+        if (iconAssignments.has(uuid)) {
+          return iconAssignments.get(uuid);
         }
 
         const icon = customIcons[nextCustomIconIndex];
         nextCustomIconIndex = (nextCustomIconIndex + 1) % customIcons.length;
-        iconAssignments.set(external_id, icon);
+        iconAssignments.set(uuid, icon);
 
         return icon;
       },
