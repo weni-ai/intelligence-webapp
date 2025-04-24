@@ -17,7 +17,12 @@ describe('AgentsTeamStore', () => {
   describe('loadActiveTeam', () => {
     it('should load active team successfully', async () => {
       const mockData = {
-        data: [],
+        data: {
+          agents: [],
+          manager: {
+            id: 'manager',
+          },
+        },
       };
       nexusaiAPI.router.agents_team.listActiveTeam.mockResolvedValue(mockData);
 
