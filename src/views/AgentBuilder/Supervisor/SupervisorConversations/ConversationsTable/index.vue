@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import Unnnic from '@weni/unnnic-system';
 
 import { useSupervisorStore } from '@/store/Supervisor';
@@ -45,7 +45,10 @@ const pagination = ref({
 });
 
 function handleRowClick(row) {
-  supervisorStore.selectConversation(row.id);
+  supervisorStore.selectConversation(null);
+  nextTick(() => {
+    supervisorStore.selectConversation(row.id);
+  });
 }
 
 const table = computed(() => {
