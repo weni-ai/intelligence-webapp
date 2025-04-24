@@ -8,14 +8,17 @@
       'preview-agent-card--animated': active && type === 'agent',
     }"
   >
-    <UnnnicAvatarIcon
+    <AgentIcon
       v-if="type === 'manager'"
-      data-testid="preview-agent-card-icon"
-      class="preview-agent-card__icon"
-      size="sm"
-      icon="neurology"
-      scheme="aux-purple"
+      icon="Manager"
+      class="preview-agent-card__agent-icon"
     />
+    <AgentIcon
+      v-else-if="type === 'agent' && active"
+      :icon="icon"
+      class="preview-agent-card__agent-icon"
+    />
+
     <section class="preview-agent-card__content">
       <UnnnicIntelligenceText
         data-testid="preview-agent-card-name"
@@ -46,6 +49,8 @@
 </template>
 
 <script setup>
+import AgentIcon from '../AgentsTeam/AgentIcon.vue';
+
 defineProps({
   type: {
     type: String,
@@ -53,6 +58,10 @@ defineProps({
     validator: (value) => ['manager', 'agent'].includes(value),
   },
   name: {
+    type: String,
+    required: true,
+  },
+  icon: {
     type: String,
     required: true,
   },
@@ -104,6 +113,11 @@ defineProps({
     .preview-agent-card__status {
       color: $unnnic-color-neutral-cleanest;
     }
+  }
+
+  &__agent-icon {
+    width: $unnnic-icon-size-lg;
+    height: $unnnic-icon-size-lg;
   }
 
   &__content {

@@ -381,6 +381,8 @@ function scrollToLastMessage() {
 }
 
 function initPreview() {
+  if (flowPreviewStore.preview.contact.uuid) return;
+
   flowPreviewStore.previewInit({
     contentBaseUuid: store.state.router.contentBaseUuid,
   });
@@ -391,8 +393,6 @@ function initPreview() {
 }
 
 onMounted(() => {
-  if (flowPreviewStore.preview.contact.uuid) return;
-
   initPreview();
 });
 </script>

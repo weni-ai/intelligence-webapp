@@ -12,6 +12,13 @@
       v-else
       class="assign-agent-card__content"
     >
+      <AgentIcon
+        v-if="agent.icon"
+        :icon="agent.icon"
+        class="content__icon"
+        data-testid="agent-icon"
+      />
+
       <header class="content__header">
         <UnnnicIntelligenceText
           tag="p"
@@ -55,19 +62,19 @@
             />
           </section>
         </section>
-      </header>
 
-      <UnnnicIntelligenceText
-        v-if="agent.description && assignment"
-        class="content__description"
-        tag="p"
-        family="secondary"
-        size="body-gt"
-        color="neutral-cloudy"
-        data-testid="description"
-      >
-        {{ agent.description }}
-      </UnnnicIntelligenceText>
+        <UnnnicIntelligenceText
+          v-if="agent.description"
+          class="header__description"
+          tag="p"
+          family="secondary"
+          size="body-gt"
+          color="neutral-cloudy"
+          data-testid="description"
+        >
+          {{ agent.description }}
+        </UnnnicIntelligenceText>
+      </header>
 
       <section class="content__skills">
         <Skill
@@ -124,6 +131,7 @@ import AssignAgentCardSkeleton from './AssignAgentCardSkeleton.vue';
 import AssignAgentDrawer from './AssignAgentDrawer.vue';
 import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
 import Skill from './Skill.vue';
+import AgentIcon from './AgentIcon.vue';
 
 const props = defineProps({
   loading: {
@@ -208,41 +216,65 @@ async function toggleDrawerAssigning() {
   padding: $unnnic-spacing-sm;
 
   display: grid;
-  gap: $unnnic-spacing-sm;
+  gap: $unnnic-spacing-ant;
   align-content: space-between;
 
   &__content {
-    display: flex;
-    flex-direction: column;
-    gap: $unnnic-spacing-xs;
+    display: grid;
+    grid-template-columns: auto repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: $unnnic-spacing-ant;
+
+    .content__icon {
+      width: $unnnic-icon-size-xl;
+      height: auto;
+      aspect-ratio: 1/1;
+
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+      align-self: center;
+    }
 
     .content__header {
       display: grid;
       grid-template-columns: auto 1fr;
-      gap: $unnnic-spacing-xs;
+      column-gap: $unnnic-spacing-xs;
+      align-content: center;
+
+      grid-column: 2 / 5;
+      grid-row: 1 / 2;
 
       .header__actions {
         display: flex;
         justify-content: space-between;
         align-items: center;
 
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+
         .actions__content {
           display: flex;
         }
       }
-    }
 
-    .content__description {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      .header__description {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+
+        grid-column: 1 / 3;
+        grid-row: 2 / 3;
+      }
     }
 
     .content__skills {
       display: flex;
       gap: $unnnic-spacing-nano;
       flex-wrap: wrap;
+
+      grid-column: 1 / 5;
+      grid-row: 2 / 3;
     }
   }
 
