@@ -48,12 +48,13 @@ import Credentials from '@/components/Brain/Tunings/Credentials/index.vue';
 
 const tabs = ref(
   [
+    { title: 'config', page: 'config' },
     { title: 'credentials', page: 'credentials' },
     { title: 'history', page: 'hist' },
   ].filter((obj) => obj),
 );
 
-const activeTab = ref('credentials');
+const activeTab = ref('config');
 
 const props = defineProps({
   data: {
