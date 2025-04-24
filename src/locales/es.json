@@ -324,7 +324,11 @@
           "title": "Vista previa de agentes",
           "agents_progressive_feedback": {
             "title": "Feedback progresivo de agentes",
-          "description": "El agente puede proporcionar actualizaciones breves mientras formula la respuesta final, ayudando al contacto a entender su proceso en tiempo real."
+            "description": "El agente puede proporcionar actualizaciones breves mientras formula la respuesta final, ayudando al contacto a entender su proceso en tiempo real."
+          },
+          "multiple_message_format": {
+            "title": "Formato de mensaje múltiple",
+            "description": "El agente puede enviar mensajes formatos múltiples, como Quick Replies, List Message, CTA y Catálogo."
           }
         }
       },

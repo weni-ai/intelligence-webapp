@@ -14,12 +14,10 @@ describe('PreviewVisualFlow.vue', () => {
     {
       id: 1,
       name: 'Agent 1',
-      external_id: 'ext1',
     },
     {
       id: 2,
       name: 'Agent 2',
-      external_id: 'ext2',
     },
   ];
 
@@ -32,7 +30,7 @@ describe('PreviewVisualFlow.vue', () => {
             data: {
               manager: {
                 name: 'Manager',
-                external_id: 'ext0',
+                id: 'manager',
               },
               agents: mockTeamAgents,
             },
@@ -40,7 +38,7 @@ describe('PreviewVisualFlow.vue', () => {
         },
         preview: {
           activeAgent: {
-            external_id: 'ext1',
+            id: 1,
             currentTask: 'Current Task',
           },
         },
@@ -147,7 +145,7 @@ describe('PreviewVisualFlow.vue', () => {
     it('should update branch positions when active agent changes', async () => {
       const previewStore = usePreviewStore();
       const newActiveAgent = {
-        external_id: 'ext2',
+        id: 2,
         currentTask: 'New Task',
       };
 

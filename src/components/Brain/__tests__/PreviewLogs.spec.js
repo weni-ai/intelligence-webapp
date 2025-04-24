@@ -10,10 +10,10 @@ import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 const mockTeam = {
   agents: [
-    { external_id: 'agent-1', name: 'Test Agent 1' },
-    { external_id: 'agent-2', name: 'Test Agent 2' },
+    { id: 'agent-1', name: 'Test Agent 1' },
+    { id: 'agent-2', name: 'Test Agent 2' },
   ],
-  manager: { external_id: 'manager-1', name: 'Manager' },
+  manager: { id: 'manager', name: 'Manager' },
 };
 
 const mockTraces = [
@@ -21,21 +21,33 @@ const mockTraces = [
     type: 'trace_update',
     summary: 'First trace summary',
     trace: {
-      agentId: 'agent-1',
+      orchestrationTrace: {
+        observation: {
+          agentCollaboratorInvocationOutput: {
+            agentCollaboratorName: 'agent-1',
+          },
+        },
+      },
     },
   },
   {
     type: 'trace_update',
     summary: 'Second trace summary',
     trace: {
-      agentId: 'agent-1',
+      orchestrationTrace: {
+        observation: {
+          agentCollaboratorInvocationOutput: {
+            agentCollaboratorName: 'agent-1',
+          },
+        },
+      },
     },
   },
   {
     type: 'trace_update',
     summary: 'Manager trace',
     trace: {
-      agentId: 'manager-1',
+      id: 'manager',
     },
   },
 ];
@@ -143,9 +155,9 @@ describe('PreviewLogs.vue', () => {
       const processedLogs = wrapper.vm.processedLogs;
 
       expect(processedLogs.length).toBe(2);
-      expect(processedLogs[0].external_id).toBe('agent-1');
+      expect(processedLogs[0].id).toBe('agent-1');
       expect(processedLogs[0].steps.length).toBe(2);
-      expect(processedLogs[1].external_id).toBe('manager-1');
+      expect(processedLogs[1].id).toBe('manager');
       expect(processedLogs[1].steps.length).toBe(1);
     });
 
@@ -169,7 +181,7 @@ describe('PreviewLogs.vue', () => {
       await wrapper.setProps({ logs: tracesWithUnknownAgent });
 
       expect(wrapper.vm.processedLogs.length).toBe(1);
-      expect(wrapper.vm.processedLogs[0].external_id).toBe('manager-1');
+      expect(wrapper.vm.processedLogs[0].id).toBe('manager');
     });
   });
 

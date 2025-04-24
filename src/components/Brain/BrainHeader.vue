@@ -95,8 +95,7 @@ const isTuningsSaveButtonDisabled = computed(() => {
 
 const isTuningsSaveButtonLoading = computed(() => {
   return isAgentsTeamEnabled
-    ? tuningsStore.credentials.status === 'loading' &&
-        tuningsStore.credentials.data
+    ? tuningsStore.isLoadingTunings
     : store.state.Brain.isSavingChanges;
 });
 

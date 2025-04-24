@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 
@@ -15,6 +16,14 @@ const pinia = createTestingPinia({
     preview: {
       ws: null,
     },
+  },
+});
+
+const store = createStore({
+  state() {
+    return {
+      router: { contentBaseUuid: '123' },
+    };
   },
 });
 
@@ -44,7 +53,7 @@ describe('PreviewDrawer.vue', () => {
         modelValue: true,
       },
       global: {
-        plugins: [pinia],
+        plugins: [pinia, store],
         stubs: {
           PreviewDetails: true,
           Preview: true,
