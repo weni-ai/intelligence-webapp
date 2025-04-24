@@ -10,6 +10,7 @@
 <script setup>
 import { computed } from 'vue';
 
+import Manager from '@/assets/icons/agents/Manager.svg';
 import OrdersAgent from '@/assets/icons/agents/OrdersAgent.svg';
 import CustomIcon1 from '@/assets/icons/agents/CustomIcon1.svg';
 import CustomIcon2 from '@/assets/icons/agents/CustomIcon2.svg';
@@ -37,6 +38,7 @@ import CustomIcon23 from '@/assets/icons/agents/CustomIcon23.svg';
 import CustomIcon24 from '@/assets/icons/agents/CustomIcon24.svg';
 
 const agentIcons = {
+  Manager,
   OrdersAgent,
   CustomIcon1,
   CustomIcon2,

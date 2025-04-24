@@ -8,17 +8,13 @@
       'preview-agent-card--animated': active && type === 'agent',
     }"
   >
-    <UnnnicAvatarIcon
-      v-if="type === 'manager'"
-      data-testid="preview-agent-card-icon"
-      class="preview-agent-card__manager-icon"
-      size="sm"
-      icon="neurology"
-      scheme="aux-purple"
-    />
-
     <AgentIcon
-      v-if="type === 'agent' && active"
+      v-if="type === 'manager'"
+      icon="Manager"
+      class="preview-agent-card__agent-icon"
+    />
+    <AgentIcon
+      v-else-if="type === 'agent' && active"
       :icon="icon"
       class="preview-agent-card__agent-icon"
     />
@@ -120,8 +116,8 @@ defineProps({
   }
 
   &__agent-icon {
-    width: $unnnic-icon-size-xl;
-    height: $unnnic-icon-size-xl;
+    width: $unnnic-icon-size-lg;
+    height: $unnnic-icon-size-lg;
   }
 
   &__content {

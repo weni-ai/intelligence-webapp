@@ -221,13 +221,12 @@ async function toggleDrawerAssigning() {
 
   &__content {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: auto repeat(3, 1fr);
     grid-template-rows: auto auto;
     gap: $unnnic-spacing-ant;
 
     .content__icon {
-      min-width: $unnnic-icon-size-xl;
-      width: 100%;
+      width: $unnnic-icon-size-xl;
       height: auto;
       aspect-ratio: 1/1;
 
