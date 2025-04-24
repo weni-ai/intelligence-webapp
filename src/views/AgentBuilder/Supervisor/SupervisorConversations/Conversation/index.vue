@@ -85,6 +85,7 @@ $conversation-border: $unnnic-border-width-thinner solid
 .conversation {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 
   border-left: $conversation-border;
 
