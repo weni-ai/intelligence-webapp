@@ -34,7 +34,7 @@ const handleLogin = async (to, from, next) => {
   if (nextPath) {
     next({ path: nextPath, replace: true });
   } else {
-    next({ path: '/home', replace: true });
+    next({ path: '/intelligences/home', replace: true });
   }
 };
 
@@ -55,7 +55,7 @@ const router = createRouter({
       beforeEnter: handleLogin,
     },
     {
-      path: '/home',
+      path: '/intelligences/home',
       name: 'home',
       component: Home,
     },
@@ -135,6 +135,10 @@ const router = createRouter({
         return { name: 'supervisor' };
       },
       async beforeEnter(_to, _from, next) {
+        if (!useFeatureFlagsStore().flags.agentsTeam) {
+          next({ name: 'router' });
+        }
+
         const { data } = await nexusaiAPI.router.read({
           projectUuid: store.state.Auth.connectProjectUuid,
           obstructiveErrorProducer: true,

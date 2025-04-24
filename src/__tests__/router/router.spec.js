@@ -89,7 +89,10 @@ describe('router', () => {
     };
     const next = vi.fn();
     await router.options.routes[0].beforeEnter(to, null, next);
-    expect(next).toHaveBeenCalledWith({ path: '/home', replace: true });
+    expect(next).toHaveBeenCalledWith({
+      path: '/intelligences/home',
+      replace: true,
+    });
   });
 
   it('should handle brain preview full page route correctly', async () => {

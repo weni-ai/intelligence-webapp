@@ -3,11 +3,13 @@ import nexusRequest from '../nexusaiRequest';
 
 export const Supervisor = {
   conversations: {
-    async list({ projectUuid, start, end, search }) {
+    async list({ projectUuid, page, start, end, search, type }) {
       const params = {
+        page,
         start,
         end,
-        search,
+        ...(search && { search }),
+        ...(type && { human_support: type === 'forwarded_human_support' }),
       };
 
       const { data } = await billingRequest.$http.get(
@@ -25,10 +27,20 @@ export const Supervisor = {
       return data;
     },
 
-    async getById({ projectUuid, conversationId }) {
-      const { data } = await nexusRequest.$http.get(
-        `/api/${projectUuid}/conversations/${conversationId}`,
-      );
+    async getById({ projectUuid, start, end, urn, next }) {
+      const params = {
+        start,
+        end,
+        contact_urn: urn,
+      };
+
+      let url = `/api/${projectUuid}/conversations/?${new URLSearchParams(params)}`;
+
+      if (next) {
+        url = next.slice(next.indexOf('/api'));
+      }
+
+      const { data } = await nexusRequest.$http.get(url);
 
       return data;
     },

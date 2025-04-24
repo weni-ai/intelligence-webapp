@@ -23,18 +23,35 @@
       </button>
     </header>
 
-    <section class="conversation__messages">
-      <QuestionAndAnswer
-        v-for="message in conversation.data.results"
-        :key="message.id"
-        :data="message"
-        :isLoading="conversation.data.status === 'loading'"
-      />
+    <section
+      class="conversation__messages"
+      @scroll="handleScroll"
+    >
+      <template
+        v-if="
+          conversation.data.status === 'loading' && !conversation.data.results
+        "
+      >
+        <QuestionAndAnswer
+          v-for="loadMessage in 3"
+          :key="loadMessage"
+          :data="loadMessage"
+          :isLoading="true"
+        />
+      </template>
+      <template v-else>
+        <QuestionAndAnswer
+          v-for="message in conversation.data.results"
+          :key="message.id"
+          :data="message"
+          :isLoading="false"
+        />
 
-      <ForwardedHumanSupport
-        v-if="conversation.human_support"
-        class="conversation__forwarded-human-support"
-      />
+        <ForwardedHumanSupport
+          v-if="conversation.human_support"
+          class="conversation__forwarded-human-support"
+        />
+      </template>
     </section>
   </section>
 </template>
@@ -54,6 +71,12 @@ const conversation = computed(() => supervisorStore.selectedConversation);
 onMounted(() => {
   supervisorStore.loadSelectedConversationData();
 });
+
+function handleScroll(event) {
+  if (event.target.scrollTop === 0) {
+    supervisorStore.loadSelectedConversationData({ next: true });
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -86,6 +109,8 @@ $conversation-border: $unnnic-border-width-thinner solid
 
   &__messages {
     padding: $unnnic-spacing-sm;
+
+    overflow: hidden auto;
   }
 
   &__forwarded-human-support {

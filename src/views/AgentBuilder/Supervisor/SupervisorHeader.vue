@@ -4,6 +4,7 @@
       <UnnnicInputDatePicker
         v-model="dateFilter"
         position="right"
+        class="supervisor-header__date-picker"
         :maxDate="today"
       />
     </template>
@@ -37,3 +38,13 @@ watch(
   { immediate: true },
 );
 </script>
+
+<style lang="scss" scoped>
+.supervisor-header {
+  &__date-picker {
+    :deep(.input) {
+      width: 100%;
+    }
+  }
+}
+</style>

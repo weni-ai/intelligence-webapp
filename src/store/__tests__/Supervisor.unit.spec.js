@@ -161,9 +161,11 @@ describe('Supervisor Store', () => {
           nexusaiAPI.agent_builder.supervisor.conversations.list,
         ).toHaveBeenCalledWith({
           projectUuid: 'test-project-uuid',
+          page: 1,
           start: '01-01-2023',
           end: '31-01-2023',
           search: '',
+          type: '',
         });
 
         expect(store.conversations.status).toBe('complete');

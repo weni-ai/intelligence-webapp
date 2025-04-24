@@ -62,14 +62,16 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     }
   }
 
-  async function loadConversations() {
+  async function loadConversations(page = 1) {
     conversations.status = 'loading';
     try {
       const response = await supervisorApi.conversations.list({
         projectUuid: projectUuid.value,
+        page,
         start: format(parseISO(filters.start), 'dd-MM-yyyy'),
         end: format(parseISO(filters.end), 'dd-MM-yyyy'),
         search: filters.search,
+        type: filters.type,
       });
 
       conversations.status = 'complete';
@@ -79,24 +81,44 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     }
   }
 
-  async function loadSelectedConversationData() {
+  async function loadSelectedConversationData({ next = false } = {}) {
+    const conversation = selectedConversation.value;
+
+    if (!conversation) return;
+    if (conversation.data.status === 'loading') return;
+    if (next && !conversation.data.next) return;
+
     try {
       selectedConversation.value.data.status = 'loading';
-      const response = await supervisorApi.conversations.getById({
+
+      const formatDateParam = (date) => format(parseISO(date), 'dd-MM-yyyy');
+
+      const params = {
         projectUuid: projectUuid.value,
-        conversationId: selectedConversation.value.id,
-      });
+        start: formatDateParam(filters.start),
+        end: formatDateParam(filters.end),
+        urn: selectedConversation.value.urn,
+        next: next ? selectedConversation.value.data.next : null,
+      };
+
+      const response = await supervisorApi.conversations.getById(params);
+
+      const mergedResults = next
+        ? [...response.results, ...selectedConversation.value.data.results]
+        : response.results;
 
       selectedConversation.value.data = {
         ...selectedConversation.value.data,
         ...response,
+        results: mergedResults,
+        status: 'complete',
       };
-
-      selectedConversation.value.data.status = 'complete';
     } catch (error) {
-      console.error(error);
+      console.error('Error loading conversation data:', error);
 
-      selectedConversation.value.data.status = 'error';
+      if (selectedConversation.value?.data) {
+        selectedConversation.value.data.status = 'error';
+      }
     }
   }
 
