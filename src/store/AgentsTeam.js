@@ -126,16 +126,15 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
     }
   }
 
-  async function toggleAgentAssignment({ external_id, is_assigned }) {
-    if (!external_id || typeof is_assigned !== 'boolean') {
-      throw new Error('external_id and is_assigned are required');
+  async function toggleAgentAssignment({ uuid, is_assigned }) {
+    if (!uuid || typeof is_assigned !== 'boolean') {
+      throw new Error('uuid and is_assigned are required');
     }
 
     try {
       const agent =
-        officialAgents.data.find(
-          (agent) => agent.external_id === external_id,
-        ) || myAgents.data.find((agent) => agent.external_id === external_id);
+        officialAgents.data.find((agent) => agent.uuid === uuid) ||
+        myAgents.data.find((agent) => agent.uuid === uuid);
 
       if (!agent) {
         throw new Error('Agent not found');
@@ -153,7 +152,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         activeTeam.data.agents.push(agent);
       } else {
         activeTeam.data.agents = activeTeam.data.agents.filter(
-          (agent) => agent.external_id !== external_id,
+          (agent) => agent.uuid !== uuid,
         );
       }
 

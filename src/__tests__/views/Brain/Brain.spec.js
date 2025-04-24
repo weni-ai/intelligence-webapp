@@ -375,18 +375,4 @@ describe('Brain Component', () => {
       });
     }
   });
-
-  it('should load active team when mounted if agents team is enabled', () => {
-    featureFlagsStore.flags.agentsTeam = true;
-
-    const loadActiveTeamSpy = vi.spyOn(agentsTeamStore, 'loadActiveTeam');
-
-    wrapper = shallowMount(Brain, {
-      global: {
-        plugins: [store, pinia],
-      },
-    });
-
-    expect(loadActiveTeamSpy).toHaveBeenCalledTimes(1);
-  });
 });

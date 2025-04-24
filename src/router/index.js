@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
+import AgentBuilder from '../views/AgentBuilder/index.vue';
 import RepositoryContentBases from '../views/repository/content/Bases.vue';
 import ContentBasesForm from '@/views/ContentBases/Form.vue';
 import Brain from '../views/Brain/Brain.vue';
@@ -9,6 +10,7 @@ import NotFound from '../views/NotFound.vue';
 
 import store from '../store';
 import nexusaiAPI from '../api/nexusaiAPI';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 let nextFromRedirect = '';
 
@@ -32,7 +34,7 @@ const handleLogin = async (to, from, next) => {
   if (nextPath) {
     next({ path: nextPath, replace: true });
   } else {
-    next({ path: '/home', replace: true });
+    next({ path: '/intelligences/home', replace: true });
   }
 };
 
@@ -53,7 +55,7 @@ const router = createRouter({
       beforeEnter: handleLogin,
     },
     {
-      path: '/home',
+      path: '/intelligences/home',
       name: 'home',
       component: Home,
     },
@@ -83,6 +85,10 @@ const router = createRouter({
         return { name: 'router-monitoring' };
       },
       async beforeEnter(_to, _from, next) {
+        if (useFeatureFlagsStore().flags.agentsTeam) {
+          next({ name: 'agent-builder' });
+        }
+
         const { data } = await nexusaiAPI.router.read({
           projectUuid: store.state.Auth.connectProjectUuid,
           obstructiveErrorProducer: true,
@@ -105,11 +111,6 @@ const router = createRouter({
           component: () => import('../views/Brain/RouterProfile/index.vue'),
         },
         {
-          path: 'agents-team',
-          name: 'router-agents-team',
-          component: () => import('../views/Brain/RouterAgentsTeam/index.vue'),
-        },
-        {
           path: 'content',
           name: 'router-content',
           component: () => import('../views/Brain/RouterContentBase.vue'),
@@ -123,6 +124,56 @@ const router = createRouter({
           path: 'tunings',
           name: 'router-tunings',
           component: () => import('../views/Brain/RouterTunings.vue'),
+        },
+      ],
+    },
+    {
+      path: '/',
+      name: 'agent-builder',
+      component: AgentBuilder,
+      redirect: () => {
+        return { name: 'supervisor' };
+      },
+      async beforeEnter(_to, _from, next) {
+        if (!useFeatureFlagsStore().flags.agentsTeam) {
+          next({ name: 'router' });
+        }
+
+        const { data } = await nexusaiAPI.router.read({
+          projectUuid: store.state.Auth.connectProjectUuid,
+          obstructiveErrorProducer: true,
+        });
+
+        store.state.router.contentBaseUuid = data.uuid;
+        store.state.router.intelligenceUuid = data.intelligence;
+
+        next();
+      },
+      children: [
+        {
+          path: 'supervisor',
+          name: 'supervisor',
+          component: () => import('@/views/AgentBuilder/Supervisor/index.vue'),
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('@/views/AgentBuilder/Profile.vue'),
+        },
+        {
+          path: 'agents',
+          name: 'agents',
+          component: () => import('@/views/AgentBuilder/AgentsTeam/index.vue'),
+        },
+        {
+          path: 'knowledge',
+          name: 'knowledge',
+          component: () => import('@/views/AgentBuilder/Knowledge.vue'),
+        },
+        {
+          path: 'tunings',
+          name: 'tunings',
+          component: () => import('@/views/AgentBuilder/Tunings.vue'),
         },
       ],
     },

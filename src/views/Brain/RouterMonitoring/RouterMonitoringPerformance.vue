@@ -12,60 +12,16 @@
       {{ $t('router.monitoring.performance') }}
     </UnnnicIntelligenceText>
 
-    <section
+    <PerformanceCard
       v-for="(answer, key) in Object.entries(answers)"
       :key="key"
-      :class="['performance__card', `performance__card--${answer[0]}`]"
-      data-test="card"
-    >
-      <header class="card__header">
-        <UnnnicIntelligenceText
-          tag="h3"
-          family="secondary"
-          size="body-gt"
-          color="neutral-darkest"
-          class="header__title"
-          data-test="card-title"
-        >
-          {{ answer[1].title }}
-        </UnnnicIntelligenceText>
-
-        <UnnnicToolTip
-          side="top"
-          :text="answer[1].tooltip"
-          enabled
-          maxWidth="18rem"
-          class="header__tooltip"
-          data-test="card-tooltip"
-        >
-          <UnnnicIcon
-            icon="info"
-            size="sm"
-            scheme="neutral-cleanest"
-            filled
-          />
-        </UnnnicToolTip>
-      </header>
-
-      <UnnnicSkeletonLoading
-        v-if="isLoadingPerformance"
-        data-test="card-value-skeleton"
-        tag="div"
-        width="50px"
-        height="31px"
-      />
-      <UnnnicIntelligenceText
-        v-else
-        tag="p"
-        family="secondary"
-        size="title-md"
-        color="neutral-darkest"
-        weight="bold"
-        data-test="card-value"
-      >
-        {{ formatLocaleNumber(answer[1].value) }}%
-      </UnnnicIntelligenceText>
-    </section>
+      data-test="monitoring-performance-card"
+      :title="answer[1].title"
+      :tooltip="answer[1].tooltip"
+      :value="answer[1].value"
+      :scheme="getPerformanceTypeColor(answer[0])"
+      :isLoading="isLoadingPerformance"
+    />
   </section>
 </template>
 
@@ -75,6 +31,7 @@ import { useRoute } from 'vue-router';
 
 import { useMonitoringStore } from '@/store/Monitoring';
 import i18n from '@/utils/plugins/i18n';
+import PerformanceCard from '@/components/Brain/Monitoring/PerformanceCard.vue';
 
 const monitoringStore = useMonitoringStore();
 const route = useRoute();
@@ -91,19 +48,18 @@ const answers = computed(() => ({
   action: createAnswer('action'),
 }));
 
+const getPerformanceTypeColor = (type) => {
+  if (type === 'success') return 'green';
+  if (type === 'failed') return 'red';
+  return 'blue';
+};
+
 const isLoadingPerformance = computed(
   () => monitoringStore.messages.performance.status === 'loading',
 );
 
 function getMessagesPerformance() {
   monitoringStore.loadMessagesPerformance({});
-}
-
-function formatLocaleNumber(num) {
-  return new Intl.NumberFormat(i18n.global.locale, {
-    minimumFractionDigits: num % 1 === 0 ? 0 : 1,
-    maximumFractionDigits: 1,
-  }).format(num);
 }
 
 watch(
@@ -129,44 +85,6 @@ watch(
 
   .performance__title {
     grid-column: 1 / -1;
-  }
-
-  .performance__card {
-    overflow: hidden;
-
-    padding: $unnnic-spacing-md $unnnic-spacing-sm;
-
-    border-radius: $unnnic-border-radius-sm;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
-    border-left-width: $unnnic-border-width-thick;
-
-    &--success {
-      border-left-color: $unnnic-color-aux-green-300;
-    }
-
-    &--failed {
-      border-left-color: $unnnic-color-aux-red-300;
-    }
-    &--action {
-      border-left-color: $unnnic-color-aux-blue-300;
-    }
-
-    .card__header {
-      display: flex;
-      gap: $unnnic-spacing-xs;
-      align-items: center;
-
-      .header__title {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-
-      .header__tooltip {
-        display: flex;
-        cursor: default;
-      }
-    }
   }
 }
 </style>

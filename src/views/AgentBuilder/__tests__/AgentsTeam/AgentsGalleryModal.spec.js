@@ -5,7 +5,7 @@ import { createTestingPinia } from '@pinia/testing';
 
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-import AgentsGalleryModal from '@/views/Brain/RouterAgentsTeam/AgentsGalleryModal.vue';
+import AgentsGalleryModal from '@/views/AgentBuilder/AgentsTeam/AgentsGalleryModal.vue';
 
 describe('AgentsGalleryModal.vue', () => {
   vi.stubGlobal('open', vi.fn());

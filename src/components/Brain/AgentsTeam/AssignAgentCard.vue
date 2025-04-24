@@ -178,7 +178,7 @@ async function assignAgent() {
     isToggleAgentAssignmentLoading.value = true;
 
     const { status } = await agentsTeamStore.toggleAgentAssignment({
-      external_id: props.agent.external_id,
+      uuid: props.agent.uuid,
       is_assigned: isAssigned,
     });
 

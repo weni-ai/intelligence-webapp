@@ -1,10 +1,11 @@
 import { shallowMount } from '@vue/test-utils';
 import { nextTick } from 'vue';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 import { createTestingPinia } from '@pinia/testing';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-import ActiveTeam from '@/views/Brain/RouterAgentsTeam/ActiveTeam.vue';
+import ActiveTeam from '@/views/AgentBuilder/AgentsTeam/ActiveTeam.vue';
 
 const pinia = createTestingPinia({
   initialState: {

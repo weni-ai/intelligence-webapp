@@ -60,7 +60,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 section.profile {
   display: grid;
-  grid-template-rows: repeat(2, auto 1fr);
+  grid-template-rows: auto 1fr;
 
   .profile__divider:first-of-type {
     margin-top: 0;

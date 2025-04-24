@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Supervisor view > matches snapshot 1`] = `
+"<section class="supervisor">
+  <supervisor-header-stub class="supervisor__header" data-testid="header"></supervisor-header-stub>
+  <supervisor-conversations-stub class="supervisor__conversations" data-testid="supervisor-conversations"></supervisor-conversations-stub>
+  <!--v-if-->
+</section>"
+`;
