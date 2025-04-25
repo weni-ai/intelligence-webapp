@@ -18,7 +18,10 @@
     <section>
       <Credentials v-if="activeTab === 'credentials'" />
 
-      <Settings v-if="activeTab === 'config'" />
+      <Settings
+        v-if="activeTab === 'config'"
+        :data="data"
+      />
 
       <ChangesHistory v-if="activeTab === 'hist'" />
     </section>
