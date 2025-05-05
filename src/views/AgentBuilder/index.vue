@@ -43,6 +43,8 @@ import ModalSaveChangesError from '../Brain/ModalSaveChangesError.vue';
 const route = useRoute();
 const store = useStore();
 
+const agentsTeamStore = useAgentsTeamStore();
+
 const currentView = computed(() => {
   const views = {
     knowledge: Knowledge,
@@ -57,7 +59,9 @@ const currentView = computed(() => {
 
 onMounted(() => {
   useTuningsStore().fetchCredentials();
-  useAgentsTeamStore().loadActiveTeam();
+  agentsTeamStore.loadActiveTeam();
+  agentsTeamStore.loadOfficialAgents();
+  agentsTeamStore.loadMyAgents();
 });
 </script>
 
