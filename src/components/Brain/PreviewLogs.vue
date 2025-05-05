@@ -90,6 +90,13 @@ const props = defineProps({
       return ['left', 'right'].includes(value);
     },
   },
+  agents: {
+    type: Object,
+    default: () => ({
+      agents: [],
+      manager: {},
+    }),
+  },
 });
 
 const previewStore = usePreviewStore();
@@ -102,27 +109,32 @@ const selectedLog = ref({
 });
 
 const processedLogs = computed(() => {
-  if (!agentsTeamStore.activeTeam.data) return [];
+  const allAgents =
+    Object.keys(props.agents.manager).length && props.agents.agents.length
+      ? props.agents
+      : agentsTeamStore.allAgents;
+  if (!allAgents) return [];
 
   const traces = props.logs;
-  const { agents: activeTeam, manager } = agentsTeamStore.activeTeam.data || {};
+  const { agents, manager } = allAgents;
 
   return traces.reduce((logsByAgent, trace) => {
-    const agent = activeTeam.find(
-      (agent) =>
-        agent.id ===
-        trace?.trace?.orchestrationTrace?.observation
-          ?.agentCollaboratorInvocationOutput?.agentCollaboratorName,
-    );
+    const { orchestrationTrace = {} } = trace?.trace || {};
+    const { agentCollaboratorName = '' } =
+      orchestrationTrace?.observation?.agentCollaboratorInvocationOutput ||
+      orchestrationTrace?.invocationInput?.agentCollaboratorInvocationInput ||
+      {};
 
-    const agentToLog = agent || manager;
-    if (!agentToLog) return logsByAgent;
+    const agent =
+      agents.find((agent) => agent.id === agentCollaboratorName) || manager;
+
+    if (!agent) return logsByAgent;
 
     const lastLog = logsByAgent.at(-1);
-    if (lastLog?.id !== agentToLog.id) {
+    if (lastLog?.id !== agent.id) {
       logsByAgent.push({
-        id: agentToLog.id,
-        agent_name: agentToLog.name || 'Manager',
+        id: agent.id,
+        agent_name: agent.name || 'Manager',
         steps: [],
       });
     }

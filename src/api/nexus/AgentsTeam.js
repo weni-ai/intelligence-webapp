@@ -30,6 +30,7 @@ export const AgentsTeam = {
           assigned,
           credentials,
           is_official,
+          slug,
         }) => ({
           uuid,
           name,
@@ -38,6 +39,7 @@ export const AgentsTeam = {
           assigned,
           credentials,
           is_official,
+          id: slug,
         }),
       ),
     };
@@ -64,6 +66,7 @@ export const AgentsTeam = {
           assigned,
           credentials,
           is_official,
+          slug,
         }) => ({
           uuid,
           name,
@@ -72,6 +75,7 @@ export const AgentsTeam = {
           assigned,
           credentials,
           is_official,
+          id: slug,
         }),
       ),
     };

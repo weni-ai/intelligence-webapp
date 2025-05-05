@@ -8,7 +8,7 @@ import PreviewLogs from '../PreviewLogs.vue';
 import { usePreviewStore } from '@/store/Preview';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
-const mockTeam = {
+const mockAllAgents = {
   agents: [
     { id: 'agent-1', name: 'Test Agent 1' },
     { id: 'agent-2', name: 'Test Agent 2' },
@@ -54,16 +54,9 @@ const mockTraces = [
 
 const createWrapper = (props = {}) => {
   const pinia = createTestingPinia({
-    createSpy: vi.fn,
     initialState: {
       preview: {
         traces: [...mockTraces],
-      },
-      AgentsTeam: {
-        activeTeam: {
-          data: { ...mockTeam },
-          status: 'complete',
-        },
       },
     },
   });
@@ -114,6 +107,7 @@ describe('PreviewLogs.vue', () => {
     wrapper = createWrapper();
     previewStore = usePreviewStore();
     agentsTeamStore = useAgentsTeamStore();
+    agentsTeamStore.allAgents = mockAllAgents;
   });
 
   afterEach(() => {

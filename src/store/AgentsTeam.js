@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 import nexusaiAPI from '@/api/nexusaiAPI.js';
 import { useAlertStore } from './Alert';
@@ -24,6 +24,13 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
   const myAgents = reactive({
     status: null,
     data: [],
+  });
+
+  const allAgents = computed(() => {
+    return {
+      manager: activeTeam.data.manager,
+      agents: [...officialAgents.data, ...myAgents.data],
+    };
   });
 
   const isAgentsGalleryOpen = ref(false);
@@ -194,6 +201,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
     activeTeam,
     officialAgents,
     myAgents,
+    allAgents,
     isAgentsGalleryOpen,
     loadActiveTeam,
     loadOfficialAgents,
