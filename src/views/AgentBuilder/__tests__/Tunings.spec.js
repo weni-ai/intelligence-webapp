@@ -38,23 +38,26 @@ describe('Tunings.vue', () => {
     });
 
     it('renders the Credentials component by default', () => {
-      expect(credentials().exists()).toBe(true);
-      expect(settings().exists()).toBe(false);
+      expect(settings().exists()).toBe(true);
+      expect(credentials().exists()).toBe(false);
       expect(changesHistory().exists()).toBe(false);
     });
 
     it('renders tab content based on activeTab value', async () => {
-      expect(credentials().exists()).toBe(true);
+      await wrapper.vm.onTabChange('hist');
+      expect(credentials().exists()).toBe(false);
+      expect(settings().exists()).toBe(false);
+      expect(changesHistory().exists()).toBe(true);
 
       await wrapper.vm.onTabChange('config');
       expect(credentials().exists()).toBe(false);
       expect(settings().exists()).toBe(true);
       expect(changesHistory().exists()).toBe(false);
 
-      await wrapper.vm.onTabChange('hist');
-      expect(credentials().exists()).toBe(false);
+      await wrapper.vm.onTabChange('credentials');
+      expect(credentials().exists()).toBe(true);
       expect(settings().exists()).toBe(false);
-      expect(changesHistory().exists()).toBe(true);
+      expect(changesHistory().exists()).toBe(false);
     });
   });
 
@@ -66,15 +69,19 @@ describe('Tunings.vue', () => {
 
   describe('User interactions', () => {
     it('changes activeTab when tab is changed', async () => {
-      expect(wrapper.vm.activeTab).toBe('credentials');
+      expect(wrapper.vm.activeTab).toBe('config');
 
       await wrapper.vm.onTabChange('hist');
       expect(wrapper.vm.activeTab).toBe('hist');
     });
 
     it('passes correct tabs to UnnnicTab component', () => {
-      expect(unnnicTab().props('tabs')).toEqual(['credentials', 'hist']);
-      expect(unnnicTab().props('activeTab')).toBe('credentials');
+      expect(unnnicTab().props('tabs')).toEqual([
+        'config',
+        'credentials',
+        'hist',
+      ]);
+      expect(unnnicTab().props('activeTab')).toBe('config');
     });
   });
 });

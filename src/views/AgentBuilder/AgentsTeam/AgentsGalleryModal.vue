@@ -184,11 +184,6 @@ function openCLI() {
   window.open(agentsTeamStore.linkToCreateAgent, '_blank');
 }
 
-onMounted(() => {
-  agentsTeamStore.loadOfficialAgents();
-  agentsTeamStore.loadMyAgents();
-});
-
 const debouncedSearch = (callback) => debounce(callback, 300);
 watch(
   () => search.value['my-agents'],
