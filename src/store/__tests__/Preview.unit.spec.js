@@ -78,29 +78,15 @@ describe('PreviewStore', () => {
       store.traces = [
         {
           trace: {
-            trace: {
-              orchestrationTrace: {
-                observation: {
-                  agentCollaboratorInvocationOutput: {
-                    agentCollaboratorName: 'agent-1',
-                  },
-                },
-              },
-            },
+            trace: {},
+            agentCollaboratorName: 'agent-1',
             summary: 'Task 1',
           },
         },
         {
           trace: {
-            trace: {
-              orchestrationTrace: {
-                observation: {
-                  agentCollaboratorInvocationOutput: {
-                    agentCollaboratorName: 'agent-2',
-                  },
-                },
-              },
-            },
+            trace: {},
+            agentCollaboratorName: 'agent-2',
             summary: 'Task 2',
           },
         },
@@ -116,15 +102,8 @@ describe('PreviewStore', () => {
       store.traces = [
         {
           trace: {
-            trace: {
-              orchestrationTrace: {
-                observation: {
-                  agentCollaboratorInvocationOutput: {
-                    agentCollaboratorName: 'unknown-agent',
-                  },
-                },
-              },
-            },
+            trace: {},
+            agentCollaboratorName: 'unknown-agent',
             summary: 'Task X',
           },
         },
