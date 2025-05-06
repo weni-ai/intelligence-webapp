@@ -35,6 +35,7 @@ exports[`AssignAgentCard.vue > renders correctly 1`] = `
           data-testid="description"
           data-v-73104bd4=""
           data-v-ec8da4ad=""
+          title="Test Description"
         >
           
           Test Description
