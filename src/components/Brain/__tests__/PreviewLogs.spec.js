@@ -20,28 +20,14 @@ const mockTraces = [
   {
     type: 'trace_update',
     summary: 'First trace summary',
-    trace: {
-      orchestrationTrace: {
-        observation: {
-          agentCollaboratorInvocationOutput: {
-            agentCollaboratorName: 'agent-1',
-          },
-        },
-      },
-    },
+    trace: {},
+    agentCollaboratorName: 'agent-1',
   },
   {
     type: 'trace_update',
     summary: 'Second trace summary',
-    trace: {
-      orchestrationTrace: {
-        observation: {
-          agentCollaboratorInvocationOutput: {
-            agentCollaboratorName: 'agent-1',
-          },
-        },
-      },
-    },
+    trace: {},
+    agentCollaboratorName: 'agent-1',
   },
   {
     type: 'trace_update',
