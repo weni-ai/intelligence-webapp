@@ -70,6 +70,7 @@
           family="secondary"
           size="body-gt"
           color="neutral-cloudy"
+          :title="agent.description"
           data-testid="description"
         >
           {{ agent.description }}

@@ -3,6 +3,7 @@ import { computed, reactive, ref } from 'vue';
 
 import nexusaiAPI from '@/api/nexusaiAPI.js';
 import { useAlertStore } from './Alert';
+import agentIconService from '@/utils/agentIconService';
 
 import i18n from '@/utils/plugins/i18n';
 
@@ -13,7 +14,10 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
   const activeTeam = reactive({
     status: null,
-    data: [],
+    data: {
+      manager: null,
+      agents: [],
+    },
   });
 
   const officialAgents = reactive({
@@ -35,51 +39,6 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
   const isAgentsGalleryOpen = ref(false);
 
-  const agentIconService = (() => {
-    const officialIcons = {
-      Order: 'OrdersAgent',
-    };
-
-    const customIcons = Array.from(
-      { length: 24 },
-      (_, index) => `CustomIcon${index + 1}`,
-    );
-
-    const iconAssignments = new Map();
-    let nextCustomIconIndex = 0;
-
-    return {
-      getIconForAgent(agent) {
-        const { name, uuid } = agent;
-
-        const matchedOfficialIcon = Object.keys(officialIcons).find((key) =>
-          name.includes(key),
-        );
-
-        if (matchedOfficialIcon) {
-          return officialIcons[matchedOfficialIcon];
-        }
-
-        if (iconAssignments.has(uuid)) {
-          return iconAssignments.get(uuid);
-        }
-
-        const icon = customIcons[nextCustomIconIndex];
-        nextCustomIconIndex = (nextCustomIconIndex + 1) % customIcons.length;
-        iconAssignments.set(uuid, icon);
-
-        return icon;
-      },
-
-      applyIconToAgent(agent) {
-        return {
-          ...agent,
-          icon: this.getIconForAgent(agent),
-        };
-      },
-    };
-  })();
-
   async function loadActiveTeam() {
     try {
       activeTeam.status = 'loading';
@@ -88,10 +47,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
       activeTeam.data = {
         manager: data.manager,
-        agents:
-          data.agents?.map((agent) =>
-            agentIconService.applyIconToAgent(agent),
-          ) || [],
+        agents: agentIconService.applyIconsToAgents(data.agents),
       };
       activeTeam.status = 'complete';
     } catch (error) {
@@ -109,8 +65,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         search,
       });
 
-      officialAgents.data =
-        data?.map((agent) => agentIconService.applyIconToAgent(agent)) || [];
+      officialAgents.data = agentIconService.applyIconsToAgents(data);
       officialAgents.status = 'complete';
     } catch (error) {
       console.error('error', error);
@@ -127,8 +82,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         search,
       });
 
-      myAgents.data =
-        data?.map((agent) => agentIconService.applyIconToAgent(agent)) || [];
+      myAgents.data = agentIconService.applyIconsToAgents(data);
       myAgents.status = 'complete';
     } catch (error) {
       console.error('error', error);
