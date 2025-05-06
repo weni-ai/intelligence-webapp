@@ -180,16 +180,10 @@ export default {
         );
       },
 
-      createCredentials({
-        projectUuid,
-        credentials = {},
-        agent_uuid,
-        is_confidential = true,
-      }) {
+      createCredentials({ projectUuid, credentials = {}, agent_uuid }) {
         return request.$http.post(`api/project/${projectUuid}/credentials`, {
           credentials,
           agent_uuid,
-          is_confidential,
         });
       },
 

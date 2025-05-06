@@ -236,13 +236,13 @@ export const useTuningsStore = defineStore('Tunings', () => {
     }
   }
 
-  async function createCredentials(agentUuid) {
+  async function createCredentials(agentUuid, credentialsToCreate) {
     try {
       credentials.value.status = 'loading';
 
       await nexusaiAPI.router.tunings.createCredentials({
         projectUuid: connectProjectUuid.value,
-        credentials: credentials.value.data.officialAgents,
+        credentials: credentialsToCreate,
         agent_uuid: agentUuid,
       });
 
