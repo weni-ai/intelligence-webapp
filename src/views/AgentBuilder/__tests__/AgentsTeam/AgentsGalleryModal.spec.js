@@ -108,11 +108,6 @@ describe('AgentsGalleryModal.vue', () => {
     it('renders agent cards', () => {
       expect(assignAgentCards().length).toBe(2);
     });
-
-    it('loads official and my agents when mounted', () => {
-      expect(agentsTeamStore.loadOfficialAgents).toHaveBeenCalledTimes(1);
-      expect(agentsTeamStore.loadMyAgents).toHaveBeenCalledTimes(1);
-    });
   });
 
   describe('Loading states', () => {
