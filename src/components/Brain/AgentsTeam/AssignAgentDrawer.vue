@@ -172,18 +172,22 @@ function close() {
 
 async function toggleAgentAssignment() {
   try {
-    const agentHaveCredentialsCreated = props.agent.credentials.some(
-      (credential) => {
-        const [index, type] = tuningsStore.getCredentialIndex(credential.name);
-
-        return tuningsStore.initialCredentials?.[type]?.[index];
-      },
-    );
-
-    if (!agentHaveCredentialsCreated) {
-      await tuningsStore.createCredentials(props.agent.uuid);
-    } else if (credentialsWithoutValue.value.length) {
-      await tuningsStore.saveCredentials();
+    if (credentialsWithoutValue.value.length) {
+      const credentialsToCreate = credentialsWithoutValue.value.map(
+        (credential) => {
+          const [index, type] = tuningsStore.getCredentialIndex(
+            credential.name,
+          );
+          return {
+            ...credential,
+            value: tuningsStore.credentials.data?.[type]?.[index]?.value,
+          };
+        },
+      );
+      await tuningsStore.createCredentials(
+        props.agent.uuid,
+        credentialsToCreate,
+      );
     }
 
     emit('assign');
