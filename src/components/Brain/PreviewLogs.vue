@@ -119,11 +119,7 @@ const processedLogs = computed(() => {
   const { agents, manager } = allAgents;
 
   return traces.reduce((logsByAgent, trace) => {
-    const { orchestrationTrace = {} } = trace?.trace || {};
-    const { agentCollaboratorName = '' } =
-      orchestrationTrace?.observation?.agentCollaboratorInvocationOutput ||
-      orchestrationTrace?.invocationInput?.agentCollaboratorInvocationInput ||
-      {};
+    const { agentCollaboratorName = '' } = trace || {};
 
     const agent =
       agents.find((agent) => agent.id === agentCollaboratorName) || manager;
