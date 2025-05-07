@@ -63,20 +63,10 @@ Before running the application, make sure you have installed the following tools
 | Variable | Type | Default | Description |
 |--|--|--|--|
 | API_BASE_URL | `string` | In development mode is `http://localhost:8000/api` | [bothub-engine](https://github.com/bothub-it/bothub-engine) HTTP service API URL
-| BOTHUB_NLP_BASE_URL | `string` | In development mode is `http://localhost:2657/` | [bothub-nlp](https://github.com/bothub-it/bothub-nlp) Bothub NLP service URL
 | BOTHUB_WEBAPP_BASE_URL | `string` | In development mode is `http://localhost:8080/` |[bothub-webapp](https://github.com/bothub-it/bothub-webapp)  Bothub Webapp service URL
 | SUPPORTED_LANGUAGES | `string` | `en\|pt` | Check description and formatation in [Supported_Languages environment variable](https://github.com/bothub-it/bothub-engine#environment-variables)
-| VERSION_ENABLED | `boolean` | In development mode is `false` | Should Bothub show version belong to each repository*
-| MAILCHIMP_LOGIN | `string` | Empty | Check [MailChimp](https://mailchimp.com/) subscribe LOGIN URL*
-| MAILCHIMP_DATACENTER | `string` | Empty | Check [MailChimp](https://mailchimp.com/)  subscribe DATACENTER URL*
-| MAILCHIMP_USER_ID | `string` | Empty | Check [MailChimp](https://mailchimp.com/)  subscribe USER ID URL*
-| MAILCHIMP_LIST_ID | `string` | Empty | Check [MailChimp](https://mailchimp.com/) subscribe LIST ID URL*
-| BOTHUB_WEBAPP_USE_SENTRY | `boolean` | In development mode is `false`, in production mode is `true` | Enable [sentri.io](https://sentry.io/welcome/) tracking*
 | BOTHUB_WEBAPP_SENTRY | `string` | Empty | Sentry.io DNS*
-| BOTHUB_WEBAPP_USE_HOTJAR | `boolean` | In development mode is `false`, in production mode is `true` | Enable [Hotjar](https://www.hotjar.com/) tracking*
-| BOTHUB_WEBAPP_HOTJAR_ID | `string` | Empty | [Hotjar](https://www.hotjar.com/) ID*
-| BOTHUB_WEBAPP_LIGHTHOUSE_KEY | `string` | Empty | [Helpdocs Lighthouse widget](https://support.helpdocs.io/article/ykv7l5jthy-lighthouse-widget-api) API key*
-| BOTHUB_WEBAPP_LIGHTHOUSE_ALGORITHM_ARTICLE_ID | `string` | Empty | Helpdocs algorithm article id *
+| HOTJAR_ID | `string` | Empty | [Hotjar](https://www.hotjar.com/) ID*
 
 # Development
 
