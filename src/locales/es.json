@@ -343,6 +343,10 @@
             "title": "Formato de mensaje múltiple",
             "description": "El agente puede enviar mensajes formatos múltiples, como Quick Replies, List Message, CTA y Catálogo."
           }
+        },
+        "human_support": {
+          "title": "Soporte humano",
+          "description": "Con esta función activada, el agente podrá reenviar la conversación a soporte humano."
         }
       },
       "save_success": "Ajustes guardados con éxito"
