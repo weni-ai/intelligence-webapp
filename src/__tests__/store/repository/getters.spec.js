@@ -1,9 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import getters from '@/store/repository/getters';
 
-global.runtimeVariables = {
-  get: vi.fn(() => 'enabled'),
-};
+vi.stubEnv('VITE_VERSION_ENABLED', 'enabled');
 
 describe('@/store/repository/getters', () => {
   const state = {
@@ -81,9 +79,8 @@ describe('@/store/repository/getters', () => {
     expect(result).toBe(true);
   });
 
-  it('versionEnabled should return the value from runtimeVariables', () => {
+  it('versionEnabled should return the value from env variable', () => {
     const result = getters.versionEnabled();
     expect(result).toBe('enabled');
-    expect(runtimeVariables.get).toHaveBeenCalledWith('VITE_VERSION_ENABLED');
   });
 });

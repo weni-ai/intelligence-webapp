@@ -11,6 +11,7 @@ import NotFound from '../views/NotFound.vue';
 import store from '../store';
 import nexusaiAPI from '../api/nexusaiAPI';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import env from '@/utils/env';
 
 let nextFromRedirect = '';
 
@@ -208,10 +209,7 @@ const router = createRouter({
           const projectUuid = sessionStorage.getItem('projectUuid');
 
           const path = `/loginexternal/${bearerToken}/${intelligenceOrgId}/${projectUuid}/`;
-          const redirectUrl = new URL(
-            path,
-            runtimeVariables.get('INTELLIGENCE_LEGACY_URL'),
-          );
+          const redirectUrl = new URL(path, env('INTELLIGENCE_LEGACY_URL'));
 
           redirectUrl.searchParams.append('org_uuid', orgUuid);
           redirectUrl.searchParams.append('project_uuid', projectUuid);

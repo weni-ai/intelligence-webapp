@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/browser';
 import nexusaiRequest from '@/api/nexusaiRequest';
 import store from '@/store';
 import i18n from '@/utils/plugins/i18n';
+import env from '@/utils/env';
 
 vi.mock('axios', () => ({
   default: {
@@ -53,7 +54,7 @@ describe('nexusaiRequest.js', () => {
     nexusaiRequest.$http;
 
     expect(axios.create).toHaveBeenCalledWith({
-      baseURL: runtimeVariables.get('NEXUS_API_BASE_URL'),
+      baseURL: env('NEXUS_API_BASE_URL'),
       headers: {
         Authorization: 'token123',
       },
@@ -66,7 +67,7 @@ describe('nexusaiRequest.js', () => {
     nexusaiRequest.$http;
 
     expect(axios.create).toHaveBeenCalledWith({
-      baseURL: runtimeVariables.get('NEXUS_API_BASE_URL'),
+      baseURL: env('NEXUS_API_BASE_URL'),
       headers: {},
     });
   });
