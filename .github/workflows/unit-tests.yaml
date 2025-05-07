@@ -12,11 +12,11 @@ jobs:
         with:
           node-version: 18
       - name: Install Dependencies
-        run: yarn --frozen-lockfile
+        run: npm install --frozen-lockfile
       - name: Run lint
-        run: yarn lint --fix
+        run: npm run lint --fix
       - name: Run Unit Tests with Coverage
-        run: yarn vitest run --coverage
+        run: npm run vitest run --coverage
       - name: Check Coverage Threshold
         run: |
           COVERAGE=$(jq '.total.lines.pct' coverage/coverage-summary.json)
