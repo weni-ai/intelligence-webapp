@@ -12,12 +12,9 @@ jobs:
         with:
           node-version: 18
 
-      - name: Clean npm cache
-        run: npm cache clean
-
       - name: Install dependencies
         run: |
-          rm -rf node_modules package-lock.json
+          rm -rf node_modules
           npm install
 
       - name: Run lint
