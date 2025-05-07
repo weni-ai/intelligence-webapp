@@ -8,7 +8,7 @@ export function HotjarIdentifyUser({ token }) {
   };
 
   const isThereAMissingKeycloakSettingValue = Object.values(keycloak).some(
-    (value) => !value,
+    (value) => !value || value === 'null',
   );
 
   if (isThereAMissingKeycloakSettingValue) {
