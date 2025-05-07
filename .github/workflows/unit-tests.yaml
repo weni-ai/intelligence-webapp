@@ -11,12 +11,17 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Install Dependencies
-        run: npm install --frozen-lockfile
+
+      - name: Install dependencies
+        run: |
+          npm install
+
       - name: Run lint
-        run: npm run lint --fix
+        run: npm run lint
+
       - name: Run Unit Tests with Coverage
         run: npm run test:coverage
+
       - name: Check Coverage Threshold
         run: |
           COVERAGE=$(jq '.total.lines.pct' coverage/coverage-summary.json)
@@ -25,6 +30,7 @@ jobs:
             echo "Coverage is below 70%: $COVERAGE%"
             exit 1
           fi
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:
