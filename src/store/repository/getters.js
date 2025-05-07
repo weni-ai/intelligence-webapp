@@ -30,7 +30,4 @@ export default {
   getCheckRepositoryTrain(state) {
     return state.repositoryIsTraining;
   },
-  versionEnabled() {
-    return env('VITE_VERSION_ENABLED');
-  },
 };

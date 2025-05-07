@@ -1,7 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import getters from '@/store/repository/getters';
-
-vi.stubEnv('VITE_VERSION_ENABLED', 'enabled');
 
 describe('@/store/repository/getters', () => {
   const state = {
@@ -77,10 +75,5 @@ describe('@/store/repository/getters', () => {
   it('getCheckRepositoryTrain should return the repository training state from the state', () => {
     const result = getters.getCheckRepositoryTrain(state);
     expect(result).toBe(true);
-  });
-
-  it('versionEnabled should return the value from env variable', () => {
-    const result = getters.versionEnabled();
-    expect(result).toBe('enabled');
   });
 });
