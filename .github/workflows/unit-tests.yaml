@@ -13,7 +13,7 @@ jobs:
           node-version: 18
 
       - name: Clean npm cache
-        run: npm cache clean --force
+        run: npm cache clean
 
       - name: Install dependencies
         run: |
