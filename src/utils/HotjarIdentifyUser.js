@@ -1,13 +1,14 @@
 import axios from 'axios';
+import env from './env';
 
 export function HotjarIdentifyUser({ token }) {
   const keycloak = {
-    server: runtimeVariables.get('KEYCLOAK_SERVER'),
-    realm: runtimeVariables.get('KEYCLOAK_REALM'),
+    server: env('KEYCLOAK_SERVER'),
+    realm: env('KEYCLOAK_REALM'),
   };
 
   const isThereAMissingKeycloakSettingValue = Object.values(keycloak).some(
-    (value) => !value,
+    (value) => !value || value === 'null',
   );
 
   if (isThereAMissingKeycloakSettingValue) {

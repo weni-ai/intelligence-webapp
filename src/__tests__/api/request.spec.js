@@ -29,9 +29,7 @@ vi.mock('@/store', () => ({
   },
 }));
 
-global.runtimeVariables = {
-  get: vi.fn(),
-};
+vi.stubEnv('VITE_API_BASE_URL', 'http://example.com');
 
 describe('request.js', () => {
   beforeEach(() => {
@@ -41,7 +39,6 @@ describe('request.js', () => {
   it('should create axios client with correct baseURL and headers', () => {
     store.getters.authenticated = true;
     store.getters.authToken = 'token123';
-    runtimeVariables.get.mockReturnValue('http://example.com');
 
     request.$http;
 
@@ -55,7 +52,6 @@ describe('request.js', () => {
 
   it('should not include Authorization header when not authenticated', () => {
     store.getters.authenticated = false;
-    runtimeVariables.get.mockReturnValue('http://example.com');
 
     request.$http;
 

@@ -140,6 +140,7 @@ import { useActionsStore } from '@/store/Actions.js';
 import { usePagination } from '@/views/ContentBases/pagination';
 import nexusaiAPI from '@/api/nexusaiAPI';
 import i18n from '@/utils/plugins/i18n.js';
+import env from '@/utils/env';
 
 const modelValue = defineModel({
   type: Boolean,
@@ -246,9 +247,7 @@ function searchForFlowUuid(flowUuid) {
 }
 
 function openFlowEditor() {
-  const templateLinkFlowEditor = String(
-    runtimeVariables.get('TEMPLATE_LINK_FLOW_EDITOR'),
-  );
+  const templateLinkFlowEditor = String(env('TEMPLATE_LINK_FLOW_EDITOR'));
 
   const transformedLink = templateLinkFlowEditor
     .replace('{dashProjectUuid}', store.state.Auth.connectProjectUuid)

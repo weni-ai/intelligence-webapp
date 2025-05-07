@@ -17,9 +17,7 @@ vi.mock('uuid', () => ({
   v4: vi.fn(() => 'mock-uuid'),
 }));
 
-global.runtimeVariables = {
-  get: vi.fn(() => 'http://mock-api.com'),
-};
+vi.stubEnv('VITE_FLOWS_API_BASE_URL', 'http://mock-api.com');
 
 const mockFlowUuid = 'mock-flow-uuid';
 const mockAuthToken = 'mockAuthToken';

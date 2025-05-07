@@ -6,10 +6,8 @@ import listeners from '@/websocket/listeners';
 
 vi.mock('@/websocket/socket');
 vi.mock('@/websocket/listeners');
-vi.mock('@/utils/env', () => ({
-  default: vi.fn(() => 'ws://mock-url'),
-}));
 vi.mock('@/store/modules/dashboard');
+vi.stubEnv('VITE_NEXUS_WEBSOCKET_BASE_URL', 'ws://mock-url');
 
 describe('WebSocketSetup', () => {
   let webSocketSetup;

@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/browser';
 import store from '../store';
 import i18n from '../utils/plugins/i18n';
 import { get } from 'lodash';
+import env from '@/utils/env';
 
 /**
  * Creates a configured axios instance with shared interceptors and error handling
@@ -11,7 +12,7 @@ import { get } from 'lodash';
  */
 export const createHttpClient = (baseUrlKey) => {
   const client = axios.create({
-    baseURL: runtimeVariables.get(baseUrlKey),
+    baseURL: env(baseUrlKey),
     headers: {
       ...(store.getters.authenticated
         ? { Authorization: `${store.getters.authToken}` }

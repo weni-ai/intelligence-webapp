@@ -78,6 +78,7 @@ import { getFileType } from '@/utils/medias';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 import i18n from '@/utils/plugins/i18n';
+import env from '@/utils/env';
 
 const emit = defineEmits(['messages']);
 
@@ -146,7 +147,7 @@ function isEventCardBrain(event) {
   }
 
   const url = new URL(event.url);
-  const apiBaseUrl = new URL(runtimeVariables.get('NEXUS_API_BASE_URL')).origin;
+  const apiBaseUrl = new URL(env('NEXUS_API_BASE_URL')).origin;
 
   return (
     url.origin === apiBaseUrl &&
