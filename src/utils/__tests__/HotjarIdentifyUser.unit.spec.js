@@ -29,8 +29,8 @@ describe('HotjarIdentifyUser.js', () => {
       beforeEach(() => {
         vi.clearAllMocks();
 
-        vi.stubEnv('VITE_KEYCLOAK_SERVER', server);
-        vi.stubEnv('VITE_KEYCLOAK_REALM', realm);
+        vi.stubEnv('KEYCLOAK_SERVER', server);
+        vi.stubEnv('KEYCLOAK_REALM', realm);
 
         HotjarIdentifyUser({ token: '1234' });
       });
@@ -46,8 +46,8 @@ describe('HotjarIdentifyUser.js', () => {
       vi.clearAllMocks();
       vi.useFakeTimers();
 
-      vi.stubEnv('VITE_KEYCLOAK_SERVER', 'server-2');
-      vi.stubEnv('VITE_KEYCLOAK_REALM', 'realm-2');
+      vi.stubEnv('KEYCLOAK_SERVER', 'server-2');
+      vi.stubEnv('KEYCLOAK_REALM', 'realm-2');
 
       HotjarIdentifyUser({ token: 'Bearer 1234' });
     });
