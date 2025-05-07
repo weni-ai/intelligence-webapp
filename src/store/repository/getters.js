@@ -1,3 +1,5 @@
+import env from '@/utils/env';
+
 export default {
   relatedUuid(state) {
     return state.relatedUuid;
@@ -29,6 +31,6 @@ export default {
     return state.repositoryIsTraining;
   },
   versionEnabled() {
-    return runtimeVariables.get('VITE_VERSION_ENABLED');
+    return env('VITE_VERSION_ENABLED');
   },
 };
