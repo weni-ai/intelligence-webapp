@@ -53,6 +53,16 @@ RUN apk add --no-cache git
 
 COPY package.json package-lock.json ./
 
+# Detect CPU architecture and install appropriate rspack binding
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then \
+        echo "Installing ARM64 rspack binding" && \
+        npm install @rspack/binding-linux-arm64-musl@^1.3.9; \
+    else \
+        echo "Installing x64 rspack binding" && \
+        npm install @rspack/binding-linux-x64-musl@^1.3.9; \
+    fi
+
 RUN --mount=type=cache,target=/root/.npm NPM_CONFIG_CACHE=/root/.npm npm install
 
 COPY . ./
