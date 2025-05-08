@@ -49,19 +49,16 @@ ENV TEMPLATE_LINK_FLOW_EDITOR=${TEMPLATE_LINK_FLOW_EDITOR}
 ENV KEYCLOAK_SERVER=${KEYCLOAK_SERVER}
 ENV KEYCLOAK_REALM=${KEYCLOAK_REALM}
 
-RUN apk add --no-cache git
+RUN apk add --no-cache \
+    git \
+    build-base \
+    cairo-dev \
+    pango-dev \
+    jpeg-dev \
+    giflib-dev \
+    librsvg-dev
 
 COPY package.json package-lock.json ./
-
-# Detect CPU architecture and install appropriate rspack binding
-RUN ARCH=$(uname -m) && \
-    if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then \
-        echo "Installing ARM64 rspack binding" && \
-        npm install @rspack/binding-linux-arm64-musl@^1.3.9; \
-    else \
-        echo "Installing x64 rspack binding" && \
-        npm install @rspack/binding-linux-x64-musl@^1.3.9; \
-    fi
 
 RUN --mount=type=cache,target=/root/.npm NPM_CONFIG_CACHE=/root/.npm npm install
 
