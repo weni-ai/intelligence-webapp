@@ -49,14 +49,7 @@ ENV TEMPLATE_LINK_FLOW_EDITOR=${TEMPLATE_LINK_FLOW_EDITOR}
 ENV KEYCLOAK_SERVER=${KEYCLOAK_SERVER}
 ENV KEYCLOAK_REALM=${KEYCLOAK_REALM}
 
-RUN apk add --no-cache \
-    git \
-    build-base \
-    cairo-dev \
-    pango-dev \
-    jpeg-dev \
-    giflib-dev \
-    librsvg-dev
+RUN apk add --no-cache git
 
 COPY package.json package-lock.json ./
 
