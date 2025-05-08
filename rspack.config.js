@@ -21,7 +21,7 @@ module.exports = defineConfig({
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/',
+    publicPath: process.env.PUBLIC_PATH_URL || '/',
     clean: true,
     filename: 'assets/js/[name]-[contenthash].js',
     chunkFilename: 'assets/js/[name]-[contenthash].js',
@@ -82,7 +82,7 @@ module.exports = defineConfig({
       __VUE_PROD_DEVTOOLS__: false,
       'process.env': JSON.stringify(process.env),
       'import.meta.env': JSON.stringify({
-        BASE_URL: '/',
+        BASE_URL: process.env.PUBLIC_PATH_URL || '/',
       }),
     }),
     new VueLoaderPlugin(),
