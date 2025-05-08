@@ -9,7 +9,8 @@
   $dot-min-height: -$dot-size;
   $dot-max-height: (
       -$unnnic-font-size-body-md - $unnnic-line-height-md + $dot-size
-    ) * 0.65;
+    ) *
+    0.65;
 
   width: $dot-size;
   height: $dot-size;

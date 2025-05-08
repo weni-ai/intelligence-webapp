@@ -16,7 +16,7 @@ beforeAll(() => {
     (plugin) => plugin !== i18n,
   );
 
-  vi.stubEnv('VITE_ORGS_CAN_CREATE_CONTENT_AI', '456, 789');
+  vi.stubEnv('ORGS_CAN_CREATE_CONTENT_AI', '456, 789');
 });
 
 afterAll(() => {
