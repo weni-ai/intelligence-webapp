@@ -4,6 +4,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { resolve } = require('path');
 const path = require('path');
 const dotenv = require('dotenv');
+const pkg = require('./package.json');
 
 dotenv.config();
 
@@ -76,6 +77,7 @@ module.exports = defineConfig({
   plugins: [
     new rspack.HtmlRspackPlugin({
       template: './index.html',
+      minify: true,
     }),
     new rspack.DefinePlugin({
       __VUE_OPTIONS_API__: true,
@@ -86,6 +88,35 @@ module.exports = defineConfig({
       }),
     }),
     new VueLoaderPlugin(),
+    new rspack.container.ModuleFederationPlugin({
+      name: 'agent_builder',
+      filename: 'remoteEntry.js',
+      remotes: {
+        host: `host@${process.env.MODULE_FEDERATION_CONNECT_URL}/remoteEntry.js`,
+      },
+      shared: {
+        ...pkg,
+        vue: {
+          singleton: true,
+          eager: true,
+        },
+        'vue-i18n': {
+          singleton: true,
+          requiredVersion: pkg.dependencies['vue-i18n'],
+          eager: true,
+        },
+        pinia: {
+          singleton: true,
+          requiredVersion: pkg.dependencies['pinia'],
+          eager: true,
+        },
+        lodash: {
+          singleton: true,
+          requiredVersion: pkg.dependencies['lodash'],
+          eager: true,
+        },
+      },
+    }),
   ],
   optimization: {
     minimizer: [
