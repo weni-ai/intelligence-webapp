@@ -1,6 +1,7 @@
 import WS from '@/websocket/socket';
 
 import listeners from './listeners';
+import env from '@/utils/env';
 
 export default class WebSocketSetup {
   THIRTY_SECONDS = 30000;
@@ -10,7 +11,7 @@ export default class WebSocketSetup {
     this.token = token;
     this.endpoint = endpoint;
     this.pingIntervalId = null;
-    this.url = `${runtimeVariables.get('NEXUS_WEBSOCKET_BASE_URL')}/${endpoint}/${this.project}/?Token=${this.token}`;
+    this.url = `${env('NEXUS_WEBSOCKET_BASE_URL')}/${endpoint}/${this.project}/?Token=${this.token}`;
   }
 
   connect() {
