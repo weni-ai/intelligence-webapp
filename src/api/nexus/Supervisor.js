@@ -39,10 +39,9 @@ export const Supervisor = {
       return data;
     },
 
-    async getById({ projectUuid, start, end, urn, next }) {
+    async getById({ projectUuid, start, urn, next }) {
       const params = {
         start,
-        end,
         contact_urn: urn,
       };
 
