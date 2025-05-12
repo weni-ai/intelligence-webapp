@@ -3,6 +3,7 @@ import { computed, inject } from 'vue';
 
 import globalStore from '.';
 import { gbKey } from '../utils/Growthbook';
+import { useProjectStore } from './Project';
 
 export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
   const growthbook = inject(gbKey);
@@ -23,6 +24,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
 
   const flags = computed(() => ({
     agentsTeam:
+      useProjectStore().isMultiAgents ||
       growthbook?.isOn('agent_builder_2') ||
       isOrgEnabledForFlag('VITE_FF_ORGS_WITH_AGENTS_TEAM') ||
       isProjectEnabledForFlag('VITE_FF_PROJECTS_WITH_AGENTS_TEAM'),
