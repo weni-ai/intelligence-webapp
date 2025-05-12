@@ -186,6 +186,8 @@
       >
         {{ $t('router.tunings.restore_default') }}
       </UnnnicButton>
+
+      <SettingsUpgradeToMultiagents />
     </footer>
   </section>
 </template>
@@ -194,12 +196,14 @@
 import nexusaiAPI from '@/api/nexusaiAPI';
 import LoadingFormElement from '@/components/LoadingFormElement.vue';
 import SettingsAdvanced from './SettingsAdvanced.vue';
+import SettingsUpgradeToMultiagents from './SettingsUpgradeToMultiagents.vue';
 import { WENIGPT_OPTIONS } from '@/utils';
 
 export default {
   components: {
     SettingsAdvanced,
     LoadingFormElement,
+    SettingsUpgradeToMultiagents,
   },
   props: {
     data: {
@@ -382,7 +386,8 @@ export default {
 
 .tunings__actions {
   display: flex;
-  column-gap: $unnnic-spacing-md;
+  flex-direction: column;
+  gap: $unnnic-spacing-md;
 
   > * {
     flex: 1;
