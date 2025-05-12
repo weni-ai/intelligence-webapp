@@ -5,7 +5,7 @@ import globalStore from '.';
 
 export const useProjectStore = defineStore('Project', () => {
   const uuid = computed(() => globalStore.state.Auth.connectProjectUuid);
-  const isMultiAgents = ref(false);
+  const isMultiAgents = ref(null);
 
   async function updateIsMultiAgents(boolean) {
     isMultiAgents.value = boolean;
