@@ -41,11 +41,15 @@ const handleLogin = async (to, from, next) => {
 };
 
 const getMultiAgentsEnabled = async () => {
+  const projectStore = useProjectStore();
+
+  if (projectStore.isMultiAgents) return;
+
   const { data } = await nexusaiAPI.router.tunings.multiAgents.read({
     projectUuid: store.state.Auth.connectProjectUuid,
   });
 
-  useProjectStore().updateIsMultiAgents(data.multi_agents);
+  projectStore.updateIsMultiAgents(data.multi_agents);
 };
 
 const router = createRouter({

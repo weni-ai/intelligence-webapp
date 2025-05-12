@@ -243,12 +243,12 @@ export default {
 
       multiAgents: {
         read({ projectUuid }) {
-          return request.$http.get(`api/project/${projectUuid}/multi-agents/`);
+          return request.$http.get(`api/project/${projectUuid}/multi-agents`);
         },
 
         edit({ projectUuid, multi_agents }) {
           return request.$http.patch(
-            `api/project/${projectUuid}/multi-agents/`,
+            `api/project/${projectUuid}/multi-agents`,
             {
               multi_agents,
             },
