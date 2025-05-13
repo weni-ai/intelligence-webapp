@@ -4,7 +4,8 @@ import nexusaiAPI from '@/api/nexusaiAPI';
 import { createStore } from 'vuex';
 import { describe, beforeEach, vi, test, expect } from 'vitest';
 import { brainTuningsFields } from '@/__tests__/mocks/brainTuningsFields.js';
-
+import { createTestingPinia } from '@pinia/testing';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 const store = createStore({
   state() {
     return {
@@ -34,11 +35,13 @@ const store = createStore({
   },
 });
 
+const pinia = createTestingPinia();
+
 describe('Settings', () => {
   let wrapper;
   let dispatchSpy;
   let commitSpy;
-
+  let featureFlagsStore;
   beforeEach(() => {
     vi.clearAllMocks();
 
@@ -56,9 +59,10 @@ describe('Settings', () => {
         },
       },
       global: {
-        plugins: [store],
+        plugins: [store, pinia],
       },
     });
+    featureFlagsStore = useFeatureFlagsStore(pinia);
   });
 
   test('renders the component correctly', () => {
@@ -116,39 +120,6 @@ describe('Settings', () => {
       );
     }
   });
-
-  // these tests are disabled because we have removed a configuration feature if it comes back the test will come back together
-  /* test('updates a field value correctly', async () => {
-    const slider = wrapper.findComponent({ name: 'UnnnicSlider' });
-    await slider.vm.$emit('valueChange', 0.7);
-
-    expect(commitSpy).toHaveBeenCalledWith('updateTuning', {
-      name: 'temperature',
-      value: 0.7,
-    });
-  });
-
-    test('renders advanced fields correctly', async () => {
-    await flushPromises();
-    const advancedFields = wrapper.findComponent({
-      name: 'SettingsAdvanced',
-    });
-
-    expect(advancedFields.exists()).toBe(true);
-
-    const nafHeader = advancedFields
-      .findAll('.unnnic-text')
-      .filter((component) =>
-        component
-          .text()
-          .includes(wrapper.vm.$t('router.tunings.fields.parameter')),
-      );
-    expect(nafHeader.length).toBeGreaterThan(0);
-
-    const sliders = advancedFields.findAllComponents({ name: 'UnnnicSlider' });
-    expect(sliders.length).toBeGreaterThan(0);
-  });
-  */
 
   test('handles select field update correctly', async () => {
     const select = wrapper.findComponent({ name: 'UnnnicSelectSmart' });

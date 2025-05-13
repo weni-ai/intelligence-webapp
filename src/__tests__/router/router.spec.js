@@ -116,6 +116,12 @@ describe('router', () => {
       intelligence: 'intelligenceUuid',
     };
     vi.spyOn(nexusaiAPI.router, 'read').mockResolvedValue({ data });
+    vi.spyOn(nexusaiAPI.router.tunings.multiAgents, 'read').mockResolvedValue({
+      data: {
+        can_view: true,
+        multi_agents: true,
+      },
+    });
     const next = vi.fn();
     await router.options.routes[4].beforeEnter({}, {}, next);
     expect(store.state.router.contentBaseUuid).toBe(data.uuid);
