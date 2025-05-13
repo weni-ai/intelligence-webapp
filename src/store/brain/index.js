@@ -194,7 +194,7 @@ export default {
 
     async upgradeToMultiagents({ state, rootState }) {
       try {
-        await nexusaiAPI.router.multiAgents.edit({
+        await nexusaiAPI.router.tunings.multiAgents.edit({
           projectUuid: rootState.Auth.connectProjectUuid,
           multi_agents: true,
           hideGenericErrorAlert: true,
