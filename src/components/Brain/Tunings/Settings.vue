@@ -187,14 +187,13 @@
         {{ $t('router.tunings.restore_default') }}
       </UnnnicButton>
 
-      <SettingsUpgradeToMultiagents
-        v-if="featureFlagsStore.flags.upgradeToMultiAgents"
-      />
+      <SettingsUpgradeToMultiagents v-if="canUpgradeToMultiAgents.value" />
     </footer>
   </section>
 </template>
 
 <script>
+import { computed } from 'vue';
 import nexusaiAPI from '@/api/nexusaiAPI';
 import LoadingFormElement from '@/components/LoadingFormElement.vue';
 import SettingsAdvanced from './SettingsAdvanced.vue';
@@ -217,10 +216,15 @@ export default {
       required: false,
     },
   },
+
   setup() {
     const featureFlagsStore = useFeatureFlagsStore();
+    const canUpgradeToMultiAgents = computed(
+      () => featureFlagsStore?.flags?.upgradeToMultiAgents,
+    );
     return {
       featureFlagsStore,
+      canUpgradeToMultiAgents,
     };
   },
 
