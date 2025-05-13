@@ -249,6 +249,19 @@
         "credentials": "Credenciales",
         "history": "Historial de cambios"
       },
+      "upgrade_to_multi_agents": {
+        "title": "Actualizar para Agent Builder 2.0",
+        "description": "Actualice su proyecto para usar un equipo de agentes inteligentes que colaboran para entender y responder de forma más eficaz, haciendo que su asistente sea más inteligente con esfuerzo mínimo.",
+        "button": "Actualizar ahora",
+        "modal": {
+          "title": "Actualizar para Agent Builder 2.0",
+          "description": "¿Está seguro de que desea actualizar para Agent Builder 2.0? Esta acción es permanente y no se puede revertir.",
+          "cancel": "Cancelar",
+          "upgrade": "Actualizar"
+        },
+        "error": "Error al actualizar para Agent Builder 2.0",
+        "success": "Actualizado a Agent Builder 2.0 con éxito"
+      },
       "history": {
         "no_changes": "No se realizaron cambios en Agent Builder.",
         "description": "Consulta el historial de cambios realizados en Agent builder",

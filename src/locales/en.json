@@ -249,6 +249,19 @@
         "credentials": "Credentials",
         "history": "History of changes"
       },
+      "upgrade_to_multi_agents": {
+        "title": "Upgrade to Agent Builder 2.0",
+        "description": "Upgrade your project to use a smart team of agents that collaborate to understand and respond more effectively, making your assistant smarter with minimal effort.",
+        "button": "Upgrade now",
+        "modal": {
+          "title": "Upgrade to Agent Builder 2.0",
+          "description": "Are you sure you want to upgrade to Agent Builder 2.0? This change is permanent and cannot be undone.",
+          "cancel": "Cancel",
+          "upgrade": "Upgrade"
+        },
+        "error": "Error upgrading to Agent Builder 2.0",
+        "success": "Upgraded to Agent Builder 2.0 successfully"
+      },
       "history": {
         "no_changes": "No changes were made to the Agent Builder.",
         "description": "View the history of changes made to Agent Builder",
