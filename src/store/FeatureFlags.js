@@ -2,14 +2,16 @@ import { defineStore } from 'pinia';
 import { computed, inject } from 'vue';
 
 import globalStore from '.';
-import { gbKey } from '../utils/Growthbook';
 import { useProjectStore } from './Project';
+
+import { gbKey } from '../utils/Growthbook';
+import env from '@/utils/env';
 
 export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
   const growthbook = inject(gbKey);
 
   const getListAtEnv = (key) => {
-    return runtimeVariables.get(key)?.split(',') || [];
+    return env(key)?.split(',') || [];
   };
 
   const isOrgEnabledForFlag = (flagKey) => {

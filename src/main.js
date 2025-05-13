@@ -14,6 +14,8 @@ import UnnnicSystemPlugin from './utils/UnnnicSystemPlugin.js';
 import { gbKey, initializeGrowthBook } from './utils/Growthbook';
 import { getJwtToken } from './utils/jwt';
 import './utils/HandlerObstructiveError.js';
+import './utils/plugins/Hotjar.js';
+import env from './utils/env';
 
 getJwtToken().then(() => {
   initializeGrowthBook().then((gbInstance) => {
@@ -24,11 +26,11 @@ getJwtToken().then(() => {
 
     app.use(store).use(pinia).use(router).use(UnnnicSystemPlugin).use(i18n);
 
-    if (runtimeVariables.get('VITE_BOTHUB_WEBAPP_SENTRY')) {
+    if (env('VITE_BOTHUB_WEBAPP_SENTRY')) {
       Sentry.init({
         app,
-        dsn: runtimeVariables.get('VITE_BOTHUB_WEBAPP_SENTRY'),
-        environment: runtimeVariables.get('SENTRY_ENVIRONMENT'),
+        dsn: env('VITE_BOTHUB_WEBAPP_SENTRY'),
+        environment: env('SENTRY_ENVIRONMENT'),
         integrations: [
           Sentry.browserTracingIntegration({ router }),
           Sentry.replayIntegration(),

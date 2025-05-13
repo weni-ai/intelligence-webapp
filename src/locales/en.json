@@ -356,6 +356,10 @@
             "title": "Multiple message format",
             "description": "With this function enabled, the agent will be able to send multiple messages formats, like Quick Replies, List Message, CTA and Catalog."
           }
+        },
+        "human_support": {
+          "title": "Human support",
+          "description": "With this function enabled, the agent will be able to forward the conversation to human support."
         }
       },
       "save_success": "Tunings saved successfully"
