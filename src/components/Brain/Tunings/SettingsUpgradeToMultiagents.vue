@@ -6,6 +6,7 @@
         family="secondary"
         size="body-gt"
         weight="bold"
+        data-testid="upgrade-to-multi-agents-title"
       >
         {{ $t('router.tunings.upgrade_to_multi_agents.title') }}
       </UnnnicIntelligenceText>
@@ -14,6 +15,7 @@
         color="neutral-cloudy"
         family="secondary"
         size="body-gt"
+        data-testid="upgrade-to-multi-agents-description"
       >
         {{ $t('router.tunings.upgrade_to_multi_agents.description') }}
       </UnnnicIntelligenceText>
@@ -22,11 +24,13 @@
     <UnnnicButton
       type="attention"
       :text="$t('router.tunings.upgrade_to_multi_agents.button')"
+      data-testid="upgrade-to-multiagents-button"
       @click="handleUpgradeToMultiagentsModal"
     />
 
     <UnnnicModalDialog
       v-model:modelValue="openUpgradeToMultiagentsModal"
+      data-testid="modal"
       class="upgrade-to-multi-agents__modal"
       showCloseIcon
       icon="error"
