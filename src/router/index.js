@@ -51,6 +51,7 @@ const getMultiAgentsEnabled = async () => {
     projectUuid: store.state.Auth.connectProjectUuid,
   });
 
+  useFeatureFlagsStore().editUpgradeToMultiAgents(data.can_view);
   projectStore.updateIsMultiAgents(data.multi_agents);
 };
 

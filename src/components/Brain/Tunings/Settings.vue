@@ -187,7 +187,9 @@
         {{ $t('router.tunings.restore_default') }}
       </UnnnicButton>
 
-      <SettingsUpgradeToMultiagents />
+      <SettingsUpgradeToMultiagents
+        v-if="featureFlagsStore.flags.upgradeToMultiAgents"
+      />
     </footer>
   </section>
 </template>
@@ -198,6 +200,7 @@ import LoadingFormElement from '@/components/LoadingFormElement.vue';
 import SettingsAdvanced from './SettingsAdvanced.vue';
 import SettingsUpgradeToMultiagents from './SettingsUpgradeToMultiagents.vue';
 import { WENIGPT_OPTIONS } from '@/utils';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 export default {
   components: {
@@ -213,6 +216,12 @@ export default {
       },
       required: false,
     },
+  },
+  setup() {
+    const featureFlagsStore = useFeatureFlagsStore();
+    return {
+      featureFlagsStore,
+    };
   },
 
   data() {
