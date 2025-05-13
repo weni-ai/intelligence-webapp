@@ -9,9 +9,11 @@ import RouterPreviewFullPage from '../views/Brain/RouterPreviewFullPage.vue';
 import NotFound from '../views/NotFound.vue';
 
 import store from '../store';
-import nexusaiAPI from '../api/nexusaiAPI';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useProjectStore } from '@/store/Project';
+
+import nexusaiAPI from '../api/nexusaiAPI';
+
 import env from '@/utils/env';
 
 let nextFromRedirect = '';
