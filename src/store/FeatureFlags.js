@@ -30,8 +30,8 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
     agentsTeam:
       useProjectStore().isMultiAgents ||
       growthbook?.isOn('agent_builder_2') ||
-      isOrgEnabledForFlag('VITE_FF_ORGS_WITH_AGENTS_TEAM') ||
-      isProjectEnabledForFlag('VITE_FF_PROJECTS_WITH_AGENTS_TEAM'),
+      isOrgEnabledForFlag('FF_ORGS_WITH_AGENTS_TEAM') ||
+      isProjectEnabledForFlag('FF_PROJECTS_WITH_AGENTS_TEAM'),
     upgradeToMultiAgents,
   }));
 
