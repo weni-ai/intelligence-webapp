@@ -5,6 +5,7 @@
       data-test="message-input-left-button"
     >
       <ContentItemActions
+        v-if="!isAgentsTeamEnabled"
         data-test="content-item-actions"
         triggerIcon="add"
         triggerSize="md"
@@ -58,6 +59,7 @@
 <script setup>
 import { computed, nextTick, ref, useTemplateRef } from 'vue';
 import { useStore } from 'vuex';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
 
@@ -70,6 +72,8 @@ const props = defineProps({
     default: '',
   },
 });
+
+const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
 const modelValue = defineModel('modelValue', {
   type: [String, File],
