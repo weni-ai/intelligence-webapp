@@ -1,5 +1,6 @@
 import { useActionsStore } from '@/store/Actions';
 import VERBOSE_LANGUAGES from './verbose_languages';
+import env from './env';
 
 export const languageListToDict = (list) =>
   list.reduce((current, lang) => {
@@ -8,15 +9,12 @@ export const languageListToDict = (list) =>
   }, {});
 
 export const LANGUAGES = languageListToDict(
-  runtimeVariables
-    .get('VITE_SUPPORTED_LANGUAGES')
-    .split('|')
+  env('VITE_SUPPORTED_LANGUAGES')
+    ?.split('|')
     .map((v) => v.split(':')[0]),
 );
 
-export const WENIGPT_OPTIONS = JSON.parse(
-  runtimeVariables.get('VITE_OPTIONS_WENIGPT'),
-);
+export const WENIGPT_OPTIONS = JSON.parse(env('VITE_OPTIONS_WENIGPT') || '[]');
 
 export const createDownloadAnchor = ({ name, href }) => {
   const a = document.createElement('a');

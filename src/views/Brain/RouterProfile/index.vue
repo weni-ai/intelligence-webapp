@@ -15,16 +15,6 @@
     />
 
     <RouterProfileInstructions data-testid="instructions" />
-
-    <template v-if="featureFlagsStore.flags.agentsTeam">
-      <UnnnicDivider
-        data-testid="divider"
-        ySpacing="md"
-        class="profile__divider"
-      />
-
-      <RouterProfileHumanSupport data-testid="human-support" />
-    </template>
   </section>
 </template>
 
@@ -38,11 +28,8 @@ import i18n from '@/utils/plugins/i18n';
 
 import RouterProfileGeneralInfo from './RouterProfileGeneralInfo.vue';
 import RouterProfileInstructions from './RouterProfileInstructions.vue';
-import RouterProfileHumanSupport from './RouterProfileHumanSupport.vue';
-import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 const profileStore = useProfileStore();
-const featureFlagsStore = useFeatureFlagsStore();
 const alertStore = useAlertStore();
 
 onMounted(() => {

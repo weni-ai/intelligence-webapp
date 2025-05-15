@@ -191,13 +191,21 @@ describe('AssignAgentDrawer.vue', () => {
 
       expect(tuningsStore.createCredentials).toHaveBeenCalledWith(
         mockAgent.uuid,
+        [
+          {
+            name: 'API_KEY',
+            value: '',
+            label: 'API Key',
+            placeholder: 'Enter API key',
+          },
+          {
+            label: 'Base URL',
+            name: 'BASE_URL',
+            placeholder: 'Enter base URL',
+            value: 'https://example.com',
+          },
+        ],
       );
-    });
-
-    it('should call saveCredentials when credentials are not filled', async () => {
-      wrapper.vm.toggleAgentAssignment();
-
-      expect(tuningsStore.saveCredentials).toHaveBeenCalled();
     });
 
     it('should emit assign when credentials are filled', async () => {
@@ -211,7 +219,7 @@ describe('AssignAgentDrawer.vue', () => {
         .spyOn(console, 'error')
         .mockImplementation(() => {});
 
-      tuningsStore.saveCredentials.mockRejectedValue(new Error('Error'));
+      tuningsStore.createCredentials.mockRejectedValue(new Error('Error'));
 
       await wrapper.vm.toggleAgentAssignment();
 

@@ -12,6 +12,7 @@ export const usePreviewStore = defineStore('preview', () => {
 
   const ws = ref(null);
   const traces = ref([]);
+  const collaboratorInvoked = ref('');
   const collaboratorsTraces = computed(() =>
     traces.value
       .filter((trace) => trace.type === 'trace_update')
@@ -21,9 +22,7 @@ export const usePreviewStore = defineStore('preview', () => {
     const agentsTeamStore = useAgentsTeamStore();
     const lastTrace = traces.value.at(-1)?.trace;
 
-    const lastTraceAgentId =
-      lastTrace?.trace?.orchestrationTrace?.observation
-        ?.agentCollaboratorInvocationOutput?.agentCollaboratorName || 'manager';
+    const lastTraceAgentId = lastTrace?.agentCollaboratorName || 'manager';
 
     const agent = agentsTeamStore.activeTeam.data?.agents?.find(
       (agent) => agent.id && lastTraceAgentId && agent.id === lastTraceAgentId,
@@ -36,6 +35,28 @@ export const usePreviewStore = defineStore('preview', () => {
   });
 
   function addTrace(update) {
+    const {
+      orchestrationTrace: {
+        invocationInput: { agentCollaboratorInvocationInput } = {},
+        observation: { agentCollaboratorInvocationOutput } = {},
+      } = {},
+    } = update?.trace?.trace || {};
+
+    const traceInvokingAgent =
+      agentCollaboratorInvocationInput?.agentCollaboratorName;
+    const traceOutputAgent =
+      agentCollaboratorInvocationOutput?.agentCollaboratorName;
+
+    if (traceInvokingAgent) collaboratorInvoked.value = traceInvokingAgent;
+    else if (traceOutputAgent) collaboratorInvoked.value = '';
+
+    const agentCollaboratorName =
+      traceInvokingAgent || traceOutputAgent || collaboratorInvoked.value;
+
+    if (agentCollaboratorName) {
+      update.trace.agentCollaboratorName = agentCollaboratorName;
+    }
+
     traces.value.push(update);
   }
 
@@ -72,5 +93,6 @@ export const usePreviewStore = defineStore('preview', () => {
     collaboratorsTraces,
     traces,
     addTrace,
+    collaboratorInvoked,
   };
 });

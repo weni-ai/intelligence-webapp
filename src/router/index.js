@@ -9,8 +9,12 @@ import RouterPreviewFullPage from '../views/Brain/RouterPreviewFullPage.vue';
 import NotFound from '../views/NotFound.vue';
 
 import store from '../store';
-import nexusaiAPI from '../api/nexusaiAPI';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useProjectStore } from '@/store/Project';
+
+import nexusaiAPI from '../api/nexusaiAPI';
+
+import env from '@/utils/env';
 
 let nextFromRedirect = '';
 
@@ -36,6 +40,19 @@ const handleLogin = async (to, from, next) => {
   } else {
     next({ path: '/intelligences/home', replace: true });
   }
+};
+
+const getMultiAgentsEnabled = async () => {
+  const projectStore = useProjectStore();
+
+  if (projectStore.isMultiAgents !== null) return;
+
+  const { data } = await nexusaiAPI.router.tunings.multiAgents.read({
+    projectUuid: store.state.Auth.connectProjectUuid,
+  });
+
+  useFeatureFlagsStore().editUpgradeToMultiAgents(data.can_view);
+  projectStore.updateIsMultiAgents(data.multi_agents);
 };
 
 const router = createRouter({
@@ -85,6 +102,8 @@ const router = createRouter({
         return { name: 'router-monitoring' };
       },
       async beforeEnter(_to, _from, next) {
+        await getMultiAgentsEnabled();
+
         if (useFeatureFlagsStore().flags.agentsTeam) {
           next({ name: 'agent-builder' });
         }
@@ -135,6 +154,8 @@ const router = createRouter({
         return { name: 'supervisor' };
       },
       async beforeEnter(_to, _from, next) {
+        await getMultiAgentsEnabled();
+
         if (!useFeatureFlagsStore().flags.agentsTeam) {
           next({ name: 'router' });
         }
@@ -208,10 +229,7 @@ const router = createRouter({
           const projectUuid = sessionStorage.getItem('projectUuid');
 
           const path = `/loginexternal/${bearerToken}/${intelligenceOrgId}/${projectUuid}/`;
-          const redirectUrl = new URL(
-            path,
-            runtimeVariables.get('INTELLIGENCE_LEGACY_URL'),
-          );
+          const redirectUrl = new URL(path, env('INTELLIGENCE_LEGACY_URL'));
 
           redirectUrl.searchParams.append('org_uuid', orgUuid);
           redirectUrl.searchParams.append('project_uuid', projectUuid);

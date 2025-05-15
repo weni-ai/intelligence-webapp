@@ -180,16 +180,10 @@ export default {
         );
       },
 
-      createCredentials({
-        projectUuid,
-        credentials = {},
-        agent_uuid,
-        is_confidential = true,
-      }) {
+      createCredentials({ projectUuid, credentials = {}, agent_uuid }) {
         return request.$http.post(`api/project/${projectUuid}/credentials`, {
           credentials,
           agent_uuid,
-          is_confidential,
         });
       },
 
@@ -244,6 +238,21 @@ export default {
           return request.$http.patch(`api/${projectUuid}/project`, {
             brain_on,
           });
+        },
+      },
+
+      multiAgents: {
+        read({ projectUuid }) {
+          return request.$http.get(`api/project/${projectUuid}/multi-agents`);
+        },
+
+        edit({ projectUuid, multi_agents }) {
+          return request.$http.patch(
+            `api/project/${projectUuid}/multi-agents`,
+            {
+              multi_agents,
+            },
+          );
         },
       },
     },
