@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   env: {
     node: true,
+    browser: true,
   },
   extends: ['@weni/eslint-config/vue3'],
   rules: {
@@ -14,7 +15,9 @@ module.exports = {
     'vue/valid-attribute-name': 'off',
   },
   parserOptions: {
-    parser: 'babel-eslint',
-    ecmaVersion: 2020,
+    ecmaVersion: 'latest',
+    ecmaFeatures: {
+      importAssertions: true,
+    },
   },
 };

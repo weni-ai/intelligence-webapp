@@ -13,7 +13,7 @@ exports[`AgentCardSkeleton.vue > renders correctly 1`] = `
     
     <span
       class="unnnic-skeleton"
-      style="background-color: rgb(232, 244, 244); animation: SkeletonLoading 1.5s ease-in-out infinite; width: 30%; height: 22px;"
+      style="background-color: rgb(232, 244, 244); background-image: linear-gradient( 90deg, #E8F4F4, rgba(255,255,255,0.375), #E8F4F4 ); animation: SkeletonLoading 1.5s ease-in-out infinite; width: 30%; height: 22px;"
     >
        ‌ 
     </span>
@@ -26,7 +26,7 @@ exports[`AgentCardSkeleton.vue > renders correctly 1`] = `
     
     <span
       class="unnnic-skeleton"
-      style="background-color: rgb(232, 244, 244); animation: SkeletonLoading 1.5s ease-in-out infinite; width: 100%; height: 44px;"
+      style="background-color: rgb(232, 244, 244); background-image: linear-gradient( 90deg, #E8F4F4, rgba(255,255,255,0.375), #E8F4F4 ); animation: SkeletonLoading 1.5s ease-in-out infinite; width: 100%; height: 44px;"
     >
        ‌ 
     </span>
@@ -44,7 +44,7 @@ exports[`AgentCardSkeleton.vue > renders correctly 1`] = `
       
       <span
         class="unnnic-skeleton"
-        style="background-color: rgb(232, 244, 244); animation: SkeletonLoading 1.5s ease-in-out infinite; width: 100px; height: 30px;"
+        style="background-color: rgb(232, 244, 244); background-image: linear-gradient( 90deg, #E8F4F4, rgba(255,255,255,0.375), #E8F4F4 ); animation: SkeletonLoading 1.5s ease-in-out infinite; width: 100px; height: 30px;"
       >
          ‌ 
       </span>
@@ -57,7 +57,7 @@ exports[`AgentCardSkeleton.vue > renders correctly 1`] = `
       
       <span
         class="unnnic-skeleton"
-        style="background-color: rgb(232, 244, 244); animation: SkeletonLoading 1.5s ease-in-out infinite; width: 150px; height: 30px;"
+        style="background-color: rgb(232, 244, 244); background-image: linear-gradient( 90deg, #E8F4F4, rgba(255,255,255,0.375), #E8F4F4 ); animation: SkeletonLoading 1.5s ease-in-out infinite; width: 150px; height: 30px;"
       >
          ‌ 
       </span>
@@ -71,7 +71,7 @@ exports[`AgentCardSkeleton.vue > renders correctly 1`] = `
     
     <span
       class="unnnic-skeleton"
-      style="background-color: rgb(232, 244, 244); animation: SkeletonLoading 1.5s ease-in-out infinite; width: 100%; height: 38px;"
+      style="background-color: rgb(232, 244, 244); background-image: linear-gradient( 90deg, #E8F4F4, rgba(255,255,255,0.375), #E8F4F4 ); animation: SkeletonLoading 1.5s ease-in-out infinite; width: 100%; height: 38px;"
     >
        ‌ 
     </span>

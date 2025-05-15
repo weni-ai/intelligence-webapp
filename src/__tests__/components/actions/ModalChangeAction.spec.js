@@ -72,7 +72,7 @@ const store = createStore({
 });
 
 vi.stubEnv(
-  'VITE_TEMPLATE_LINK_FLOW_EDITOR',
+  'TEMPLATE_LINK_FLOW_EDITOR',
   'https://floweditor/{dashProjectUuid}/flow/{flowUuid}',
 );
 

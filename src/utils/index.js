@@ -3,18 +3,18 @@ import VERBOSE_LANGUAGES from './verbose_languages';
 import env from './env';
 
 export const languageListToDict = (list) =>
-  list.reduce((current, lang) => {
+  list?.reduce((current, lang) => {
     Object.assign(current, { [lang]: VERBOSE_LANGUAGES[lang] || lang });
     return current;
   }, {});
 
 export const LANGUAGES = languageListToDict(
-  env('VITE_SUPPORTED_LANGUAGES')
+  env('SUPPORTED_LANGUAGES')
     ?.split('|')
     .map((v) => v.split(':')[0]),
 );
 
-export const WENIGPT_OPTIONS = JSON.parse(env('VITE_OPTIONS_WENIGPT') || '[]');
+export const WENIGPT_OPTIONS = JSON.parse(env('OPTIONS_WENIGPT') || '[]');
 
 export const createDownloadAnchor = ({ name, href }) => {
   const a = document.createElement('a');
