@@ -64,12 +64,15 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
   async function loadConversations(page = 1) {
     conversations.status = 'loading';
+
+    const formatDateParam = (date) => format(parseISO(date), 'dd-MM-yyyy');
+
     try {
       const response = await supervisorApi.conversations.list({
         projectUuid: projectUuid.value,
         page,
-        start: format(parseISO(filters.start), 'dd-MM-yyyy'),
-        end: format(parseISO(filters.end), 'dd-MM-yyyy'),
+        start: formatDateParam(filters.start),
+        end: formatDateParam(filters.end),
         search: filters.search,
         type: filters.type,
       });
@@ -91,12 +94,9 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     try {
       selectedConversation.value.data.status = 'loading';
 
-      const formatDateParam = (date) => format(parseISO(date), 'dd-MM-yyyy');
-
       const params = {
         projectUuid: projectUuid.value,
-        start: formatDateParam(filters.start),
-        end: formatDateParam(filters.end),
+        start: selectedConversation.value.created_on,
         urn: selectedConversation.value.urn,
         next: next ? selectedConversation.value.data.next : null,
       };

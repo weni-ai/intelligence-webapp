@@ -84,12 +84,11 @@ const currentBrainRoute = computed(() => {
 const showDateFilter = computed(() => route.name?.includes('monitoring'));
 
 const tuningsStore = useTuningsStore();
-const previewStore = usePreviewStore();
 const store = useStore();
 
 const isTuningsSaveButtonDisabled = computed(() => {
   return isAgentsTeamEnabled
-    ? !tuningsStore.isCredentialsValid && !tuningsStore.hasSettingsChanges
+    ? !tuningsStore.isCredentialsValid && !tuningsStore.isSettingsValid
     : store.getters.isBrainSaveButtonDisabled;
 });
 
