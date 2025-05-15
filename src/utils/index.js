@@ -3,7 +3,7 @@ import VERBOSE_LANGUAGES from './verbose_languages';
 import env from './env';
 
 export const languageListToDict = (list) =>
-  list.reduce((current, lang) => {
+  list?.reduce((current, lang) => {
     Object.assign(current, { [lang]: VERBOSE_LANGUAGES[lang] || lang });
     return current;
   }, {});
