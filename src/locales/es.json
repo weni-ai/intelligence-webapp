@@ -104,7 +104,9 @@
         "token_help": "Puedes encontrar este token en tu",
         "project_settings": "configuración del proyecto",
         "and_paste": "y pegarlo aquí.",
-        "send": "Enviar exportación"
+        "send": "Enviar exportación",
+        "success": "La exportación será enviada a todas las direcciones de correo electrónico listadas pronto",
+        "error": "Error al enviar exportación. Intente nuevamente más tarde."
       }
     }
   },
