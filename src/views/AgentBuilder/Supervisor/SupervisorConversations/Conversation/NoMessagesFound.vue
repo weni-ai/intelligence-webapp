@@ -65,6 +65,7 @@
   &__link {
     color: $unnnic-color-neutral-dark;
     font-weight: $unnnic-font-weight-bold;
+    display: inline;
   }
 }
 </style>
