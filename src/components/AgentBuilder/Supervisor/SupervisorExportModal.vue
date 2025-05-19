@@ -84,11 +84,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 import { useProjectStore } from '@/store/Project';
 import { useSupervisorStore } from '@/store/Supervisor';
 
+import { Supervisor as supervisorApi } from '@/api/nexus/Supervisor';
 import env from '@/utils/env';
 
 const props = defineProps({
@@ -105,6 +106,7 @@ const supervisorStore = useSupervisorStore();
 
 const token = ref('');
 const isSending = ref(false);
+const emails = ref([]);
 
 const closeModal = () => {
   emit('update:modelValue', false);
@@ -120,6 +122,20 @@ const handleExport = async () => {
   isSending.value = false;
   closeModal();
 };
+
+const getExportEmails = async () => {
+  emails.value =
+    (await supervisorApi.conversations.getExportEmails()?.emails) || [];
+};
+
+watch(
+  () => props.modelValue,
+  () => {
+    if (props.modelValue && !emails.value.length) {
+      getExportEmails();
+    }
+  },
+);
 </script>
 
 <style lang="scss" scoped>

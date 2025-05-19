@@ -51,5 +51,10 @@ export const Supervisor = {
       });
       return data;
     },
+
+    async getExportEmails() {
+      const { data } = await nexusRequest.$http.get('/api/reports');
+      return data;
+    },
   },
 };
