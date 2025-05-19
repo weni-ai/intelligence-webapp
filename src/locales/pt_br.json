@@ -100,6 +100,16 @@
         "title": "Nenhuma mensagem encontrada nesta conversa.",
         "description": "Se a mensagem foi enviada pelo suporte humano ou disparo de mensagens, você pode encontrá-la no {studio_link}.",
         "studio_link": "Estúdio"
+      },
+      "export": {
+        "title": "Enviar exportação por e-mail",
+        "description": "Vamos preparar o arquivo com os dados de IA e enviá-lo para os seguintes e-mails:",
+        "token_label": "Token de API do Projeto",
+        "token_placeholder": "86d2ba6397cabd4b22f7da925ef89d78bfb2d90dd",
+        "token_help": "Você pode encontrar este token em suas",
+        "project_settings": "configurações do projeto",
+        "and_paste": "e cole-o aqui.",
+        "send": "Enviar exportação"
       }
     }
   },

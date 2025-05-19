@@ -1,18 +1,29 @@
 <template>
   <AgentBuilderHeader :withDivider="false">
     <template #actions>
-      <UnnnicInputDatePicker
-        v-model="dateFilter"
-        position="right"
-        class="supervisor-header__date-picker"
-        :maxDate="today"
-      />
+      <section class="supervisor-header__actions">
+        <UnnnicInputDatePicker
+          v-model="dateFilter"
+          position="right"
+          class="supervisor-header__date-picker"
+          :maxDate="today"
+        />
+
+        <UnnnicButton
+          iconCenter="open_in_new"
+          type="secondary"
+          @click="openExportModal"
+        />
+      </section>
+
+      <SupervisorExportModal v-model="isExportModalOpen" />
     </template>
   </AgentBuilderHeader>
 </template>
 
 <script setup>
 import AgentBuilderHeader from '@/components/AgentBuilder/Header.vue';
+import SupervisorExportModal from '@/components/AgentBuilder/Supervisor/SupervisorExportModal.vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
@@ -37,10 +48,23 @@ watch(
   },
   { immediate: true },
 );
+
+const isExportModalOpen = ref(false);
+
+function openExportModal() {
+  isExportModalOpen.value = true;
+}
 </script>
 
 <style lang="scss" scoped>
 .supervisor-header {
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $unnnic-spacing-xs;
+    justify-content: flex-end;
+  }
+
   &__date-picker {
     :deep(.input) {
       width: 100%;
