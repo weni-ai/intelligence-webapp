@@ -72,9 +72,9 @@
     >
       {{ $t('agent_builder.supervisor.export.token_help') }}
       <a
-        :href="`${window.parent?.location.href}/projects/${projectStore.uuid}/settings/project/org/home`"
-        target="_blank"
+        href="#"
         class="help-text__link"
+        @click="openProjectSettings"
       >
         {{ $t('agent_builder.supervisor.export.project_settings') }}
       </a>
@@ -109,7 +109,16 @@ const handleExport = async () => {
   if (!token.value) return;
 
   // isSending.value = true;
-  console.log('window', window.parent);
+};
+
+const openProjectSettings = () => {
+  window.parent.postMessage(
+    {
+      event: 'redirect',
+      path: 'settings',
+    },
+    '*',
+  );
 };
 </script>
 
