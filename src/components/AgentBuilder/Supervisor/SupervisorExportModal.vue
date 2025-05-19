@@ -84,7 +84,6 @@
 </template>
 
 <script setup>
-import { useProjectStore } from '@/store/Project';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -95,9 +94,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue', 'export']);
-
-const projectStore = useProjectStore();
-
 const token = ref('');
 const isSending = ref(false);
 
@@ -115,7 +111,7 @@ const openProjectSettings = () => {
   window.parent.postMessage(
     {
       event: 'redirect',
-      path: 'settings',
+      path: 'settings:init',
     },
     '*',
   );
