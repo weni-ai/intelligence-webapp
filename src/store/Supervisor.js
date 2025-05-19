@@ -2,14 +2,17 @@ import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
 import { format, parseISO } from 'date-fns';
 import globalStore from '.';
+import { useAlertStore } from './Alert';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 
 import { PerformanceAdapter } from '@/api/adapters/supervisor/performance';
+import i18n from '@/utils/plugins/i18n';
 
 export const useSupervisorStore = defineStore('Supervisor', () => {
   const projectUuid = computed(() => globalStore.state.Auth.connectProjectUuid);
   const supervisorApi = nexusaiAPI.agent_builder.supervisor;
+  const alertStore = useAlertStore();
 
   const forwardStats = reactive({
     status: null,
@@ -140,6 +143,26 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     };
   }
 
+  async function exportSupervisorData({ token }) {
+    try {
+      await supervisorApi.conversations.export({
+        hideGenericErrorAlert: true,
+        projectUuid: projectUuid.value,
+        token,
+      });
+
+      alertStore.add({
+        type: 'success',
+        text: i18n.global.t('agent_builder.supervisor.export.success'),
+      });
+    } catch (error) {
+      alertStore.add({
+        type: 'error',
+        text: i18n.global.t('agent_builder.supervisor.export.error'),
+      });
+    }
+  }
+
   return {
     forwardStats,
     loadForwardStats,
@@ -149,5 +172,6 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     selectConversation,
     selectedConversation,
     filters,
+    exportSupervisorData,
   };
 });
