@@ -2,14 +2,17 @@ import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
 import { format, parseISO } from 'date-fns';
 import globalStore from '.';
+import { useAlertStore } from './Alert';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 
 import { PerformanceAdapter } from '@/api/adapters/supervisor/performance';
+import i18n from '@/utils/plugins/i18n';
 
 export const useSupervisorStore = defineStore('Supervisor', () => {
   const projectUuid = computed(() => globalStore.state.Auth.connectProjectUuid);
   const supervisorApi = nexusaiAPI.agent_builder.supervisor;
+  const alertStore = useAlertStore();
 
   const forwardStats = reactive({
     status: null,
@@ -64,12 +67,15 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
   async function loadConversations(page = 1) {
     conversations.status = 'loading';
+
+    const formatDateParam = (date) => format(parseISO(date), 'dd-MM-yyyy');
+
     try {
       const response = await supervisorApi.conversations.list({
         projectUuid: projectUuid.value,
         page,
-        start: format(parseISO(filters.start), 'dd-MM-yyyy'),
-        end: format(parseISO(filters.end), 'dd-MM-yyyy'),
+        start: formatDateParam(filters.start),
+        end: formatDateParam(filters.end),
         search: filters.search,
         type: filters.type,
       });
@@ -91,12 +97,9 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     try {
       selectedConversation.value.data.status = 'loading';
 
-      const formatDateParam = (date) => format(parseISO(date), 'dd-MM-yyyy');
-
       const params = {
         projectUuid: projectUuid.value,
-        start: formatDateParam(filters.start),
-        end: formatDateParam(filters.end),
+        start: selectedConversation.value.created_on,
         urn: selectedConversation.value.urn,
         next: next ? selectedConversation.value.data.next : null,
       };
@@ -140,6 +143,26 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     };
   }
 
+  async function exportSupervisorData({ token }) {
+    try {
+      await supervisorApi.conversations.export({
+        hideGenericErrorAlert: true,
+        projectUuid: projectUuid.value,
+        token,
+      });
+
+      alertStore.add({
+        type: 'success',
+        text: i18n.global.t('agent_builder.supervisor.export.success'),
+      });
+    } catch (error) {
+      alertStore.add({
+        type: 'error',
+        text: i18n.global.t('agent_builder.supervisor.export.error'),
+      });
+    }
+  }
+
   return {
     forwardStats,
     loadForwardStats,
@@ -149,5 +172,6 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     selectConversation,
     selectedConversation,
     filters,
+    exportSupervisorData,
   };
 });

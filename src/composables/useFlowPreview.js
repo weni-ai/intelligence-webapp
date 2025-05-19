@@ -4,6 +4,7 @@ import { ref, computed } from 'vue';
 import axios from 'axios';
 import update from 'immutability-helper';
 import { v4 as createUUID } from 'uuid';
+import env from '@/utils/env';
 
 export const isMT = (event) => {
   return !!['msg_created', 'ivr_created'].find((type) => type === event.type);
@@ -49,7 +50,7 @@ export default function useFlowPreview() {
 
   const previewAPI = computed(() => {
     const instance = axios.create({
-      baseURL: runtimeVariables.get('FLOWS_API_BASE_URL'),
+      baseURL: env('FLOWS_API_BASE_URL'),
     });
 
     return (body) =>

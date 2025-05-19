@@ -95,7 +95,24 @@
       },
       "view_logs": "View logs",
       "hide_logs": "Hide logs",
-      "search": "Search"
+      "search": "Search",
+      "no_messages_found": {
+        "title": "No messages found on this conversation.",
+        "description": "If the message was sent by human support or triggered messages, you can find it on the {studio_link}.",
+        "studio_link": "Studio"
+      },
+      "export": {
+        "title": "Send export by email",
+        "description": "We'll prepare the file with the AI data and send it to the following email addresses:",
+        "token_label": "Project API Token",
+        "token_placeholder": "86d2ba6397cabd4b22f7da925ef89d78bfb2d90dd",
+        "token_help": "You can find this token in your",
+        "project_settings": "project settings",
+        "and_paste": "and paste it here.",
+        "send": "Send export",
+        "success": "The export will be sent to all listed email addresses soon",
+        "error": "Error sending export. Try again later."
+      }
     }
   },
   "router": {
@@ -249,6 +266,19 @@
         "credentials": "Credentials",
         "history": "History of changes"
       },
+      "upgrade_to_multi_agents": {
+        "title": "Upgrade to Agent Builder 2.0",
+        "description": "Upgrade your project to use a smart team of agents that collaborate to understand and respond more effectively, making your assistant smarter with minimal effort.",
+        "button": "Upgrade now",
+        "modal": {
+          "title": "Upgrade to Agent Builder 2.0",
+          "description": "Are you sure you want to upgrade to Agent Builder 2.0? This change is permanent and cannot be undone.",
+          "cancel": "Cancel",
+          "upgrade": "Upgrade"
+        },
+        "error": "Error upgrading to Agent Builder 2.0",
+        "success": "Upgraded to Agent Builder 2.0 successfully"
+      },
       "history": {
         "no_changes": "No changes were made to the Agent Builder.",
         "description": "View the history of changes made to Agent Builder",
@@ -343,6 +373,10 @@
             "title": "Multiple message format",
             "description": "With this function enabled, the agent will be able to send multiple messages formats, like Quick Replies, List Message, CTA and Catalog."
           }
+        },
+        "human_support": {
+          "title": "Human support",
+          "description": "With this function enabled, the agent will be able to forward the conversation to human support."
         }
       },
       "save_success": "Tunings saved successfully"

@@ -732,4 +732,34 @@ describe('nexusaiAPI.js', () => {
     });
     expect(result).toEqual(mockResponse);
   });
+
+  it('should get multi-agents configuration', async () => {
+    const mockResponse = { data: 'mockData' };
+    request.$http.get.mockResolvedValue(mockResponse);
+
+    const result = await nexusaiAPI.router.tunings.multiAgents.read({
+      projectUuid: 'project1',
+    });
+
+    expect(request.$http.get).toHaveBeenCalledWith(
+      'api/project/project1/multi-agents',
+    );
+    expect(result).toEqual(mockResponse);
+  });
+
+  it('should edit multi-agents configuration', async () => {
+    const mockResponse = { data: { multi_agents: true } };
+    request.$http.patch.mockResolvedValue(mockResponse);
+
+    const result = await nexusaiAPI.router.tunings.multiAgents.edit({
+      projectUuid: 'project1',
+      multi_agents: true,
+    });
+
+    expect(request.$http.patch).toHaveBeenCalledWith(
+      'api/project/project1/multi-agents',
+      { multi_agents: true },
+    );
+    expect(result).toEqual(mockResponse);
+  });
 });

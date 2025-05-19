@@ -4,6 +4,7 @@ import router from '@/router';
 import store from '@/store';
 import nexusaiAPI from '@/api/nexusaiAPI';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useProjectStore } from '@/store/Project';
 
 vi.mock('@/views/Home.vue', () => ({
   default: {
@@ -69,13 +70,14 @@ global.location = {
 
 describe('router', () => {
   let featureFlagsStore;
-
+  let projectStore;
   beforeEach(() => {
     vi.clearAllMocks();
     vi.spyOn(store, 'dispatch').mockImplementation(() => Promise.resolve());
     createTestingPinia();
 
     featureFlagsStore = useFeatureFlagsStore();
+    projectStore = useProjectStore();
   });
 
   it('should create router with history mode', () => {
@@ -116,6 +118,12 @@ describe('router', () => {
       intelligence: 'intelligenceUuid',
     };
     vi.spyOn(nexusaiAPI.router, 'read').mockResolvedValue({ data });
+    vi.spyOn(nexusaiAPI.router.tunings.multiAgents, 'read').mockResolvedValue({
+      data: {
+        can_view: true,
+        multi_agents: true,
+      },
+    });
     const next = vi.fn();
     await router.options.routes[4].beforeEnter({}, {}, next);
     expect(store.state.router.contentBaseUuid).toBe(data.uuid);
@@ -134,10 +142,7 @@ describe('router', () => {
       return null;
     });
 
-    global.runtimeVariables.get = (key) => {
-      if (key === 'INTELLIGENCE_LEGACY_URL') return 'http://example.com';
-      return '';
-    };
+    vi.stubEnv('VITE_INTELLIGENCE_LEGACY_URL', 'http://example.com');
 
     const to = { fullPath: '/some-path' };
     const from = {};
@@ -190,5 +195,47 @@ describe('router', () => {
       .beforeEnter(to, from, next);
 
     expect(next).toHaveBeenCalled();
+  });
+
+  describe('Multi-agents feature flag', () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('should make a request to get multi-agents feature flag configuration before entering the router or agent builder route', async () => {
+      const next = vi.fn();
+      await router.options.routes[4].beforeEnter({}, {}, next);
+      expect(nexusaiAPI.router.tunings.multiAgents.read).toHaveBeenCalledTimes(
+        1,
+      );
+
+      await router.options.routes[5].beforeEnter({}, {}, next);
+      expect(nexusaiAPI.router.tunings.multiAgents.read).toHaveBeenCalledTimes(
+        2,
+      );
+    });
+
+    it('should not make a request before entering bothub routes', async () => {
+      const next = vi.fn();
+      await router.options.routes[3].beforeEnter({}, {}, next);
+      expect(nexusaiAPI.router.tunings.multiAgents.read).not.toHaveBeenCalled();
+    });
+
+    it('should update the multi-agents feature flag configuration when the request is successful', async () => {
+      const next = vi.fn();
+      await router.options.routes[4].beforeEnter({}, {}, next);
+      expect(featureFlagsStore.editUpgradeToMultiAgents).toHaveBeenCalledWith(
+        true,
+      );
+    });
+
+    it('should not make the request if the multi-agents project field is different of null', async () => {
+      projectStore.isMultiAgents = true;
+
+      const next = vi.fn();
+      await router.options.routes[4].beforeEnter({}, {}, next);
+
+      expect(nexusaiAPI.router.tunings.multiAgents.read).not.toHaveBeenCalled();
+    });
   });
 });

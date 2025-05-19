@@ -3,6 +3,7 @@ import { WENIGPT_OPTIONS } from '../../utils';
 import { models } from '@/store/brain/models.js';
 import nexusaiAPI from '@/api/nexusaiAPI.js';
 import i18n from '../../utils/plugins/i18n';
+import { useProjectStore } from '../Project';
 
 export default {
   state: () => ({
@@ -188,6 +189,32 @@ export default {
         }
       } finally {
         state.isSavingChanges = false;
+      }
+    },
+
+    async upgradeToMultiagents({ state, rootState }) {
+      try {
+        await nexusaiAPI.router.tunings.multiAgents.edit({
+          projectUuid: rootState.Auth.connectProjectUuid,
+          multi_agents: true,
+          hideGenericErrorAlert: true,
+        });
+
+        useProjectStore().updateIsMultiAgents(true);
+
+        rootState.alert = {
+          type: 'success',
+          text: i18n.global.t('router.tunings.upgrade_to_multi_agents.success'),
+        };
+
+        return { status: 'success' };
+      } catch (error) {
+        rootState.alert = {
+          type: 'error',
+          text: i18n.global.t('router.tunings.upgrade_to_multi_agents.error'),
+        };
+
+        return { status: 'error' };
       }
     },
   },

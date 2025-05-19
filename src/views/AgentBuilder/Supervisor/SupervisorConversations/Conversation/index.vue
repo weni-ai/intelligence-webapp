@@ -39,6 +39,9 @@
           :isLoading="true"
         />
       </template>
+
+      <NoMessagesFound v-else-if="conversation.data.results?.length === 0" />
+
       <template v-else>
         <QuestionAndAnswer
           v-for="message in conversation.data.results"
@@ -63,7 +66,7 @@ import { useSupervisorStore } from '@/store/Supervisor';
 
 import QuestionAndAnswer from './QuestionAndAnswer/index.vue';
 import ForwardedHumanSupport from './QuestionAndAnswer/ForwardedHumanSupport.vue';
-
+import NoMessagesFound from './NoMessagesFound.vue';
 const supervisorStore = useSupervisorStore();
 
 const conversation = computed(() => supervisorStore.selectedConversation);
