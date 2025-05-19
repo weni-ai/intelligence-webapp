@@ -96,6 +96,11 @@
       "view_logs": "View logs",
       "hide_logs": "Hide logs",
       "search": "Search",
+      "no_messages_found": {
+        "title": "No messages found on this conversation.",
+        "description": "If the message was sent by human support or triggered messages, you can find it on the {studio_link}.",
+        "studio_link": "Studio"
+      },
       "export": {
         "title": "Send export by email",
         "description": "We'll prepare the file with the AI data and send it to the following email addresses:",

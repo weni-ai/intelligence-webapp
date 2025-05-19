@@ -96,6 +96,11 @@
       "view_logs": "Ver logs",
       "hide_logs": "Esconder logs",
       "search": "Buscar",
+      "no_messages_found": {
+        "title": "No se encontraron mensajes en esta conversación.",
+        "description": "Si el mensaje fue enviado por soporte humano o mensajes disparados, puedes encontrarlo en el {studio_link}.",
+        "studio_link": "Studio"
+      },
       "export": {
         "title": "Enviar exportación por correo electrónico",
         "description": "Prepararemos el archivo con los datos de IA y lo enviaremos a las siguientes direcciones de correo electrónico:",
