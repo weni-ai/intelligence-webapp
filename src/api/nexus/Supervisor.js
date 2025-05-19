@@ -64,8 +64,10 @@ export const Supervisor = {
       return data;
     },
 
-    async getExportEmails() {
-      const { data } = await nexusRequest.$http.get('/api/reports');
+    async getExportEmails({ projectUuid }) {
+      const { data } = await nexusRequest.$http.get(
+        `/api/reports?project_uuid=${projectUuid}`,
+      );
       return data;
     },
   },
