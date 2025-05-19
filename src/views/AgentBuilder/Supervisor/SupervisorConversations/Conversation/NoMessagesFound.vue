@@ -29,17 +29,25 @@
         tag="p"
       >
         <template #studio_link>
-          <p
-            href="#"
+          <a
+            :href="`${env('VITE_CONNECT_URL')}/projects/${projectStore.uuid}/studio/contact`"
             class="no-messages-found__link"
+            target="_blank"
           >
             {{ $t('agent_builder.supervisor.no_messages_found.studio_link') }}
-          </p>
+          </a>
         </template>
       </i18n-t>
     </UnnnicIntelligenceText>
   </section>
 </template>
+
+<script setup>
+import { useProjectStore } from '@/store/Project';
+import env from '@/utils/env';
+
+const projectStore = useProjectStore();
+</script>
 
 <style scoped lang="scss">
 .no-messages-found {
@@ -65,7 +73,9 @@
   &__link {
     color: $unnnic-color-neutral-dark;
     font-weight: $unnnic-font-weight-bold;
-    display: inline;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
   }
 }
 </style>
