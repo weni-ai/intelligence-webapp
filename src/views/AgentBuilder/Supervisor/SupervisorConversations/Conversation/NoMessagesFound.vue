@@ -29,24 +29,17 @@
         tag="p"
       >
         <template #studio_link>
-          <a
+          <p
             href="#"
             class="no-messages-found__link"
-            @click="goToStudio"
           >
             {{ $t('agent_builder.supervisor.no_messages_found.studio_link') }}
-          </a>
+          </p>
         </template>
       </i18n-t>
     </UnnnicIntelligenceText>
   </section>
 </template>
-
-<script setup>
-function goToStudio() {
-  window.parent.postMessage({ event: 'redirect', path: 'studio:contact' }, '*');
-}
-</script>
 
 <style scoped lang="scss">
 .no-messages-found {
@@ -72,9 +65,6 @@ function goToStudio() {
   &__link {
     color: $unnnic-color-neutral-dark;
     font-weight: $unnnic-font-weight-bold;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
   }
 }
 </style>
