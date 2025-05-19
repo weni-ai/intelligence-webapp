@@ -100,7 +100,19 @@
         "title": "No messages found on this conversation.",
         "description": "If the message was sent by human support or triggered messages, you can find it on the {studio_link}.",
         "studio_link": "Studio"
-      }      
+      },
+      "export": {
+        "title": "Send export by email",
+        "description": "We'll prepare the file with the AI data and send it to the following email addresses:",
+        "token_label": "Project API Token",
+        "token_placeholder": "86d2ba6397cabd4b22f7da925ef89d78bfb2d90dd",
+        "token_help": "You can find this token in your",
+        "project_settings": "project settings",
+        "and_paste": "and paste it here.",
+        "send": "Send export",
+        "success": "The export will be sent to all listed email addresses soon",
+        "error": "Error sending export. Try again later."
+      }
     }
   },
   "router": {
