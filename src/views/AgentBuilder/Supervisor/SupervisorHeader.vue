@@ -7,12 +7,14 @@
           position="right"
           class="supervisor-header__date-picker"
           :maxDate="today"
+          data-testid="date-picker"
         />
 
         <UnnnicButton
           v-if="showExport"
           iconCenter="open_in_new"
           type="secondary"
+          data-testid="export-button"
           @click="openExportModal"
         />
       </section>
@@ -20,6 +22,7 @@
       <SupervisorExportModal
         v-if="showExport"
         v-model="isExportModalOpen"
+        data-testid="export-modal"
       />
     </template>
   </AgentBuilderHeader>
