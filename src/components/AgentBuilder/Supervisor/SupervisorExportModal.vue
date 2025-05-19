@@ -124,8 +124,11 @@ const handleExport = async () => {
 };
 
 const getExportEmails = async () => {
-  emails.value =
-    (await supervisorApi.conversations.getExportEmails()?.emails) || [];
+  const response = await supervisorApi.conversations.getExportEmails({
+    projectUuid: projectStore.uuid,
+  });
+
+  emails.value = response?.emails || [];
 };
 
 watch(
