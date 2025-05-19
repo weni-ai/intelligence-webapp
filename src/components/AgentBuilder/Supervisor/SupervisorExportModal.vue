@@ -72,9 +72,9 @@
     >
       {{ $t('agent_builder.supervisor.export.token_help') }}
       <a
-        href="#"
+        :href="`${env('VITE_CONNECT_URL')}/projects/${projectStore.uuid}/settings`"
         class="help-text__link"
-        @click="openProjectSettings"
+        target="_blank"
       >
         {{ $t('agent_builder.supervisor.export.project_settings') }}
       </a>
@@ -85,6 +85,8 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useProjectStore } from '@/store/Project';
+import env from '@/utils/env';
 
 const props = defineProps({
   modelValue: {
@@ -94,6 +96,9 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue', 'export']);
+
+const projectStore = useProjectStore();
+
 const token = ref('');
 const isSending = ref(false);
 
@@ -105,16 +110,6 @@ const handleExport = async () => {
   if (!token.value) return;
 
   // isSending.value = true;
-};
-
-const openProjectSettings = () => {
-  window.parent.postMessage(
-    {
-      event: 'redirect',
-      path: 'settings:init',
-    },
-    '*',
-  );
 };
 </script>
 
