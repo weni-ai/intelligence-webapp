@@ -138,10 +138,6 @@ export default {
         this.translateAllLinks();
       }
     });
-
-    console.log('redirect', 'studio:contact');
-
-    window.parent.postMessage({ event: 'redirect', path: 'studio:contact' }, '*');
   },
   methods: {
     ...mapActions(['getMyProfileInfo', 'setUserName']),
