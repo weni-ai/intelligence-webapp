@@ -99,7 +99,7 @@
       "no_messages_found": {
         "title": "Nenhuma mensagem encontrada nesta conversa.",
         "description": "Se a mensagem foi enviada pelo suporte humano ou disparo de mensagens, você pode encontrá-la no {studio_link}.",
-        "studio_link": "Studio"
+        "studio_link": "Estúdio"
       }
     }
   },
