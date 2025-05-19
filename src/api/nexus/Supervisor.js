@@ -1,5 +1,10 @@
-import billingRequest from '../billingRequest';
+// import billingRequest from '../billingRequest';
+import axios from 'axios';
 import nexusRequest from '../nexusaiRequest';
+
+const mockRequest = axios.create({
+  baseURL: 'https://nexus.apip.stg.cloud.weni.ai',
+});
 
 export const Supervisor = {
   conversations: {
@@ -12,17 +17,24 @@ export const Supervisor = {
         ...(type && { human_support: type === 'forwarded_human_support' }),
       };
 
-      const { data } = await billingRequest.$http.get(
-        `${projectUuid}/conversations/?${new URLSearchParams(params)}`,
+      const { data } = await mockRequest.get(
+        `/api/${projectUuid}/conversations/?${new URLSearchParams(params)}`,
       );
+      // const { data } = await billingRequest.$http.get(
+      //   `${projectUuid}/conversations/?${new URLSearchParams(params)}`,
+      // );
 
       return data;
     },
 
     async forwardStats({ projectUuid, start, end }) {
-      const { data } = await billingRequest.$http.get(
-        `${projectUuid}/forward-stats/?start=${start}&end=${end}`,
+      const { data } = await mockRequest.get(
+        `/api/${projectUuid}/forward-stats/?start=${start}&end=${end}`,
       );
+
+      // const { data } = await billingRequest.$http.get(
+      //   `${projectUuid}/forward-stats/?start=${start}&end=${end}`,
+      // );
 
       return data;
     },
