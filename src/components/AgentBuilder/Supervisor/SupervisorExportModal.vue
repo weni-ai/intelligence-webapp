@@ -16,7 +16,7 @@
       'data-test': 'send-export-button',
     }"
     class="supervisor-export-modal"
-    @secondary-button-click="handleCancel"
+    @secondary-button-click="closeModal"
     @primary-button-click="handleExport"
     @update:model-value="$emit('update:modelValue', $event)"
   >
@@ -84,8 +84,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+
 import { useProjectStore } from '@/store/Project';
+import { useSupervisorStore } from '@/store/Supervisor';
+
+import { Supervisor as supervisorApi } from '@/api/nexus/Supervisor';
 import env from '@/utils/env';
 
 const props = defineProps({
@@ -98,19 +102,40 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'export']);
 
 const projectStore = useProjectStore();
+const supervisorStore = useSupervisorStore();
 
 const token = ref('');
 const isSending = ref(false);
+const emails = ref([]);
 
-const handleCancel = () => {
+const closeModal = () => {
   emit('update:modelValue', false);
 };
 
 const handleExport = async () => {
   if (!token.value) return;
 
-  // isSending.value = true;
+  isSending.value = true;
+
+  await supervisorStore.exportSupervisorData({ token: token.value });
+
+  isSending.value = false;
+  closeModal();
 };
+
+const getExportEmails = async () => {
+  emails.value =
+    (await supervisorApi.conversations.getExportEmails()?.emails) || [];
+};
+
+watch(
+  () => props.modelValue,
+  () => {
+    if (props.modelValue && !emails.value.length) {
+      getExportEmails();
+    }
+  },
+);
 </script>
 
 <style lang="scss" scoped>

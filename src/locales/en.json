@@ -109,7 +109,9 @@
         "token_help": "You can find this token in your",
         "project_settings": "project settings",
         "and_paste": "and paste it here.",
-        "send": "Send export"
+        "send": "Send export",
+        "success": "The export will be sent to all listed email addresses soon",
+        "error": "Error sending export. Try again later."
       }
     }
   },

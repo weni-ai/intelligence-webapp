@@ -10,13 +10,17 @@
         />
 
         <UnnnicButton
+          v-if="showExport"
           iconCenter="open_in_new"
           type="secondary"
           @click="openExportModal"
         />
       </section>
 
-      <SupervisorExportModal v-model="isExportModalOpen" />
+      <SupervisorExportModal
+        v-if="showExport"
+        v-model="isExportModalOpen"
+      />
     </template>
   </AgentBuilderHeader>
 </template>
@@ -26,11 +30,15 @@ import AgentBuilderHeader from '@/components/AgentBuilder/Header.vue';
 import SupervisorExportModal from '@/components/AgentBuilder/Supervisor/SupervisorExportModal.vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import { format, subDays } from 'date-fns';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const supervisorStore = useSupervisorStore();
+const featureFlagsStore = useFeatureFlagsStore();
+
+const showExport = computed(() => featureFlagsStore.flags.supervisorExport);
 
 const last7Days = format(subDays(new Date(), 7), 'yyyy-MM-dd');
 const today = format(new Date(), 'yyyy-MM-dd');
