@@ -1,6 +1,32 @@
 import i18n from './plugins/i18n';
 
-export function processTrace({ trace, collaboratorInvoked }) {
+/**
+ * Processes a trace object and updates it with additional configuration and collaborator information.
+ *
+ * @param {Object} trace - The original trace object to process
+ * @param {string} currentAgent - The name of the collaborator that was invoked
+ *
+ * @example
+ * const result = processTrace({
+ *   trace: { trace: { trace: { orchestrationTrace: { ... } } } },
+ *   currentAgent: 'agent1'
+ * });
+ *
+ * @returns
+ * {
+ *   trace: {
+ *     trace: {
+ *       orchestrationTrace: { ... }
+ *     }
+ *   }
+ *   config: {
+ *     summary: 'string',
+ *     icon: 'string'
+ *     currentAgent: 'string'
+ *   }
+ * }
+ */
+export function processTrace({ trace, currentAgent }) {
   const traceData = trace?.trace?.trace || {};
   const {
     orchestrationTrace: {
@@ -11,14 +37,14 @@ export function processTrace({ trace, collaboratorInvoked }) {
     } = {},
   } = traceData;
 
-  const updatedCollaborator = addAgentToTrace({
-    collaboratorInvoked,
+  const traceConfig = getTraceConfig({ trace: traceData });
+
+  const updatedCollaborator = addAgentToConfig({
+    currentAgent,
     input: agentCollaboratorInvocationInput,
     output: agentCollaboratorInvocationOutput,
-    trace: traceData,
+    config: traceConfig,
   });
-
-  const traceConfig = getTraceConfig({ trace: traceData });
 
   return {
     ...trace,
@@ -28,7 +54,7 @@ export function processTrace({ trace, collaboratorInvoked }) {
     },
     config: {
       ...traceConfig,
-      collaboratorInvoked: updatedCollaborator,
+      currentAgent: updatedCollaborator,
     },
   };
 }
@@ -137,19 +163,27 @@ function getTraceConfig({ trace: traceToUpdate }) {
   };
 }
 
-function addAgentToTrace({ collaboratorInvoked, input, output, trace }) {
+/**
+ * This function is necessary to maintain agent sequencing according to the invoke,
+ * since the agent only sends its ID in the input and output, and not in all of its traces
+ * @param {Object} config - The config object to update
+ * @param {string} currentAgent - The name of the collaborator that was invoked
+ * @param {Object} input - The input object
+ * @param {Object} output - The output object
+ */
+function addAgentToConfig({ currentAgent, input, output, config }) {
   const traceInvokingAgent = input?.agentCollaboratorName;
   const traceOutputAgent = output?.agentCollaboratorName;
 
-  let updatedCollaborator = collaboratorInvoked;
+  let updatedCollaborator = currentAgent;
   if (traceInvokingAgent) updatedCollaborator = traceInvokingAgent;
   else if (traceOutputAgent) updatedCollaborator = '';
 
-  const agentCollaboratorName =
+  const agentName =
     traceInvokingAgent || traceOutputAgent || updatedCollaborator;
 
-  if (agentCollaboratorName) {
-    trace.agentCollaboratorName = agentCollaboratorName;
+  if (agentName) {
+    config.agentName = agentName;
   }
 
   return updatedCollaborator;

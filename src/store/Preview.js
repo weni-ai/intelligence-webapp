@@ -34,14 +34,17 @@ export const usePreviewStore = defineStore('preview', () => {
   });
 
   function addTrace(trace) {
-    const processedTrace = processTrace({
-      trace,
-      collaboratorInvoked: collaboratorInvoked.value,
-    });
+    if (trace.type === 'trace_update') {
+      const processedTrace = processTrace({
+        trace,
+        currentAgent: collaboratorInvoked.value,
+      });
 
-    collaboratorInvoked.value = processedTrace.config.collaboratorInvoked;
-
-    traces.value.push(processedTrace);
+      collaboratorInvoked.value = processedTrace.config.currentAgent;
+      traces.value.push(processedTrace);
+    } else {
+      traces.value.push(trace);
+    }
   }
 
   function clearTraces() {

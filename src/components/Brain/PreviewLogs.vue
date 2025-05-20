@@ -120,10 +120,9 @@ const processedLogs = computed(() => {
   const { agents, manager } = allAgents;
 
   return traces.reduce((logsByAgent, trace) => {
-    const { agentCollaboratorName = '' } = trace || {};
+    const { agentName = '' } = trace.config || {};
 
-    const agent =
-      agents.find((agent) => agent.id === agentCollaboratorName) || manager;
+    const agent = agents.find((agent) => agent.id === agentName) || manager;
 
     if (!agent) return logsByAgent;
 
