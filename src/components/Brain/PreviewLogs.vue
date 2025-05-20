@@ -45,6 +45,7 @@
           >
             <p>{{ step.title }}</p>
             <button
+              v-if="step.trace?.trace?.trace"
               class="step__see-full"
               data-testid="preview-logs-log-step-see-full"
               @click="openModalLogFullDetails(step.title, step.trace)"
@@ -144,8 +145,8 @@ const processedLogs = computed(() => {
 });
 
 function getTraceSummary(trace) {
-  if (trace.summary) {
-    return trace.summary;
+  if (trace.config?.summary) {
+    return trace.config.summary;
   }
 
   function capitalizeWord(word) {

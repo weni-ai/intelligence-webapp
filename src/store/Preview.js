@@ -15,9 +15,7 @@ export const usePreviewStore = defineStore('preview', () => {
   const traces = ref([]);
   const collaboratorInvoked = ref('');
   const collaboratorsTraces = computed(() =>
-    traces.value
-      .filter((trace) => trace.type === 'trace_update')
-      .map((trace) => trace.trace),
+    traces.value.filter((trace) => trace.type === 'trace_update'),
   );
   const activeAgent = computed(() => {
     const agentsTeamStore = useAgentsTeamStore();
@@ -41,7 +39,7 @@ export const usePreviewStore = defineStore('preview', () => {
       collaboratorInvoked: collaboratorInvoked.value,
     });
 
-    collaboratorInvoked.value = processedTrace.collaboratorInvoked;
+    collaboratorInvoked.value = processedTrace.config.collaboratorInvoked;
 
     traces.value.push(processedTrace);
   }
