@@ -43,6 +43,20 @@
             :class="`steps__step steps__step--${props.logsSide}`"
             data-testid="preview-logs-log-step"
           >
+            <section class="steps__step-icon">
+              <UnnnicIcon
+                class="step-icon__background"
+                icon="circle"
+                size="md"
+                filled
+              />
+
+              <UnnnicIcon
+                class="step-icon__icon"
+                :icon="step.trace.config?.icon"
+                size="sm"
+              />
+            </section>
             <p>{{ step.title }}</p>
             <button
               v-if="step.trace?.trace?.trace"
@@ -332,25 +346,55 @@ watch(
         list-style: none;
 
         .steps__step {
-          &:first-letter {
-            text-transform: uppercase;
-          }
+          $lineHeight: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+
+          position: relative;
+
+          min-height: $lineHeight * 2;
+
           color: $unnnic-color-neutral-cloudy;
           font-family: $unnnic-font-family-secondary;
           font-size: $unnnic-font-size-body-gt;
-          line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+          line-height: $lineHeight;
 
-          @extend %progressDot;
+          &:first-letter {
+            text-transform: uppercase;
+          }
+
+          .steps__step-icon {
+            margin-right: $unnnic-spacing-xs;
+
+            position: absolute;
+            top: 0;
+
+            z-index: 10;
+
+            display: grid;
+            place-items: center;
+
+            .step-icon__background {
+              color: $unnnic-color-neutral-soft;
+
+              grid-area: 1 / 2;
+            }
+
+            .step-icon__icon {
+              color: $unnnic-color-neutral-darkest;
+              font-size: $unnnic-font-size-body-gt;
+
+              grid-area: 1 / 2;
+            }
+          }
 
           &--left {
-            &::before {
-              left: $progressDotOffset;
+            .steps__step-icon {
+              left: -($unnnic-spacing-xl);
             }
           }
 
           &--right {
-            &::before {
-              right: $progressDotOffset;
+            .steps__step-icon {
+              right: -($unnnic-spacing-xl) + 4.5;
             }
           }
 
@@ -374,8 +418,13 @@ watch(
         .steps__step:last-of-type {
           color: $unnnic-color-weni-600;
 
-          &::before {
+          &::before,
+          .step-icon__background {
             color: $unnnic-color-weni-600;
+          }
+
+          .step-icon__icon {
+            color: $unnnic-color-neutral-white;
           }
 
           .step__see-full {
