@@ -6,6 +6,7 @@ import WS from '@/websocket/setup';
 
 import { useAgentsTeamStore } from './AgentsTeam';
 import globalStore from '.';
+import { processTrace } from '@/utils/traces';
 
 export const usePreviewStore = defineStore('preview', () => {
   const auth = computed(() => globalStore.state.Auth);
@@ -34,30 +35,15 @@ export const usePreviewStore = defineStore('preview', () => {
     };
   });
 
-  function addTrace(update) {
-    const {
-      orchestrationTrace: {
-        invocationInput: { agentCollaboratorInvocationInput } = {},
-        observation: { agentCollaboratorInvocationOutput } = {},
-      } = {},
-    } = update?.trace?.trace || {};
+  function addTrace(trace) {
+    const processedTrace = processTrace({
+      trace,
+      collaboratorInvoked: collaboratorInvoked.value,
+    });
 
-    const traceInvokingAgent =
-      agentCollaboratorInvocationInput?.agentCollaboratorName;
-    const traceOutputAgent =
-      agentCollaboratorInvocationOutput?.agentCollaboratorName;
+    collaboratorInvoked.value = processedTrace.collaboratorInvoked;
 
-    if (traceInvokingAgent) collaboratorInvoked.value = traceInvokingAgent;
-    else if (traceOutputAgent) collaboratorInvoked.value = '';
-
-    const agentCollaboratorName =
-      traceInvokingAgent || traceOutputAgent || collaboratorInvoked.value;
-
-    if (agentCollaboratorName) {
-      update.trace.agentCollaboratorName = agentCollaboratorName;
-    }
-
-    traces.value.push(update);
+    traces.value.push(processedTrace);
   }
 
   function clearTraces() {
