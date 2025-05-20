@@ -1,4 +1,5 @@
 import i18n from './plugins/i18n';
+import * as Sentry from '@sentry/browser';
 
 /**
  * Processes a trace object and updates it with additional configuration and collaborator information.
@@ -81,85 +82,90 @@ function getTraceConfig({ trace: traceToUpdate }) {
     guardrailTrace,
   } = trace;
 
+  const traceT = (key) => i18n.global.t(`agent_builder.traces.${key}`);
+
   const mappingRules = [
     {
       key: knowledgeBaseLookupOutput,
-      summary: i18n.global.t('agent_builder.traces.search_result_received'),
+      summary: traceT('search_result_received'),
       icon: 'menu_book',
     },
     {
       key: knowledgeBaseLookupInput,
-      summary: i18n.global.t('agent_builder.traces.searching_knowledge_base'),
+      summary: traceT('searching_knowledge_base'),
       icon: 'menu_book',
     },
     {
       key: modelInvocationInput,
-      summary: i18n.global.t('agent_builder.traces.invoking_model'),
+      summary: traceT('invoking_model'),
       icon: 'workspaces',
     },
     {
       key: modelInvocationOutput,
-      summary: i18n.global.t('agent_builder.traces.model_response_received'),
+      summary: traceT('model_response_received'),
       icon: 'workspaces',
     },
     {
       key: rationale,
-      summary: i18n.global.t('agent_builder.traces.thinking'),
+      summary: traceT('thinking'),
       icon: 'emoji_objects',
     },
     {
       key: agentCollaboratorInvocationInput,
-      summary: i18n.global.t('agent_builder.traces.delegating_to_agent'),
+      summary: traceT('delegating_to_agent'),
       icon: 'login',
     },
     {
       key: agentCollaboratorInvocationOutput,
-      summary: i18n.global.t('agent_builder.traces.forwarding_to_manager'),
+      summary: traceT('forwarding_to_manager'),
       icon: 'logout',
     },
     {
       key: actionGroupInvocationInput,
-      summary: i18n.global.t('agent_builder.traces.executing_tool', {
+      summary: traceT('executing_tool', {
         function: actionGroupInvocationInput?.function?.split('-')?.[0],
       }),
       icon: 'build',
     },
     {
       key: actionGroupInvocationOutput,
-      summary: i18n.global.t('agent_builder.traces.tool_result_received'),
+      summary: traceT('tool_result_received'),
       icon: 'build',
     },
     trace.agentCollaboratorName
       ? {
           key: finalResponse,
-          summary: i18n.global.t(
-            'agent_builder.traces.preparing_response_for_manager',
-          ),
+          summary: traceT('preparing_response_for_manager'),
           icon: 'chat_bubble',
         }
       : {
           key: finalResponse,
-          summary: i18n.global.t(
-            'agent_builder.traces.preparing_final_response',
-          ),
+          summary: traceT('preparing_final_response'),
           icon: 'question_answer',
         },
     {
       key: guardrailTrace,
-      summary: i18n.global.t('agent_builder.traces.applying_safety_rules'),
+      summary: traceT('applying_safety_rules'),
       icon: 'security',
     },
   ];
 
+  let summary = '';
+  let icon = '';
+
   const matched = mappingRules.find(({ key }) => key !== undefined);
   if (matched) {
-    trace.summary = matched.summary;
-    trace.icon = matched.icon;
+    summary = matched.summary;
+    icon = matched.icon;
+  } else {
+    const error = new Error('No matching trace rules found');
+    error.trace = JSON.stringify(trace);
+    Sentry.captureException(error);
   }
 
   return {
-    summary: trace.summary,
-    icon: trace.icon,
+    summary,
+    icon,
   };
 }
 
