@@ -6,6 +6,7 @@ import WS from '@/websocket/setup';
 
 import { useAgentsTeamStore } from './AgentsTeam';
 import globalStore from '.';
+import { processTrace } from '@/utils/traces';
 
 export const usePreviewStore = defineStore('preview', () => {
   const auth = computed(() => globalStore.state.Auth);
@@ -14,9 +15,7 @@ export const usePreviewStore = defineStore('preview', () => {
   const traces = ref([]);
   const collaboratorInvoked = ref('');
   const collaboratorsTraces = computed(() =>
-    traces.value
-      .filter((trace) => trace.type === 'trace_update')
-      .map((trace) => trace.trace),
+    traces.value.filter((trace) => trace.type === 'trace_update'),
   );
   const activeAgent = computed(() => {
     const agentsTeamStore = useAgentsTeamStore();
@@ -34,30 +33,18 @@ export const usePreviewStore = defineStore('preview', () => {
     };
   });
 
-  function addTrace(update) {
-    const {
-      orchestrationTrace: {
-        invocationInput: { agentCollaboratorInvocationInput } = {},
-        observation: { agentCollaboratorInvocationOutput } = {},
-      } = {},
-    } = update?.trace?.trace || {};
+  function addTrace(trace) {
+    if (trace.type === 'trace_update') {
+      const processedTrace = processTrace({
+        trace,
+        currentAgent: collaboratorInvoked.value,
+      });
 
-    const traceInvokingAgent =
-      agentCollaboratorInvocationInput?.agentCollaboratorName;
-    const traceOutputAgent =
-      agentCollaboratorInvocationOutput?.agentCollaboratorName;
-
-    if (traceInvokingAgent) collaboratorInvoked.value = traceInvokingAgent;
-    else if (traceOutputAgent) collaboratorInvoked.value = '';
-
-    const agentCollaboratorName =
-      traceInvokingAgent || traceOutputAgent || collaboratorInvoked.value;
-
-    if (agentCollaboratorName) {
-      update.trace.agentCollaboratorName = agentCollaboratorName;
+      collaboratorInvoked.value = processedTrace.config.currentAgent;
+      traces.value.push(processedTrace);
+    } else {
+      traces.value.push(trace);
     }
-
-    traces.value.push(update);
   }
 
   function clearTraces() {

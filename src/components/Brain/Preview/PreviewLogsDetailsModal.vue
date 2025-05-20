@@ -17,7 +17,7 @@
         family="secondary"
         size="body-gt"
       >
-        {{ prettyPrintJSON(trace) }}
+        {{ prettyPrintJSON(trace?.trace) }}
       </UnnnicIntelligenceText>
     </section>
   </UnnnicModalDialog>
