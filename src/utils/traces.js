@@ -38,14 +38,16 @@ export function processTrace({ trace, currentAgent }) {
     } = {},
   } = traceData;
 
-  const traceConfig = getTraceConfig({ trace: traceData });
+  traceData.config = {};
 
   const updatedCollaborator = addAgentToConfig({
     currentAgent,
     input: agentCollaboratorInvocationInput,
     output: agentCollaboratorInvocationOutput,
-    config: traceConfig,
+    config: traceData.config,
   });
+
+  const traceConfig = getTraceConfig({ trace: traceData });
 
   return {
     ...trace,
@@ -54,6 +56,7 @@ export function processTrace({ trace, currentAgent }) {
       trace: modelInvocationInput || modelInvocationOutput ? null : trace.trace,
     },
     config: {
+      ...traceData.config,
       ...traceConfig,
       currentAgent: updatedCollaborator,
     },
@@ -82,7 +85,8 @@ function getTraceConfig({ trace: traceToUpdate }) {
     guardrailTrace,
   } = trace;
 
-  const traceT = (key) => i18n.global.t(`agent_builder.traces.${key}`);
+  const traceT = (key, params) =>
+    i18n.global.t(`agent_builder.traces.${key}`, params);
 
   const mappingRules = [
     {
@@ -132,7 +136,7 @@ function getTraceConfig({ trace: traceToUpdate }) {
       summary: traceT('tool_result_received'),
       icon: 'build',
     },
-    trace.agentCollaboratorName
+    trace.config.agentName
       ? {
           key: finalResponse,
           summary: traceT('preparing_response_for_manager'),
