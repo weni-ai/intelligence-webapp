@@ -244,7 +244,7 @@ watch(
 
 <style scoped lang="scss">
 .logs-enter-active {
-  transition: all 0.5s ease-out;
+  transition: all 0.2s ease-out;
 }
 .logs-enter-from {
   $logTranslateY: -24px;
@@ -253,7 +253,7 @@ watch(
 }
 
 .steps-enter-active {
-  transition: all 0.5s ease-out;
+  transition: all 0.2s ease-out;
 }
 .steps-enter-from {
   opacity: 0;
