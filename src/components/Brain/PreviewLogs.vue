@@ -47,7 +47,7 @@
               <UnnnicIcon
                 class="step-icon__background"
                 icon="circle"
-                size="md"
+                size="lg"
                 filled
               />
 
@@ -295,10 +295,9 @@ watch(
     }
 
     .logs__log {
-      $progressDotOffset: -($unnnic-spacing-sm + $unnnic-spacing-nano) + 0.5;
-
       margin-bottom: $unnnic-spacing-sm;
 
+      $progressDotOffset: -($unnnic-spacing-sm + $unnnic-spacing-nano) + 0.5;
       %progressDot {
         &::before {
           content: '•';
@@ -316,7 +315,7 @@ watch(
         color: $unnnic-color-neutral-darkest;
         font-family: $unnnic-font-family-secondary;
         font-weight: $unnnic-font-weight-bold;
-        font-size: $unnnic-font-size-body-gt;
+        font-size: $unnnic-font-size-body-lg;
         line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 
         @extend %progressDot;
@@ -341,7 +340,7 @@ watch(
         padding: 0;
 
         display: grid;
-        gap: $unnnic-spacing-xs;
+        gap: $unnnic-spacing-sm;
 
         list-style: none;
 
@@ -349,8 +348,6 @@ watch(
           $lineHeight: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 
           position: relative;
-
-          min-height: $lineHeight * 2;
 
           color: $unnnic-color-neutral-cloudy;
           font-family: $unnnic-font-family-secondary;
@@ -362,10 +359,8 @@ watch(
           }
 
           .steps__step-icon {
-            margin-right: $unnnic-spacing-xs;
-
             position: absolute;
-            top: 0;
+            top: calc($lineHeight / 8);
 
             z-index: 10;
 
@@ -373,28 +368,25 @@ watch(
             place-items: center;
 
             .step-icon__background {
-              color: $unnnic-color-neutral-soft;
-
-              grid-area: 1 / 2;
+              color: $unnnic-color-neutral-white;
+              position: absolute;
+              z-index: -1;
             }
 
             .step-icon__icon {
               color: $unnnic-color-neutral-darkest;
-              font-size: $unnnic-font-size-body-gt;
-
-              grid-area: 1 / 2;
             }
           }
 
           &--left {
             .steps__step-icon {
-              left: -($unnnic-spacing-xl);
+              left: -($unnnic-spacing-xl) + 4.5;
             }
           }
 
           &--right {
             .steps__step-icon {
-              right: -($unnnic-spacing-xl) + 4.5;
+              right: -($unnnic-spacing-md) + 1;
             }
           }
 
@@ -418,13 +410,8 @@ watch(
         .steps__step:last-of-type {
           color: $unnnic-color-weni-600;
 
-          &::before,
-          .step-icon__background {
-            color: $unnnic-color-weni-600;
-          }
-
           .step-icon__icon {
-            color: $unnnic-color-neutral-white;
+            color: $unnnic-color-weni-600;
           }
 
           .step__see-full {
