@@ -19,12 +19,14 @@ export const usePreviewStore = defineStore('preview', () => {
   );
   const activeAgent = computed(() => {
     const agentsTeamStore = useAgentsTeamStore();
-    const lastTrace = traces.value.at(-1)?.trace;
+    const lastLog = traces.value.at(-1);
+    const lastTrace = lastLog?.trace;
 
-    const lastTraceAgentId = lastTrace?.agentCollaboratorName || 'manager';
+    const lastTraceAgentId = lastLog?.config?.agentName || 'manager';
 
     const agent = agentsTeamStore.activeTeam.data?.agents?.find(
-      (agent) => agent.id && lastTraceAgentId && agent.id === lastTraceAgentId,
+      (agent) =>
+        agent?.id && lastTraceAgentId && agent?.id === lastTraceAgentId,
     );
 
     return {
