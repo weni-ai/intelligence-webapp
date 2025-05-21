@@ -60,10 +60,16 @@ const contentRef = ref(null);
 const previewStore = usePreviewStore();
 
 const scrollContentToBottom = () => {
-  contentRef.value.scrollTo({
-    top: contentRef.value.scrollHeight,
-    behavior: 'smooth',
-  });
+  const { scrollTop, clientHeight, scrollHeight } = contentRef.value;
+  const scrollPosition = scrollTop + clientHeight;
+  const isNearBottom = scrollHeight - scrollPosition <= 100;
+
+  if (isNearBottom) {
+    contentRef.value.scrollTo({
+      top: scrollHeight,
+      behavior: 'smooth',
+    });
+  }
 };
 </script>
 
