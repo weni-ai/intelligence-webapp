@@ -38,7 +38,7 @@
         class="details__logs"
       >
         <PreviewLogs
-          :logs="previewStore.collaboratorsTraces"
+          :logs="previewStore.collaboratorsLogs"
           @scroll-to-bottom="scrollContentToBottom"
         />
       </section>

@@ -45,10 +45,10 @@
           >
             <p>{{ step.title }}</p>
             <button
-              v-if="step.trace?.trace?.trace"
+              v-if="step.log?.data"
               class="step__see-full"
               data-testid="preview-logs-log-step-see-full"
-              @click="openModalLogFullDetails(step.title, step.trace)"
+              @click="openModalLogFullDetails(step.title, step.log)"
             >
               {{ $t('router.preview.see_full_details') }}
             </button>
@@ -65,7 +65,7 @@
     <PreviewLogsDetailsModal
       v-model="showDetailsModal"
       :title="selectedLog.summary"
-      :trace="selectedLog.trace"
+      :log="selectedLog.log"
       data-testid="preview-logs-details-modal"
     />
   </section>
@@ -106,7 +106,7 @@ const agentsTeamStore = useAgentsTeamStore();
 const showDetailsModal = ref(false);
 const selectedLog = ref({
   summary: '',
-  trace: '',
+  log: '',
 });
 
 const processedLogs = computed(() => {
@@ -116,11 +116,11 @@ const processedLogs = computed(() => {
       : agentsTeamStore.allAgents;
   if (!allAgents) return [];
 
-  const traces = props.logs;
+  const logs = props.logs;
   const { agents, manager } = allAgents;
 
-  return traces.reduce((logsByAgent, trace) => {
-    const { agentName = '' } = trace.config || {};
+  return logs.reduce((logsByAgent, log) => {
+    const { agentName = '' } = log.config || {};
 
     const agent = agents.find((agent) => agent.id === agentName) || manager;
 
@@ -136,41 +136,41 @@ const processedLogs = computed(() => {
     }
 
     logsByAgent.at(-1)?.steps.push({
-      title: getTraceSummary(trace) || 'Unknown',
-      trace,
+      title: getLogSummary(log) || 'Unknown',
+      log,
     });
     return logsByAgent;
   }, []);
 });
 
-function getTraceSummary(trace) {
-  if (trace.config?.summary) {
-    return trace.config.summary;
+function getLogSummary(log) {
+  if (log.config?.summary) {
+    return log.config.summary;
   }
 
   function capitalizeWord(word) {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }
 
-  function formatTraceKey(key) {
+  function formatLogKey(key) {
     return key
       .split(/(?=[A-Z])|_/)
       .map(capitalizeWord)
       .join(' ');
   }
 
-  function findTraceKey(traceObject) {
-    return Object.keys(traceObject).find((key) =>
+  function findTraceKey(trace) {
+    return Object.keys(trace).find((key) =>
       key.toLowerCase().includes('trace'),
     );
   }
 
-  if (!trace.trace || typeof trace.trace !== 'object') {
+  if (!log.data || typeof log.data !== 'object') {
     return 'Unknown';
   }
 
-  const traceKey = findTraceKey(trace.trace.trace || trace.trace);
-  return traceKey ? formatTraceKey(traceKey) : 'Unknown';
+  const logKey = findTraceKey(log.data.trace);
+  return logKey ? formatLogKey(logKey) : 'Unknown';
 }
 
 const progressHeight = ref(0);
@@ -181,8 +181,8 @@ onMounted(() => {
   });
 });
 
-function openModalLogFullDetails(summary, trace) {
-  selectedLog.value = { summary, trace };
+function openModalLogFullDetails(summary, log) {
+  selectedLog.value = { summary, log };
   showDetailsModal.value = true;
 }
 
@@ -219,9 +219,9 @@ function updateProgressBarHeight(type = 'agent') {
 }
 
 watch(
-  () => previewStore.collaboratorsTraces,
-  (newTraces) => {
-    if (newTraces.length === 0) {
+  () => previewStore.collaboratorsLogs,
+  (newLogs) => {
+    if (newLogs.length === 0) {
       progressHeight.value = 0;
     }
   },

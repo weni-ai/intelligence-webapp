@@ -64,7 +64,7 @@ import ForwardedHumanSupport from './ForwardedHumanSupport.vue';
 import { useMonitoringStore } from '@/store/Monitoring';
 import Message from './Message.vue';
 import ViewLogsButton from './ViewLogsButton.vue';
-import { processTrace } from '@/utils/traces';
+import { processLog } from '@/utils/previewLogs';
 
 const props = defineProps({
   isLoading: {
@@ -104,7 +104,7 @@ async function loadLogs() {
 
     let collaborator = '';
     logs.value = responseLogs.map((log) => {
-      const proccesedLog = processTrace({
+      const proccesedLog = processLog({
         trace: {
           trace: log,
         },
