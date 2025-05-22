@@ -158,12 +158,10 @@ function getLogConfig({ trace, config }) {
   if (matched) {
     summary = matched.summary;
     icon = matched.icon;
-
-    if (!matched.summary) {
-      const error = new Error('No matching trace rules found');
-      error.trace = JSON.stringify(trace);
-      Sentry.captureException(error);
-    }
+  } else {
+    const error = new Error('No matching trace rules found');
+    error.trace = JSON.stringify(trace);
+    Sentry.captureException(error);
   }
 
   return {
