@@ -24,6 +24,7 @@ const mockLogs = [
     },
     config: {
       agentName: 'agent-1',
+      icon: 'icon-1',
       summary: 'First trace summary',
     },
   },
@@ -32,6 +33,7 @@ const mockLogs = [
     data: null,
     config: {
       agentName: 'agent-1',
+      icon: 'icon-2',
       summary: 'Second trace summary',
     },
   },
@@ -81,6 +83,10 @@ describe('PreviewLogs.vue', () => {
   const logItems = () => wrapper.findAll('[data-testid="preview-logs-log"]');
   const logAgentNames = () =>
     wrapper.findAll('[data-testid="preview-logs-log-agent-name"]');
+  const logStepIcons = () =>
+    wrapper.findAll('[data-testid="preview-logs-log-step-icon"]');
+  const logStepIconsIcon = () =>
+    wrapper.findAll('[data-testid="preview-logs-log-step-icon-icon"]');
   const stepItems = () =>
     wrapper.findAll('[data-testid="preview-logs-log-step"]');
   const seeFullButtons = () =>
@@ -120,6 +126,12 @@ describe('PreviewLogs.vue', () => {
     it('renders the correct number of logs and steps', () => {
       expect(logItems().length).toBe(2);
       expect(stepItems().length).toBe(3);
+    });
+
+    it('renders the correct icon for each step', () => {
+      expect(logStepIcons().length).toBe(2);
+      expect(logStepIconsIcon().at(0).text()).toBe('icon-1');
+      expect(logStepIconsIcon().at(1).text()).toBe('icon-2');
     });
 
     it('renders the correct agent names', () => {

@@ -43,7 +43,11 @@
             :class="`steps__step steps__step--${props.logsSide}`"
             data-testid="preview-logs-log-step"
           >
-            <section class="steps__step-icon">
+            <section
+              v-if="step.log?.config?.icon"
+              class="steps__step-icon"
+              data-testid="preview-logs-log-step-icon"
+            >
               <UnnnicIcon
                 class="step-icon__background"
                 icon="circle"
@@ -53,7 +57,8 @@
 
               <UnnnicIcon
                 class="step-icon__icon"
-                :icon="step.trace.config?.icon"
+                data-testid="preview-logs-log-step-icon-icon"
+                :icon="step.log.config?.icon"
                 size="sm"
               />
             </section>
