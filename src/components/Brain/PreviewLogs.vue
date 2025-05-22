@@ -60,6 +60,7 @@
                 data-testid="preview-logs-log-step-icon-icon"
                 :icon="step.log.config?.icon"
                 size="sm"
+                scheme="neutral-cloudy"
               />
             </section>
             <p>{{ step.title }}</p>
@@ -320,7 +321,7 @@ watch(
         color: $unnnic-color-neutral-darkest;
         font-family: $unnnic-font-family-secondary;
         font-weight: $unnnic-font-weight-bold;
-        font-size: $unnnic-font-size-body-lg;
+        font-size: $unnnic-font-size-body-gt;
         line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 
         @extend %progressDot;
@@ -376,10 +377,6 @@ watch(
               color: $unnnic-color-neutral-white;
               position: absolute;
               z-index: -1;
-            }
-
-            .step-icon__icon {
-              color: $unnnic-color-neutral-darkest;
             }
           }
 
