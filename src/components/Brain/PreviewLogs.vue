@@ -43,6 +43,26 @@
             :class="`steps__step steps__step--${props.logsSide}`"
             data-testid="preview-logs-log-step"
           >
+            <section
+              v-if="step.log?.config?.icon"
+              class="steps__step-icon"
+              data-testid="preview-logs-log-step-icon"
+            >
+              <UnnnicIcon
+                class="step-icon__background"
+                icon="circle"
+                size="lg"
+                filled
+              />
+
+              <UnnnicIcon
+                class="step-icon__icon"
+                data-testid="preview-logs-log-step-icon-icon"
+                :icon="step.log.config?.icon"
+                size="sm"
+                scheme="neutral-cloudy"
+              />
+            </section>
             <p>{{ step.title }}</p>
             <button
               v-if="step.log?.data"
@@ -230,7 +250,7 @@ watch(
 
 <style scoped lang="scss">
 .logs-enter-active {
-  transition: all 0.5s ease-out;
+  transition: all 0.2s ease-out;
 }
 .logs-enter-from {
   $logTranslateY: -24px;
@@ -239,7 +259,7 @@ watch(
 }
 
 .steps-enter-active {
-  transition: all 0.5s ease-out;
+  transition: all 0.2s ease-out;
 }
 .steps-enter-from {
   opacity: 0;
@@ -281,10 +301,9 @@ watch(
     }
 
     .logs__log {
-      $progressDotOffset: -($unnnic-spacing-sm + $unnnic-spacing-nano) + 0.5;
-
       margin-bottom: $unnnic-spacing-sm;
 
+      $progressDotOffset: -($unnnic-spacing-sm + $unnnic-spacing-nano) - 0.5;
       %progressDot {
         &::before {
           content: '•';
@@ -327,30 +346,49 @@ watch(
         padding: 0;
 
         display: grid;
-        gap: $unnnic-spacing-xs;
+        gap: $unnnic-spacing-sm;
 
         list-style: none;
 
         .steps__step {
-          &:first-letter {
-            text-transform: uppercase;
-          }
+          $lineHeight: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+
+          position: relative;
+
           color: $unnnic-color-neutral-cloudy;
           font-family: $unnnic-font-family-secondary;
           font-size: $unnnic-font-size-body-gt;
-          line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+          line-height: $lineHeight;
 
-          @extend %progressDot;
+          &:first-letter {
+            text-transform: uppercase;
+          }
+
+          .steps__step-icon {
+            position: absolute;
+            top: calc($lineHeight / 8);
+
+            z-index: 10;
+
+            display: grid;
+            place-items: center;
+
+            .step-icon__background {
+              color: $unnnic-color-neutral-white;
+              position: absolute;
+              z-index: -1;
+            }
+          }
 
           &--left {
-            &::before {
-              left: $progressDotOffset;
+            .steps__step-icon {
+              left: -($unnnic-spacing-xl) + 4.5;
             }
           }
 
           &--right {
-            &::before {
-              right: $progressDotOffset;
+            .steps__step-icon {
+              right: -($unnnic-spacing-md) + 1;
             }
           }
 
@@ -374,7 +412,7 @@ watch(
         .steps__step:last-of-type {
           color: $unnnic-color-weni-600;
 
-          &::before {
+          .step-icon__icon {
             color: $unnnic-color-weni-600;
           }
 
