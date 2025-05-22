@@ -124,8 +124,8 @@
       "forwarding_to_manager": "Enviando al Manager",
       "executing_tool": "Ejecutando herramienta {function}",
       "tool_result_received": "Resultado de la herramienta recibido",
-      "preparing_response_for_manager": "Preparando respuesta para el Manager",
-      "preparing_final_response": "Preparando respuesta final",
+      "sending_response_for_manager": "Enviando respuesta para el Manager",
+      "sending_final_response": "Enviando respuesta final",
       "applying_safety_rules": "Aplicando reglas de seguridad"
     }
   },

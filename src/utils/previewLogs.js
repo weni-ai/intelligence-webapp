@@ -28,7 +28,7 @@ import * as Sentry from '@sentry/browser';
  * }
  */
 export function processLog({ log, currentAgent }) {
-  const trace = log?.trace?.trace || {};
+  const trace = log?.trace?.trace || log?.trace || {};
 
   const {
     orchestrationTrace: {
@@ -51,7 +51,7 @@ export function processLog({ log, currentAgent }) {
   const traceConfig = getLogConfig({ trace, config: configData });
 
   return {
-    type: log.type,
+    type: log?.type,
     data: modelInvocationInput || modelInvocationOutput ? null : log?.trace,
     config: {
       ...configData,
@@ -136,12 +136,12 @@ function getLogConfig({ trace, config }) {
     config?.agentName
       ? {
           key: finalResponse,
-          summary: traceT('preparing_response_for_manager'),
+          summary: traceT('sending_response_for_manager'),
           icon: 'chat_bubble',
         }
       : {
           key: finalResponse,
-          summary: traceT('preparing_final_response'),
+          summary: traceT('sending_final_response'),
           icon: 'question_answer',
         },
     {
@@ -158,10 +158,12 @@ function getLogConfig({ trace, config }) {
   if (matched) {
     summary = matched.summary;
     icon = matched.icon;
-  } else {
-    const error = new Error('No matching trace rules found');
-    error.trace = JSON.stringify(trace);
-    Sentry.captureException(error);
+
+    if (!matched.summary) {
+      const error = new Error('No matching trace rules found');
+      error.trace = JSON.stringify(trace);
+      Sentry.captureException(error);
+    }
   }
 
   return {
