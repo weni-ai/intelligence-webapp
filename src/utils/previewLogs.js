@@ -89,12 +89,12 @@ function getLogConfig({ trace, config }) {
     {
       key: knowledgeBaseLookupOutput,
       summary: traceT('search_result_received'),
-      icon: 'menu_book',
+      icon: 'article',
     },
     {
       key: knowledgeBaseLookupInput,
       summary: traceT('searching_knowledge_base'),
-      icon: 'menu_book',
+      icon: 'article',
     },
     {
       key: modelInvocationInput,
@@ -147,7 +147,7 @@ function getLogConfig({ trace, config }) {
     {
       key: guardrailTrace,
       summary: traceT('applying_safety_rules'),
-      icon: 'security',
+      icon: 'shield',
     },
   ];
 
