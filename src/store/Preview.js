@@ -6,51 +6,49 @@ import WS from '@/websocket/setup';
 
 import { useAgentsTeamStore } from './AgentsTeam';
 import globalStore from '.';
-import { processTrace } from '@/utils/traces';
+import { processLog } from '@/utils/previewLogs';
 
 export const usePreviewStore = defineStore('preview', () => {
   const auth = computed(() => globalStore.state.Auth);
 
   const ws = ref(null);
-  const traces = ref([]);
+  const logs = ref([]);
   const collaboratorInvoked = ref('');
-  const collaboratorsTraces = computed(() =>
-    traces.value.filter((trace) => trace.type === 'trace_update'),
+  const collaboratorsLogs = computed(() =>
+    logs.value.filter((log) => log.type === 'trace_update'),
   );
   const activeAgent = computed(() => {
     const agentsTeamStore = useAgentsTeamStore();
-    const lastLog = traces.value.at(-1);
-    const lastTrace = lastLog?.trace;
+    const lastLog = logs.value.at(-1);
 
-    const lastTraceAgentId = lastLog?.config?.agentName || 'manager';
+    const lastLogAgentId = lastLog?.config?.agentName || 'manager';
 
     const agent = agentsTeamStore.activeTeam.data?.agents?.find(
-      (agent) =>
-        agent?.id && lastTraceAgentId && agent?.id === lastTraceAgentId,
+      (agent) => agent?.id && lastLogAgentId && agent?.id === lastLogAgentId,
     );
 
     return {
       ...(agent || agentsTeamStore.activeTeam.data?.manager),
-      currentTask: lastTrace?.summary,
+      currentTask: lastLog?.config?.summary,
     };
   });
 
-  function addTrace(trace) {
-    if (trace.type === 'trace_update') {
-      const processedTrace = processTrace({
-        trace,
+  function addLog(log) {
+    if (log.type === 'trace_update') {
+      const processedLog = processLog({
+        log,
         currentAgent: collaboratorInvoked.value,
       });
 
-      collaboratorInvoked.value = processedTrace.config.currentAgent;
-      traces.value.push(processedTrace);
+      collaboratorInvoked.value = processedLog.config.currentAgent;
+      logs.value.push(processedLog);
     } else {
-      traces.value.push(trace);
+      logs.value.push(log);
     }
   }
 
-  function clearTraces() {
-    traces.value = [];
+  function clearLogs() {
+    logs.value = [];
   }
 
   function connectWS() {
@@ -77,11 +75,11 @@ export const usePreviewStore = defineStore('preview', () => {
     ws,
     connectWS,
     disconnectWS,
-    clearTraces,
+    clearLogs,
     activeAgent,
-    collaboratorsTraces,
-    traces,
-    addTrace,
+    collaboratorsLogs,
+    logs,
+    addLog,
     collaboratorInvoked,
   };
 });

@@ -1,5 +1,5 @@
-import addTrace from './addTrace';
+import addLog from './addLog';
 
 export default {
-  addTrace,
+  addLog,
 };

@@ -79,13 +79,13 @@ describe('AgentsTeam.vue', () => {
   });
 
   describe('Component lifecycle', () => {
-    it('disconnects WebSocket and clears traces on unmount', async () => {
+    it('disconnects WebSocket and clears logs on unmount', async () => {
       previewStore.ws = true;
 
       wrapper.unmount();
 
       expect(previewStore.disconnectWS).toHaveBeenCalled();
-      expect(previewStore.clearTraces).toHaveBeenCalled();
+      expect(previewStore.clearLogs).toHaveBeenCalled();
     });
   });
 });

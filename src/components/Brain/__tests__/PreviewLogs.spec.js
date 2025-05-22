@@ -16,24 +16,33 @@ const mockAllAgents = {
   manager: { id: 'manager', name: 'Manager' },
 };
 
-const mockTraces = [
+const mockLogs = [
   {
     type: 'trace_update',
-    summary: 'First trace summary',
-    trace: {},
-    agentCollaboratorName: 'agent-1',
+    data: {
+      trace: {},
+    },
+    config: {
+      agentName: 'agent-1',
+      icon: 'icon-1',
+      summary: 'First trace summary',
+    },
   },
   {
     type: 'trace_update',
-    summary: 'Second trace summary',
-    trace: {},
-    agentCollaboratorName: 'agent-1',
+    data: null,
+    config: {
+      agentName: 'agent-1',
+      icon: 'icon-2',
+      summary: 'Second trace summary',
+    },
   },
   {
     type: 'trace_update',
-    summary: 'Manager trace',
-    trace: {
-      id: 'manager',
+    data: null,
+    config: {
+      agentName: 'manager',
+      summary: 'Manager trace',
     },
   },
 ];
@@ -42,14 +51,14 @@ const createWrapper = (props = {}) => {
   const pinia = createTestingPinia({
     initialState: {
       preview: {
-        traces: [...mockTraces],
+        logs: [...mockLogs],
       },
     },
   });
 
   return mount(PreviewLogs, {
     props: {
-      logs: mockTraces,
+      logs: mockLogs,
       logsSide: 'left',
       ...props,
     },
@@ -74,6 +83,10 @@ describe('PreviewLogs.vue', () => {
   const logItems = () => wrapper.findAll('[data-testid="preview-logs-log"]');
   const logAgentNames = () =>
     wrapper.findAll('[data-testid="preview-logs-log-agent-name"]');
+  const logStepIcons = () =>
+    wrapper.findAll('[data-testid="preview-logs-log-step-icon"]');
+  const logStepIconsIcon = () =>
+    wrapper.findAll('[data-testid="preview-logs-log-step-icon-icon"]');
   const stepItems = () =>
     wrapper.findAll('[data-testid="preview-logs-log-step"]');
   const seeFullButtons = () =>
@@ -115,6 +128,12 @@ describe('PreviewLogs.vue', () => {
       expect(stepItems().length).toBe(3);
     });
 
+    it('renders the correct icon for each step', () => {
+      expect(logStepIcons().length).toBe(2);
+      expect(logStepIconsIcon().at(0).text()).toBe('icon-1');
+      expect(logStepIconsIcon().at(1).text()).toBe('icon-2');
+    });
+
     it('renders the correct agent names', () => {
       expect(logAgentNames().at(0).text()).toBe('Test Agent 1');
       expect(logAgentNames().at(1).text()).toBe('Manager');
@@ -135,9 +154,9 @@ describe('PreviewLogs.vue', () => {
       const processedLogs = wrapper.vm.processedLogs;
 
       expect(processedLogs.length).toBe(2);
-      expect(processedLogs[0].id).toBe('agent-1');
+      expect(processedLogs[0].agent).toBe('Test Agent 1');
       expect(processedLogs[0].steps.length).toBe(2);
-      expect(processedLogs[1].id).toBe('manager');
+      expect(processedLogs[1].agent).toBe('Manager');
       expect(processedLogs[1].steps.length).toBe(1);
     });
 
@@ -148,20 +167,21 @@ describe('PreviewLogs.vue', () => {
     });
 
     it('handles missing agent correctly', async () => {
-      const tracesWithUnknownAgent = [
+      const logsWithUnknownAgent = [
         {
           type: 'trace_update',
           summary: 'Unknown agent trace',
-          trace: {
+          data: null,
+          config: {
             agentId: 'unknown-agent',
           },
         },
       ];
 
-      await wrapper.setProps({ logs: tracesWithUnknownAgent });
+      await wrapper.setProps({ logs: logsWithUnknownAgent });
 
       expect(wrapper.vm.processedLogs.length).toBe(1);
-      expect(wrapper.vm.processedLogs[0].id).toBe('manager');
+      expect(wrapper.vm.processedLogs[0].agent).toBe('Manager');
     });
   });
 
@@ -182,7 +202,7 @@ describe('PreviewLogs.vue', () => {
       expect(modal().props('modelValue')).toBeTruthy();
 
       expect(modal().props('title')).toBe('First trace summary');
-      expect(modal().props('trace')).toEqual(mockTraces[0]);
+      expect(modal().props('log')).toEqual(mockLogs[0]);
     });
 
     it('closes modal correctly', async () => {

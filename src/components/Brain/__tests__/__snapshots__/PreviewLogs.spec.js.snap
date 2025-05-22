@@ -8,10 +8,13 @@ exports[`PreviewLogs.vue > Component rendering > matches snapshot 1`] = `
       <p data-v-6e9a8500="" class="log__agent-name log__agent-name--left" data-testid="preview-logs-log-agent-name">Test Agent 1</p>
       <ol data-v-6e9a8500="" class="log__steps">
         <li data-v-6e9a8500="" class="steps__step steps__step--left" data-testid="preview-logs-log-step">
+          <section data-v-6e9a8500="" class="steps__step-icon" data-testid="preview-logs-log-step-icon"><span data-v-9846e6db="" data-v-6e9a8500="" class="material-symbols-rounded unnnic-icon-scheme--neutral-darkest unnnic-icon-size--lg material-symbols-rounded--filled step-icon__background" data-testid="material-icon" translate="no">circle</span><span data-v-9846e6db="" data-v-6e9a8500="" class="material-symbols-rounded unnnic-icon-scheme--neutral-darkest unnnic-icon-size--sm step-icon__icon" data-testid="preview-logs-log-step-icon-icon" translate="no">icon-1</span></section>
           <p data-v-6e9a8500="">First trace summary</p><button data-v-6e9a8500="" class="step__see-full" data-testid="preview-logs-log-step-see-full">See full details</button>
         </li>
         <li data-v-6e9a8500="" class="steps__step steps__step--left" data-testid="preview-logs-log-step">
-          <p data-v-6e9a8500="">Second trace summary</p><button data-v-6e9a8500="" class="step__see-full" data-testid="preview-logs-log-step-see-full">See full details</button>
+          <section data-v-6e9a8500="" class="steps__step-icon" data-testid="preview-logs-log-step-icon"><span data-v-9846e6db="" data-v-6e9a8500="" class="material-symbols-rounded unnnic-icon-scheme--neutral-darkest unnnic-icon-size--lg material-symbols-rounded--filled step-icon__background" data-testid="material-icon" translate="no">circle</span><span data-v-9846e6db="" data-v-6e9a8500="" class="material-symbols-rounded unnnic-icon-scheme--neutral-darkest unnnic-icon-size--sm step-icon__icon" data-testid="preview-logs-log-step-icon-icon" translate="no">icon-2</span></section>
+          <p data-v-6e9a8500="">Second trace summary</p>
+          <!--v-if-->
         </li>
       </ol>
     </li>
@@ -19,12 +22,14 @@ exports[`PreviewLogs.vue > Component rendering > matches snapshot 1`] = `
       <p data-v-6e9a8500="" class="log__agent-name log__agent-name--left" data-testid="preview-logs-log-agent-name">Manager</p>
       <ol data-v-6e9a8500="" class="log__steps">
         <li data-v-6e9a8500="" class="steps__step steps__step--left" data-testid="preview-logs-log-step">
-          <p data-v-6e9a8500="">Manager trace</p><button data-v-6e9a8500="" class="step__see-full" data-testid="preview-logs-log-step-see-full">See full details</button>
+          <!--v-if-->
+          <p data-v-6e9a8500="">Manager trace</p>
+          <!--v-if-->
         </li>
       </ol>
     </li>
   </ol>
   <article data-v-6e9a8500="" class="preview-logs__progress-bar preview-logs__progress-bar--left" data-testid="preview-logs-progress-bar"></article>
-  <preview-logs-details-modal-stub data-v-6e9a8500="" title="" trace="" modelvalue="false" data-testid="preview-logs-details-modal"></preview-logs-details-modal-stub>
+  <preview-logs-details-modal-stub data-v-6e9a8500="" title="" log="" modelvalue="false" data-testid="preview-logs-details-modal"></preview-logs-details-modal-stub>
 </section>"
 `;
