@@ -8,27 +8,28 @@ import * as Sentry from '@sentry/browser';
  * @param {string} currentAgent - The name of the collaborator that was invoked
  *
  * @example
- * const result = processTrace({
+ * const result = processLog({
  *   trace: { trace: { trace: { orchestrationTrace: { ... } } } },
- *   currentAgent: 'agent1'
+ *   currentAgent: 'string'
  * });
  *
  * @returns
  * {
- *   trace: {
- *     trace: {
- *       orchestrationTrace: { ... }
- *     }
- *   }
+ *   type: 'trace_update',
+ *   data: {
+ *     sessionId: 'string',
+ *     orchestrationTrace: { ... } or guardrailTrace: { ... } or other relevant traces
+ *   },
  *   config: {
  *     summary: 'string',
- *     icon: 'string'
+ *     icon: 'string',
  *     currentAgent: 'string'
  *   }
  * }
  */
-export function processTrace({ trace, currentAgent }) {
-  const traceData = trace?.trace?.trace || {};
+export function processLog({ log, currentAgent }) {
+  const trace = log?.trace?.trace || {};
+
   const {
     orchestrationTrace: {
       invocationInput: { agentCollaboratorInvocationInput } = {},
@@ -36,35 +37,31 @@ export function processTrace({ trace, currentAgent }) {
       modelInvocationInput,
       modelInvocationOutput,
     } = {},
-  } = traceData;
+  } = trace;
 
-  traceData.config = {};
+  const configData = {};
 
   const updatedCollaborator = addAgentToConfig({
     currentAgent,
     input: agentCollaboratorInvocationInput,
     output: agentCollaboratorInvocationOutput,
-    config: traceData.config,
+    config: configData,
   });
 
-  const traceConfig = getTraceConfig({ trace: traceData });
+  const traceConfig = getLogConfig({ trace, config: configData });
 
   return {
-    ...trace,
-    trace: {
-      ...trace.trace,
-      trace: modelInvocationInput || modelInvocationOutput ? null : trace.trace,
-    },
+    type: log.type,
+    data: modelInvocationInput || modelInvocationOutput ? null : log?.trace,
     config: {
-      ...traceData.config,
+      ...configData,
       ...traceConfig,
       currentAgent: updatedCollaborator,
     },
   };
 }
 
-function getTraceConfig({ trace: traceToUpdate }) {
-  const trace = { ...traceToUpdate };
+function getLogConfig({ trace, config }) {
   const {
     orchestrationTrace: {
       invocationInput: {
@@ -136,7 +133,7 @@ function getTraceConfig({ trace: traceToUpdate }) {
       summary: traceT('tool_result_received'),
       icon: 'build',
     },
-    trace.config.agentName
+    config?.agentName
       ? {
           key: finalResponse,
           summary: traceT('preparing_response_for_manager'),

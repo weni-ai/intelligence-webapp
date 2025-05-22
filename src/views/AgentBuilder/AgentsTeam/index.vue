@@ -67,7 +67,7 @@ const handlePreview = () => {
 onUnmounted(() => {
   if (previewStore.ws) {
     previewStore.disconnectWS();
-    previewStore.clearTraces();
+    previewStore.clearLogs();
   }
 });
 </script>

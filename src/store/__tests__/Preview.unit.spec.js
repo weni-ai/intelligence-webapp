@@ -4,6 +4,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { usePreviewStore } from '@/store/Preview';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import WS from '@/websocket/setup';
+import { processLog } from '@/utils/previewLogs';
 
 vi.mock('@/websocket/setup');
 vi.mock('@/store/AgentsTeam', () => ({
@@ -58,35 +59,37 @@ describe('PreviewStore', () => {
   describe('Initial state', () => {
     it('should have initial state properties', () => {
       expect(store.ws).toBeNull();
-      expect(store.traces).toEqual([]);
-      expect(store.collaboratorsTraces).toEqual([]);
+      expect(store.logs).toEqual([]);
+      expect(store.collaboratorsLogs).toEqual([]);
     });
   });
 
   describe('Computed properties', () => {
     it('should filter and map collaborators traces correctly', () => {
-      store.traces = [
+      store.logs = [
         { type: 'trace_update', trace: { id: 1 } },
         { type: 'other_type', trace: { id: 2 } },
         { type: 'trace_update', trace: { id: 3 } },
       ];
 
-      expect(store.collaboratorsTraces).toEqual([{ id: 1 }, { id: 3 }]);
+      expect(store.collaboratorsLogs).toEqual([store.logs[0], store.logs[2]]);
     });
 
     it('should return the active agent based on the last trace', () => {
-      store.traces = [
+      store.logs = [
         {
-          trace: {
-            trace: {},
-            agentCollaboratorName: 'agent-1',
+          type: 'trace_update',
+          data: null,
+          config: {
+            agentName: 'agent-1',
             summary: 'Task 1',
           },
         },
         {
-          trace: {
-            trace: {},
-            agentCollaboratorName: 'agent-2',
+          type: 'trace_update',
+          data: null,
+          config: {
+            agentName: 'agent-2',
             summary: 'Task 2',
           },
         },
@@ -99,11 +102,12 @@ describe('PreviewStore', () => {
     });
 
     it('should return the manager when agent not found', () => {
-      store.traces = [
+      store.logs = [
         {
-          trace: {
-            trace: {},
-            agentCollaboratorName: 'unknown-agent',
+          type: 'trace_update',
+          data: null,
+          config: {
+            agentName: 'unknown-agent',
             summary: 'Task X',
           },
         },
@@ -116,22 +120,36 @@ describe('PreviewStore', () => {
   });
 
   describe('Actions', () => {
-    it('should add a trace', () => {
-      const trace = { type: 'trace_update', trace: { id: 1 } };
-      store.addTrace(trace);
+    it('should add a log', () => {
+      const log = {
+        type: 'trace_update',
+        trace: {
+          trace: {
+            orchestrationTrace: {
+              invocationInput: {
+                agentCollaboratorInvocationInput: {
+                  agentCollaboratorName: 'agent-1',
+                },
+              },
+            },
+          },
+        },
+      };
+      store.addLog(log);
+      const processedLog = processLog({ log, currentAgent: 'agent-1' });
 
-      expect(store.traces).toEqual([trace]);
+      expect(store.logs).toEqual([processedLog]);
     });
 
-    it('should clear traces', () => {
-      store.traces = [
-        { type: 'trace_update', trace: { id: 1 } },
-        { type: 'trace_update', trace: { id: 2 } },
+    it('should clear logs', () => {
+      store.logs = [
+        { type: 'trace_update', data: { id: 1 } },
+        { type: 'trace_update', data: { id: 2 } },
       ];
 
-      store.clearTraces();
+      store.clearLogs();
 
-      expect(store.traces).toEqual([]);
+      expect(store.logs).toEqual([]);
     });
 
     it('should connect to WebSocket', () => {

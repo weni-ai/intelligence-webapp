@@ -120,7 +120,7 @@ describe('PreviewDrawer.vue', () => {
   it('should refresh preview when refresh action is clicked', async () => {
     await wrapper.vm.previewHeaderActions[0].onClick();
 
-    expect(previewStore.clearTraces).toHaveBeenCalled();
+    expect(previewStore.clearLogs).toHaveBeenCalled();
     expect(flowPreviewStore.clearMessages).toHaveBeenCalled();
   });
 });
