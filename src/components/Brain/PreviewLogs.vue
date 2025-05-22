@@ -28,7 +28,7 @@
           :class="`log__agent-name log__agent-name--${props.logsSide}`"
           data-testid="preview-logs-log-agent-name"
         >
-          {{ log.agent_name }}
+          {{ log.agent }}
         </p>
 
         <TransitionGroup
@@ -130,7 +130,7 @@ const processedLogs = computed(() => {
     if (lastLog?.id !== agent.id) {
       logsByAgent.push({
         id: agent.id,
-        agent_name: agent.name || 'Manager',
+        agent: agent.name || 'Manager',
         steps: [],
       });
     }
