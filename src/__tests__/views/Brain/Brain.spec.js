@@ -13,6 +13,7 @@ import { useRoute } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useFlowPreviewStore } from '@/store/FlowPreview';
 
 const pinia = createTestingPinia({ stubActions: false });
 
@@ -102,6 +103,7 @@ describe('Brain Component', () => {
   let wrapper;
   let agentsTeamStore;
   let featureFlagsStore;
+  let flowPreviewStore;
   let pushMock;
   beforeEach(() => {
     useRoute.mockImplementationOnce(() => ({
@@ -135,6 +137,7 @@ describe('Brain Component', () => {
 
     agentsTeamStore = useAgentsTeamStore();
     featureFlagsStore = useFeatureFlagsStore();
+    flowPreviewStore = useFlowPreviewStore();
   });
 
   afterEach(() => {
@@ -197,7 +200,7 @@ describe('Brain Component', () => {
   test('toggles RefreshPreview when corresponding dropdown item is clicked', async () => {
     const dropdownItem = wrapper.find('[data-test="Clear conversations"]');
     await dropdownItem.trigger('click');
-    expect(wrapper.vm.refreshPreviewValue).toBe(1);
+    expect(flowPreviewStore.clearMessages).toHaveBeenCalled();
   });
 
   test('check that BrainOn has the correct value after using loadRouterOptions', async () => {
@@ -311,15 +314,6 @@ describe('Brain Component', () => {
 
     expect(store.state.Brain.contentText.current).toBe('');
     expect(store.state.Brain.contentText.old).toBe('');
-  });
-
-  test('check if refreshPreview updates refreshPreviewValue correctly', async () => {
-    expect(wrapper.vm.refreshPreviewValue).eq(0);
-
-    for (const value of [1, 2, 3, 4, 5]) {
-      wrapper.vm.refreshPreview();
-      expect(wrapper.vm.refreshPreviewValue).eq(value);
-    }
   });
 
   test('check if router components are rendered correctly based on route.name', async () => {
