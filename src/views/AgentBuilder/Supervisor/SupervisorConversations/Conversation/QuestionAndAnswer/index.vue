@@ -64,6 +64,7 @@ import ForwardedHumanSupport from './ForwardedHumanSupport.vue';
 import { useMonitoringStore } from '@/store/Monitoring';
 import Message from './Message.vue';
 import ViewLogsButton from './ViewLogsButton.vue';
+import { processLog } from '@/utils/previewLogs';
 
 const props = defineProps({
   isLoading: {
@@ -97,10 +98,23 @@ async function loadLogs() {
   loadingLogs.value = true;
 
   try {
-    logs.value = await monitoringStore.loadLogs({
+    const responseLogs = await monitoringStore.loadLogs({
       messageId: props.data.id,
     });
 
+    let collaborator = '';
+    logs.value = responseLogs.map((log) => {
+      const proccesedLog = processLog({
+        trace: {
+          trace: log,
+        },
+        currentAgent: collaborator,
+      });
+
+      collaborator = proccesedLog.config.currentAgent;
+
+      return proccesedLog;
+    });
     showLogs.value = true;
   } catch (error) {
     console.error(error);

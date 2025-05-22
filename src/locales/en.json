@@ -113,6 +113,20 @@
         "success": "The export will be sent to all listed email addresses soon",
         "error": "Error sending export. Try again later."
       }
+    },
+    "traces": {
+      "search_result_received": "Search result received",
+      "searching_knowledge_base": "Searching knowledge base",
+      "invoking_model": "Invoking model",
+      "model_response_received": "Model response received",
+      "thinking": "Thinking",
+      "delegating_to_agent": "Delegating task to agent",
+      "forwarding_to_manager": "Forwarding to Manager",
+      "executing_tool": "Executing tool {function}",
+      "tool_result_received": "Tool result received",
+      "preparing_response_for_manager": "Preparing response for Manager",
+      "preparing_final_response": "Preparing final response",
+      "applying_safety_rules": "Applying safety rules"
     }
   },
   "router": {

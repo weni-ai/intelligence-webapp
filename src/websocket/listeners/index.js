@@ -7,6 +7,6 @@ export default ({ ws, type = 'monitoring' }) => {
   if (type === 'monitoring') {
     ws.on('ws', createListener(monitoringListener.create));
   } else if (type === 'preview') {
-    ws.on('trace_update', createListener(previewListener.addTrace));
+    ws.on('trace_update', createListener(previewListener.addLog));
   }
 };

@@ -113,6 +113,20 @@
         "success": "La exportación será enviada a todas las direcciones de correo electrónico listadas pronto",
         "error": "Error al enviar exportación. Intente nuevamente más tarde."
       }
+    },
+    "traces": {
+      "search_result_received": "Resultado de búsqueda recibido",
+      "searching_knowledge_base": "Buscando información en la base de conocimiento",
+      "invoking_model": "Invocando el modelo",
+      "model_response_received": "Respuesta del modelo recibida",
+      "thinking": "Pensando",
+      "delegating_to_agent": "Delegando tarea al agente",
+      "forwarding_to_manager": "Enviando al Manager",
+      "executing_tool": "Ejecutando herramienta {function}",
+      "tool_result_received": "Resultado de la herramienta recibido",
+      "preparing_response_for_manager": "Preparando respuesta para el Manager",
+      "preparing_final_response": "Preparando respuesta final",
+      "applying_safety_rules": "Aplicando reglas de seguridad"
     }
   },
   "router": {
