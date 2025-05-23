@@ -6,7 +6,7 @@
     <UnnnicTab
       data-testid="preview-details-tabs"
       class="preview-details__tabs"
-      :modelValue="selectedTab"
+      :activeTab="selectedTab"
       :tabs="detailTabs"
       @change="selectedTab = $event"
     >
@@ -32,24 +32,19 @@
         <PreviewVisualFlow />
       </section>
 
-      <section
+      <PreviewLogsSection
         v-else
-        data-testid="preview-details-logs"
-        class="details__logs"
-      >
-        <PreviewLogs
-          :logs="previewStore.collaboratorsLogs"
-          @scroll-to-bottom="scrollContentToBottom"
-        />
-      </section>
+        :logs="previewStore.collaboratorsLogs"
+        @scroll-to-bottom="scrollContentToBottom('near-bottom')"
+      />
     </section>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 
-import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
+import PreviewLogsSection from './PreviewLogsSection.vue';
 import PreviewVisualFlow from './PreviewVisualFlow.vue';
 import { usePreviewStore } from '@/store/Preview';
 
@@ -59,18 +54,23 @@ const detailTabs = ['visual_flow', 'logs'];
 const contentRef = ref(null);
 const previewStore = usePreviewStore();
 
-const scrollContentToBottom = () => {
+const scrollContentToBottom = (type = 'mount') => {
   const { scrollTop, clientHeight, scrollHeight } = contentRef.value;
   const scrollPosition = scrollTop + clientHeight;
-  const isNearBottom = scrollHeight - scrollPosition <= 100;
+  const isNearBottom = scrollHeight - scrollPosition <= 300;
 
-  if (isNearBottom) {
+  if (type === 'mount' || isNearBottom) {
     contentRef.value.scrollTo({
       top: scrollHeight,
       behavior: 'smooth',
     });
   }
 };
+
+watch(
+  () => selectedTab.value,
+  () => nextTick(() => scrollContentToBottom('mount')),
+);
 </script>
 
 <style lang="scss" scoped>

@@ -16,7 +16,7 @@
       :class="`preview-logs__logs preview-logs__logs--${props.logsSide}`"
       name="logs"
       tag="ol"
-      @enter="updateProgressBarHeight('agent')"
+      @before-enter="updateProgressBarHeight('agent')"
     >
       <li
         v-for="(log, logIndex) in processedLogs"
@@ -35,7 +35,8 @@
           name="steps"
           tag="ol"
           class="log__steps"
-          @enter="updateProgressBarHeight('step')"
+          @before-enter="updateProgressBarHeight('step')"
+          @before-leave="updateProgressBarHeight('step')"
         >
           <li
             v-for="(step, stepIndex) in log.steps"
@@ -93,7 +94,7 @@
 
 <script setup>
 import { ref, onMounted, nextTick, computed, watch } from 'vue';
-import { usePreviewStore } from '@/store/Preview';
+
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import PreviewLogsDetailsModal from './Preview/PreviewLogsDetailsModal.vue';
 
@@ -120,7 +121,6 @@ const props = defineProps({
   },
 });
 
-const previewStore = usePreviewStore();
 const agentsTeamStore = useAgentsTeamStore();
 
 const showDetailsModal = ref(false);
@@ -209,7 +209,9 @@ function openModalLogFullDetails(summary, log) {
 const logTranslateY = 24;
 
 function updateProgressBarHeight(type = 'agent') {
-  nextTick(() => {
+  console.log('updateProgressBarHeight', type);
+
+  setTimeout(() => {
     if (!['mount', 'agent', 'step'].includes(type)) {
       throw new Error('Invalid type passed to updateProgressHeight function');
     }
@@ -235,11 +237,11 @@ function updateProgressBarHeight(type = 'agent') {
     }
 
     emit('scroll-to-bottom');
-  });
+  }, 200);
 }
 
 watch(
-  () => previewStore.collaboratorsLogs,
+  () => props.logs,
   (newLogs) => {
     if (newLogs.length === 0) {
       progressHeight.value = 0;
@@ -267,10 +269,6 @@ watch(
 
 .preview-logs {
   position: relative;
-
-  &--left {
-    margin: 0 auto;
-  }
 
   .preview-logs__empty {
     margin: 0;
