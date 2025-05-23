@@ -17,7 +17,7 @@
         family="secondary"
         size="body-gt"
       >
-        {{ prettyPrintJSON(trace) }}
+        {{ prettyPrintJSON(log?.data) }}
       </UnnnicIntelligenceText>
     </section>
   </UnnnicModalDialog>
@@ -33,7 +33,7 @@ defineProps({
     type: String,
     required: true,
   },
-  trace: {
+  log: {
     type: Object,
     required: true,
   },
@@ -42,8 +42,8 @@ defineProps({
 defineEmits(['update:modelValue']);
 
 function prettyPrintJSON(json) {
+  if (!json) return '';
   const jsonString = JSON.stringify(json, null, '\t');
-
   return jsonString;
 }
 </script>

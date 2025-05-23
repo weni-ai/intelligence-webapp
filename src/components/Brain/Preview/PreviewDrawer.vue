@@ -93,7 +93,7 @@ const previewHeaderActions = computed(() => [
 ]);
 
 function refreshPreview() {
-  previewStore.clearTraces();
+  previewStore.clearLogs();
   flowPreviewStore.clearMessages();
   flowPreviewStore.previewInit({
     contentBaseUuid: store.state.router.contentBaseUuid,

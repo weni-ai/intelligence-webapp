@@ -29,10 +29,7 @@
       :value="typeof modelValue === 'string' ? modelValue : ''"
       :placeholder="placeholder"
       type="text"
-      :class="[
-        'message-input',
-        { 'message-input--without-actions': isAgentsTeamEnabled },
-      ]"
+      :class="['message-input']"
       @input="updateModelValue($event.target.value)"
       @keypress.enter="emitSend"
     />
@@ -174,8 +171,7 @@ const audioValue = computed(() =>
 );
 const rightButtonType = computed(() =>
   isRecordingAudio.value ||
-  (modelValue.value && typeof modelValue.value === 'string') ||
-  isAgentsTeamEnabled
+  (modelValue.value && typeof modelValue.value === 'string')
     ? 'send'
     : 'mic',
 );
@@ -239,10 +235,6 @@ function emitSend() {
 
   border-radius: $unnnic-border-radius-md;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
-
-  &--without-actions {
-    padding: $unnnic-spacing-sm;
-  }
 
   &::placeholder {
     color: $unnnic-color-neutral-clean;

@@ -95,7 +95,38 @@
       },
       "view_logs": "View logs",
       "hide_logs": "Hide logs",
-      "search": "Search"
+      "search": "Search",
+      "no_messages_found": {
+        "title": "No messages found on this conversation.",
+        "description": "If the message was sent by human support or triggered messages, you can find it on the {studio_link}.",
+        "studio_link": "Studio"
+      },
+      "export": {
+        "title": "Send export by email",
+        "description": "We'll prepare the file with the AI data and send it to the following email addresses:",
+        "token_label": "Project API Token",
+        "token_placeholder": "86d2ba6397cabd4b22f7da925ef89d78bfb2d90dd",
+        "token_help": "You can find this token in your",
+        "project_settings": "project settings",
+        "and_paste": "and paste it here.",
+        "send": "Send export",
+        "success": "The export will be sent to all listed email addresses soon",
+        "error": "Error sending export. Try again later."
+      }
+    },
+    "traces": {
+      "search_result_received": "Search result received",
+      "searching_knowledge_base": "Searching knowledge base",
+      "invoking_model": "Invoking model",
+      "model_response_received": "Model response received",
+      "thinking": "Thinking",
+      "delegating_to_agent": "Delegating task to agent",
+      "forwarding_to_manager": "Forwarding to Manager",
+      "executing_tool": "Executing tool {function}",
+      "tool_result_received": "Tool result received",
+      "sending_response_for_manager": "Sending response for Manager",
+      "sending_final_response": "Sending final response",
+      "applying_safety_rules": "Applying safety rules"
     }
   },
   "router": {

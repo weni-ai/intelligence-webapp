@@ -38,9 +38,9 @@ describe('PreviewLogsDetailsModal.vue', () => {
   });
 
   it('should format JSON trace correctly', () => {
-    const trace = { test: 'data', nested: { key: 'value' } };
-    wrapper = createWrapper({ trace });
-    const expectedOutput = JSON.stringify(trace, null, '\t');
+    const log = { data: { test: 'data', nested: { key: 'value' } } };
+    wrapper = createWrapper({ log });
+    const expectedOutput = JSON.stringify(log.data, null, '\t');
     expect(modalTrace().text()).toBe(expectedOutput);
   });
 

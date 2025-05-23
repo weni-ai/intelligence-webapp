@@ -95,7 +95,38 @@
       },
       "view_logs": "Ver logs",
       "hide_logs": "Esconder logs",
-      "search": "Buscar"
+      "search": "Buscar",
+      "no_messages_found": {
+        "title": "No se encontraron mensajes en esta conversación.",
+        "description": "Si el mensaje fue enviado por soporte humano o mensajes disparados, puedes encontrarlo en el {studio_link}.",
+        "studio_link": "Studio"
+      },
+      "export": {
+        "title": "Enviar exportación por correo electrónico",
+        "description": "Prepararemos el archivo con los datos de IA y lo enviaremos a las siguientes direcciones de correo electrónico:",
+        "token_label": "Token API del Proyecto",
+        "token_placeholder": "86d2ba6397cabd4b22f7da925ef89d78bfb2d90dd",
+        "token_help": "Puedes encontrar este token en tu",
+        "project_settings": "configuración del proyecto",
+        "and_paste": "y pegarlo aquí.",
+        "send": "Enviar exportación",
+        "success": "La exportación será enviada a todas las direcciones de correo electrónico listadas pronto",
+        "error": "Error al enviar exportación. Intente nuevamente más tarde."
+      }
+    },
+    "traces": {
+      "search_result_received": "Resultado de búsqueda recibido",
+      "searching_knowledge_base": "Buscando información en la base de conocimiento",
+      "invoking_model": "Invocando el modelo",
+      "model_response_received": "Respuesta del modelo recibida",
+      "thinking": "Pensando",
+      "delegating_to_agent": "Delegando tarea al agente",
+      "forwarding_to_manager": "Enviando al Manager",
+      "executing_tool": "Ejecutando herramienta {function}",
+      "tool_result_received": "Resultado de la herramienta recibido",
+      "sending_response_for_manager": "Enviando respuesta para el Manager",
+      "sending_final_response": "Enviando respuesta final",
+      "applying_safety_rules": "Aplicando reglas de seguridad"
     }
   },
   "router": {
