@@ -4,6 +4,7 @@
       icon="search_off"
       scheme="neutral-dark"
       class="no-messages-found__icon"
+      data-testid="no-messages-icon"
     />
 
     <UnnnicIntelligenceText
@@ -13,6 +14,7 @@
       size="body-gt"
       weight="bold"
       class="no-messages-found__title"
+      data-testid="no-messages-title"
     >
       {{ $t('agent_builder.supervisor.no_messages_found.title') }}
     </UnnnicIntelligenceText>
@@ -22,17 +24,20 @@
       color="neutral-dark"
       family="secondary"
       size="body-gt"
+      data-testid="no-messages-description"
     >
       <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
       <i18n-t
         keypath="agent_builder.supervisor.no_messages_found.description"
         tag="p"
+        data-testid="no-messages-description-i18n"
       >
         <template #studio_link>
           <a
             :href="`${env('VITE_CONNECT_URL')}/projects/${projectStore.uuid}/studio/contact`"
             class="no-messages-found__link"
             target="_blank"
+            data-testid="studio-link"
           >
             {{ $t('agent_builder.supervisor.no_messages_found.studio_link') }}
           </a>

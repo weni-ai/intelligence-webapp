@@ -1,5 +1,8 @@
 <template>
-  <section class="conversation">
+  <section
+    class="conversation"
+    data-testid="conversation"
+  >
     <header class="conversation__header">
       <UnnnicIntelligenceText
         tag="h2"
@@ -7,15 +10,18 @@
         family="secondary"
         size="title-sm"
         weight="bold"
+        data-testid="conversation-title"
       >
-        {{ conversation.urn }}
+        {{ conversation?.urn }}
       </UnnnicIntelligenceText>
 
       <button
         class="header__close-button"
+        data-testid="close-button"
         @click="supervisorStore.selectConversation(null)"
       >
         <UnnnicIcon
+          data-testid="close-button-icon"
           icon="close"
           size="md"
           scheme="neutral-cloudy"
@@ -25,34 +31,37 @@
 
     <section
       class="conversation__messages"
+      data-testid="messages-container"
       @scroll="handleScroll"
     >
-      <template
-        v-if="
-          conversation.data.status === 'loading' && !conversation.data.results
-        "
-      >
+      <template v-if="status === 'loading' && !results">
         <QuestionAndAnswer
           v-for="loadMessage in 3"
           :key="loadMessage"
           :data="loadMessage"
           :isLoading="true"
+          data-testid="loading-message"
         />
       </template>
 
-      <NoMessagesFound v-else-if="conversation.data.results?.length === 0" />
+      <NoMessagesFound
+        v-else-if="results?.length === 0"
+        data-testid="no-messages-found"
+      />
 
       <template v-else>
         <QuestionAndAnswer
-          v-for="message in conversation.data.results"
+          v-for="message in results"
           :key="message.id"
           :data="message"
           :isLoading="false"
+          data-testid="message"
         />
 
         <ForwardedHumanSupport
-          v-if="conversation.human_support"
+          v-if="conversation?.human_support"
           class="conversation__forwarded-human-support"
+          data-testid="forwarded-human-support"
         />
       </template>
     </section>
@@ -70,6 +79,8 @@ import NoMessagesFound from './NoMessagesFound.vue';
 const supervisorStore = useSupervisorStore();
 
 const conversation = computed(() => supervisorStore.selectedConversation);
+const status = computed(() => conversation.value?.data?.status);
+const results = computed(() => conversation.value?.data?.results);
 
 onMounted(() => {
   supervisorStore.loadSelectedConversationData();
