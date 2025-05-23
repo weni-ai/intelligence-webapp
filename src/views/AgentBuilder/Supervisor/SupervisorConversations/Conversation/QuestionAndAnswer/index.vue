@@ -105,9 +105,7 @@ async function loadLogs() {
     let collaborator = '';
     logs.value = responseLogs.map((log) => {
       const proccesedLog = processLog({
-        trace: {
-          trace: log,
-        },
+        log,
         currentAgent: collaborator,
       });
 

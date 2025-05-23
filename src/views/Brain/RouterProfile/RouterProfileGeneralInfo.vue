@@ -184,7 +184,7 @@ export default {
     handlePersonalityValue(value) {
       const personality = this.personalities.find((e) => value === e.value);
 
-      return [personality];
+      return personality ? [personality] : [{ label: '', value: '' }];
     },
   },
 };

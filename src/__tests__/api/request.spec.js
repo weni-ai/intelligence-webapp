@@ -29,7 +29,7 @@ vi.mock('@/store', () => ({
   },
 }));
 
-vi.stubEnv('VITE_API_BASE_URL', 'http://example.com');
+vi.stubEnv('API_BASE_URL', 'http://example.com');
 
 describe('request.js', () => {
   beforeEach(() => {
