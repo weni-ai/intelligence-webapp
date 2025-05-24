@@ -180,7 +180,7 @@
       "error_loading_previous_messages": "Error al cargar mensajes anteriores",
       "inspect_response": {
         "title": "Inspeccionar respuesta",
-        "inpect": "Inspeccionar",
+        "inspect": "Inspect",
         "intelligent_agent_response_details": "Detalles de la respuesta del agente inteligente",
         "contact_message": "Mensaje de contacto",
         "agent_response": "Respuesta del agente",
@@ -228,7 +228,7 @@
         "official": "Oficial",
         "custom": "Personalizado",
         "remove_agent": "Eliminar agente"
-      }, 
+      },
       "drawer": {
         "title": "Asignar {name} al equipo",
         "description": "Ingrese las credenciales para asignar el agente",
@@ -364,7 +364,7 @@
           "cancel": "Cancelar",
           "action": "Desactivar"
         }
-        },
+      },
       "credentials": {
         "no_credentials": "No hay credenciales insertadas",
         "used_by_official_agents": "Credenciales usadas por los agentes oficiales",
