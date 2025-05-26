@@ -1,11 +1,28 @@
 <template>
   <AgentBuilderHeader :withDivider="false">
     <template #actions>
-      <UnnnicInputDatePicker
-        v-model="dateFilter"
-        position="right"
-        class="supervisor-header__date-picker"
-        :maxDate="today"
+      <section class="supervisor-header__actions">
+        <UnnnicInputDatePicker
+          v-model="dateFilter"
+          position="right"
+          class="supervisor-header__date-picker"
+          :maxDate="today"
+          data-testid="date-picker"
+        />
+
+        <UnnnicButton
+          v-if="showExport"
+          iconCenter="open_in_new"
+          type="secondary"
+          data-testid="export-button"
+          @click="openExportModal"
+        />
+      </section>
+
+      <SupervisorExportModal
+        v-if="showExport"
+        v-model="isExportModalOpen"
+        data-testid="export-modal"
       />
     </template>
   </AgentBuilderHeader>
@@ -13,13 +30,18 @@
 
 <script setup>
 import AgentBuilderHeader from '@/components/AgentBuilder/Header.vue';
+import SupervisorExportModal from '@/components/AgentBuilder/Supervisor/SupervisorExportModal.vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 import { format, subDays } from 'date-fns';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const supervisorStore = useSupervisorStore();
+const featureFlagsStore = useFeatureFlagsStore();
+
+const showExport = computed(() => featureFlagsStore.flags.supervisorExport);
 
 const last7Days = format(subDays(new Date(), 7), 'yyyy-MM-dd');
 const today = format(new Date(), 'yyyy-MM-dd');
@@ -37,10 +59,23 @@ watch(
   },
   { immediate: true },
 );
+
+const isExportModalOpen = ref(false);
+
+function openExportModal() {
+  isExportModalOpen.value = true;
+}
 </script>
 
 <style lang="scss" scoped>
 .supervisor-header {
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $unnnic-spacing-xs;
+    justify-content: flex-end;
+  }
+
   &__date-picker {
     :deep(.input) {
       width: 100%;

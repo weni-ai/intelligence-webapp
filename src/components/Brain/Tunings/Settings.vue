@@ -186,20 +186,26 @@
       >
         {{ $t('router.tunings.restore_default') }}
       </UnnnicButton>
+
+      <SettingsUpgradeToMultiagents v-if="canUpgradeToMultiAgents.value" />
     </footer>
   </section>
 </template>
 
 <script>
+import { computed } from 'vue';
 import nexusaiAPI from '@/api/nexusaiAPI';
 import LoadingFormElement from '@/components/LoadingFormElement.vue';
 import SettingsAdvanced from './SettingsAdvanced.vue';
+import SettingsUpgradeToMultiagents from './SettingsUpgradeToMultiagents.vue';
 import { WENIGPT_OPTIONS } from '@/utils';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
 export default {
   components: {
     SettingsAdvanced,
     LoadingFormElement,
+    SettingsUpgradeToMultiagents,
   },
   props: {
     data: {
@@ -209,6 +215,17 @@ export default {
       },
       required: false,
     },
+  },
+
+  setup() {
+    const featureFlagsStore = useFeatureFlagsStore();
+    const canUpgradeToMultiAgents = computed(
+      () => featureFlagsStore?.flags?.upgradeToMultiAgents,
+    );
+    return {
+      featureFlagsStore,
+      canUpgradeToMultiAgents,
+    };
   },
 
   data() {
@@ -382,7 +399,8 @@ export default {
 
 .tunings__actions {
   display: flex;
-  column-gap: $unnnic-spacing-md;
+  flex-direction: column;
+  gap: $unnnic-spacing-md;
 
   > * {
     flex: 1;

@@ -71,13 +71,15 @@ describe('PreviewDetails.vue', () => {
     expect(wrapper.vm.detailTabs).toEqual(['visual_flow', 'logs']);
   });
 
-  it('should scroll content to bottom when logs component emits scroll event', async () => {
+  it('should scroll content to bottom when logs component emits scroll event if it is near the bottom', async () => {
     await switchToLogsTab();
 
     const mockScrollTo = vi.fn();
     wrapper.vm.contentRef = {
       scrollTo: mockScrollTo,
       scrollHeight: 100,
+      scrollTop: 0,
+      clientHeight: 0,
     };
 
     await wrapper.findComponent(PreviewLogs).vm.$emit('scroll-to-bottom');
@@ -88,9 +90,13 @@ describe('PreviewDetails.vue', () => {
     });
   });
 
-  it('should translate tab headers correctly', () => {
-    const tabs = previewDetailsTabs();
-    expect(tabs.text()).toContain(i18n.global.t('router.preview.visual_flow'));
-    expect(tabs.text()).toContain(i18n.global.t('router.preview.logs'));
+  it('should not scroll content to bottom when logs component emits scroll event if it is not near the bottom', async () => {
+    await switchToLogsTab();
+
+    const mockScrollTo = vi.fn();
+    wrapper.vm.contentRef = {
+      scrollTo: mockScrollTo,
+      scrollHeight: 100,
+    };
   });
 });

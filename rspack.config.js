@@ -10,6 +10,7 @@ dotenv.config();
 
 // Target browsers, see: https://github.com/browserslist/browserslist
 const targets = ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = defineConfig({
   context: __dirname,
@@ -23,13 +24,16 @@ module.exports = defineConfig({
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: process.env.PUBLIC_PATH_URL || '/',
-    clean: true,
+    clean: !isDevelopment,
     filename: 'assets/js/[name]-[contenthash].js',
     chunkFilename: 'assets/js/[name]-[contenthash].js',
     assetModuleFilename: 'assets/[name]-[hash][ext]',
   },
   entry: {
     main: './src/main.js',
+  },
+  stats: {
+    warnings: false,
   },
   resolve: {
     extensions: ['...', '.js', '.vue'],
@@ -84,7 +88,7 @@ module.exports = defineConfig({
       __VUE_PROD_DEVTOOLS__: false,
       'process.env': JSON.stringify(process.env),
       'import.meta.env': JSON.stringify({
-        BASE_URL: process.env.PUBLIC_PATH_URL || '/',
+        BASE_URL: '/',
       }),
     }),
     new VueLoaderPlugin(),
@@ -125,6 +129,17 @@ module.exports = defineConfig({
         minimizerOptions: { targets },
       }),
     ],
+    moduleIds: 'deterministic',
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   },
   experiments: {
     css: true,

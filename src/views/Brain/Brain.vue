@@ -47,10 +47,7 @@
           :previewActions="previewActions"
         />
         <BrainWarningBar v-if="!routerTunings.brainOn" />
-        <Preview
-          :key="refreshPreviewValue"
-          @messages="getPreviewMessages"
-        />
+        <Preview @messages="getPreviewMessages" />
       </section>
     </section>
 
@@ -89,6 +86,7 @@ import i18n from '@/utils/plugins/i18n';
 import useBrainRoutes from '@/composables/useBrainRoutes';
 import BrainWarningBar from '@/components/Brain/BrainWarningBar.vue';
 import BrainHeaderPreview from '@/components/Brain/BrainHeaderPreview.vue';
+import { useFlowPreviewStore } from '@/store/FlowPreview';
 
 export default {
   name: 'Brain',
@@ -113,8 +111,8 @@ export default {
 
     const loadingContentBase = ref(false);
     const dropdownOpen = ref(false);
-    const refreshPreviewValue = ref(0);
     const isMobilePreviewModalOpen = ref(false);
+    const flowPreviewStore = useFlowPreviewStore();
 
     const previewMessages = ref('');
 
@@ -164,7 +162,10 @@ export default {
     );
 
     const refreshPreview = () => {
-      refreshPreviewValue.value += 1;
+      flowPreviewStore.clearMessages();
+      flowPreviewStore.previewInit({
+        contentBaseUuid: store.state.router.contentBaseUuid,
+      });
     };
 
     const exportConversations = () => {
@@ -291,7 +292,6 @@ export default {
       route,
       loadingContentBase,
       dropdownOpen,
-      refreshPreviewValue,
       isMobilePreviewModalOpen,
       files,
       sites,
