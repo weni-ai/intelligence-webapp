@@ -19,18 +19,25 @@ export default {
 
   computed: {
     html() {
-      marked.setOptions({
+      const purifiedContent = DOMPurify.sanitize(this.content);
+
+      marked.use({
         breaks: true,
-        gfm: false,
+        useNewRenderer: true,
+        renderer: {
+          link(token) {
+            return `<a target="_blank" href="${token.href || token}">${token.text || token}</a>`;
+          },
+        },
       });
 
-      const processedContent = this.content
+      const processedContent = purifiedContent
         // Convert • bullet points to proper Markdown list syntax
         .replace(/\n•\s*/g, '\n* ')
         // Handle cases where • appears at the start of content
         .replace(/^•\s*/g, '* ')
 
-      return DOMPurify.sanitize(marked.parse(processedContent));
+      return marked.parse(processedContent);
     },
   },
 };
