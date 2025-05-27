@@ -5,7 +5,6 @@
       data-test="message-input-left-button"
     >
       <ContentItemActions
-        v-if="!isAgentsTeamEnabled"
         data-test="content-item-actions"
         triggerIcon="add"
         triggerSize="md"
@@ -95,18 +94,20 @@ const attachActions = [
     ),
     onClick: () => openFileSelection('photo_and_video'),
   },
-  {
-    scheme: 'neutral-dark',
-    icon: 'attach_file',
-    text: i18n.global.t('webapp.home.bases.preview_tests_attachments.file'),
-    onClick: () => openFileSelection('document'),
-  },
-  {
-    scheme: 'neutral-dark',
-    icon: 'location_on',
-    text: i18n.global.t('webapp.home.bases.preview_tests_attachments.location'),
-    onClick: () => getGeolocalization(),
-  },
+  ...(isAgentsTeamEnabled ? [] : [  
+    {
+      scheme: 'neutral-dark',
+      icon: 'attach_file',
+      text: i18n.global.t('webapp.home.bases.preview_tests_attachments.file'),
+      onClick: () => openFileSelection('document'),
+    },
+    {
+      scheme: 'neutral-dark',
+      icon: 'location_on',
+      text: i18n.global.t('webapp.home.bases.preview_tests_attachments.location'),
+      onClick: () => getGeolocalization(),
+    },
+  ]),
 ];
 
 function openFileSelection(type) {
