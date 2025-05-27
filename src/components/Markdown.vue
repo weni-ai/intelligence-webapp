@@ -1,6 +1,7 @@
 <template>
   <section
     class="content-section"
+    data-testid="content"
     v-html="html"
   />
 </template>
