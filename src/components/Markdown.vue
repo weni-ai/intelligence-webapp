@@ -35,7 +35,7 @@ export default {
         // Convert • bullet points to proper Markdown list syntax
         .replace(/\n•\s*/g, '\n* ')
         // Handle cases where • appears at the start of content
-        .replace(/^•\s*/g, '* ')
+        .replace(/^•\s*/g, '* ');
 
       return marked.parse(processedContent);
     },
