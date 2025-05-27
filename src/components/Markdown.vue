@@ -19,7 +19,18 @@ export default {
 
   computed: {
     html() {
-      return DOMPurify.sanitize(marked.parse(this.content));
+      marked.setOptions({
+        breaks: true,
+        gfm: false,
+      });
+
+      const processedContent = this.content
+        // Convert • bullet points to proper Markdown list syntax
+        .replace(/\n•\s*/g, '\n* ')
+        // Handle cases where • appears at the start of content
+        .replace(/^•\s*/g, '* ')
+
+      return DOMPurify.sanitize(marked.parse(processedContent));
     },
   },
 };
