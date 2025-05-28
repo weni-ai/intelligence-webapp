@@ -8,6 +8,11 @@
       'preview-agent-card--animated': active && type === 'agent',
     }"
   >
+    <VueParticles
+      v-if="active && type === 'agent'"
+      class="preview-agent-card__particles"
+    />
+
     <AgentIcon
       v-if="type === 'manager'"
       icon="Manager"
@@ -51,6 +56,7 @@
 </template>
 
 <script setup>
+import VueParticles from './Particles.vue';
 import AgentIcon from '../AgentsTeam/AgentIcon.vue';
 
 defineProps({
@@ -80,6 +86,7 @@ defineProps({
 
 <style lang="scss" scoped>
 .preview-agent-card {
+  position: relative;
   box-shadow: $unnnic-shadow-level-near;
   border-radius: $unnnic-border-radius-md;
   background-color: $unnnic-color-background-white;
@@ -99,6 +106,18 @@ defineProps({
 
   transform-origin: center;
   transform-box: fill-box;
+
+  overflow: hidden;
+
+  &__particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: $unnnic-border-radius-md;
+  }
 
   &--animated {
     transform: scale(1.02);
