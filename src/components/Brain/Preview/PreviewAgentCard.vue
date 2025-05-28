@@ -8,10 +8,12 @@
       'preview-agent-card--animated': active && type === 'agent',
     }"
   >
-    <VueParticles
-      v-if="active && type === 'agent'"
-      class="preview-agent-card__particles"
-    />
+    <Transition name="fade">
+      <VueParticles
+        v-if="active && type === 'agent'"
+        class="preview-agent-card__particles"
+      />
+    </Transition>
 
     <AgentIcon
       v-if="type === 'manager'"
@@ -85,6 +87,16 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .preview-agent-card {
   position: relative;
   box-shadow: $unnnic-shadow-level-near;
