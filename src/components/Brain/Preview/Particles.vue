@@ -64,3 +64,9 @@ defineProps({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+#particles {
+  height: 100%;
+}
+</style>
