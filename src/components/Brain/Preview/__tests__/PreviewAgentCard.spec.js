@@ -66,11 +66,11 @@ describe('PreviewAgentCard.vue', () => {
       expect(agentCardIcon().exists()).toBe(false);
     });
 
-    it('should not render any icon when type is agent and not active', () => {
+    it('should not show any icon when type is agent and not active', () => {
       wrapper = createWrapper({ type: 'agent', active: false });
 
       expect(managerCardIcon().exists()).toBe(false);
-      expect(agentCardIcon().exists()).toBe(false);
+      expect(agentCardIcon().isVisible()).toBe(false);
     });
 
     it('should render agent icon when type is agent and active', () => {
