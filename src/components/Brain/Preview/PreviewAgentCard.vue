@@ -21,14 +21,25 @@
       class="preview-agent-card__agent-icon"
       :data-testid="`preview-agent-card-icon-${type}`"
     />
-    <AgentIcon
-      v-else-if="type === 'agent' && active"
-      :icon="icon"
-      class="preview-agent-card__agent-icon"
-      :data-testid="`preview-agent-card-icon-${type}`"
-    />
 
-    <section class="preview-agent-card__content">
+    <Transition
+      v-else
+      name="fade"
+    >
+      <AgentIcon
+        v-show="type === 'agent' && active"
+        :icon="icon"
+        class="preview-agent-card__agent-icon"
+        :data-testid="`preview-agent-card-icon-${type}`"
+      />
+    </Transition>
+
+    <section
+      class="preview-agent-card__content"
+      :class="{
+        'preview-agent-card__content--active': type === 'agent' && active,
+      }"
+    >
       <UnnnicIntelligenceText
         data-testid="preview-agent-card-name"
         tag="h3"
@@ -155,12 +166,28 @@ defineProps({
 
   &__content {
     overflow: hidden;
+    transition: all 0.4s ease;
+
+    &--active {
+      animation: slideInFromLeft 0.4s ease forwards;
+    }
   }
 
   .preview-agent-card__title {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 </style>
