@@ -126,7 +126,12 @@
       "tool_result_received": "Resultado de la herramienta recibido",
       "sending_response_for_manager": "Enviando respuesta para el Manager",
       "sending_final_response": "Enviando respuesta final",
-      "applying_safety_rules": "Aplicando reglas de seguridad"
+      "applying_safety_rules": "Aplicando reglas de seguridad",
+      "filter_logs": {
+        "title": "Filtrar logs",
+        "placeholder": "Pesquisar por log",
+        "categories": "Categorias"
+      }
     }
   },
   "router": {

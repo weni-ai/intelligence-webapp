@@ -209,8 +209,6 @@ function openModalLogFullDetails(summary, log) {
 const logTranslateY = 24;
 
 function updateProgressBarHeight(type = 'agent') {
-  console.log('updateProgressBarHeight', type);
-
   setTimeout(() => {
     if (!['mount', 'agent', 'step'].includes(type)) {
       throw new Error('Invalid type passed to updateProgressHeight function');
