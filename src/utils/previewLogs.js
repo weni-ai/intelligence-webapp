@@ -146,13 +146,13 @@ function getLogConfig({ trace, config }) {
       ? {
           key: finalResponse,
           summary: traceT('sending_response_for_manager'),
-          category: 'forwarding_to_manager',
+          category: 'sending_response_for_manager',
           icon: 'chat_bubble',
         }
       : {
           key: finalResponse,
           summary: traceT('sending_final_response'),
-          category: 'forwarding_to_manager',
+          category: 'sending_final_response',
           icon: 'question_answer',
         },
     {

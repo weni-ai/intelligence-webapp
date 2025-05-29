@@ -137,8 +137,8 @@
           "delegating_to_agent": "Delegando tarefa ao agente",
           "forwarding_to_manager": "Encaminhando para o Manager",
           "tool": "Tool",
-          "preparing_agent_response": "Preparando resposta do agente",
-          "preparing_final_response": "Preparando resposta final",
+          "sending_response_for_manager": "Enviando resposta para o Manager",
+          "sending_final_response": "Enviando resposta final",
           "applying_guardrails": "Aplicando regras de segurança"
         },
         "no_logs_found": "Nenhum log encontrado"

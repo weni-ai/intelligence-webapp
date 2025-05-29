@@ -79,8 +79,8 @@ const categoryOptions = computed(() => {
     'delegating_to_agent',
     'forwarding_to_manager',
     'tool',
-    'preparing_agent_response',
-    'preparing_final_response',
+    'sending_final_response',
+    'sending_response_for_manager',
     'applying_guardrails',
   ];
 
