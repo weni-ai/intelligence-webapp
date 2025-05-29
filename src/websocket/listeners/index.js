@@ -14,10 +14,7 @@ export default ({ ws, type = 'monitoring' }) => {
   }
 
   if (type === 'preview') {
-    ws.on(
-      'trace_update',
-      createTypedListener('trace_update', previewListener.addLog),
-    );
+    ws.on('trace_update', createListener(previewListener.addLog));
     ws.on('preview', createTypedListener('preview', previewListener.update));
   }
 };
