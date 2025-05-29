@@ -134,10 +134,11 @@ defineProps({
 
   &__particles {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 0;
+    transform: translateY(-50%);
     width: 100%;
-    height: 100%;
+    height: 150px;
     z-index: -1;
     border-radius: $unnnic-border-radius-md;
   }
