@@ -130,7 +130,18 @@
       "filter_logs": {
         "title": "Filtrar logs",
         "placeholder": "Pesquisar por log",
-        "categories": "Categorias"
+        "categories": {
+          "placeholder": "Categorias",
+          "knowledge": "Conhecimento",
+          "thinking": "Pensando",
+          "delegating_to_agent": "Delegando tarefa ao agente",
+          "forwarding_to_manager": "Encaminhando para o Manager",
+          "tool": "Tool",
+          "preparing_agent_response": "Preparando resposta do agente",
+          "preparing_final_response": "Preparando resposta final",
+          "applying_guardrails": "Aplicando regras de segurança"
+        },
+        "no_logs_found": "Nenhum log encontrado"
       }
     }
   },

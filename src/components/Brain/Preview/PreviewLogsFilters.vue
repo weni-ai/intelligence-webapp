@@ -57,6 +57,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { debounce } from 'lodash';
+import i18n from '@/utils/plugins/i18n';
 
 const props = defineProps({
   logs: {
@@ -72,18 +73,33 @@ const selectedCategories = ref([]);
 const showFilters = ref(false);
 
 const categoryOptions = computed(() => {
-  const categories = new Set();
+  const categories = [
+    'knowledge',
+    'thinking',
+    'delegating_to_agent',
+    'forwarding_to_manager',
+    'tool',
+    'preparing_agent_response',
+    'preparing_final_response',
+    'applying_guardrails',
+  ];
 
-  props.logs.forEach((log) => {
-    if (log.category) {
-      categories.add(log.category);
-    }
-  });
+  const placeholder = {
+    value: '',
+    label: i18n.global.t(
+      'agent_builder.traces.filter_logs.categories.placeholder',
+    ),
+  };
 
-  return Array.from(categories).map((category) => ({
-    value: category,
-    label: category,
-  }));
+  return [
+    placeholder,
+    ...categories.map((category) => ({
+      value: category,
+      label: i18n.global.t(
+        `agent_builder.traces.filter_logs.categories.${category}`,
+      ),
+    })),
+  ];
 });
 
 function toggleFilters() {
@@ -93,7 +109,9 @@ function toggleFilters() {
 function emitFiltersChanged() {
   emit('filters-changed', {
     searchTerm: searchTerm.value,
-    selectedCategories: selectedCategories.value,
+    selectedCategories: selectedCategories.value.map(
+      (category) => category.value,
+    ),
   });
 }
 

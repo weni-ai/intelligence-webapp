@@ -8,7 +8,17 @@
       @filters-changed="handleFiltersChanged"
     />
 
+    <p
+      v-if="
+        filteredLogs.length === 0 &&
+        (searchTerm.trim() || selectedCategories.length > 0)
+      "
+      class="preview-logs-section__empty"
+    >
+      {{ $t('agent_builder.traces.filter_logs.no_logs_found') }}
+    </p>
     <PreviewLogs
+      v-else
       :logs="filteredLogs"
       @scroll-to-bottom="$emit('scroll-to-bottom')"
     />
@@ -16,17 +26,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
 import PreviewLogsFilters from '@/components/Brain/Preview/PreviewLogsFilters.vue';
+import { usePreviewStore } from '@/store/Preview';
 
-const props = defineProps({
-  logs: {
-    type: Array,
-    required: true,
-  },
-});
+const previewStore = usePreviewStore();
+const logs = computed(() => previewStore.collaboratorsLogs);
 
 const emit = defineEmits(['scroll-to-bottom']);
 
@@ -41,30 +48,29 @@ function handleFiltersChanged(filters) {
 }
 
 function filterLogs() {
-  let filtered = props.logs;
+  let filtered = logs.value;
+
+  if (selectedCategories.value.length > 0) {
+    filtered = filtered.filter((log) =>
+      selectedCategories.value.includes(log.config.category),
+    );
+  }
 
   if (searchTerm.value.trim()) {
     const searchTermLower = searchTerm.value.toLowerCase().trim();
 
     filtered = filtered.filter((log) => {
-      if (!log.data) return false;
+      const logDataString = JSON.stringify(log.data).toLowerCase();
+      const logSummary = log.config.summary.toLowerCase();
 
-      const logDataString =
-        typeof log.data === 'string'
-          ? log.data.toLowerCase()
-          : JSON.stringify(log.data).toLowerCase();
-
-      return logDataString.includes(searchTermLower);
+      return (
+        logDataString.includes(searchTermLower) ||
+        logSummary.includes(searchTermLower)
+      );
     });
   }
 
-  if (selectedCategories.value.length > 0) {
-    filtered = filtered.filter((log) =>
-      selectedCategories.value.includes(log.category),
-    );
-  }
-
-  filteredLogs.value = filtered;
+  filteredLogs.value = filtered || [];
 }
 
 onMounted(() => {
@@ -72,7 +78,7 @@ onMounted(() => {
 });
 
 watch(
-  () => props.logs,
+  () => logs.value,
   () => filterLogs(),
 );
 </script>
@@ -84,5 +90,15 @@ watch(
   gap: $unnnic-spacing-sm;
 
   height: 100%;
+
+  &__empty {
+    margin: 0;
+    padding: 0;
+
+    color: $unnnic-color-neutral-clean;
+    font-family: $unnnic-font-family-secondary;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+  }
 }
 </style>

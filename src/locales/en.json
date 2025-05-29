@@ -130,7 +130,18 @@
       "filter_logs": {
         "title": "Filter logs",
         "placeholder": "Search by log",
-        "categories": "Categories"
+        "categories": {
+          "placeholder": "Categories",
+          "knowledge": "Knowledge",
+          "thinking": "Thinking",
+          "delegating_to_agent": "Delegating to agent",
+          "forwarding_to_manager": "Forwarding to Manager",
+          "tool": "Tool",
+          "preparing_agent_response": "Preparing agent response",
+          "preparing_final_response": "Preparing final response",
+          "applying_guardrails": "Applying guardrails"
+        },
+        "no_logs_found": "No logs found"
       }
     }
   },

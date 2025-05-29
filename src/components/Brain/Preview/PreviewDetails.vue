@@ -34,7 +34,6 @@
 
       <PreviewLogsSection
         v-else
-        :logs="previewStore.collaboratorsLogs"
         @scroll-to-bottom="scrollContentToBottom('near-bottom')"
       />
     </section>
@@ -46,13 +45,11 @@ import { ref, watch, nextTick } from 'vue';
 
 import PreviewLogsSection from './PreviewLogsSection.vue';
 import PreviewVisualFlow from './PreviewVisualFlow.vue';
-import { usePreviewStore } from '@/store/Preview';
 
 const selectedTab = ref('visual_flow');
 const detailTabs = ['visual_flow', 'logs'];
 
 const contentRef = ref(null);
-const previewStore = usePreviewStore();
 
 const scrollContentToBottom = (type = 'mount') => {
   const { scrollTop, clientHeight, scrollHeight } = contentRef.value;
