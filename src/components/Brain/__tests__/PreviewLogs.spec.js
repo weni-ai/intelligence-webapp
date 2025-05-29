@@ -217,8 +217,12 @@ describe('PreviewLogs.vue', () => {
 
   describe('Events', () => {
     it('emits scroll-to-bottom when updateProgressBarHeight is called', async () => {
+      vi.useFakeTimers();
       await wrapper.vm.updateProgressBarHeight();
       await nextTick();
+
+      vi.runAllTimers();
+      vi.useRealTimers();
 
       expect(wrapper.emitted('scroll-to-bottom')).toBeTruthy();
     });
