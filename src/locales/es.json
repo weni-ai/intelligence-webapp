@@ -962,6 +962,7 @@
         "preview_tests_placeholder": "Escriba un mensaje",
         "preview_tests_attachments": {
           "photos_or_videos": "Fotos y vídeos",
+          "photos": "Fotos",
           "file": "Archivo",
           "location": "Ubicación"
         },
