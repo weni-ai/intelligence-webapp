@@ -962,6 +962,7 @@
         "preview_tests_placeholder": "Type a message",
         "preview_tests_attachments": {
           "photos_or_videos": "Photos and videos",
+          "photos": "Photos",
           "file": "File",
           "location": "Location"
         },

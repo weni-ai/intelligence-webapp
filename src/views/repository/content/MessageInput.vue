@@ -5,7 +5,6 @@
       data-test="message-input-left-button"
     >
       <ContentItemActions
-        v-if="!isAgentsTeamEnabled"
         data-test="content-item-actions"
         triggerIcon="add"
         triggerSize="md"
@@ -86,7 +85,16 @@ const store = useStore();
 const inputFile = useTemplateRef('file');
 const currentAllowedMediaFormats = ref('');
 
-const attachActions = [
+const attachActions = isAgentsTeamEnabled ? [
+  {
+    scheme: 'neutral-dark',
+    icon: 'image',
+    text: i18n.global.t(
+      'webapp.home.bases.preview_tests_attachments.photos',
+    ),
+    onClick: () => openFileSelection('photo'),
+  },
+] : [
   {
     scheme: 'neutral-dark',
     icon: 'image',
@@ -111,6 +119,7 @@ const attachActions = [
 
 function openFileSelection(type) {
   const mapTypes = {
+    photo: allowedMediaFormats.image,
     photo_and_video: allowedMediaFormats.image.concat(
       allowedMediaFormats.video,
     ),
