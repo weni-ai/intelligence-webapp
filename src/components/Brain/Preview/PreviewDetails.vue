@@ -54,7 +54,7 @@ const contentRef = ref(null);
 const scrollContentToBottom = (type = 'mount') => {
   const { scrollTop, clientHeight, scrollHeight } = contentRef.value;
   const scrollPosition = scrollTop + clientHeight;
-  const isNearBottom = scrollHeight - scrollPosition <= 300;
+  const isNearBottom = scrollHeight - scrollPosition <= 400;
 
   if (type === 'mount' || isNearBottom) {
     contentRef.value.scrollTo({
