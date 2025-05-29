@@ -10,8 +10,10 @@
   >
     <Transition name="fade">
       <VueParticles
-        v-if="active && type === 'agent'"
+        v-show="active && currentTask"
+        :id="`particles-${name}`"
         class="preview-agent-card__particles"
+        :direction="bubbleDirection"
       />
     </Transition>
 
@@ -62,7 +64,7 @@
         size="body-md"
         color="weni-600"
       >
-        {{ currentTask || 'Standby' }}
+        {{ currentTask }}
       </UnnnicIntelligenceText>
     </section>
   </section>
@@ -94,6 +96,11 @@ defineProps({
     type: String,
     required: true,
   },
+  bubbleDirection: {
+    type: String,
+    default: 'none',
+    validator: (value) => ['left', 'right', 'bounce', 'none'].includes(value),
+  },
 });
 </script>
 
@@ -122,6 +129,10 @@ defineProps({
   gap: $unnnic-spacing-ant;
 
   height: fit-content;
+  min-height: calc(
+    $unnnic-font-size-body-gt + $unnnic-line-height-md * 2 +
+      $unnnic-font-size-body-gt
+  );
 
   z-index: 1;
 

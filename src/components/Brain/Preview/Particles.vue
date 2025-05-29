@@ -2,7 +2,8 @@
   <section id="particles-container">
     <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
     <vue-particles
-      id="particles"
+      :id="id"
+      class="particles"
       :options="{
         fullScreen: {
           enable: false,
@@ -21,11 +22,11 @@
             enable: false,
           },
           move: {
-            direction: 'top',
+            direction,
             enable: true,
             outModes: 'out',
             random: false,
-            speed: 0.8,
+            speed: 2,
             straight: false,
           },
           collisions: {
@@ -57,16 +58,27 @@
 defineProps({
   color: {
     type: String,
-    default: '#63B3ED',
+    default: '#00DED2',
     validator: (value) => {
-      return ['#63B3ED', '#F6AD55'].includes(value);
+      return ['#00DED2', '#F6AD55'].includes(value);
     },
+  },
+  direction: {
+    type: String,
+    default: 'none',
+    validator: (value) => {
+      return ['left', 'right', 'bounce', 'none'].includes(value);
+    },
+  },
+  id: {
+    type: String,
+    default: 'particles',
   },
 });
 </script>
 
 <style lang="scss" scoped>
-#particles {
+.particles {
   height: 100%;
 }
 </style>
