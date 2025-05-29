@@ -463,10 +463,6 @@ onMounted(() => {
     .footer__message-input {
       width: 100%;
     }
-
-    :deep(.message-input) {
-      padding-left: $unnnic-spacing-sm;
-    }
   }
 }
 </style>
