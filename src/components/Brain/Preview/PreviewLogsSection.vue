@@ -3,54 +3,56 @@
     data-testid="preview-details-logs"
     class="preview-logs-section"
   >
-    <header class="preview-logs-section__header">
-      <button
-        :class="{ 'header__filter-button--expanded': showFilters }"
-        class="header__filter-button"
-        data-testid="filter-logs-button"
-        @click="toggleFilters"
-      >
-        <UnnnicIntelligenceText
-          color="neutral-clean"
-          family="secondary"
-          size="body-gt"
+    <section class="preview-logs-section__filters">
+      <header class="filters__header">
+        <button
+          :class="{ 'header__filter-button--expanded': showFilters }"
+          class="header__filter-button"
+          data-testid="filter-logs-button"
+          @click="toggleFilters"
         >
-          {{ $t('agent_builder.traces.filter_logs.title') }}
-        </UnnnicIntelligenceText>
+          <UnnnicIntelligenceText
+            color="neutral-clean"
+            family="secondary"
+            size="body-gt"
+          >
+            {{ $t('agent_builder.traces.filter_logs.title') }}
+          </UnnnicIntelligenceText>
 
-        <UnnnicIcon
-          class="filter-button__icon"
-          icon="keyboard_arrow_up"
-          scheme="neutral-clean"
-          size="avatar-nano"
-          :class="{ 'filter-button__icon--expanded': showFilters }"
-        />
-      </button>
-    </header>
+          <UnnnicIcon
+            class="filter-button__icon"
+            icon="keyboard_arrow_down"
+            scheme="neutral-clean"
+            size="avatar-nano"
+            :class="{ 'filter-button__icon--expanded': showFilters }"
+          />
+        </button>
+      </header>
 
-    <Transition name="filters-slide">
-      <section
-        v-show="showFilters"
-        class="preview-logs-section__filters"
-      >
-        <UnnnicInput
-          v-model="searchTerm"
-          :placeholder="$t('agent_builder.traces.filter_logs.placeholder')"
-          data-testid="logs-search-input"
-          iconLeft="search"
-          class="search__input"
-        />
+      <Transition name="filters-slide">
+        <section
+          v-show="showFilters"
+          class="filters__fields"
+        >
+          <UnnnicInput
+            v-model="searchTerm"
+            :placeholder="$t('agent_builder.traces.filter_logs.placeholder')"
+            data-testid="logs-search-input"
+            iconLeft="search"
+            class="search__input"
+          />
 
-        <UnnnicSelectSmart
-          v-model:modelValue="selectedCategories"
-          :options="categoryOptions"
-          autocomplete
-          autocompleteClearOnFocus
-          multiple
-          data-testid="logs-category-filter"
-        />
-      </section>
-    </Transition>
+          <UnnnicSelectSmart
+            v-model:modelValue="selectedCategories"
+            :options="categoryOptions"
+            autocomplete
+            autocompleteClearOnFocus
+            multiple
+            data-testid="logs-category-filter"
+          />
+        </section>
+      </Transition>
+    </section>
 
     <PreviewLogs
       :logs="filteredLogs"
@@ -154,40 +156,47 @@ watch(
   display: flex;
   flex-direction: column;
   height: 100%;
-
-  &__header {
-    margin-bottom: $unnnic-spacing-xs;
-
-    .header__filter-button {
-      border: none;
-      background: none;
-      padding: 0;
-
-      cursor: pointer;
-
-      display: flex;
-      align-items: center;
-      gap: $unnnic-spacing-nano;
-
-      .filter-button__icon {
-        transition: transform 0.2s ease;
-
-        &--expanded {
-          transform: rotate(180deg);
-        }
-      }
-    }
-  }
+  gap: $unnnic-spacing-sm;
 
   &__filters {
     display: flex;
     flex-direction: column;
-    gap: $unnnic-spacing-md;
+    gap: $unnnic-spacing-xs;
 
-    .filters__search,
-    .filters__categories {
-      .search__input {
-        width: 100%;
+    .filters__header {
+      .header__filter-button {
+        border: none;
+        background: none;
+        padding: 0;
+
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        gap: $unnnic-spacing-nano;
+
+        .filter-button__icon {
+          transition: transform 0.2s ease;
+
+          &--expanded {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+
+    .filters__fields {
+      display: flex;
+      flex-direction: column;
+      gap: $unnnic-spacing-xs;
+
+      z-index: 100;
+
+      .filters__search,
+      .filters__categories {
+        .search__input {
+          width: 100%;
+        }
       }
     }
   }
