@@ -89,36 +89,43 @@ function getLogConfig({ trace, config }) {
     {
       key: knowledgeBaseLookupOutput,
       summary: traceT('search_result_received'),
+      category: 'knowledge',
       icon: 'article',
     },
     {
       key: knowledgeBaseLookupInput,
       summary: traceT('searching_knowledge_base'),
+      category: 'knowledge',
       icon: 'article',
     },
     {
       key: modelInvocationInput,
       summary: traceT('invoking_model'),
+      category: 'model',
       icon: 'workspaces',
     },
     {
       key: modelInvocationOutput,
       summary: traceT('model_response_received'),
+      category: 'model',
       icon: 'workspaces',
     },
     {
       key: rationale,
       summary: traceT('thinking'),
-      icon: 'emoji_objects',
+      category: 'thinking',
+      icon: 'lightbulb',
     },
     {
       key: agentCollaboratorInvocationInput,
       summary: traceT('delegating_to_agent'),
+      category: 'delegating_to_agent',
       icon: 'login',
     },
     {
       key: agentCollaboratorInvocationOutput,
       summary: traceT('forwarding_to_manager'),
+      category: 'forwarding_to_manager',
       icon: 'logout',
     },
     {
@@ -126,38 +133,45 @@ function getLogConfig({ trace, config }) {
       summary: traceT('executing_tool', {
         function: actionGroupInvocationInput?.function?.split('-')?.[0],
       }),
+      category: 'tool',
       icon: 'build',
     },
     {
       key: actionGroupInvocationOutput,
       summary: traceT('tool_result_received'),
+      category: 'tool',
       icon: 'build',
     },
     config?.agentName
       ? {
           key: finalResponse,
           summary: traceT('sending_response_for_manager'),
+          category: 'sending_response_for_manager',
           icon: 'chat_bubble',
         }
       : {
           key: finalResponse,
           summary: traceT('sending_final_response'),
+          category: 'sending_final_response',
           icon: 'question_answer',
         },
     {
       key: guardrailTrace,
       summary: traceT('applying_safety_rules'),
+      category: 'applying_guardrails',
       icon: 'shield',
     },
   ];
 
   let summary = '';
   let icon = '';
+  let category = '';
 
   const matched = mappingRules.find(({ key }) => key !== undefined);
   if (matched) {
     summary = matched.summary;
     icon = matched.icon;
+    category = matched.category;
   } else {
     const error = new Error('No matching trace rules found');
     error.trace = JSON.stringify(trace);
@@ -166,6 +180,7 @@ function getLogConfig({ trace, config }) {
 
   return {
     summary,
+    category,
     icon,
   };
 }
