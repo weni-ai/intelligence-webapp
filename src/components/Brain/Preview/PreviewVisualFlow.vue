@@ -95,7 +95,7 @@ const branchPositions = computed(() => {
 });
 
 function isActiveAgent(agent) {
-  return agent.id === activeAgent.value?.id;
+  return agent?.id === activeAgent.value?.id;
 }
 
 const visualFlowHeight = ref(0);
