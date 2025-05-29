@@ -8,7 +8,7 @@ vi.mock('axios', () => ({
   },
 }));
 
-vi.stubEnv('VITE_API_BASE_URL', 'http://brain.weni.com');
+vi.stubEnv('API_BASE_URL', 'http://brain.weni.com');
 
 describe('requestExternal.js', () => {
   beforeEach(() => {
@@ -42,7 +42,7 @@ describe('requestExternal.js', () => {
   });
 
   it('should handle when env variable returns a different URL', () => {
-    vi.stubEnv('VITE_API_BASE_URL', 'http://another-url.com');
+    vi.stubEnv('API_BASE_URL', 'http://another-url.com');
     requestExternal.$http('anotherToken');
     expect(axios.create).toHaveBeenCalledWith({
       baseURL: 'http://another-url.com',

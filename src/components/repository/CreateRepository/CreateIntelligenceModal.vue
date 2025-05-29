@@ -125,7 +125,7 @@ export default {
     },
 
     isOrgCanCreateContentAI() {
-      return env('VITE_ORGS_CAN_CREATE_CONTENT_AI')
+      return env('ORGS_CAN_CREATE_CONTENT_AI')
         ?.split(', ')
         .includes(this.$store.state.Auth.connectOrgUuid);
     },
