@@ -168,16 +168,21 @@ const treatedMessage = computed(() => {
 
   .message__component {
     margin-bottom: $unnnic-spacing-nano;
+    cursor: not-allowed;
 
-    :deep(button) {
-      background-color: $unnnic-color-neutral-soft;
-      color: $unnnic-color-neutral-clean;
-      cursor: not-allowed;
-      pointer-events: none;
-
-      &:hover {
+    &.quick-replies,
+    &.list-message,
+    &.catalog {
+      :deep(button) {
         background-color: $unnnic-color-neutral-soft;
         color: $unnnic-color-neutral-clean;
+        cursor: not-allowed;
+        pointer-events: none;
+
+        &:hover {
+          background-color: $unnnic-color-neutral-soft;
+          color: $unnnic-color-neutral-clean;
+        }
       }
     }
   }
