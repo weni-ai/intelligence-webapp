@@ -26,7 +26,7 @@
       <Message
         v-if="data?.source_type === 'user'"
         class="question-and-answer__question"
-        :text="data?.text"
+        :content="data"
       />
 
       <section
@@ -41,7 +41,7 @@
 
         <Message
           class="question-and-answer__answer-text"
-          :text="data?.text"
+          :content="data"
           scheme="success"
         >
           <ViewLogsButton
