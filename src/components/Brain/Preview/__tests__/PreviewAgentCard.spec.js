@@ -53,9 +53,9 @@ describe('PreviewAgentCard.vue', () => {
     expect(agentCardStatus().text()).toBe(currentTask);
   });
 
-  it('should display "Standby" when no currentTask is active', () => {
+  it('should display empty string when no currentTask is active', () => {
     wrapper = createWrapper({ currentTask: '' });
-    expect(agentCardStatus().text()).toBe('Standby');
+    expect(agentCardStatus().text()).toBe('');
   });
 
   describe('icon rendering', () => {
