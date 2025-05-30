@@ -127,6 +127,7 @@
       "sending_response_for_manager": "Sending response for Manager",
       "sending_final_response": "Sending final response",
       "applying_safety_rules": "Applying safety rules",
+      "processing_message": "Processing message",
       "filter_logs": {
         "title": "Filter logs",
         "placeholder": "Search by log",
