@@ -180,6 +180,8 @@ function getLogSummary(log) {
   }
 
   function findTraceKey(trace) {
+    if (!trace) return;
+
     return Object.keys(trace).find((key) =>
       key.toLowerCase().includes('trace'),
     );
@@ -189,7 +191,7 @@ function getLogSummary(log) {
     return 'Unknown';
   }
 
-  const logKey = findTraceKey(log.data.trace);
+  const logKey = findTraceKey(log.data.trace || log.data);
   return logKey ? formatLogKey(logKey) : 'Unknown';
 }
 

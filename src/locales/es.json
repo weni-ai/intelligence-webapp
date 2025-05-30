@@ -127,6 +127,7 @@
       "sending_response_for_manager": "Enviando respuesta para el Manager",
       "sending_final_response": "Enviando respuesta final",
       "applying_safety_rules": "Aplicando reglas de seguridad",
+      "processing_message": "Procesando mensaje",
       "filter_logs": {
         "title": "Filtrar logs",
         "placeholder": "Pesquisar por log",

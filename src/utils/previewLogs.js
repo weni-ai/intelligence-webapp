@@ -80,6 +80,7 @@ function getLogConfig({ trace, config }) {
       rationale,
     } = {},
     guardrailTrace,
+    postProcessingTrace,
   } = trace;
 
   const traceT = (key, params) =>
@@ -160,6 +161,12 @@ function getLogConfig({ trace, config }) {
       summary: traceT('applying_safety_rules'),
       category: 'applying_guardrails',
       icon: 'shield',
+    },
+    {
+      key: postProcessingTrace,
+      summary: traceT('processing_message'),
+      category: 'processing_message',
+      icon: 'autorenew',
     },
   ];
 
