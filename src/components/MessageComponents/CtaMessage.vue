@@ -7,7 +7,7 @@
       type="secondary"
       size="large"
       iconLeft="open_in_new"
-      :text="message.cta_url.display_text"
+      :text="message.cta_message.display_text"
       class="cta-message__button"
       data-testid="cta-button"
       @click="openUrl"
@@ -26,7 +26,7 @@ const props = defineProps({
 });
 
 function openUrl() {
-  const url = props.message.cta_url.url;
+  const url = props.message.cta_message.url;
   window.open(url, '_blank');
 }
 </script>
