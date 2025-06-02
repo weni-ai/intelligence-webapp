@@ -21,9 +21,8 @@
     >
       <template #components>
         <MessageComponentResolver
-          v-if="parsedJsonMessage"
           class="message__component"
-          :message="parsedJsonMessage.msg"
+          :message="parsedJsonMessage?.msg || props.content"
         />
       </template>
     </MessageDisplay>
