@@ -160,6 +160,7 @@ watch(
   () => flowPreviewStore.messages,
   (newMessages) => {
     emit('messages', newMessages);
+    scrollToLastMessage();
   },
   { deep: true },
 );
