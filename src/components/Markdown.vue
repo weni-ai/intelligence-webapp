@@ -27,6 +27,9 @@ export default {
         useNewRenderer: true,
         renderer: {
           link(token) {
+            if (token.includes('mailto:')) {
+              return token.replace('mailto:', '');
+            }
             return `<a target="_blank" href="${token.href || token}">${token.text || token}</a>`;
           },
         },
