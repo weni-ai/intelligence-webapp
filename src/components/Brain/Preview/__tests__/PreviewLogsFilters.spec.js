@@ -34,7 +34,6 @@ describe('PreviewLogsFilters.vue', () => {
         logs: mockLogs,
       },
       global: {
-        plugins: [i18n],
         stubs: {
           UnnnicIntelligenceText: {
             template: '<p><slot /></p>',
