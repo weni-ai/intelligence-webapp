@@ -278,7 +278,10 @@ const loadContentIntelligences = async () => {
       orgUuid: store.state.Auth.connectOrgUuid,
     });
 
-    store.state.Repository.publicIntelligences.data = data.results;
+    store.state.Repository.publicIntelligences.data = [
+      ...(store.state.Repository.publicIntelligences.data || []),
+      ...data.results,
+    ];
     store.state.Repository.publicIntelligences.next = data.next;
     store.state.Repository.publicIntelligences.status = 'complete';
     contentLoading.value = false;
