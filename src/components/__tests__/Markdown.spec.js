@@ -7,15 +7,15 @@ import Markdown from '../Markdown.vue';
 
 vi.mock('dompurify', () => ({
   default: {
-    sanitize: vi.fn((content) => content)
-  }
+    sanitize: vi.fn((content) => content),
+  },
 }));
 
 vi.mock('marked', () => ({
   marked: {
     use: vi.fn(),
-    parse: vi.fn((content) => content)
-  }
+    parse: vi.fn((content) => content),
+  },
 }));
 
 describe('Markdown.vue', () => {
@@ -25,7 +25,7 @@ describe('Markdown.vue', () => {
   const setWrapperContent = (content) => {
     wrapper.setProps({ content });
     return wrapper.vm.$nextTick();
-  }
+  };
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -33,7 +33,7 @@ describe('Markdown.vue', () => {
     marked.parse.mockImplementation((content) => `<p>${content}</p>`);
 
     wrapper = mount(Markdown, {
-      props: { content: 'test' }
+      props: { content: 'test' },
     });
   });
 
@@ -44,14 +44,14 @@ describe('Markdown.vue', () => {
   });
 
   describe('Component rendering', () => {
-    it('renders correctly with default props', () => {      
+    it('renders correctly with default props', () => {
       expect(content().exists()).toBe(true);
     });
 
     it('renders with provided content prop', async () => {
       const content = 'Test markdown content';
       await setWrapperContent(content);
-      
+
       expect(wrapper.props('content')).toBe(content);
     });
   });
@@ -71,8 +71,8 @@ describe('Markdown.vue', () => {
         breaks: true,
         useNewRenderer: true,
         renderer: expect.objectContaining({
-          link: expect.any(Function)
-        })
+          link: expect.any(Function),
+        }),
       });
     });
 
@@ -110,30 +110,33 @@ describe('Markdown.vue', () => {
 
   describe('Link renderer functionality', () => {
     it('creates links with target="_blank" attribute', () => {
-
       const linkRenderer = marked.use.mock.calls[0][0].renderer.link;
       const token = { href: 'https://example.com', text: 'Example' };
       const result = linkRenderer(token);
 
-      expect(result).toBe('<a target="_blank" href="https://example.com">Example</a>');
+      expect(result).toBe(
+        '<a target="_blank" href="https://example.com">Example</a>',
+      );
     });
 
     it('handles token as string for href', () => {
-
       const linkRenderer = marked.use.mock.calls[0][0].renderer.link;
       const token = 'https://example.com';
       const result = linkRenderer(token);
 
-      expect(result).toBe('<a target="_blank" href="https://example.com">https://example.com</a>');
+      expect(result).toBe(
+        '<a target="_blank" href="https://example.com">https://example.com</a>',
+      );
     });
 
     it('handles token as string for text', () => {
-
       const linkRenderer = marked.use.mock.calls[0][0].renderer.link;
       const token = 'https://example.com';
       const result = linkRenderer(token);
 
-      expect(result).toBe('<a target="_blank" href="https://example.com">https://example.com</a>');
+      expect(result).toBe(
+        '<a target="_blank" href="https://example.com">https://example.com</a>',
+      );
     });
   });
 
@@ -144,7 +147,7 @@ describe('Markdown.vue', () => {
       marked.parse.mockReturnValue(expectedHtml);
 
       wrapper = mount(Markdown, {
-        props: { content: mockContent }
+        props: { content: mockContent },
       });
 
       expect(content().html()).toContain(expectedHtml);
@@ -152,7 +155,7 @@ describe('Markdown.vue', () => {
 
     it('updates HTML when content prop changes', async () => {
       wrapper = mount(Markdown, {
-        props: { content: 'Initial content' }
+        props: { content: 'Initial content' },
       });
 
       const newContent = 'Updated content';
