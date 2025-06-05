@@ -1,6 +1,6 @@
 import env from '@/utils/env';
 
-export default (function (
+export default function (
   userEmail = null,
   h = window,
   o = document,
@@ -25,4 +25,4 @@ export default (function (
     var userId = userEmail;
     window.hj('identify', userId, {});
   }
-})();
+}
