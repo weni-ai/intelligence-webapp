@@ -26,7 +26,7 @@
       <Message
         v-if="data?.source_type === 'user'"
         class="question-and-answer__question"
-        :text="data?.text"
+        :content="data"
       />
 
       <section
@@ -40,8 +40,10 @@
         />
 
         <Message
+          v-for="(content, index) in messagesToShow"
+          :key="index"
           class="question-and-answer__answer-text"
-          :text="data?.text"
+          :content="content"
           scheme="success"
         >
           <ViewLogsButton
@@ -57,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
 import ForwardedHumanSupport from './ForwardedHumanSupport.vue';
@@ -75,6 +77,42 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+});
+
+const messagesToShow = computed(() => {
+  return treatedData.value?.components?.length > 0
+    ? treatedData.value.components.map((c) => c.msg)
+    : [treatedData.value];
+});
+
+const extractedComponents = computed(() => {
+  const rawComponents = props.data.text.split('}}\n\n');
+
+  return rawComponents
+    .map((component, index) => {
+      const isLast = index === rawComponents.length - 1;
+      const completeComponent = isLast ? component : component + '}}\n\n';
+
+      try {
+        return JSON.parse(completeComponent);
+      } catch {
+        return null;
+      }
+    })
+    .filter((component) => component !== null);
+});
+
+const treatedData = computed(() => {
+  const components = extractedComponents.value;
+
+  if (components.length > 0) {
+    return {
+      ...props.data,
+      components,
+    };
+  }
+
+  return props.data;
 });
 
 const monitoringStore = useMonitoringStore();

@@ -10,7 +10,7 @@ describe('CtaMessage.vue', () => {
   const ctaButton = () => wrapper.find('[data-testid="cta-button"]');
 
   const mockMessage = {
-    cta_url: {
+    cta_message: {
       url: 'https://example.com',
       display_text: 'Visit Example',
     },
@@ -36,7 +36,7 @@ describe('CtaMessage.vue', () => {
     it('renders button with correct text from message prop', () => {
       expect(ctaButton().exists()).toBe(true);
       expect(ctaButton().attributes('text')).toBe(
-        mockMessage.cta_url.display_text,
+        mockMessage.cta_message.display_text,
       );
     });
   });
@@ -47,7 +47,7 @@ describe('CtaMessage.vue', () => {
 
       expect(mockWindowOpen).toHaveBeenCalledTimes(1);
       expect(mockWindowOpen).toHaveBeenCalledWith(
-        mockMessage.cta_url.url,
+        mockMessage.cta_message.url,
         '_blank',
       );
     });

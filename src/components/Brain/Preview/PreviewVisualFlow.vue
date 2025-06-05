@@ -9,12 +9,9 @@
       data-testid="visual-flow-manager"
       name="Manager"
       :active="true"
-      :currentTask="
-        isActiveAgent(manager)
-          ? activeAgent?.currentTask || $t('router.preview.manager_task')
-          : $t('router.preview.manager_task')
-      "
+      :currentTask="isActiveAgent(manager) ? activeAgent?.currentTask : ''"
       type="manager"
+      bubbleDirection="bounce"
     />
 
     <BranchLines
@@ -41,10 +38,9 @@
         :name="agent.name"
         :icon="agent.icon"
         :active="isActiveAgent(agent)"
+        :bubbleDirection="index % 2 === 0 ? 'left' : 'right'"
         :currentTask="
-          isActiveAgent(agent)
-            ? activeAgent?.currentTask
-            : $t('router.preview.standby')
+          isActiveAgent(agent) ? activeAgent?.currentTask : 'Standby'
         "
         type="agent"
       />
@@ -99,7 +95,7 @@ const branchPositions = computed(() => {
 });
 
 function isActiveAgent(agent) {
-  return agent.id === activeAgent.value?.id;
+  return agent?.id === activeAgent.value?.id;
 }
 
 const visualFlowHeight = ref(0);

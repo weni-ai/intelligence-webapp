@@ -61,7 +61,7 @@ const resolvedComponent = computed(() => {
     return ListMessageComponent;
   }
 
-  if (messageData.interaction_type === 'cta_url' && messageData.cta_url) {
+  if (messageData.interaction_type === 'cta_url' && messageData.cta_message) {
     return CtaMessageComponent;
   }
 

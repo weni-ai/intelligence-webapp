@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import * as Sentry from '@sentry/vue';
+import Particles from '@tsparticles/vue3';
+import { loadSlim } from '@tsparticles/slim';
 
 import App from './App.vue';
 import router from './router';
@@ -25,6 +27,12 @@ getJwtToken().then(() => {
     const app = createApp(App);
 
     app.use(store).use(pinia).use(router).use(UnnnicSystemPlugin).use(i18n);
+
+    app.use(Particles, {
+      init: async (engine) => {
+        await loadSlim(engine);
+      },
+    });
 
     if (env('VITE_BOTHUB_WEBAPP_SENTRY')) {
       Sentry.init({
