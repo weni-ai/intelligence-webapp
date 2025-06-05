@@ -12,8 +12,8 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 
-import DorisFacePalm from '../assets/images/doris-face-palm-reaction.png';
-import DorisSignalingStop from '../assets/images/doris-signaling-to-stop.png';
+import DorisFacePalm from '@/assets/images/doris-face-palm-reaction.png';
+import DorisSignalingStop from '@/assets/images/doris-signaling-to-stop.png';
 
 const store = useStore();
 

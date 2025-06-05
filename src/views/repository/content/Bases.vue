@@ -66,7 +66,7 @@
         class="bases-list--empty"
       >
         <img
-          src="../../../assets/images/doris-yawning.png"
+          src="@/assets/images/doris-yawning.png"
           alt="Doris Yawning"
         />
 
@@ -113,7 +113,7 @@
           class="bases-list--empty"
         >
           <img
-            src="../../../assets/images/doris-doubt-reaction.png"
+            src="@/assets/images/doris-doubt-reaction.png"
             alt="Doris Doubt Reaction"
           />
 
