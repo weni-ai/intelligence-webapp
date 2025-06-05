@@ -47,9 +47,7 @@
           :previewActions="previewActions"
         />
         <BrainWarningBar v-if="!routerTunings.brainOn" />
-        <Preview
-          @messages="getPreviewMessages"
-        />
+        <Preview @messages="getPreviewMessages" />
       </section>
     </section>
 
