@@ -54,7 +54,7 @@ import { computed, nextTick, ref, watch } from 'vue';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { usePreviewStore } from '@/store/Preview';
 
-import BranchLines from '@/assets/icons/BranchLines.vue';
+import BranchLines from './BranchLines.vue';
 import PreviewAgentCard from './PreviewAgentCard.vue';
 
 const agentsTeamStore = useAgentsTeamStore();
