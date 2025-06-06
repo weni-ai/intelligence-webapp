@@ -142,7 +142,7 @@ describe('router', () => {
       return null;
     });
 
-    vi.stubEnv('VITE_INTELLIGENCE_LEGACY_URL', 'http://example.com');
+    vi.stubEnv('INTELLIGENCE_LEGACY_URL', 'http://example.com');
 
     const to = { fullPath: '/some-path' };
     const from = {};

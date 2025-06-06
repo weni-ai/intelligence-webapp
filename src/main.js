@@ -16,12 +16,14 @@ import UnnnicSystemPlugin from './utils/UnnnicSystemPlugin.js';
 import { gbKey, initializeGrowthBook } from './utils/Growthbook';
 import { getJwtToken } from './utils/jwt';
 import './utils/HandlerObstructiveError.js';
-import './utils/plugins/Hotjar.js';
+import hotjarInit from '@/utils/plugins/Hotjar';
 import env from './utils/env';
 
 getJwtToken().then(() => {
   initializeGrowthBook().then((gbInstance) => {
     iframessa.register('ai');
+
+    hotjarInit();
 
     const pinia = createPinia();
     const app = createApp(App);
