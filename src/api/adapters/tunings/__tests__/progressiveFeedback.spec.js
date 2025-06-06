@@ -34,8 +34,11 @@ describe('Tunings progressiveFeedback adapter', () => {
           description: 'Test description',
           status: 'active',
         };
-        const result = ProgressiveFeedbackAdapter.fromApi({...obj, rationale: input});
-        expect(result).toEqual({...obj, progressiveFeedback: expected});
+        const result = ProgressiveFeedbackAdapter.fromApi({
+          ...obj,
+          rationale: input,
+        });
+        expect(result).toEqual({ ...obj, progressiveFeedback: expected });
       });
     });
   });
@@ -71,9 +74,12 @@ describe('Tunings progressiveFeedback adapter', () => {
           description: 'Test description',
           status: 'active',
         };
-        const result = ProgressiveFeedbackAdapter.toApi({...obj, progressiveFeedback: input});
-        expect(result).toEqual({...obj, rationale: expected});
+        const result = ProgressiveFeedbackAdapter.toApi({
+          ...obj,
+          progressiveFeedback: input,
+        });
+        expect(result).toEqual({ ...obj, rationale: expected });
       });
     });
-  });    
+  });
 });

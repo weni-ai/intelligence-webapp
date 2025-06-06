@@ -131,4 +131,4 @@ describe('src/websocket/listeners/preview/addLog.js', () => {
       expect(mockPreviewStore.addLog).toHaveBeenCalledWith(message);
     });
   });
-}); 
+});

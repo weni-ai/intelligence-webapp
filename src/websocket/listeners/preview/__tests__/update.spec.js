@@ -59,7 +59,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
         testMessage.content,
         {
           fallbackMessage,
-        }
+        },
       );
     });
 
@@ -87,7 +87,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
       expect(mockFlowPreviewStore.treatAnswerResponse).toHaveBeenCalledWith(
         answerMessage,
         testMessage.content,
-        expect.any(Object)
+        expect.any(Object),
       );
     });
   });
@@ -123,13 +123,15 @@ describe('src/websocket/listeners/preview/update.js', () => {
         },
       };
 
-      expect(mockFlowPreviewStore.addMessage).toHaveBeenCalledWith(expectedNewAnswer);
+      expect(mockFlowPreviewStore.addMessage).toHaveBeenCalledWith(
+        expectedNewAnswer,
+      );
       expect(mockFlowPreviewStore.treatAnswerResponse).toHaveBeenCalledWith(
         expectedNewAnswer,
         testMessage.content,
         {
           fallbackMessage,
-        }
+        },
       );
     });
 
@@ -187,14 +189,12 @@ describe('src/websocket/listeners/preview/update.js', () => {
         testMessage.content,
         {
           fallbackMessage,
-        }
+        },
       );
     });
 
     it('uses i18n for fallback message', () => {
-      mockFlowPreviewStore.messages = [
-        { type: 'answer', status: 'loading' },
-      ];
+      mockFlowPreviewStore.messages = [{ type: 'answer', status: 'loading' }];
 
       const testMessage = {
         content: { type: 'broadcast', message: 'Response' },
@@ -207,16 +207,14 @@ describe('src/websocket/listeners/preview/update.js', () => {
         testMessage.content,
         {
           fallbackMessage,
-        }
+        },
       );
     });
   });
 
   describe('Different message content types', () => {
     it('handles broadcast message content', () => {
-      mockFlowPreviewStore.messages = [
-        { type: 'answer', status: 'loading' },
-      ];
+      mockFlowPreviewStore.messages = [{ type: 'answer', status: 'loading' }];
 
       const testMessage = {
         content: {
@@ -231,14 +229,12 @@ describe('src/websocket/listeners/preview/update.js', () => {
       expect(mockFlowPreviewStore.treatAnswerResponse).toHaveBeenCalledWith(
         expect.any(Object),
         testMessage.content,
-        expect.any(Object)
+        expect.any(Object),
       );
     });
 
     it('handles cancelled message content', () => {
-      mockFlowPreviewStore.messages = [
-        { type: 'answer', status: 'loading' },
-      ];
+      mockFlowPreviewStore.messages = [{ type: 'answer', status: 'loading' }];
 
       const testMessage = {
         content: {
@@ -251,16 +247,14 @@ describe('src/websocket/listeners/preview/update.js', () => {
       expect(mockFlowPreviewStore.treatAnswerResponse).toHaveBeenCalledWith(
         expect.any(Object),
         testMessage.content,
-        expect.any(Object)
+        expect.any(Object),
       );
     });
   });
 
   describe('Edge cases', () => {
     it('handles message without content', () => {
-      mockFlowPreviewStore.messages = [
-        { type: 'answer', status: 'loading' },
-      ];
+      mockFlowPreviewStore.messages = [{ type: 'answer', status: 'loading' }];
 
       const testMessage = {};
 
@@ -269,22 +263,18 @@ describe('src/websocket/listeners/preview/update.js', () => {
       expect(mockFlowPreviewStore.treatAnswerResponse).toHaveBeenCalledWith(
         expect.any(Object),
         undefined,
-        expect.any(Object)
+        expect.any(Object),
       );
     });
 
     it('handles null message', () => {
-      mockFlowPreviewStore.messages = [
-        { type: 'answer', status: 'loading' },
-      ];
+      mockFlowPreviewStore.messages = [{ type: 'answer', status: 'loading' }];
 
       expect(() => update(null)).toThrow();
     });
 
     it('handles undefined message', () => {
-      mockFlowPreviewStore.messages = [
-        { type: 'answer', status: 'loading' },
-      ];
+      mockFlowPreviewStore.messages = [{ type: 'answer', status: 'loading' }];
 
       expect(() => update(undefined)).toThrow();
     });
@@ -362,9 +352,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
         throw new Error(errorMessage);
       });
 
-      mockFlowPreviewStore.messages = [
-        { type: 'answer', status: 'loaded' },
-      ];
+      mockFlowPreviewStore.messages = [{ type: 'answer', status: 'loaded' }];
 
       const testMessage = {
         content: { type: 'broadcast', message: 'Response' },
@@ -379,9 +367,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
         throw new Error(errorMessage);
       });
 
-      mockFlowPreviewStore.messages = [
-        { type: 'answer', status: 'loading' },
-      ];
+      mockFlowPreviewStore.messages = [{ type: 'answer', status: 'loading' }];
 
       const testMessage = {
         content: { type: 'broadcast', message: 'Response' },
@@ -402,4 +388,4 @@ describe('src/websocket/listeners/preview/update.js', () => {
       expect(() => update(testMessage)).toThrow('Store initialization failed');
     });
   });
-}); 
+});

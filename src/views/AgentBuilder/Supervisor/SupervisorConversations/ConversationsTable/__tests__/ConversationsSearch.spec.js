@@ -50,7 +50,9 @@ describe('ConversationsSearch.vue', () => {
     it('renders UnnnicInput with correct props', () => {
       expect(input().exists()).toBe(true);
       expect(input().props('iconLeft')).toBe('search');
-      expect(input().props('placeholder')).toBe(i18n.global.t('agent_builder.supervisor.search'));
+      expect(input().props('placeholder')).toBe(
+        i18n.global.t('agent_builder.supervisor.search'),
+      );
     });
 
     it('initializes with empty search value', () => {
@@ -62,14 +64,14 @@ describe('ConversationsSearch.vue', () => {
     it('updates local search value when input changes', async () => {
       await input().vm.$emit('update:modelValue', 'test search');
       await nextTick();
-      
+
       expect(input().props('modelValue')).toBe('test search');
     });
 
     it('updates store filter when search value changes', async () => {
       await input().vm.$emit('update:modelValue', 'conversation search');
       await nextTick();
-      
+
       expect(store.filters.search).toBe('conversation search');
     });
 
@@ -77,7 +79,7 @@ describe('ConversationsSearch.vue', () => {
       await input().vm.$emit('update:modelValue', 'some text');
       await nextTick();
       expect(store.filters.search).toBe('some text');
-      
+
       await input().vm.$emit('update:modelValue', '');
       await nextTick();
       expect(store.filters.search).toBe('');
@@ -85,10 +87,10 @@ describe('ConversationsSearch.vue', () => {
 
     it('handles special characters in search', async () => {
       const specialText = '!@#$%^&*()_+-={}[]|\\:";\'<>?,./';
-      
+
       await input().vm.$emit('update:modelValue', specialText);
       await nextTick();
-      
+
       expect(store.filters.search).toBe(specialText);
     });
   });
@@ -96,10 +98,10 @@ describe('ConversationsSearch.vue', () => {
   describe('Edge cases', () => {
     it('handles very long search strings', async () => {
       const longText = 'a'.repeat(1000);
-      
+
       await input().vm.$emit('update:modelValue', longText);
       await nextTick();
-      
+
       expect(store.filters.search).toBe(longText);
     });
 
@@ -108,8 +110,8 @@ describe('ConversationsSearch.vue', () => {
       await input().vm.$emit('update:modelValue', 'search2');
       await input().vm.$emit('update:modelValue', 'search3');
       await nextTick();
-      
+
       expect(store.filters.search).toBe('search3');
     });
   });
-}); 
+});

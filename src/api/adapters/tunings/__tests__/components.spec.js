@@ -34,8 +34,11 @@ describe('Tunings components adapter', () => {
           description: 'Test description',
           status: 'active',
         };
-        const result = ComponentsAdapter.fromApi({...obj, use_components: input});
-        expect(result).toEqual({...obj, components: expected});
+        const result = ComponentsAdapter.fromApi({
+          ...obj,
+          use_components: input,
+        });
+        expect(result).toEqual({ ...obj, components: expected });
       });
     });
   });
@@ -71,8 +74,8 @@ describe('Tunings components adapter', () => {
           description: 'Test description',
           status: 'active',
         };
-        const result = ComponentsAdapter.toApi({...obj, components: input});
-        expect(result).toEqual({...obj, use_components: expected});
+        const result = ComponentsAdapter.toApi({ ...obj, components: input });
+        expect(result).toEqual({ ...obj, use_components: expected });
       });
     });
   });
