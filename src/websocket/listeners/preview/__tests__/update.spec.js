@@ -8,20 +8,20 @@ vi.mock('@/store/FlowPreview', () => ({
   useFlowPreviewStore: vi.fn(),
 }));
 
-const fallbackMessage = '*Unable to find an answer to this question*';  
+const fallbackMessage = '*Unable to find an answer to this question*';
 
 describe('src/websocket/listeners/preview/update.js', () => {
   let mockFlowPreviewStore;
 
   beforeEach(() => {
     setActivePinia(createPinia());
-    
+
     mockFlowPreviewStore = {
       messages: [],
       addMessage: vi.fn(),
       treatAnswerResponse: vi.fn(),
     };
-    
+
     useFlowPreviewStore.mockReturnValue(mockFlowPreviewStore);
   });
 
@@ -38,7 +38,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
         question_uuid: null,
         feedback: { value: null, reason: null },
       };
-      
+
       mockFlowPreviewStore.messages = [
         { type: 'question', text: 'Test question' },
         existingAnswer,
@@ -69,7 +69,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
         status: 'loading',
         text: 'Loading...',
       };
-      
+
       mockFlowPreviewStore.messages = [
         { type: 'question', text: 'Question 1' },
         { type: 'flowstart', name: 'Flow started' },
@@ -169,7 +169,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
         type: 'answer',
         status: 'loading',
       };
-      
+
       mockFlowPreviewStore.messages = [existingAnswer];
 
       const testMessage = {
@@ -191,7 +191,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
       );
     });
 
-    it('uses i18n for fallback message', () => {      
+    it('uses i18n for fallback message', () => {
       mockFlowPreviewStore.messages = [
         { type: 'answer', status: 'loading' },
       ];
@@ -342,7 +342,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
         { type: 'question', text: 'Test question' },
         { type: 'answer', status: 'loaded', text: 'Previous answer' },
       ];
-      
+
       mockFlowPreviewStore.messages = testMessages;
 
       const testMessage = {
@@ -361,7 +361,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
       mockFlowPreviewStore.addMessage.mockImplementation(() => {
         throw new Error(errorMessage);
       });
-      
+
       mockFlowPreviewStore.messages = [
         { type: 'answer', status: 'loaded' },
       ];
@@ -378,7 +378,7 @@ describe('src/websocket/listeners/preview/update.js', () => {
       mockFlowPreviewStore.treatAnswerResponse.mockImplementation(() => {
         throw new Error(errorMessage);
       });
-      
+
       mockFlowPreviewStore.messages = [
         { type: 'answer', status: 'loading' },
       ];

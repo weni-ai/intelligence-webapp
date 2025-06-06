@@ -13,11 +13,11 @@ describe('src/websocket/listeners/preview/addLog.js', () => {
 
   beforeEach(() => {
     setActivePinia(createPinia());
-    
+
     mockPreviewStore = {
       addLog: vi.fn(),
     };
-    
+
     usePreviewStore.mockReturnValue(mockPreviewStore);
   });
 

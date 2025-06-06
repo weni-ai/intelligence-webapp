@@ -18,4 +18,4 @@ describe('src/websocket/listeners/preview/index.js', () => {
       expect(Object.keys(previewListeners)).toEqual(['addLog', 'update']);
     });
   });
-}); 
+});
