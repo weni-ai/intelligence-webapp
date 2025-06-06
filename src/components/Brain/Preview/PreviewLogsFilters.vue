@@ -2,6 +2,7 @@
   <section
     v-if="logs.length > 0"
     class="preview-logs-filters"
+    data-testid="preview-logs-filters"
   >
     <header class="filters__header">
       <button
@@ -20,6 +21,7 @@
 
         <UnnnicIcon
           class="filter-button__icon"
+          data-testid="filter-logs-icon"
           icon="keyboard_arrow_down"
           scheme="neutral-clean"
           size="avatar-nano"
@@ -31,6 +33,7 @@
     <Transition name="filters-slide">
       <section
         v-show="showFilters"
+        data-testid="filter-logs-fields"
         class="filters__fields"
       >
         <UnnnicInput
