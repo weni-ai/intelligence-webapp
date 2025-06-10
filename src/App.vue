@@ -51,7 +51,6 @@ import { isEmpty } from 'lodash';
 import { HotjarIdentifyUser } from '@/utils/HotjarIdentifyUser.js';
 import { useAlertStore } from '@/store/Alert.js';
 import { useActionsStore } from '@/store/Actions.js';
-import { useFeatureFlagsStore } from './store/FeatureFlags';
 
 export default {
   name: 'App',
@@ -120,11 +119,6 @@ export default {
         }
       }
     });
-
-    sessionStorage.setItem(
-      'agentsTeam',
-      JSON.stringify(useFeatureFlagsStore().flags.agentsTeam),
-    );
   },
   mounted() {
     document.title = this.dynamicTitle;
