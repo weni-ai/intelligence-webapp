@@ -748,11 +748,6 @@
       "register": "Registrarse",
       "create_bot": "Crear inteligencia"
     },
-    "safari_alert": {
-      "title": "Navegador no soportado",
-      "text": "Su navegador aún no es compatible con este servicio 😥 Recomendamos usar la plataforma en otro navegador, ya que uno de los que se enumeran a continuación:",
-      "button": "← Volver a la página de inicio"
-    },
     "analyze_text": {
       "grid1": "Haga una solicitud HTTP al servicio de NLP, siga el siguiente ejemplo.",
       "method_send": "Cuerpo de POST:",
