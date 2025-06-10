@@ -106,6 +106,7 @@ const router = createRouter({
 
         if (useFeatureFlagsStore().flags.agentsTeam) {
           next({ name: 'agent-builder' });
+          sessionStorage.setItem('agentsTeam', JSON.stringify(true));
         }
 
         const { data } = await nexusaiAPI.router.read({
@@ -158,6 +159,7 @@ const router = createRouter({
 
         if (!useFeatureFlagsStore().flags.agentsTeam) {
           next({ name: 'router' });
+          sessionStorage.setItem('agentsTeam', JSON.stringify(false));
         }
 
         const { data } = await nexusaiAPI.router.read({
