@@ -2,6 +2,7 @@
   <UnnnicInput
     v-model="search"
     iconLeft="search"
+    data-testid="search-input"
     :placeholder="$t('agent_builder.supervisor.search')"
   />
 </template>
