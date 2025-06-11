@@ -53,6 +53,7 @@ const getMultiAgentsEnabled = async () => {
 
   useFeatureFlagsStore().editUpgradeToMultiAgents(data.can_view);
   projectStore.updateIsMultiAgents(data.multi_agents);
+  sessionStorage.setItem('agentsTeam', JSON.stringify(data.multi_agents));
 };
 
 const router = createRouter({
@@ -106,7 +107,6 @@ const router = createRouter({
 
         if (useFeatureFlagsStore().flags.agentsTeam) {
           next({ name: 'agent-builder' });
-          sessionStorage.setItem('agentsTeam', JSON.stringify(true));
         }
 
         const { data } = await nexusaiAPI.router.read({
@@ -159,7 +159,6 @@ const router = createRouter({
 
         if (!useFeatureFlagsStore().flags.agentsTeam) {
           next({ name: 'router' });
-          sessionStorage.setItem('agentsTeam', JSON.stringify(false));
         }
 
         const { data } = await nexusaiAPI.router.read({
