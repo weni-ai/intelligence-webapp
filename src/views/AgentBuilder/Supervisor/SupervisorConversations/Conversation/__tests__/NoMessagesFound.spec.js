@@ -5,7 +5,7 @@ import { useProjectStore } from '@/store/Project';
 
 import NoMessagesFound from '../NoMessagesFound.vue';
 
-vi.stubEnv('VITE_CONNECT_URL', 'https://connect.example.com');
+vi.stubEnv('CONNECT_URL', 'https://connect.example.com');
 
 vi.mock('@/store/Project', () => ({
   useProjectStore: vi.fn().mockReturnValue({

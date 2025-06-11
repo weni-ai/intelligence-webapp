@@ -34,7 +34,7 @@
       >
         <template #studio_link>
           <a
-            :href="`${env('VITE_CONNECT_URL')}/projects/${projectStore.uuid}/studio/contact`"
+            :href="`${env('CONNECT_URL')}/projects/${projectStore.uuid}/studio/contact`"
             class="no-messages-found__link"
             target="_blank"
             data-testid="studio-link"
