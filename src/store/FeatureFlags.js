@@ -34,7 +34,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
       isOrgEnabledForFlag('FF_ORGS_WITH_AGENTS_TEAM') ||
       isProjectEnabledForFlag('FF_PROJECTS_WITH_AGENTS_TEAM'),
     upgradeToMultiAgents,
-    supervisorExport: isProjectEnabledForFlag('VITE_FF_SUPERVISOR_EXPORT'),
+    supervisorExport: isProjectEnabledForFlag('FF_SUPERVISOR_EXPORT'),
   }));
 
   function editUpgradeToMultiAgents(value) {
