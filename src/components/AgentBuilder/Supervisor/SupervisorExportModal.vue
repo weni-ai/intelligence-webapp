@@ -72,7 +72,7 @@
     >
       {{ $t('agent_builder.supervisor.export.token_help') }}
       <a
-        :href="`${env('VITE_CONNECT_URL')}/projects/${projectStore.uuid}/settings`"
+        :href="`${env('CONNECT_URL')}/projects/${projectStore.uuid}/settings`"
         class="help-text__link"
         target="_blank"
       >
