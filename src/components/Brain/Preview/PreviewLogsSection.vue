@@ -4,6 +4,7 @@
     class="preview-logs-section"
   >
     <PreviewLogsFilters
+      data-testid="preview-logs-filters"
       :logs="logs"
       @filters-changed="handleFiltersChanged"
     />
@@ -14,11 +15,13 @@
         (searchTerm.trim() || selectedCategories.length > 0)
       "
       class="preview-logs-section__empty"
+      data-testid="preview-logs-section-empty"
     >
       {{ $t('agent_builder.traces.filter_logs.no_logs_found') }}
     </p>
     <PreviewLogs
       v-else
+      data-testid="preview-logs"
       :logs="filteredLogs"
       @scroll-to-bottom="$emit('scroll-to-bottom')"
     />
