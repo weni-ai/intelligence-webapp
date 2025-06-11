@@ -160,6 +160,7 @@ watch(
   () => flowPreviewStore.messages,
   (newMessages) => {
     emit('messages', newMessages);
+    scrollToLastMessage();
   },
   { deep: true },
 );
@@ -462,10 +463,6 @@ onMounted(() => {
 
     .footer__message-input {
       width: 100%;
-    }
-
-    :deep(.message-input) {
-      padding-left: $unnnic-spacing-sm;
     }
   }
 }

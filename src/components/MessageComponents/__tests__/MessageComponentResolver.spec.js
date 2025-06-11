@@ -56,7 +56,10 @@ describe('MessageComponentResolver.vue', () => {
     it('renders CtaMessageComponent when message has interaction_type="cta_url"', () => {
       const message = {
         interaction_type: 'cta_url',
-        cta_url: 'https://example.com',
+        cta_message: {
+          url: 'https://example.com',
+          display_text: 'Visit Example',
+        },
       };
       setupWrapper(message);
 

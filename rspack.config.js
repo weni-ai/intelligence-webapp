@@ -129,17 +129,6 @@ module.exports = defineConfig({
         minimizerOptions: { targets },
       }),
     ],
-    moduleIds: 'deterministic',
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
   },
   experiments: {
     css: true,

@@ -1,7 +1,7 @@
 <template>
   <section class="intelligences-list--empty">
     <img
-      src="../../assets/images/doris-doubt-reaction.png"
+      :src="DorisDoubtReaction"
       alt="Doris Doubt Reaction"
     />
 
@@ -10,6 +10,10 @@
     </p>
   </section>
 </template>
+
+<script setup>
+import DorisDoubtReaction from '@/assets/images/doris-doubt-reaction.png';
+</script>
 
 <style lang="scss" scoped>
 .intelligences-list--empty {

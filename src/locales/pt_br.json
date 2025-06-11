@@ -126,7 +126,24 @@
       "tool_result_received": "Resultado da tool recebido",
       "sending_response_for_manager": "Enviando resposta para o Manager",
       "sending_final_response": "Enviando resposta final",
-      "applying_safety_rules": "Aplicando regras de segurança"
+      "applying_safety_rules": "Aplicando regras de segurança",
+      "processing_message": "Processando mensagem",
+      "filter_logs": {
+        "title": "Filtrar logs",
+        "placeholder": "Pesquisar por log",
+        "categories": {
+          "placeholder": "Categorias",
+          "knowledge": "Conhecimento",
+          "thinking": "Pensando",
+          "delegating_to_agent": "Delegando tarefa ao agente",
+          "forwarding_to_manager": "Encaminhando para o Manager",
+          "tool": "Tool",
+          "sending_response_for_manager": "Enviando resposta para o Manager",
+          "sending_final_response": "Enviando resposta final",
+          "applying_guardrails": "Aplicando regras de segurança"
+        },
+        "no_logs_found": "Nenhum log encontrado"
+      }
     }
   },
   "router": {
@@ -944,6 +961,7 @@
         "preview_tests_placeholder": "Digite uma mensagem",
         "preview_tests_attachments": {
           "photos_or_videos": "Fotos e vídeos",
+          "photos": "Fotos",
           "file": "Arquivo",
           "location": "Localização"
         },
