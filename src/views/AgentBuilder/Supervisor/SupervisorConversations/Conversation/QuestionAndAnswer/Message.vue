@@ -4,6 +4,7 @@
       'question-and-answer__message',
       `question-and-answer__message--${scheme}`,
     ]"
+    data-testid="message"
   >
     <template v-if="treatedMessage.images.length">
       <img
@@ -12,17 +13,20 @@
         :src="image.url"
         :alt="image.alt"
         class="message__image"
+        data-testid="image"
       />
     </template>
 
     <MessageDisplay
       v-if="treatedMessage.text"
       :message="treatedMessage"
+      data-testid="message-display"
     >
       <template #components>
         <MessageComponentResolver
           class="message__component"
           :message="parsedJsonMessage?.msg || props.content"
+          data-testid="message-component"
         />
       </template>
     </MessageDisplay>
@@ -32,6 +36,7 @@
       class="message__audio"
       :src="treatedMessage.audio.url"
       :canDiscard="false"
+      data-testid="audio-recorder"
     />
 
     <slot />

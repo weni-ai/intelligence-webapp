@@ -2,6 +2,7 @@
   <section class="human-support">
     <header class="human-support__header">
       <UnnnicIntelligenceText
+        data-testid="title"
         tag="p"
         family="secondary"
         color="neutral-darkest"
@@ -17,15 +18,18 @@
         v-if="loading"
         label
         element="textarea"
+        data-testid="form-loading"
       />
 
       <template v-else>
         <SettingsField
           v-model="tunings.settings.data.humanSupport"
+          data-testid="field"
           :textRight="$t('profile.human_support.title')"
           :description="$t('router.tunings.settings.human_support.description')"
         />
         <UnnnicFormElement
+          data-testid="form-element"
           class="form__element"
           :label="$t('profile.human_support.fields.rules.title')"
           :error="error ? $t('profile.invalid_field') : ''"
@@ -33,6 +37,7 @@
         >
           <UnnnicTextArea
             v-model="tunings.settings.data.humanSupportPrompt"
+            data-testid="textarea"
             :placeholder="$t('profile.human_support.fields.rules.placeholder')"
             :type="error ? 'error' : 'normal'"
             :disabled="!humanSupport"

@@ -6,7 +6,7 @@
       size="body-lg"
       color="neutral-darkest"
       weight="bold"
-      data-testid="credentials-description"
+      data-testid="title"
     >
       {{ $t('router.tunings.settings.agents_preview.title') }}
     </UnnnicIntelligenceText>
@@ -14,6 +14,7 @@
     <form class="agents-preview__form">
       <SettingsField
         v-model="tuningsStore.settings.data.progressiveFeedback"
+        data-testid="progressive-feedback"
         :textRight="
           $t(
             'router.tunings.settings.agents_preview.agents_progressive_feedback.title',
@@ -28,6 +29,7 @@
 
       <SettingsField
         v-model="tuningsStore.settings.data.components"
+        data-testid="components"
         :textRight="
           $t(
             'router.tunings.settings.agents_preview.multiple_message_format.title',

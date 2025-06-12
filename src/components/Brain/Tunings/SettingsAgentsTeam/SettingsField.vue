@@ -1,12 +1,17 @@
 <template>
-  <section class="form__field">
+  <section
+    class="form__field"
+    data-testid="field"
+  >
     <UnnnicSwitch
+      data-testid="switch"
       :modelValue="modelValue"
       :textRight="textRight"
       @update:model-value="emit('update:modelValue', $event)"
     />
 
     <UnnnicIntelligenceText
+      data-testid="description"
       tag="p"
       family="secondary"
       size="body-gt"

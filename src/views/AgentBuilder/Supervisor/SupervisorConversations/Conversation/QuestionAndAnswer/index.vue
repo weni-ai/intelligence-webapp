@@ -20,29 +20,34 @@
     <ForwardedHumanSupport
       v-else-if="data.forwarded_human_support"
       class="question-and-answer__forwarded-human-support"
+      data-testid="forwarded-human-support"
     />
 
     <template v-else>
       <Message
         v-if="data?.source_type === 'user'"
         class="question-and-answer__question"
+        data-testid="question"
         :content="data"
       />
 
       <section
         v-if="data?.source_type === 'agent'"
         class="question-and-answer__answer"
+        data-testid="answer"
       >
         <PreviewLogs
           v-if="showLogs"
           :logs="logs"
           logsSide="right"
+          data-testid="preview-logs"
         />
 
         <Message
           v-for="(content, index) in messagesToShow"
           :key="index"
           class="question-and-answer__answer-text"
+          data-testid="answer-text"
           :content="content"
           scheme="success"
         >
@@ -50,6 +55,7 @@
             :disabled="loadingLogs"
             :loading="loadingLogs"
             :active="showLogs"
+            data-testid="view-logs-button"
             @click="handleShowLogs"
           />
         </Message>
