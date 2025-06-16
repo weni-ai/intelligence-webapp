@@ -14,7 +14,7 @@ export default mergeConfig(
       coverage: {
         all: true,
         provider: 'istanbul',
-        reporter: ['text', 'json-summary', 'html'],
+        reporter: ['text', 'json', 'json-summary', 'html'],
         reportsDirectory: './coverage',
         include: ['src/**/*.{vue,js,ts}'],
         exclude: ['src/main.js', '**/__tests__/**'],

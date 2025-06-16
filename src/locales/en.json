@@ -748,11 +748,6 @@
       "register": "Register",
       "create_bot": "Create bot"
     },
-    "safari_alert": {
-      "title": "Unsupported browser",
-      "text": "Your browser isn’t compatible with this service yet 😥 We recommend the usage of the platform on another browser, such as the ones listed below:",
-      "button": "← Go back to the main page"
-    },
     "analyze_text": {
       "grid1": "Make a HTTP request to NLP service, follow the example below.",
       "method_send": "POST Body:",

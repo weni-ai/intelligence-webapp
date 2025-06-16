@@ -1,5 +1,6 @@
 <template>
   <button
+    data-testid="view-logs-button"
     :class="[
       'question-and-answer__view-logs-button',
       {
@@ -12,6 +13,7 @@
     <section class="view-logs-button__icon-loading">
       <UnnnicIconLoading
         v-if="loading"
+        data-testid="icon-loading"
         size="sm"
         scheme="weni-300"
         class="icon-loading__icon"
@@ -21,6 +23,7 @@
     <section class="view-logs-button__content">
       <UnnnicIcon
         :icon="active ? 'visibility_off' : 'visibility'"
+        data-testid="icon-visibility"
         size="xs"
         scheme="weni-300"
         class="view-logs-button__icon-visibility"
@@ -30,6 +33,7 @@
         family="secondary"
         size="body-md"
         tag="p"
+        data-testid="button-text"
       >
         {{
           active

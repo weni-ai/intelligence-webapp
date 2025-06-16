@@ -122,7 +122,6 @@ export default {
   },
   mounted() {
     document.title = this.dynamicTitle;
-    this.safariDetected();
     window.parent.postMessage(
       {
         event: 'getConnectBaseURL',
@@ -159,14 +158,6 @@ export default {
         }
       }
       return true;
-    },
-    safariDetected() {
-      if (
-        navigator.userAgent.indexOf('Safari') !== -1 &&
-        navigator.userAgent.indexOf('Chrome') === -1
-      ) {
-        this.$router.push('/safariAlert/');
-      }
     },
     translateAllLinks() {
       if (!this.connectBaseURL) {
