@@ -28,11 +28,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
   const upgradeToMultiAgents = ref(false);
 
   const flags = computed(() => ({
-    agentsTeam:
-      useProjectStore().isMultiAgents ||
-      growthbook?.isOn('agent_builder_2') ||
-      isOrgEnabledForFlag('FF_ORGS_WITH_AGENTS_TEAM') ||
-      isProjectEnabledForFlag('FF_PROJECTS_WITH_AGENTS_TEAM'),
+    agentsTeam: useProjectStore().isMultiAgents,
     upgradeToMultiAgents,
     supervisorExport: isProjectEnabledForFlag('FF_SUPERVISOR_EXPORT'),
   }));
