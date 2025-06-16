@@ -64,6 +64,7 @@ getJwtToken().then(() => {
     app.component('UnnnicIntelligenceText', UnnnicIntelligenceText);
 
     app.provide(gbKey, gbInstance);
+
     app.mount('#app');
   });
 });
