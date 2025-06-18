@@ -1,16 +1,23 @@
 <template>
   <section class="profile__instructions">
     <section>
-      <p class="instructions__title">
+      <p
+        class="instructions__title"
+        data-testid="instructions-title"
+      >
         {{ $t('profile.instructions.title') }}
       </p>
-      <p class="instructions__subtitle">
+      <p
+        class="instructions__subtitle"
+        data-testid="instructions-subtitle"
+      >
         {{ $t('profile.instructions.sub_title') }}
       </p>
     </section>
 
     <LoadingFormElement
       v-if="loading"
+      data-testid="loading-instructions"
       label
     />
 
@@ -27,13 +34,13 @@
         <section class="element__form">
           <UnnnicInput
             v-model="instruction.instruction"
-            :data-test="`instruction-${index}`"
+            :data-testid="`instruction-${index}`"
             :placeholder="$t('profile.instructions.instruction.placeholder')"
           />
           <UnnnicButtonIcon
             v-bind="$props"
             icon="delete"
-            :data-test="`btn-delete-inst-${index}`"
+            :data-testid="`btn-delete-inst-${index}`"
             class="btn-color"
             size="small"
             @click="handleShowRemoveModal(index)"
@@ -42,12 +49,15 @@
       </UnnnicFormElement>
     </section>
 
-    <LoadingFormElement v-if="loading" />
+    <LoadingFormElement
+      v-if="loading"
+      data-testid="loading-add-instruction"
+    />
 
     <UnnnicButton
       v-else
       class="instructions__add-button"
-      data-test="btn-add-instruction"
+      data-testid="btn-add-instruction"
       size="large"
       :text="$t('profile.instructions.add_instruction_btn')"
       type="tertiary"
@@ -66,11 +76,12 @@
     :description="$t('profile.instructions.modals.description')"
     :closeIcon="false"
     class="modal-remove-instructions"
-    data-test="remove-modal"
+    data-testid="remove-modal"
   >
     <template #options>
       <UnnnicButton
         type="tertiary"
+        data-testid="btn-back-inst"
         @click="showRemoveModal = false"
       >
         {{ $t('profile.instructions.modals.back_btn') }}
@@ -79,7 +90,7 @@
       <UnnnicButton
         type="warning"
         :loading="removing"
-        data-test="btn-remove-inst"
+        data-testid="btn-remove-inst"
         @click="removeInstruction"
       >
         {{ $t('profile.instructions.modals.remove_btn') }}

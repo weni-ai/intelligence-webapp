@@ -1,6 +1,7 @@
 <template>
   <section
     ref="mapElement"
+    data-testid="map-viewport"
     class="map-viewport"
   />
 </template>

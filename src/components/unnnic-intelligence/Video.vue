@@ -2,12 +2,17 @@
   <section
     class="unnnic-video__container"
     :class="{ 'is-fullscreen': isFullcreen }"
+    data-testid="video-container"
   >
     <video
       ref="player"
       class="unnnic-video__video"
+      data-testid="video-player"
     >
-      <source :src="src" />
+      <source
+        :src="src"
+        data-testid="video-source"
+      />
     </video>
   </section>
 </template>
