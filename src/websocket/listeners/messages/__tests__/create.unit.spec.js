@@ -1,31 +1,64 @@
 import { vi, describe, it, expect, beforeEach } from 'vitest';
-
+import { createTestingPinia } from '@pinia/testing';
 import { useMonitoringStore } from '@/store/Monitoring';
-
-import createMessage from '../create';
+import createMessageListener from '../create';
 
 vi.mock('@/store/Monitoring', () => ({
   useMonitoringStore: vi.fn(),
 }));
 
-describe('createMessage', () => {
-  let createNewMessageMock;
+describe('createMessageListener', () => {
+  let monitoringStore;
 
   beforeEach(() => {
-    createNewMessageMock = vi.fn();
+    monitoringStore = {
+      createNewMessage: vi.fn(),
+    };
 
-    useMonitoringStore.mockReturnValue({
-      createNewMessage: createNewMessageMock,
-    });
-
+    useMonitoringStore.mockReturnValue(monitoringStore);
     vi.clearAllMocks();
   });
 
-  it('should call createNewMessage with the correct message', () => {
-    const message = 'test-message';
+  describe('Message creation', () => {
+    it('should call monitoringStore.createNewMessage with the correct message', () => {
+      const message = { id: 1, content: 'Test message', timestamp: Date.now() };
 
-    createMessage(message);
+      createMessageListener(message);
 
-    expect(createNewMessageMock).toHaveBeenCalledWith({ message });
+      expect(useMonitoringStore).toHaveBeenCalled();
+      expect(monitoringStore.createNewMessage).toHaveBeenCalledWith({
+        message,
+      });
+    });
+
+    it('should handle empty message object', () => {
+      const message = {};
+
+      createMessageListener(message);
+
+      expect(monitoringStore.createNewMessage).toHaveBeenCalledWith({
+        message,
+      });
+    });
+
+    it('should handle null message', () => {
+      const message = null;
+
+      createMessageListener(message);
+
+      expect(monitoringStore.createNewMessage).toHaveBeenCalledWith({
+        message,
+      });
+    });
+
+    it('should handle undefined message', () => {
+      const message = undefined;
+
+      createMessageListener(message);
+
+      expect(monitoringStore.createNewMessage).toHaveBeenCalledWith({
+        message,
+      });
+    });
   });
 });
