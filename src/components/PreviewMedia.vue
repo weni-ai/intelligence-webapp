@@ -2,28 +2,33 @@
   <img
     v-if="mediaType === 'image'"
     class="preview-media"
+    data-testid="preview-media-image"
     :src="mediaUrl"
   />
 
   <UnnnicIntelligenceVideo
     v-else-if="mediaType === 'video'"
     class="preview-media"
+    data-testid="preview-media-video"
     :src="mediaUrl"
   />
 
   <PreviewDocument
     v-else-if="mediaType === 'document'"
+    data-testid="preview-media-document"
     :document="media"
   />
 
   <MapViewport
     v-else-if="mediaType === 'geolocation'"
+    data-testid="preview-media-geolocation"
     :geolocation="media"
   />
 
   <UnnnicAudioRecorder
     v-else-if="mediaType === 'audio'"
     class="preview-media--audio"
+    data-testid="preview-media-audio"
     :src="mediaUrl"
     :canDiscard="false"
   />
