@@ -103,6 +103,21 @@ describe('WebSocketSetup', () => {
     });
   });
 
+  describe('disconnect', () => {
+    it('should clear the ping interval and close the WebSocket', () => {
+      const spyClearPingInterval = vi.spyOn(
+        webSocketSetup,
+        'clearPingInterval',
+      );
+      const spyClose = vi.spyOn(webSocketSetup.ws.ws, 'close');
+
+      webSocketSetup.disconnect();
+
+      expect(spyClearPingInterval).toHaveBeenCalled();
+      expect(spyClose).toHaveBeenCalled();
+    });
+  });
+
   describe('reconnect', () => {
     it('should close the current WebSocket and call connect', () => {
       const spyConnect = vi.spyOn(webSocketSetup, 'connect');

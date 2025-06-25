@@ -1,8 +1,11 @@
 <template>
-  <section class="settings-agents-team">
-    <AgentsPreview />
+  <section
+    class="settings-agents-team"
+    data-testid="settings-agents-team"
+  >
+    <AgentsPreview data-testid="agents-preview" />
 
-    <HumanSupport />
+    <HumanSupport data-testid="human-support" />
   </section>
 </template>
 
