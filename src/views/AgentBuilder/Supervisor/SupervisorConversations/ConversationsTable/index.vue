@@ -135,8 +135,13 @@ watch(selectedConversationIndex, (newConversation) => {
 
 watch(
   () => supervisorStore.filters,
-  () => {
-    supervisorStore.loadConversations();
+  async () => {
+    await supervisorStore.loadConversations();
+
+    const { selectedConversation, filters } = supervisorStore;
+    if (filters.conversationId && !selectedConversation) {
+      supervisorStore.selectConversation(filters.conversationId);
+    }
   },
   { immediate: true, deep: true },
 );

@@ -22,35 +22,43 @@
 </template>
 
 <script setup>
-import { computed, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed, onBeforeMount, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 import SupervisorHeader from './SupervisorHeader.vue';
 import SupervisorConversations from './SupervisorConversations/index.vue';
 import Conversation from './SupervisorConversations/Conversation/index.vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
+import { cleanParams } from '@/utils/http';
 
 const supervisorStore = useSupervisorStore();
-const route = useRoute();
 const router = useRouter();
 
 const selectedConversation = computed(() => {
   return supervisorStore.selectedConversation;
 });
 
+function updateQuery() {
+  const cleanedFilters = cleanParams(supervisorStore.filters);
+  router.replace({
+    query: {
+      ...cleanedFilters,
+    },
+  });
+}
+
 watch(
   () => supervisorStore.filters,
   (filters) => {
-    router.replace({
-      query: {
-        ...route.query,
-        ...filters,
-      },
-    });
+    updateQuery();
   },
   { deep: true },
 );
+
+onBeforeMount(() => {
+  updateQuery();
+});
 </script>
 
 <style lang="scss">

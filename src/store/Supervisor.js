@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, subDays } from 'date-fns';
 import globalStore from '.';
 import { useAlertStore } from './Alert';
+import { useRoute } from 'vue-router';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 
@@ -13,6 +14,9 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const projectUuid = computed(() => globalStore.state.Auth.connectProjectUuid);
   const supervisorApi = nexusaiAPI.agent_builder.supervisor;
   const alertStore = useAlertStore();
+  const route = useRoute();
+  const last7Days = format(subDays(new Date(), 7), 'yyyy-MM-dd');
+  const today = format(new Date(), 'yyyy-MM-dd');
 
   const forwardStats = reactive({
     status: null,
@@ -30,10 +34,11 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const selectedConversation = ref(null);
 
   const filters = reactive({
-    start: '',
-    end: '',
-    search: '',
-    type: '',
+    start: route.query.start || last7Days,
+    end: route.query.end || today,
+    search: route.query.search || '',
+    type: route.query.type || '',
+    conversationId: route.query.conversationId || '',
   });
 
   async function loadForwardStats() {
@@ -128,11 +133,12 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   function selectConversation(conversationId) {
     if (!conversationId) {
       selectedConversation.value = null;
+      filters.conversationId = '';
       return;
     }
 
     const conversation = conversations.data.results.find(
-      (conversation) => conversation.id === conversationId,
+      (conversation) => conversation.id == conversationId,
     );
 
     selectedConversation.value = {
@@ -141,6 +147,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
         status: null,
       },
     };
+    filters.conversationId = conversationId;
   }
 
   async function exportSupervisorData({ token }) {

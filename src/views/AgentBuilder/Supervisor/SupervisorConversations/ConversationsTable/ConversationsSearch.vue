@@ -15,7 +15,7 @@ import { useSupervisorStore } from '@/store/Supervisor';
 
 const supervisorStore = useSupervisorStore();
 
-const search = ref('');
+const search = ref(supervisorStore.filters.search);
 
 watch(
   () => search.value,

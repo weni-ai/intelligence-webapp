@@ -35,7 +35,7 @@ import SupervisorExportModal from '@/components/AgentBuilder/Supervisor/Supervis
 import { useSupervisorStore } from '@/store/Supervisor';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 
-import { format, subDays } from 'date-fns';
+import { format } from 'date-fns';
 import { computed, ref, watch } from 'vue';
 
 const supervisorStore = useSupervisorStore();
@@ -43,12 +43,11 @@ const featureFlagsStore = useFeatureFlagsStore();
 
 const showExport = computed(() => featureFlagsStore.flags.supervisorExport);
 
-const last7Days = format(subDays(new Date(), 7), 'yyyy-MM-dd');
 const today = format(new Date(), 'yyyy-MM-dd');
 
 const dateFilter = ref({
-  start: last7Days,
-  end: today,
+  start: supervisorStore.filters.start,
+  end: supervisorStore.filters.end,
 });
 
 watch(
