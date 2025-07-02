@@ -85,6 +85,13 @@
       }
     },
     "supervisor": {
+      "conversations_count": "{count} conversas encontradas",
+      "unnamed_contact": "Contato sem nome",
+      "status": {
+        "in_progress": "Em progresso",
+        "resolved": "Resolvido",
+        "unresolved": "Não resolvido"
+      },
       "attended_by_agent": {
         "title": "Atendido pelo agente",
         "tooltip": "Conversas resolvidas pelo agente"
