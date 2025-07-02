@@ -1,16 +1,40 @@
 <template>
-  <section class="preview-document">
+  <section
+    class="preview-document"
+    data-testid="preview-document"
+  >
     <UnnnicIcon
       :icon="documentIcon"
       scheme="neutral-white"
       size="md"
+      data-testid="document-icon"
     />
     <section class="preview-document__infos">
-      <p class="infos__name">{{ document?.name }}</p>
+      <p
+        class="infos__name"
+        data-testid="document-name"
+      >
+        {{ document?.name }}
+      </p>
       <section class="infos__technical">
-        <p class="technical__extension">{{ documentExtension }}</p>
-        <p class="technical__separator">•</p>
-        <p class="technical__size">{{ documentSize }}</p>
+        <p
+          class="technical__extension"
+          data-testid="document-extension"
+        >
+          {{ documentExtension }}
+        </p>
+        <p
+          class="technical__separator"
+          data-testid="document-separator"
+        >
+          •
+        </p>
+        <p
+          class="technical__size"
+          data-testid="document-size"
+        >
+          {{ documentSize }}
+        </p>
       </section>
     </section>
   </section>
