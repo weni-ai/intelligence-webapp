@@ -38,6 +38,18 @@ vi.mock('@/api/nexusaiAPI', () => ({
   },
 }));
 
+vi.mock('vue-router', () => ({
+  useRoute: vi.fn().mockReturnValue({
+    query: {
+      start: '2023-01-01',
+      end: '2023-01-31',
+      search: '',
+      type: '',
+      conversationId: '',
+    },
+  }),
+}));
+
 describe('ConversationsTable.vue', () => {
   let wrapper;
   let supervisorStore;

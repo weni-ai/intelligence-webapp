@@ -9,6 +9,18 @@ import ConversationsSearch from '../ConversationsSearch.vue';
 import { useSupervisorStore } from '@/store/Supervisor';
 import i18n from '@/utils/plugins/i18n';
 
+vi.mock('vue-router', () => ({
+  useRoute: vi.fn().mockReturnValue({
+    query: {
+      start: '2023-01-01',
+      end: '2023-01-31',
+      search: '',
+      type: '',
+      conversationId: '',
+    },
+  }),
+}));
+
 describe('ConversationsSearch.vue', () => {
   let wrapper;
   let store;
