@@ -9,7 +9,7 @@
       size="body-gt"
       weight="bold"
     >
-      {{ urn }}
+      {{ formattedUrn }}
     </UnnnicIntelligenceText>
     <UnnnicIntelligenceText
       data-testid="conversation-last-message"
@@ -23,7 +23,10 @@
     </UnnnicIntelligenceText>
   </section>
 </template>
+
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   urn: {
     type: String,
@@ -34,6 +37,33 @@ const props = defineProps({
     required: true,
   },
 });
+
+function formatWhatsappUrn(urn) {
+  const WHATSAPP_PREFIX = 'whatsapp:';
+
+  if (!urn?.startsWith(WHATSAPP_PREFIX)) {
+    return urn;
+  }
+
+  const phoneNumber = urn.replace(WHATSAPP_PREFIX, '');
+
+  if (phoneNumber.length < 10) {
+    return urn;
+  }
+
+  const ddi = phoneNumber.substring(0, 2);
+  const ddd = phoneNumber.substring(2, 4);
+  const number = phoneNumber.substring(4);
+
+  const formattedNumber =
+    number.length === 9
+      ? number.replace(/(\d{5})(\d{4})/, '$1-$2') // 99999-9999
+      : number.replace(/(\d{4})(\d{4})/, '$1-$2'); // 9999-9999
+
+  return `+${ddi} (${ddd}) ${formattedNumber}`;
+}
+
+const formattedUrn = computed(() => formatWhatsappUrn(props.urn));
 </script>
 
 <style scoped lang="scss">
