@@ -30,6 +30,18 @@ vi.mock('../', () => ({
   },
 }));
 
+vi.mock('vue-router', () => ({
+  useRoute: vi.fn().mockReturnValue({
+    query: {
+      start: '2023-01-01',
+      end: '2023-01-31',
+      search: '',
+      type: '',
+      conversationId: '',
+    },
+  }),
+}));
+
 vi.mock('@/utils/plugins/i18n', () => ({
   default: {
     global: {
@@ -84,6 +96,7 @@ describe('Supervisor Store', () => {
         end: '2023-01-31',
         search: '',
         type: '',
+        conversationId: '',
       });
     });
   });

@@ -43,14 +43,18 @@ vi.mock('vue-router', () => {
   return {
     useRoute: vi.fn(() => ({
       name: 'test-page',
+      query: {
+        start: '2025-01-01',
+        end: '2025-01-31',
+        search: '',
+        type: '',
+        conversationId: '',
+      },
     })),
   };
 });
 
 describe('SupervisorHeader', () => {
-  const today = format(new Date(), 'yyyy-MM-dd');
-  const last7Days = format(subDays(new Date(), 7), 'yyyy-MM-dd');
-
   let wrapper;
   let supervisorStore;
   let featureFlagsStore;
@@ -77,15 +81,21 @@ describe('SupervisorHeader', () => {
     const modelValue = datePickerEl.props('modelValue');
 
     expect(modelValue).toEqual({
-      start: last7Days,
-      end: today,
+      start: '2025-01-01',
+      end: '2025-01-31',
     });
   });
 
   it('should set maxDate prop to today for date picker', () => {
     const datePickerEl = wrapper.findComponent('[data-testid="date-picker"]');
+    const today = format(new Date(), 'yyyy-MM-dd');
 
     expect(datePickerEl.props('maxDate')).toBe(today);
+  });
+
+  it('should set correct date filter in supervisorStore during component initialization', () => {
+    expect(supervisorStore.filters.start).toBe('2025-01-01');
+    expect(supervisorStore.filters.end).toBe('2025-01-31');
   });
 
   it('should update supervisorStore filters when date filter changes', async () => {
@@ -111,10 +121,5 @@ describe('SupervisorHeader', () => {
     expect(wrapper.findComponent('[data-testid="export-modal"]').exists()).toBe(
       false,
     );
-  });
-
-  it('should set correct date filter in supervisorStore during component initialization', () => {
-    expect(supervisorStore.filters.start).toBe(last7Days);
-    expect(supervisorStore.filters.end).toBe(today);
   });
 });
