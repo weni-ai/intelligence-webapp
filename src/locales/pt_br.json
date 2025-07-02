@@ -242,6 +242,8 @@
         "success_assign_alert": "{agent} atribuído ao time com sucesso",
         "success_unassign_alert": "{agent} removido do time com sucesso",
         "error_alert": "Erro ao tentar atualizar o time",
+        "official": "Oficial",
+        "custom": "Personalizado",
         "remove_agent": "Remover agente"
       },
       "drawer": {
