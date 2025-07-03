@@ -10,7 +10,7 @@
 
       <td class="main-infos__user-data">
         <ConversationInfos
-          :name="conversation.username"
+          :username="conversation.username"
           :urn="conversation.urn"
         />
       </td>

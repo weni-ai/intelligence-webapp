@@ -1,26 +1,12 @@
 <template>
   <ConversationsSearch />
 
-  <section class="conversations-table">
-    <!-- <UnnnicTableNext
-      v-model:pagination="pagination.page"
-      :class="{
-        'conversations-table__table': true,
-        'conversations-table__table--with-results':
-          supervisorStore.conversations.status === 'complete' &&
-          conversations.results.length,
-      }"
-      data-testid="conversations-table"
-      hideHeaders
-      :headers="table.headers"
-      :rows="table.rows"
-      :paginationTotal="conversations.count"
-      :paginationInterval="pagination.interval"
-      :isLoading="supervisorStore.conversations.status === 'loading'"
-      @row-click="handleRowClick"
-    /> -->
-
+  <section
+    class="conversations-table"
+    data-testid="conversations-table"
+  >
     <UnnnicIntelligenceText
+      data-testid="conversations-count"
       class="conversations-table__count"
       tag="p"
       color="neutral-clean"
@@ -37,6 +23,7 @@
     <ConversationRow
       v-for="conversation in conversations.results"
       :key="conversation.id"
+      data-testid="conversation-row"
       :conversation="conversation"
       :isSelected="conversation.id === supervisorStore.selectedConversation?.id"
       @click="handleRowClick(conversation)"
@@ -49,12 +36,9 @@ import { computed, nextTick, ref, watch } from 'vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
-import i18n from '@/utils/plugins/i18n';
-
 import ConversationsSearch from './ConversationsSearch.vue';
 import ConversationRow from './ConversationRow.vue';
 
-const t = (key) => i18n.global.t(key);
 const supervisorStore = useSupervisorStore();
 
 const conversations = computed(() => supervisorStore.conversations.data);
@@ -70,32 +54,6 @@ function handleRowClick(row) {
     supervisorStore.selectConversation(row.id);
   });
 }
-
-const selectedConversationIndex = computed(() =>
-  conversations.value.results?.findIndex(
-    (conversation) =>
-      conversation.id === supervisorStore.selectedConversation?.id,
-  ),
-);
-
-function highlightRow(index) {
-  const rowsElements = document.querySelectorAll(
-    '.unnnic-table-next__body-row',
-  );
-
-  rowsElements.forEach((row) => {
-    row.style.backgroundColor = '';
-  });
-
-  if (rowsElements[index]) {
-    const UNNNIC_COLOR_BACKGROUND_SKY = '#F4F6F8';
-    rowsElements[index].style.backgroundColor = UNNNIC_COLOR_BACKGROUND_SKY;
-  }
-}
-
-watch(selectedConversationIndex, (newConversation) => {
-  highlightRow(newConversation);
-});
 
 watch(
   () => supervisorStore.filters,
