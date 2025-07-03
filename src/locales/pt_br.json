@@ -85,6 +85,7 @@
       }
     },
     "supervisor": {
+      "learn_details_conversations": "Aprenda sobre os detalhes de uma conversa.",
       "conversations_count": "{count} conversas encontradas",
       "unnamed_contact": "Contato sem nome",
       "status": {
