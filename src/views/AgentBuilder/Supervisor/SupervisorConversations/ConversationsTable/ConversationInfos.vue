@@ -47,7 +47,7 @@ function formatWhatsappUrn(urn) {
 
   const phoneNumber = urn.replace(WHATSAPP_PREFIX, '');
 
-  if (phoneNumber.length < 10) {
+  if (phoneNumber.length < 12) {
     return urn;
   }
 
