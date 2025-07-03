@@ -7,7 +7,6 @@ import { useRoute } from 'vue-router';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 
-import { PerformanceAdapter } from '@/api/adapters/supervisor/performance';
 import i18n from '@/utils/plugins/i18n';
 
 export const useSupervisorStore = defineStore('Supervisor', () => {
@@ -17,14 +16,6 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const route = useRoute();
   const last7Days = format(subDays(new Date(), 7), 'yyyy-MM-dd');
   const today = format(new Date(), 'yyyy-MM-dd');
-
-  const forwardStats = reactive({
-    status: null,
-    data: {
-      attendedByAgent: 0,
-      forwardedHumanSupport: 0,
-    },
-  });
 
   const conversations = reactive({
     status: null,
@@ -40,35 +31,6 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     type: route.query.type || '',
     conversationId: route.query.conversationId || '',
   });
-
-  async function loadForwardStats() {
-    forwardStats.status = 'loading';
-    try {
-      const response = await supervisorApi.conversations.forwardStats({
-        projectUuid: projectUuid.value,
-        start: format(parseISO(filters.start), 'dd-MM-yyyy'),
-        end: format(parseISO(filters.end), 'dd-MM-yyyy'),
-      });
-
-      const adaptedData = PerformanceAdapter.fromApi(response);
-      const total =
-        adaptedData.attendedByAgent + adaptedData.forwardedHumanSupport;
-
-      const calculatePercentage = (value) =>
-        total === 0 ? 0 : Math.round((value / total) * 100);
-
-      forwardStats.data = {
-        attendedByAgent: calculatePercentage(adaptedData.attendedByAgent),
-        forwardedHumanSupport: calculatePercentage(
-          adaptedData.forwardedHumanSupport,
-        ),
-      };
-
-      forwardStats.status = 'complete';
-    } catch (error) {
-      forwardStats.status = 'error';
-    }
-  }
 
   async function loadConversations(page = 1) {
     conversations.status = 'loading';
@@ -171,8 +133,6 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   }
 
   return {
-    forwardStats,
-    loadForwardStats,
     conversations,
     loadConversations,
     loadSelectedConversationData,
