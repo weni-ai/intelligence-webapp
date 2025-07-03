@@ -1,13 +1,13 @@
 <template>
   <section class="conversations">
-    <SupervisorPerformance data-testid="supervisor-performance" />
+    <SupervisorFilters data-testid="supervisor-filters" />
 
     <ConversationsTable data-testid="conversations-table" />
   </section>
 </template>
 
 <script setup>
-import SupervisorPerformance from '../SupervisorPerformance.vue';
+import SupervisorFilters from '../SupervisorFilters/index.vue';
 import ConversationsTable from './ConversationsTable/index.vue';
 </script>
 
