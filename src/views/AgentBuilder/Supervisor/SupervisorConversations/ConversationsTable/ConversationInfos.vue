@@ -1,25 +1,25 @@
 <template>
   <section class="conversation-infos">
     <UnnnicIntelligenceText
-      data-testid="conversation-urn"
-      class="conversation-infos__urn"
+      data-testid="conversation-username"
+      class="conversation-infos__username"
       tag="h3"
       color="neutral-darkest"
       family="secondary"
       size="body-gt"
       weight="bold"
     >
-      {{ formattedUrn }}
+      {{ username || `[${$t('agent_builder.supervisor.unnamed_contact')}]` }}
     </UnnnicIntelligenceText>
     <UnnnicIntelligenceText
-      data-testid="conversation-last-message"
-      class="conversation-infos__last-message"
+      data-testid="conversation-urn"
+      class="conversation-infos__urn"
       tag="p"
       color="neutral-cloudy"
       family="secondary"
       size="body-md"
     >
-      {{ lastMessage }}
+      {{ formattedUrn }}
     </UnnnicIntelligenceText>
   </section>
 </template>
@@ -28,11 +28,11 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-  urn: {
+  username: {
     type: String,
     required: true,
   },
-  lastMessage: {
+  urn: {
     type: String,
     required: true,
   },
@@ -70,8 +70,8 @@ const formattedUrn = computed(() => formatWhatsappUrn(props.urn));
 .conversation-infos {
   display: grid;
 
-  &__urn,
-  &__last-message {
+  &__username,
+  &__urn {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
