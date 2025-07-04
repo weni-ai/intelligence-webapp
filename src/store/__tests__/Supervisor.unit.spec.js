@@ -3,14 +3,12 @@ import { setActivePinia, createPinia } from 'pinia';
 import { useSupervisorStore } from '../Supervisor';
 import { useAlertStore } from '../Alert';
 import nexusaiAPI from '@/api/nexusaiAPI';
-import { PerformanceAdapter } from '@/api/adapters/supervisor/performance';
 
 vi.mock('@/api/nexusaiAPI', () => ({
   default: {
     agent_builder: {
       supervisor: {
         conversations: {
-          forwardStats: vi.fn(),
           list: vi.fn(),
           getById: vi.fn(),
           export: vi.fn(),
@@ -69,16 +67,6 @@ describe('Supervisor Store', () => {
   });
 
   describe('Initial state', () => {
-    it('has the correct initial state for forwardStats', () => {
-      expect(store.forwardStats).toEqual({
-        status: null,
-        data: {
-          attendedByAgent: 0,
-          forwardedHumanSupport: 0,
-        },
-      });
-    });
-
     it('has the correct initial state for conversations', () => {
       expect(store.conversations).toEqual({
         status: null,
@@ -101,116 +89,7 @@ describe('Supervisor Store', () => {
     });
   });
 
-  describe('Adapters', () => {
-    describe('PerformanceAdapter', () => {
-      it('transforms API data to the correct format', () => {
-        const apiData = {
-          attended_by_agent: 15,
-          forwarded_human_support: 8,
-        };
-
-        const result = PerformanceAdapter.fromApi(apiData);
-
-        expect(result).toEqual({
-          attendedByAgent: 15,
-          forwardedHumanSupport: 8,
-        });
-      });
-    });
-  });
-
   describe('Actions', () => {
-    describe('loadForwardStats', () => {
-      it('sets status to loading when started', async () => {
-        nexusaiAPI.agent_builder.supervisor.conversations.forwardStats.mockReturnValue(
-          new Promise(() => {}),
-        );
-
-        store.loadForwardStats();
-
-        expect(store.forwardStats.status).toBe('loading');
-      });
-
-      it('fetches forward stats successfully', async () => {
-        const mockApiResponse = {
-          attended_by_agent: 10,
-          forwarded_human_support: 5,
-        };
-
-        const expectedData = {
-          attendedByAgent: 67, // 10 / 15 * 100 (15 is the total of metrics)
-          forwardedHumanSupport: 33, // 5 / 15 * 100 (15 is the total of metrics)
-        };
-
-        nexusaiAPI.agent_builder.supervisor.conversations.forwardStats.mockResolvedValue(
-          mockApiResponse,
-        );
-
-        await store.loadForwardStats();
-
-        expect(
-          nexusaiAPI.agent_builder.supervisor.conversations.forwardStats,
-        ).toHaveBeenCalledWith({
-          projectUuid: 'test-project-uuid',
-          start: '01-01-2023',
-          end: '31-01-2023',
-        });
-
-        expect(store.forwardStats.status).toBe('complete');
-        expect(store.forwardStats.data).toEqual(expectedData);
-      });
-
-      it('handles zero total values gracefully', async () => {
-        const mockApiResponse = {
-          attended_by_agent: 0,
-          forwarded_human_support: 0,
-        };
-
-        nexusaiAPI.agent_builder.supervisor.conversations.forwardStats.mockResolvedValue(
-          mockApiResponse,
-        );
-
-        await store.loadForwardStats();
-
-        expect(store.forwardStats.data).toEqual({
-          attendedByAgent: 0,
-          forwardedHumanSupport: 0,
-        });
-      });
-
-      it('calculates percentages correctly for edge cases', async () => {
-        const mockApiResponse = {
-          attended_by_agent: 7,
-          forwarded_human_support: 3,
-        };
-
-        nexusaiAPI.agent_builder.supervisor.conversations.forwardStats.mockResolvedValue(
-          mockApiResponse,
-        );
-
-        await store.loadForwardStats();
-
-        expect(store.forwardStats.data).toEqual({
-          attendedByAgent: 70, // 7 / 10 * 100 (10 is the total of metrics)
-          forwardedHumanSupport: 30, // 3 / 10 * 100 (10 is the total of metrics)
-        });
-      });
-
-      it('handles errors when fetching forward stats', async () => {
-        nexusaiAPI.agent_builder.supervisor.conversations.forwardStats.mockRejectedValue(
-          new Error('API Error'),
-        );
-
-        await store.loadForwardStats();
-
-        expect(store.forwardStats.status).toBe('error');
-        expect(store.forwardStats.data).toEqual({
-          attendedByAgent: 0,
-          forwardedHumanSupport: 0,
-        });
-      });
-    });
-
     describe('loadConversations', () => {
       it('sets status to loading when started', async () => {
         nexusaiAPI.agent_builder.supervisor.conversations.list.mockReturnValue(
@@ -570,16 +449,6 @@ describe('Supervisor Store', () => {
       expect(store.filters.type).toBe('new type');
     });
 
-    it('forwardStats maintains reactive state', () => {
-      expect(store.forwardStats.status).toBeNull();
-
-      store.forwardStats.status = 'loading';
-      store.forwardStats.data.attendedByAgent = 50;
-
-      expect(store.forwardStats.status).toBe('loading');
-      expect(store.forwardStats.data.attendedByAgent).toBe(50);
-    });
-
     it('conversations maintains reactive state', () => {
       const testData = [{ id: 1, title: 'Test' }];
 
@@ -604,28 +473,6 @@ describe('Supervisor Store', () => {
   });
 
   describe('Date Formatting', () => {
-    it('formats dates correctly in loadForwardStats', async () => {
-      store.filters.start = '2023-12-01';
-      store.filters.end = '2023-12-31';
-
-      nexusaiAPI.agent_builder.supervisor.conversations.forwardStats.mockResolvedValue(
-        {
-          attended_by_agent: 5,
-          forwarded_human_support: 3,
-        },
-      );
-
-      await store.loadForwardStats();
-
-      expect(
-        nexusaiAPI.agent_builder.supervisor.conversations.forwardStats,
-      ).toHaveBeenCalledWith({
-        projectUuid: 'test-project-uuid',
-        start: '01-12-2023',
-        end: '31-12-2023',
-      });
-    });
-
     it('formats dates correctly in loadConversations', async () => {
       store.filters.start = '2023-06-15';
       store.filters.end = '2023-06-30';

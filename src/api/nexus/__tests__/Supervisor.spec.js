@@ -181,68 +181,6 @@ describe('Supervisor.js', () => {
     });
   });
 
-  describe('conversations.forwardStats', () => {
-    const mockStatsResponse = {
-      data: {
-        total: 100,
-        forwarded: 25,
-        percentage: 25,
-        by_day: [
-          {
-            date: '2023-01-01',
-            total: 10,
-            forwarded: 2,
-          },
-          {
-            date: '2023-01-02',
-            total: 15,
-            forwarded: 5,
-          },
-        ],
-      },
-    };
-
-    it('should get forward stats', async () => {
-      billingRequest.$http.get.mockResolvedValue(mockStatsResponse);
-
-      const projectUuid = 'project-123';
-      const start = '2023-01-01';
-      const end = '2023-01-31';
-
-      const result = await Supervisor.conversations.forwardStats({
-        projectUuid,
-        start,
-        end,
-      });
-
-      expect(billingRequest.$http.get).toHaveBeenCalledWith(
-        `${projectUuid}/forward-stats/?start=2023-01-01&end=2023-01-31`,
-      );
-      expect(result).toEqual(mockStatsResponse.data);
-      expect(result.total).toBe(100);
-      expect(result.forwarded).toBe(25);
-      expect(result.percentage).toBe(25);
-      expect(result.by_day.length).toBe(2);
-    });
-
-    it('should handle error when getting forward stats', async () => {
-      const error = new Error('API Error');
-      billingRequest.$http.get.mockRejectedValue(error);
-
-      const projectUuid = 'project-123';
-      const start = '2023-01-01';
-      const end = '2023-01-31';
-
-      await expect(
-        Supervisor.conversations.forwardStats({
-          projectUuid,
-          start,
-          end,
-        }),
-      ).rejects.toThrow('API Error');
-    });
-  });
-
   describe('conversations.getById', () => {
     const mockConversationResponse = {
       data: {
