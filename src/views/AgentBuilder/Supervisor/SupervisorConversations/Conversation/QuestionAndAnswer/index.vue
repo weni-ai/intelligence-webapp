@@ -24,12 +24,16 @@
     />
 
     <template v-else>
-      <Message
+      <section
         v-if="data?.source_type === 'user'"
         class="question-and-answer__question"
-        data-testid="question"
-        :content="data"
-      />
+      >
+        <AvatarLetter :text="data?.username" />
+        <Message
+          data-testid="question"
+          :content="data"
+        />
+      </section>
 
       <section
         v-if="data?.source_type === 'agent'"
@@ -67,11 +71,14 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
 
+import { useMonitoringStore } from '@/store/Monitoring';
+
+import Message from './Message.vue';
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
 import ForwardedHumanSupport from './ForwardedHumanSupport.vue';
-import { useMonitoringStore } from '@/store/Monitoring';
-import Message from './Message.vue';
+import AvatarLetter from '@/components/AgentBuilder/Supervisor/AvatarLetter.vue';
 import ViewLogsButton from './ViewLogsButton.vue';
+
 import { processLog } from '@/utils/previewLogs';
 
 const props = defineProps({
@@ -191,6 +198,11 @@ watch(
   &__skeleton-answer {
     grid-column: 2 / span 2;
     grid-row: 2;
+  }
+
+  &__question {
+    display: flex;
+    gap: $unnnic-spacing-xs;
   }
 
   &__answer {
