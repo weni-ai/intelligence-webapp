@@ -5,7 +5,7 @@ import { nextTick } from 'vue';
 
 import Unnnic from '@weni/unnnic-system';
 
-import ConversationsSearch from '../ConversationsSearch.vue';
+import FilterText from '../FilterText.vue';
 import { useSupervisorStore } from '@/store/Supervisor';
 import i18n from '@/utils/plugins/i18n';
 
@@ -21,7 +21,7 @@ vi.mock('vue-router', () => ({
   }),
 }));
 
-describe('ConversationsSearch.vue', () => {
+describe('FilterText.vue', () => {
   let wrapper;
   let store;
 
@@ -41,7 +41,7 @@ describe('ConversationsSearch.vue', () => {
       },
     });
 
-    wrapper = shallowMount(ConversationsSearch, {
+    wrapper = shallowMount(FilterText, {
       global: {
         plugins: [pinia],
         stubs: {

@@ -1,6 +1,4 @@
 <template>
-  <ConversationsSearch />
-
   <section
     class="conversations-table"
     data-testid="conversations-table"
@@ -36,7 +34,6 @@ import { computed, nextTick, ref, watch } from 'vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
-import ConversationsSearch from './ConversationsSearch.vue';
 import ConversationRow from './ConversationRow.vue';
 
 const supervisorStore = useSupervisorStore();
