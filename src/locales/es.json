@@ -101,6 +101,7 @@
         "title": "Encaminado a soporte humano",
         "tooltip": "Conversaciones encaminadas a soporte humano"
       },
+      "contact_urn": "URN del contacto: {urn}",
       "view_logs": "Ver logs",
       "hide_logs": "Esconder logs",
       "search": "Buscar",
