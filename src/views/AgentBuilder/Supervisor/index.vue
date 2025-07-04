@@ -77,11 +77,12 @@ onBeforeMount(async () => {
   display: grid;
   grid-template-rows: auto 1fr;
 
+  min-height: 100%;
+
   overflow: hidden auto;
 
   &--with-conversation {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-columns: 7fr 5fr;
   }
 
   &__header {
