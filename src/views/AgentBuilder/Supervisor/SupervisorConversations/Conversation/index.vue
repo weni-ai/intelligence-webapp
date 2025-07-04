@@ -3,31 +3,7 @@
     class="conversation"
     data-testid="conversation"
   >
-    <header class="conversation__header">
-      <UnnnicIntelligenceText
-        tag="h2"
-        color="neutral-darkest"
-        family="secondary"
-        size="title-sm"
-        weight="bold"
-        data-testid="conversation-title"
-      >
-        {{ conversation?.urn }}
-      </UnnnicIntelligenceText>
-
-      <button
-        class="header__close-button"
-        data-testid="close-button"
-        @click="supervisorStore.selectConversation(null)"
-      >
-        <UnnnicIcon
-          data-testid="close-button-icon"
-          icon="close"
-          size="md"
-          scheme="neutral-cloudy"
-        />
-      </button>
-    </header>
+    <ConversationHeader />
 
     <section
       class="conversation__messages"
@@ -76,6 +52,8 @@ import { useSupervisorStore } from '@/store/Supervisor';
 import QuestionAndAnswer from './QuestionAndAnswer/index.vue';
 import ForwardedHumanSupport from './QuestionAndAnswer/ForwardedHumanSupport.vue';
 import NoMessagesFound from './NoMessagesFound.vue';
+import ConversationHeader from './Header.vue';
+
 const supervisorStore = useSupervisorStore();
 
 const conversation = computed(() => supervisorStore.selectedConversation);
@@ -94,33 +72,12 @@ function handleScroll(event) {
 </script>
 
 <style lang="scss" scoped>
-$conversation-border: $unnnic-border-width-thinner solid
-  $unnnic-color-neutral-soft;
 .conversation {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 
-  border-left: $conversation-border;
-
-  &__header {
-    padding: $unnnic-spacing-sm;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    border-bottom: $conversation-border;
-
-    .header__close-button {
-      background-color: transparent;
-      border: none;
-
-      display: flex;
-
-      cursor: pointer;
-    }
-  }
+  border-left: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
 
   &__messages {
     padding: $unnnic-spacing-sm;
