@@ -1,15 +1,24 @@
 <template>
   <header class="conversation__header">
-    <UnnnicIntelligenceText
-      tag="h2"
-      color="neutral-darkest"
-      family="secondary"
-      size="title-sm"
-      weight="bold"
-      data-testid="conversation-title"
-    >
-      {{ conversation?.urn }}
-    </UnnnicIntelligenceText>
+    <section class="header__info">
+      <SupervisorUsername
+        :username="conversation?.username"
+        size="title-sm"
+      />
+
+      <UnnnicIntelligenceText
+        tag="h2"
+        color="neutral-cloudy"
+        family="secondary"
+        size="body-gt"
+        weight="regular"
+        data-testid="conversation-title"
+      >
+        {{ formattedUrn }}
+      </UnnnicIntelligenceText>
+
+      <!-- TODO: Add topics -->
+    </section>
 
     <button
       class="header__close-button"
@@ -27,12 +36,21 @@
 </template>
 
 <script setup>
-import { useSupervisorStore } from '@/store/Supervisor';
 import { computed } from 'vue';
+
+import { useSupervisorStore } from '@/store/Supervisor';
+import i18n from '@/utils/plugins/i18n';
+import { formatWhatsappUrn } from '@/utils/formatters';
+import SupervisorUsername from '@/components/AgentBuilder/Supervisor/SupervisorUsername.vue';
 
 const supervisorStore = useSupervisorStore();
 
 const conversation = computed(() => supervisorStore.selectedConversation);
+const formattedUrn = computed(() =>
+  i18n.global.t('agent_builder.supervisor.contact_urn', {
+    urn: formatWhatsappUrn(conversation.value?.urn),
+  }),
+);
 </script>
 
 <style lang="scss" scoped>
@@ -41,9 +59,14 @@ const conversation = computed(() => supervisorStore.selectedConversation);
 
   display: flex;
   justify-content: space-between;
-  align-items: center;
 
   border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+
+  .header__info {
+    display: flex;
+    flex-direction: column;
+    gap: $unnnic-spacing-xs;
+  }
 
   .header__close-button {
     background-color: transparent;

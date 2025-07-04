@@ -101,6 +101,7 @@
         "title": "Forwarded to human support",
         "tooltip": "Conversations forwarded to human support"
       },
+      "contact_urn": "Contact URN: {urn}",
       "view_logs": "View logs",
       "hide_logs": "Hide logs",
       "search": "Search",
