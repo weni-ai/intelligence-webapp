@@ -5,6 +5,18 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import SupervisorPerformance from '../SupervisorPerformance.vue';
 import { useSupervisorStore } from '@/store/Supervisor';
 
+vi.mock('vue-router', () => ({
+  useRoute: vi.fn().mockReturnValue({
+    query: {
+      start: '2023-01-01',
+      end: '2023-01-31',
+      search: '',
+      type: '',
+      conversationId: '',
+    },
+  }),
+}));
+
 describe('SupervisorPerformance.vue', () => {
   let wrapper;
   let supervisorStore;
@@ -20,6 +32,13 @@ describe('SupervisorPerformance.vue', () => {
               forwardedHumanSupport: 25,
             },
             ...initialState.forwardStats,
+          },
+          filters: {
+            start: '',
+            end: '',
+            search: '',
+            type: '',
+            ...initialState.filters,
           },
         },
       },
@@ -124,6 +143,63 @@ describe('SupervisorPerformance.vue', () => {
   describe('Data Fetching', () => {
     it('calls loadForwardStats on component mount', () => {
       expect(supervisorStore.loadForwardStats).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Card Click Handling', () => {
+    it('sets filter type when no filter is currently set', async () => {
+      supervisorStore.filters.type = '';
+
+      const cards = performanceCards();
+      const attendedByAgentCard = cards.find(
+        (card) => card.props('scheme') === 'green',
+      );
+
+      await attendedByAgentCard.trigger('click');
+
+      expect(supervisorStore.filters.type).toBe('attended_by_agent');
+    });
+
+    it('sets filter type when a different filter is currently set', async () => {
+      supervisorStore.filters.type = 'attended_by_agent';
+
+      const cards = performanceCards();
+      const forwardedHumanSupportCard = cards.find(
+        (card) => card.props('scheme') === 'blue',
+      );
+
+      await forwardedHumanSupportCard.trigger('click');
+
+      expect(supervisorStore.filters.type).toBe('forwarded_human_support');
+    });
+
+    it('clears filter type when the same filter is clicked again', async () => {
+      supervisorStore.filters.type = 'attended_by_agent';
+
+      const cards = performanceCards();
+      const attendedByAgentCard = cards.find(
+        (card) => card.props('scheme') === 'green',
+      );
+
+      await attendedByAgentCard.trigger('click');
+
+      expect(supervisorStore.filters.type).toBeNull();
+    });
+
+    it('updates clicked prop correctly based on current filter', async () => {
+      supervisorStore.filters.type = 'attended_by_agent';
+      await nextTick();
+
+      const cards = performanceCards();
+      const attendedByAgentCard = cards.find(
+        (card) => card.props('scheme') === 'green',
+      );
+      const forwardedHumanSupportCard = cards.find(
+        (card) => card.props('scheme') === 'blue',
+      );
+
+      expect(attendedByAgentCard.props('clicked')).toBe(true);
+      expect(forwardedHumanSupportCard.props('clicked')).toBe(false);
     });
   });
 });
