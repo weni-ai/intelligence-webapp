@@ -5,29 +5,52 @@
     class="conversations-table"
     data-testid="conversations-table"
   >
-    <UnnnicIntelligenceText
-      data-testid="conversations-count"
-      class="conversations-table__count"
-      tag="p"
-      color="neutral-clean"
-      family="primary"
-      size="body-gt"
-    >
-      {{
-        $t('agent_builder.supervisor.conversations_count', {
-          count: conversations.count,
-        })
-      }}
-    </UnnnicIntelligenceText>
+    <template v-if="conversations.count > 0">
+      <UnnnicIntelligenceText
+        data-testid="conversations-count"
+        class="conversations-table__count"
+        tag="p"
+        color="neutral-clean"
+        family="primary"
+        size="body-gt"
+      >
+        {{
+          $t('agent_builder.supervisor.conversations_count', {
+            count: conversations.count,
+          })
+        }}
+      </UnnnicIntelligenceText>
 
-    <ConversationRow
-      v-for="conversation in conversations.results"
-      :key="conversation.id"
-      data-testid="conversation-row"
-      :conversation="conversation"
-      :isSelected="conversation.id === supervisorStore.selectedConversation?.id"
-      @click="handleRowClick(conversation)"
-    />
+      <ConversationRow
+        v-for="conversation in conversations.results"
+        :key="conversation.id"
+        data-testid="conversation-row"
+        :conversation="conversation"
+        :isSelected="
+          conversation.id === supervisorStore.selectedConversation?.id
+        "
+        @click="handleRowClick(conversation)"
+      />
+    </template>
+    <section
+      v-else
+      class="conversations-table__empty"
+    >
+      <UnnnicIcon
+        icon="sms"
+        size="avatar-sm"
+        scheme="neutral-soft"
+        filled
+      />
+
+      <UnnnicIntelligenceText
+        color="neutral-cloudy"
+        family="secondary"
+        size="body-gt"
+      >
+        {{ $t('agent_builder.supervisor.conversations_empty') }}
+      </UnnnicIntelligenceText>
+    </section>
   </section>
 </template>
 
@@ -93,6 +116,17 @@ watch(
 .conversations-table {
   &__count {
     margin-bottom: $unnnic-spacing-xs;
+  }
+
+  &__empty {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: $unnnic-spacing-nano;
   }
 }
 </style>

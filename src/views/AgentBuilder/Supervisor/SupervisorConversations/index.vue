@@ -13,8 +13,8 @@ import ConversationsTable from './ConversationsTable/index.vue';
 
 <style scoped lang="scss">
 .conversations {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
   gap: $unnnic-spacing-sm;
 }
 </style>

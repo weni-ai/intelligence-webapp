@@ -65,7 +65,9 @@ onBeforeMount(() => {
 .supervisor {
   margin: -$unnnic-spacing-sm;
 
+  height: 100%;
   display: grid;
+  grid-template-rows: auto 1fr;
 
   overflow: hidden auto;
 
