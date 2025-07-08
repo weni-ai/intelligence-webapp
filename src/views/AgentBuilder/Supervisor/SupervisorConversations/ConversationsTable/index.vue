@@ -5,8 +5,9 @@
     class="conversations-table"
     data-testid="conversations-table"
   >
-    <template v-if="conversations.count > 0">
+    <template v-if="hasConversations || conversations.status === 'loading'">
       <UnnnicIntelligenceText
+        v-if="hasConversations"
         data-testid="conversations-count"
         class="conversations-table__count"
         tag="p"
@@ -16,14 +17,17 @@
       >
         {{
           $t('agent_builder.supervisor.conversations_count', {
-            count: conversations.count,
+            count: conversations.data.count,
           })
         }}
       </UnnnicIntelligenceText>
 
-      <tbody class="conversations-table__rows">
+      <tbody
+        class="conversations-table__rows"
+        @scroll="handleScroll"
+      >
         <ConversationRow
-          v-for="conversation in conversations.results"
+          v-for="conversation in conversations.data.results"
           :key="conversation.id"
           data-testid="conversation-row"
           :conversation="conversation"
@@ -32,8 +36,17 @@
           "
           @click="handleRowClick(conversation)"
         />
+
+        <template v-if="conversations.status === 'loading'">
+          <ConversationRow
+            v-for="i in 8"
+            :key="i"
+            isLoading
+          />
+        </template>
       </tbody>
     </template>
+
     <section
       v-else
       class="conversations-table__empty"
@@ -66,7 +79,8 @@ import ConversationRow from './ConversationRow.vue';
 
 const supervisorStore = useSupervisorStore();
 
-const conversations = computed(() => supervisorStore.conversations.data);
+const conversations = computed(() => supervisorStore.conversations);
+const hasConversations = computed(() => conversations.value.data.count > 0);
 
 const pagination = ref({
   page: 1,
@@ -106,12 +120,26 @@ watch(
   },
 );
 
-watch(
-  () => pagination.value.page,
-  (newPage) => {
-    supervisorStore.loadConversations(newPage);
-  },
-);
+function handleScroll(event) {
+  const { next, status } = conversations.value.data;
+
+  if (!next || status === 'loading') {
+    return;
+  }
+
+  const { scrollTop, clientHeight, scrollHeight } = event.target;
+
+  const safeDistance = 10;
+  const isInScrollBottom =
+    scrollTop + clientHeight + safeDistance >= scrollHeight;
+
+  const shouldLoadMore = isInScrollBottom;
+
+  if (shouldLoadMore) {
+    pagination.value.page++;
+    supervisorStore.loadConversations(pagination.value.page);
+  }
+}
 </script>
 
 <style scoped lang="scss">

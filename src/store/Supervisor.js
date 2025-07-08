@@ -28,7 +28,9 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
   const conversations = reactive({
     status: null,
-    data: [],
+    data: {
+      results: [],
+    },
   });
 
   const selectedConversation = ref(null);
@@ -71,6 +73,10 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   }
 
   async function loadConversations(page = 1) {
+    if (conversations.status === 'loading') {
+      return;
+    }
+
     conversations.status = 'loading';
 
     const formatDateParam = (date) => format(parseISO(date), 'dd-MM-yyyy');
@@ -86,7 +92,10 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
       });
 
       conversations.status = 'complete';
-      conversations.data = response;
+      conversations.data = {
+        ...response,
+        results: [...conversations.data.results, ...response.results],
+      };
     } catch (error) {
       conversations.status = 'error';
     }
