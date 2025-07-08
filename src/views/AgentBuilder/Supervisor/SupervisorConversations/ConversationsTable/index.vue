@@ -95,19 +95,6 @@ function handleRowClick(row) {
 }
 
 watch(
-  () => supervisorStore.filters,
-  async () => {
-    await supervisorStore.loadConversations();
-
-    const { selectedConversation, filters } = supervisorStore;
-    if (filters.conversationId && !selectedConversation) {
-      supervisorStore.selectConversation(filters.conversationId);
-    }
-  },
-  { immediate: true, deep: true },
-);
-
-watch(
   [
     () => supervisorStore.filters.search,
     () => supervisorStore.filters.start,

@@ -147,7 +147,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
       return;
     }
 
-    const conversation = conversations.data.results.find(
+    const conversation = conversations.data.results?.find(
       (conversation) => conversation.id == conversationId,
     );
 

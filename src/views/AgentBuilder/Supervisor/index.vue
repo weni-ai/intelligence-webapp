@@ -50,14 +50,21 @@ function updateQuery() {
 
 watch(
   () => supervisorStore.filters,
-  (filters) => {
+  () => {
     updateQuery();
   },
   { deep: true },
 );
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   updateQuery();
+
+  await supervisorStore.loadConversations();
+
+  const { selectedConversation, filters } = supervisorStore;
+  if (filters.conversationId && !selectedConversation) {
+    supervisorStore.selectConversation(filters.conversationId);
+  }
 });
 </script>
 
