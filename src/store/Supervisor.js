@@ -78,6 +78,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     }
 
     conversations.status = 'loading';
+    if (page === 1) conversations.data.results = [];
 
     const formatDateParam = (date) => format(parseISO(date), 'dd-MM-yyyy');
 

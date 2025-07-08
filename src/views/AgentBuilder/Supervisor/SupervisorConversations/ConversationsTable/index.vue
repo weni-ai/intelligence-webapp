@@ -7,7 +7,7 @@
   >
     <template v-if="hasConversations || conversations.status === 'loading'">
       <UnnnicIntelligenceText
-        v-if="hasConversations"
+        v-if="conversations.status !== 'loading'"
         data-testid="conversations-count"
         class="conversations-table__count"
         tag="p"
@@ -121,9 +121,9 @@ watch(
 );
 
 function handleScroll(event) {
-  const { next, status } = conversations.value.data;
+  const { next } = conversations.value.data;
 
-  if (!next || status === 'loading') {
+  if (!next || ['loading', 'error'].includes(conversations.value.status)) {
     return;
   }
 
