@@ -1,7 +1,7 @@
 <template>
   <ConversationsSearch />
 
-  <section
+  <table
     class="conversations-table"
     data-testid="conversations-table"
   >
@@ -21,16 +21,18 @@
         }}
       </UnnnicIntelligenceText>
 
-      <ConversationRow
-        v-for="conversation in conversations.results"
-        :key="conversation.id"
-        data-testid="conversation-row"
-        :conversation="conversation"
-        :isSelected="
-          conversation.id === supervisorStore.selectedConversation?.id
-        "
-        @click="handleRowClick(conversation)"
-      />
+      <tbody class="conversations-table__rows">
+        <ConversationRow
+          v-for="conversation in conversations.results"
+          :key="conversation.id"
+          data-testid="conversation-row"
+          :conversation="conversation"
+          :isSelected="
+            conversation.id === supervisorStore.selectedConversation?.id
+          "
+          @click="handleRowClick(conversation)"
+        />
+      </tbody>
     </template>
     <section
       v-else
@@ -51,7 +53,7 @@
         {{ $t('agent_builder.supervisor.conversations_empty') }}
       </UnnnicIntelligenceText>
     </section>
-  </section>
+  </table>
 </template>
 
 <script setup>
@@ -114,8 +116,27 @@ watch(
 
 <style scoped lang="scss">
 .conversations-table {
+  margin-right: 0;
+  margin-bottom: $unnnic-spacing-sm;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
   &__count {
     margin-bottom: $unnnic-spacing-xs;
+  }
+
+  &__rows {
+    $scroll-margin: calc($unnnic-spacing-nano / 2 + $unnnic-spacing-nano);
+
+    height: 100%;
+
+    overflow-y: auto;
+
+    padding-right: $scroll-margin;
+    margin-right: $scroll-margin;
   }
 
   &__empty {

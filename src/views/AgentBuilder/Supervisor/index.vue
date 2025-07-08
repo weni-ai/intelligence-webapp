@@ -65,7 +65,8 @@ onBeforeMount(() => {
 .supervisor {
   margin: -$unnnic-spacing-sm;
 
-  height: 100%;
+  min-height: 100%;
+
   display: grid;
   grid-template-rows: auto 1fr;
 
@@ -85,10 +86,14 @@ onBeforeMount(() => {
   }
 
   &__conversations {
-    padding: 0 $unnnic-spacing-sm;
+    padding-left: $unnnic-spacing-sm;
 
     grid-column: 1 / 1;
     grid-row: 2 / 3;
+
+    & > * {
+      margin-right: $unnnic-spacing-sm;
+    }
   }
 
   &__conversation {
