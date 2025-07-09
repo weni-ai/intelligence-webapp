@@ -105,6 +105,7 @@
       "view_logs": "Visualizar logs",
       "hide_logs": "Esconder logs",
       "search": "Pesquisar",
+      "conversations_empty": "Nenhuma conversa encontrada",
       "no_messages_found": {
         "title": "Nenhuma mensagem encontrada nesta conversa.",
         "description": "Se a mensagem foi enviada pelo suporte humano ou disparo de mensagens, você pode encontrá-la no {studio_link}.",

@@ -1,5 +1,13 @@
 <template>
+  <UnnnicSkeletonLoading
+    v-if="isLoading"
+    tag="div"
+    width="100%"
+    height="58px"
+  />
+
   <tr
+    v-else
     class="conversation-row"
     :class="{ 'conversation-row--selected': isSelected }"
   >
@@ -57,6 +65,10 @@ const props = defineProps({
     required: true,
   },
   isSelected: {
+    type: Boolean,
+    default: false,
+  },
+  isLoading: {
     type: Boolean,
     default: false,
   },
