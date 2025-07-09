@@ -13,7 +13,7 @@
   >
     <section class="conversation-row__main-infos">
       <td class="main-infos__avatar">
-        <p class="avatar__letter">{{ conversation?.username?.[0] || '-' }}</p>
+        <AvatarLetter :text="conversation?.username" />
       </td>
 
       <td class="main-infos__user-data">
@@ -57,6 +57,7 @@ import i18n from '@/utils/plugins/i18n';
 
 import ConversationDate from './ConversationDate.vue';
 import ConversationInfos from './ConversationInfos.vue';
+import AvatarLetter from '@/components/AgentBuilder/Supervisor/AvatarLetter.vue';
 
 const props = defineProps({
   conversation: {
@@ -168,25 +169,6 @@ const csatProps = computed(() => {
   }
 
   &__main-infos {
-    .main-infos__avatar {
-      min-width: 35px;
-      min-height: 35px;
-
-      border-radius: 50%;
-      background-color: $unnnic-color-weni-100;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .avatar__letter {
-        font-family: $unnnic-font-family-secondary;
-        font-size: $unnnic-font-size-body-gt;
-        font-weight: $unnnic-font-weight-bold;
-        color: $unnnic-color-weni-600;
-      }
-    }
-
     .main-infos__status,
     .secondary-infos__date {
       white-space: nowrap;
