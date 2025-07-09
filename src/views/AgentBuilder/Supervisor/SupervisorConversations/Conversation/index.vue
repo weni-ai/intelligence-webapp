@@ -6,6 +6,7 @@
     <ConversationHeader />
 
     <section
+      ref="messagesContainer"
       class="conversation__messages"
       data-testid="messages-container"
       @scroll="handleScroll"
@@ -45,7 +46,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
@@ -60,8 +61,14 @@ const conversation = computed(() => supervisorStore.selectedConversation);
 const status = computed(() => conversation.value?.data?.status);
 const results = computed(() => conversation.value?.data?.results);
 
-onMounted(() => {
-  supervisorStore.loadSelectedConversationData();
+const messagesContainer = ref(null);
+
+onMounted(async () => {
+  await supervisorStore.loadSelectedConversationData();
+
+  messagesContainer.value.scrollTo({
+    top: messagesContainer.value.scrollHeight,
+  });
 });
 
 function handleScroll(event) {
@@ -83,6 +90,8 @@ function handleScroll(event) {
     padding: $unnnic-spacing-sm;
 
     overflow: hidden auto;
+
+    height: 100%;
   }
 
   &__forwarded-human-support {
