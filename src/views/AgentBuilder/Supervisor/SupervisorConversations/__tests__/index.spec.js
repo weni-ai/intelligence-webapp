@@ -6,8 +6,6 @@ import SupervisorConversations from '../index.vue';
 describe('SupervisorConversations', () => {
   let wrapper;
 
-  const supervisorPerformance = () =>
-    wrapper.find('[data-testid="supervisor-performance"]');
   const conversationsTable = () =>
     wrapper.find('[data-testid="conversations-table"]');
 
@@ -16,10 +14,6 @@ describe('SupervisorConversations', () => {
   });
 
   describe('Component rendering', () => {
-    it('renders the SupervisorPerformance component', () => {
-      expect(supervisorPerformance().exists()).toBe(true);
-    });
-
     it('renders the ConversationsTable component', () => {
       expect(conversationsTable().exists()).toBe(true);
     });
