@@ -15,7 +15,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const supervisorApi = nexusaiAPI.agent_builder.supervisor;
   const alertStore = useAlertStore();
   const route = useRoute();
-  const last7Days = format(subDays(new Date(), 7), 'yyyy-MM-dd');
+  const last30Days = format(subDays(new Date(), 30), 'yyyy-MM-dd');
   const today = format(new Date(), 'yyyy-MM-dd');
 
   const forwardStats = reactive({
@@ -34,7 +34,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const selectedConversation = ref(null);
 
   const filters = reactive({
-    start: route.query.start || last7Days,
+    start: route.query.start || last30Days,
     end: route.query.end || today,
     search: route.query.search || '',
     type: route.query.type || '',
@@ -105,6 +105,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
       const params = {
         projectUuid: projectUuid.value,
         start: selectedConversation.value.created_on,
+        end: selectedConversation.value.end_on,
         urn: selectedConversation.value.urn,
         next: next ? selectedConversation.value.data.next : null,
       };
