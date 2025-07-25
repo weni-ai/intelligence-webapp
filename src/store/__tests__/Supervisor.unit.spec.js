@@ -82,7 +82,9 @@ describe('Supervisor Store', () => {
     it('has the correct initial state for conversations', () => {
       expect(store.conversations).toEqual({
         status: null,
-        data: [],
+        data: {
+          results: [],
+        },
       });
     });
 
@@ -223,10 +225,12 @@ describe('Supervisor Store', () => {
       });
 
       it('fetches conversations successfully with default page', async () => {
-        const mockApiResponse = [
-          { id: 1, title: 'Conversation 1' },
-          { id: 2, title: 'Conversation 2' },
-        ];
+        const mockApiResponse = {
+          results: [
+            { id: 1, title: 'Conversation 1' },
+            { id: 2, title: 'Conversation 2' },
+          ],
+        };
 
         nexusaiAPI.agent_builder.supervisor.conversations.list.mockResolvedValue(
           mockApiResponse,
@@ -303,7 +307,9 @@ describe('Supervisor Store', () => {
         await store.loadConversations();
 
         expect(store.conversations.status).toBe('error');
-        expect(store.conversations.data).toEqual([]);
+        expect(store.conversations.data).toEqual({
+          results: [],
+        });
       });
     });
 
