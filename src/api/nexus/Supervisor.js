@@ -19,14 +19,6 @@ export const Supervisor = {
       return data;
     },
 
-    async forwardStats({ projectUuid, start, end }) {
-      const { data } = await billingRequest.$http.get(
-        `${projectUuid}/forward-stats/?start=${start}&end=${end}`,
-      );
-
-      return data;
-    },
-
     async getById({ projectUuid, start, end, urn, next }) {
       const params = {
         start,
