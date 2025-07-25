@@ -314,16 +314,18 @@ describe('Supervisor.js', () => {
 
       const projectUuid = 'project-123';
       const start = '2023-01-01';
+      const end = '2023-01-31';
       const urn = 'tel:+123456789';
 
       const result = await Supervisor.conversations.getById({
         projectUuid,
         start,
+        end,
         urn,
       });
 
       expect(nexusRequest.$http.get).toHaveBeenCalledWith(
-        `/api/${projectUuid}/conversations/?start=2023-01-01&contact_urn=tel%3A%2B123456789`,
+        `/api/${projectUuid}/conversations/?start=2023-01-01&end=2023-01-31&contact_urn=tel%3A%2B123456789`,
       );
       expect(result).toEqual(mockConversationResponse.data);
       expect(result.results[0].contact.urn).toBe('tel:+123456789');
