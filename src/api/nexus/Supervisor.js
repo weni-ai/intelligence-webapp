@@ -1,4 +1,3 @@
-import billingRequest from '../billingRequest';
 import nexusRequest from '../nexusaiRequest';
 
 export const Supervisor = {
@@ -12,8 +11,8 @@ export const Supervisor = {
         ...(type && { human_support: type === 'forwarded_human_support' }),
       };
 
-      const { data } = await billingRequest.$http.get(
-        `${projectUuid}/conversations/?${new URLSearchParams(params)}`,
+      const { data } = await nexusRequest.$http.get(
+        `/api/${projectUuid}/supervisor/`, //?${new URLSearchParams(params)}
       );
 
       return data;
