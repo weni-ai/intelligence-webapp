@@ -140,7 +140,7 @@ describe('Preview.vue', () => {
     });
 
     it('shows messages container when messages exist', async () => {
-      wrapper.vm.messages = [
+      flowPreviewStore.messages = [
         { type: 'question', text: 'Hello' },
         { type: 'answer', text: 'Hi there!' },
       ];
@@ -162,7 +162,7 @@ describe('Preview.vue', () => {
 
   describe('Message Display', () => {
     beforeEach(() => {
-      const messages = [
+      flowPreviewStore.messages = [
         { type: 'question', text: 'Test question' },
         {
           type: 'answer',
@@ -170,7 +170,6 @@ describe('Preview.vue', () => {
           response: { msg: { text: 'Test answer' } },
         },
       ];
-      wrapper.vm.messages = messages;
     });
 
     it('renders MessageDisplay components for each message', async () => {
