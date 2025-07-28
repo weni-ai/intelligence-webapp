@@ -88,7 +88,7 @@ const profileStore = useProfileStore();
 const flowPreviewStore = useFlowPreviewStore();
 
 const message = ref('');
-const messages = ref(flowPreviewStore.messages);
+const messages = computed(() => flowPreviewStore.messages);
 const messagesRef = ref(null);
 
 const showPreviewMenu = ref(false);
