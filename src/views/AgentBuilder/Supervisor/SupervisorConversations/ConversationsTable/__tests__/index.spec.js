@@ -5,6 +5,7 @@ import { vi } from 'vitest';
 
 import ConversationsTable from '../index.vue';
 import i18n from '@/utils/plugins/i18n';
+import { nextTick } from 'vue';
 
 vi.mock('@/api/nexusaiAPI', () => ({
   default: {
@@ -56,8 +57,11 @@ describe('ConversationsTable.vue', () => {
     initialState: {
       supervisor: {
         conversations: {
-          data: null,
-          status: null,
+          data: {
+            results: [],
+            count: 2,
+          },
+          status: 'loading',
         },
         filters: {},
       },
@@ -80,6 +84,7 @@ describe('ConversationsTable.vue', () => {
 
     supervisorStore.filters.start = '2023-01-01';
     supervisorStore.filters.end = '2023-01-31';
+    supervisorStore.loadConversations();
 
     wrapper = shallowMount(ConversationsTable, {
       global: {
@@ -94,6 +99,9 @@ describe('ConversationsTable.vue', () => {
   });
 
   it('renders the component correctly', () => {
+    console.log(wrapper.html());
+    console.log(wrapper.vm.supervisorStore.conversations);
+
     expect(table().exists()).toBe(true);
     expect(conversationsCount().exists()).toBe(true);
     expect(conversationRows().length).toBe(2);
