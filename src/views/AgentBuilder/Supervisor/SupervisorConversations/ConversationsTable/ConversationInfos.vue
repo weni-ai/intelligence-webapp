@@ -1,6 +1,9 @@
 <template>
   <section class="conversation-infos">
-    <SupervisorUsername :username="username" />
+    <SupervisorUsername
+      :username="username"
+      data-testid="conversation-username"
+    />
 
     <UnnnicIntelligenceText
       data-testid="conversation-urn"

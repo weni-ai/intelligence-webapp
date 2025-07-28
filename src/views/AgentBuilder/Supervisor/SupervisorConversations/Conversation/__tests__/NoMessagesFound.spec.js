@@ -56,17 +56,17 @@ describe('NoMessagesFound.vue', () => {
 
     it('renders the search_off icon with correct scheme', () => {
       expect(icon().exists()).toBe(true);
-      expect(icon().props('icon')).toBe('search_off');
-      expect(icon().props('scheme')).toBe('neutral-dark');
+      expect(icon().props('icon')).toBe('sms');
+      expect(icon().props('scheme')).toBe('neutral-soft');
       expect(icon().classes()).toContain('no-messages-found__icon');
     });
 
     it('renders the title with correct translation key', () => {
       expect(title().props('tag')).toBe('p');
-      expect(title().props('color')).toBe('neutral-dark');
+      expect(title().props('color')).toBe('neutral-cloudy');
       expect(title().props('family')).toBe('secondary');
       expect(title().props('size')).toBe('body-gt');
-      expect(title().props('weight')).toBe('bold');
+      expect(title().props('weight')).toBe('regular');
       expect(title().classes()).toContain('no-messages-found__title');
     });
 

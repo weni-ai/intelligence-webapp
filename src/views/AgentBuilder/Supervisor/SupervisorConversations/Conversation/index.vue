@@ -3,7 +3,7 @@
     class="conversation"
     data-testid="conversation"
   >
-    <ConversationHeader />
+    <ConversationHeader data-testid="conversation-header" />
 
     <section
       ref="messagesContainer"
@@ -65,6 +65,8 @@ const messagesContainer = ref(null);
 
 onMounted(async () => {
   await supervisorStore.loadSelectedConversationData();
+
+  // if (!messagesContainer.value) return;
 
   messagesContainer.value.scrollTo({
     top: messagesContainer.value.scrollHeight,

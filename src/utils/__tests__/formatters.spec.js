@@ -13,7 +13,7 @@ describe('formatters', () => {
 
     it('should handle multiple items', () => {
       expect(formatListToReadable(['item1', 'item2', 'item3'])).toBe(
-        'item1, item2and item3',
+        'item1, item2 and item3',
       );
     });
 
