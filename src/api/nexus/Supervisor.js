@@ -5,14 +5,14 @@ export const Supervisor = {
     async list({ projectUuid, page, start, end, search, type }) {
       const params = {
         page,
-        start,
-        end,
+        start_date: start,
+        end_date: end,
         ...(search && { search }),
         ...(type && { human_support: type === 'forwarded_human_support' }),
       };
 
       const { data } = await nexusRequest.$http.get(
-        `/api/${projectUuid}/supervisor/`, //?${new URLSearchParams(params)}
+        `/api/${projectUuid}/supervisor/?${new URLSearchParams(params)}`, //?${new URLSearchParams(params)}
       );
 
       return data;
