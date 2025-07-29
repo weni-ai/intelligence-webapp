@@ -122,7 +122,29 @@
         "send": "Enviar exportação",
         "success": "A exportação será enviada para todos os e-mails listados em breve",
         "error": "Erro ao enviar exportação. Tente novamente mais tarde."
+      },
+      "filters": {
+        "status": {
+          "conversations": "Conversas",
+          "in_progress": "Em progresso",
+          "resolved": "Resolvido",
+          "unresolved": "Não resolvido",
+          "unengaged": "Não engajado",
+          "transferred_to_human_support": "Encaminhado para suporte humano"
+        },
+        "csat": {
+          "csat": "CSAT",
+          "very_satisfied": "🤩 Muito satisfeito",
+          "satisfied": "😃 Satisfeito",
+          "neutral": "😐 Neutro",
+          "dissatisfied": "😔 Insatisfeito",
+          "very_dissatisfied": "😡 Muito insatisfeito"
+        },
+        "topic": {
+          "topic": "Tópico"
+        }
       }
+      
     },
     "traces": {
       "search_result_received": "Resultado da busca recebido",
