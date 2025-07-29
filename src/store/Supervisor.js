@@ -42,7 +42,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     conversations.status = 'loading';
     if (page === 1) conversations.data.results = [];
 
-    const formatDateParam = (date) => format(parseISO(date), 'yyyy-MM-dd');
+    const formatDateParam = (date) => format(parseISO(date), 'dd-MM-yyyy');
 
     try {
       const response = await supervisorApi.conversations.list({
