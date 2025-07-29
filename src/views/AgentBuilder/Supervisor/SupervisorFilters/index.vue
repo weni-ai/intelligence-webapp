@@ -25,8 +25,8 @@
         autocomplete
       />
       <UnnnicSelectSmart
-        v-model:modelValue="subjectFilter"
-        :options="subjectOptions"
+        v-model:modelValue="topicFilter"
+        :options="topicOptions"
         orderedByIndex
         multiple
         multipleWithoutSelectsMessage
@@ -44,6 +44,7 @@ import { ref, watch } from 'vue';
 import FilterText from './FilterText.vue';
 import { format } from 'date-fns';
 import { useSupervisorStore } from '@/store/Supervisor';
+import i18n from '@/utils/plugins/i18n';
 
 const supervisorStore = useSupervisorStore();
 
@@ -72,16 +73,19 @@ watch(
   { immediate: true },
 );
 
+const getStatusTranslation = (filter) =>
+  i18n.global.t(`agent_builder.supervisor.filters.status.${filter}`);
+
 const statusOptions = ref([
-  { label: 'Conversations', value: '' },
-  { label: 'Resolved', value: 'resolved' },
-  { label: 'Unresolved', value: 'unresolved' },
-  { label: 'Unengaged', value: 'unengaged' },
+  { label: getStatusTranslation('conversations'), value: '' },
+  { label: getStatusTranslation('resolved'), value: 'resolved' },
+  { label: getStatusTranslation('unresolved'), value: 'unresolved' },
+  { label: getStatusTranslation('unengaged'), value: 'unengaged' },
   {
-    label: 'Transferred to human support',
+    label: getStatusTranslation('transferred_to_human_support'),
     value: 'transferred_to_human_support',
   },
-  { label: 'In Progress', value: 'in_progress' },
+  { label: getStatusTranslation('in_progress'), value: 'in_progress' },
 ]);
 const statusFilter = ref(getQueryFilterArray('status', statusOptions));
 
@@ -95,13 +99,19 @@ watch(
   { immediate: true, deep: true },
 );
 
+const getCsatTranslation = (filter) =>
+  i18n.global.t(`agent_builder.supervisor.filters.csat.${filter}`);
+
 const csatOptions = ref([
-  { label: 'CSAT', value: '' },
-  { label: '🤩 Very satisfied', value: 'very_satisfied' },
-  { label: '😃 Satisfied', value: 'satisfied' },
-  { label: '😐 Neutral', value: 'neutral' },
-  { label: '😔 Dissatisfied', value: 'dissatisfied' },
-  { label: '😡 Very dissatisfied', value: 'very_dissatisfied' },
+  { label: getCsatTranslation('csat'), value: '' },
+  { label: getCsatTranslation('very_satisfied'), value: 'very_satisfied' },
+  { label: getCsatTranslation('satisfied'), value: 'satisfied' },
+  { label: getCsatTranslation('neutral'), value: 'neutral' },
+  { label: getCsatTranslation('dissatisfied'), value: 'dissatisfied' },
+  {
+    label: getCsatTranslation('very_dissatisfied'),
+    value: 'very_dissatisfied',
+  },
 ]);
 const csatFilter = ref(getQueryFilterArray('csat', csatOptions));
 
@@ -113,19 +123,22 @@ watch(
   { deep: true },
 );
 
-const subjectOptions = ref([
-  { label: 'Subject', value: '' },
+const topicOptions = ref([
+  {
+    label: i18n.global.t(`agent_builder.supervisor.filters.topic.topic`),
+    value: '',
+  },
   { label: 'Order status', value: 'order_status' },
   { label: 'Order tracking', value: 'order_tracking' },
   { label: 'Order cancellation', value: 'order_cancellation' },
   { label: 'Product concierge', value: 'product_concierge' },
 ]);
-const subjectFilter = ref(getQueryFilterArray('topics', subjectOptions));
+const topicFilter = ref(getQueryFilterArray('topics', topicOptions));
 
 watch(
-  () => subjectFilter.value,
+  () => topicFilter.value,
   () => {
-    supervisorStore.filters.topics = subjectFilter.value.map(
+    supervisorStore.filters.topics = topicFilter.value.map(
       (subject) => subject.value,
     );
   },
