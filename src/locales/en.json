@@ -121,6 +121,27 @@
         "send": "Send export",
         "success": "The export will be sent to all listed email addresses soon",
         "error": "Error sending export. Try again later."
+      },
+      "filters": {
+        "status": {
+          "conversations": "Conversations",
+          "in_progress": "In progress",
+          "resolved": "Resolved",
+          "unresolved": "Unresolved",
+          "unengaged": "Unengaged",
+          "transferred_to_human_support": "Transferred to human support"
+        },
+        "csat": {
+          "csat": "CSAT",
+          "very_satisfied": "🤩 Very satisfied",
+          "satisfied": "😃 Satisfied",
+          "neutral": "😐 Neutral",
+          "dissatisfied": "😔 Dissatisfied",
+          "very_dissatisfied": "😡 Very dissatisfied"
+        },
+        "topic": {
+          "topic": "Topic"
+        }
       }
     },
     "traces": {

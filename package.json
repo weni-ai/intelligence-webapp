@@ -21,7 +21,7 @@
     "@sentry/vue": "^8.9.2",
     "@tsparticles/slim": "^3.8.1",
     "@tsparticles/vue3": "^3.0.1",
-    "@weni/unnnic-system": "2.28.0",
+    "@weni/unnnic-system": "2.36.0",
     "axios": "^1.6.8",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
