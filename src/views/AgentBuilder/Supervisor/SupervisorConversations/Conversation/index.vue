@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
@@ -63,14 +63,25 @@ const results = computed(() => conversation.value?.data?.results);
 
 const messagesContainer = ref(null);
 
-onMounted(async () => {
+async function loadConversationData() {
   await supervisorStore.loadSelectedConversationData();
-
-  // if (!messagesContainer.value) return;
 
   messagesContainer.value.scrollTo({
     top: messagesContainer.value.scrollHeight,
   });
+}
+
+watch(
+  () => supervisorStore.queryConversationId,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      loadConversationData();
+    }
+  },
+);
+
+onMounted(() => {
+  loadConversationData();
 });
 
 function handleScroll(event) {

@@ -46,6 +46,13 @@ export const Supervisor = {
         `/api/${projectUuid}/supervisor/?${new URLSearchParams(params)}`,
       );
 
+      data.results = data.results.map((result) => ({
+        ...result,
+        id: result.external_id,
+        start: result.created_on,
+        end: result.end_date,
+      }));
+
       return data;
     },
 
