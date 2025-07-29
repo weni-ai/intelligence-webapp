@@ -92,17 +92,17 @@ function handleRowClick(row) {
 }
 
 watch(
-  [
-    () => supervisorStore.filters.search,
-    () => supervisorStore.filters.start,
-    () => supervisorStore.filters.end,
-  ],
-  ([newSearch, newStart, newEnd], [oldSearch, oldStart, oldEnd]) => {
-    if (newSearch !== oldSearch || newStart !== oldStart || newEnd !== oldEnd) {
-      if (pagination.value.page === 1) supervisorStore.loadConversations();
-      else pagination.value.page = 1;
+  () => supervisorStore.filters,
+  (newFilters, oldFilters) => {
+    if (newFilters.conversationId !== oldFilters.conversationId) return;
+
+    if (pagination.value.page === 1) {
+      supervisorStore.loadConversations();
+    } else {
+      pagination.value.page = 1;
     }
   },
+  { deep: true },
 );
 
 function handleScroll(event) {

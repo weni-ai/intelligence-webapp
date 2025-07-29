@@ -48,6 +48,15 @@ import { useSupervisorStore } from '@/store/Supervisor';
 const supervisorStore = useSupervisorStore();
 
 const today = format(new Date(), 'yyyy-MM-dd');
+function getQueryFilterArray(filter, filterOptions) {
+  if (!supervisorStore.filters[filter]) return [];
+  if (typeof supervisorStore.filters[filter] !== 'string')
+    return supervisorStore.filters[filter];
+
+  return supervisorStore.filters[filter]
+    .split(',')
+    .map((item) => filterOptions.value.find((option) => option.value === item));
+}
 
 const dateFilter = ref({
   start: supervisorStore.filters.start,
@@ -63,15 +72,29 @@ watch(
   { immediate: true },
 );
 
-const statusFilter = ref([]);
 const statusOptions = ref([
   { label: 'Conversations', value: '' },
   { label: 'Resolved', value: 'resolved' },
   { label: 'Unresolved', value: 'unresolved' },
+  { label: 'Unengaged', value: 'unengaged' },
+  {
+    label: 'Transferred to human support',
+    value: 'transferred_to_human_support',
+  },
   { label: 'In Progress', value: 'in_progress' },
 ]);
+const statusFilter = ref(getQueryFilterArray('status', statusOptions));
 
-const csatFilter = ref([]);
+watch(
+  () => statusFilter.value,
+  () => {
+    supervisorStore.filters.status = statusFilter.value.map(
+      (status) => status.value,
+    );
+  },
+  { immediate: true, deep: true },
+);
+
 const csatOptions = ref([
   { label: 'CSAT', value: '' },
   { label: '🤩 Very satisfied', value: 'very_satisfied' },
@@ -80,8 +103,16 @@ const csatOptions = ref([
   { label: '😔 Dissatisfied', value: 'dissatisfied' },
   { label: '😡 Very dissatisfied', value: 'very_dissatisfied' },
 ]);
+const csatFilter = ref(getQueryFilterArray('csat', csatOptions));
 
-const subjectFilter = ref([]);
+watch(
+  () => csatFilter.value,
+  () => {
+    supervisorStore.filters.csat = csatFilter.value.map((csat) => csat.value);
+  },
+  { deep: true },
+);
+
 const subjectOptions = ref([
   { label: 'Subject', value: '' },
   { label: 'Order status', value: 'order_status' },
@@ -89,6 +120,17 @@ const subjectOptions = ref([
   { label: 'Order cancellation', value: 'order_cancellation' },
   { label: 'Product concierge', value: 'product_concierge' },
 ]);
+const subjectFilter = ref(getQueryFilterArray('topics', subjectOptions));
+
+watch(
+  () => subjectFilter.value,
+  () => {
+    supervisorStore.filters.topics = subjectFilter.value.map(
+      (subject) => subject.value,
+    );
+  },
+  { immediate: true, deep: true },
+);
 </script>
 
 <style scoped lang="scss">
