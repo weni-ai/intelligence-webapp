@@ -18,7 +18,8 @@
     <section class="modal__topic">
       <p class="topic__title">What is a conversation?</p>
       <p class="topic__description">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+        We consider all messages exchanged within 24 hours of the contact's
+        first message as a single conversation.
       </p>
     </section>
 
