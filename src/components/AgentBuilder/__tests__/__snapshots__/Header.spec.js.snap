@@ -4,7 +4,9 @@ exports[`Header.vue > Rendering > should match snapshot 1`] = `
 "<header data-v-e01a57d3="" class="agent-builder-header" data-testid="agent-builder-header">
   <section data-v-e01a57d3="" class="agent-builder-header__title">
     <h1 data-v-ec8da4ad="" data-v-e01a57d3="" class="unnnic-text unnnic-text--size-title-sm unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-bold unnnic-text--color-neutral-darkest" data-testid="agent-builder-header-title">Test Route</h1>
-    <h2 data-v-ec8da4ad="" data-v-e01a57d3="" class="unnnic-text unnnic-text--size-body-gt unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-regular unnnic-text--color-neutral-cloudy" data-testid="agent-builder-header-description">Test Description</h2>
+    <h2 data-v-ec8da4ad="" data-v-e01a57d3="" class="unnnic-text unnnic-text--size-body-gt unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-regular unnnic-text--color-neutral-cloudy" data-testid="agent-builder-header-description">Test Description
+      <!--v-if-->
+    </h2>
   </section>
 </header>
 <unnnic-divider-stub data-v-e01a57d3="" yspacing="md" scheme="neutral-soft" data-testid="agent-builder-header-divider"></unnnic-divider-stub>"

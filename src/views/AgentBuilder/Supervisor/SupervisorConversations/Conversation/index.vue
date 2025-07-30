@@ -3,33 +3,9 @@
     class="conversation"
     data-testid="conversation"
   >
-    <header class="conversation__header">
-      <UnnnicIntelligenceText
-        tag="h2"
-        color="neutral-darkest"
-        family="secondary"
-        size="title-sm"
-        weight="bold"
-        data-testid="conversation-title"
-      >
-        {{ conversation?.urn }}
-      </UnnnicIntelligenceText>
-
-      <button
-        class="header__close-button"
-        data-testid="close-button"
-        @click="supervisorStore.selectConversation(null)"
-      >
-        <UnnnicIcon
-          data-testid="close-button-icon"
-          icon="close"
-          size="md"
-          scheme="neutral-cloudy"
-        />
-      </button>
-    </header>
-
+    <ConversationHeader data-testid="conversation-header" />
     <section
+      ref="messagesContainer"
       class="conversation__messages"
       data-testid="messages-container"
       @scroll="handleScroll"
@@ -50,6 +26,14 @@
       />
 
       <template v-else>
+        <ConversationStartFinish
+          v-if="conversation?.start"
+          class="conversation__start"
+          data-testid="start"
+          type="start"
+          :datetime="conversation?.start"
+        />
+
         <QuestionAndAnswer
           v-for="message in results"
           :key="message.id"
@@ -58,10 +42,12 @@
           data-testid="message"
         />
 
-        <ForwardedHumanSupport
-          v-if="conversation?.human_support"
-          class="conversation__forwarded-human-support"
-          data-testid="forwarded-human-support"
+        <ConversationStartFinish
+          v-if="conversation?.end"
+          class="conversation__finish"
+          data-testid="finish"
+          type="finish"
+          :datetime="conversation?.end"
         />
       </template>
     </section>
@@ -69,21 +55,42 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
 import QuestionAndAnswer from './QuestionAndAnswer/index.vue';
-import ForwardedHumanSupport from './QuestionAndAnswer/ForwardedHumanSupport.vue';
+import ConversationStartFinish from './QuestionAndAnswer/ConversationStartFinish.vue';
 import NoMessagesFound from './NoMessagesFound.vue';
+import ConversationHeader from './Header.vue';
+
 const supervisorStore = useSupervisorStore();
 
 const conversation = computed(() => supervisorStore.selectedConversation);
 const status = computed(() => conversation.value?.data?.status);
 const results = computed(() => conversation.value?.data?.results);
 
+const messagesContainer = ref(null);
+
+async function loadConversationData() {
+  await supervisorStore.loadSelectedConversationData();
+
+  messagesContainer.value.scrollTo({
+    top: messagesContainer.value.scrollHeight,
+  });
+}
+
+watch(
+  () => supervisorStore.queryConversationId,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      loadConversationData();
+    }
+  },
+);
+
 onMounted(() => {
-  supervisorStore.loadSelectedConversationData();
+  loadConversationData();
 });
 
 function handleScroll(event) {
@@ -94,42 +101,29 @@ function handleScroll(event) {
 </script>
 
 <style lang="scss" scoped>
-$conversation-border: $unnnic-border-width-thinner solid
-  $unnnic-color-neutral-soft;
 .conversation {
+  overflow-x: hidden;
+
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 
-  border-left: $conversation-border;
-
-  &__header {
-    padding: $unnnic-spacing-sm;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    border-bottom: $conversation-border;
-
-    .header__close-button {
-      background-color: transparent;
-      border: none;
-
-      display: flex;
-
-      cursor: pointer;
-    }
-  }
+  border-left: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
 
   &__messages {
     padding: $unnnic-spacing-sm;
 
     overflow: hidden auto;
+
+    height: 100%;
   }
 
-  &__forwarded-human-support {
-    margin-top: $unnnic-spacing-sm;
+  &__start {
+    margin-bottom: $unnnic-spacing-xs;
+  }
+
+  &__finish {
+    margin-top: $unnnic-spacing-xs;
   }
 }
 </style>

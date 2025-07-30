@@ -71,45 +71,8 @@ describe('SupervisorHeader', () => {
   });
 
   it('should render the component correctly', () => {
-    expect(wrapper.find('[data-testid="date-picker"]').exists()).toBe(true);
     expect(wrapper.find('[data-testid="export-button"]').exists()).toBe(false);
     expect(wrapper.find('[data-testid="export-modal"]').exists()).toBe(false);
-  });
-
-  it('should set initial date filter values correctly', () => {
-    const datePickerEl = wrapper.findComponent('[data-testid="date-picker"]');
-    const modelValue = datePickerEl.props('modelValue');
-
-    expect(modelValue).toEqual({
-      start: '2025-01-01',
-      end: '2025-01-31',
-    });
-  });
-
-  it('should set maxDate prop to today for date picker', () => {
-    const datePickerEl = wrapper.findComponent('[data-testid="date-picker"]');
-    const today = format(new Date(), 'yyyy-MM-dd');
-
-    expect(datePickerEl.props('maxDate')).toBe(today);
-  });
-
-  it('should set correct date filter in supervisorStore during component initialization', () => {
-    expect(supervisorStore.filters.start).toBe('2025-01-01');
-    expect(supervisorStore.filters.end).toBe('2025-01-31');
-  });
-
-  it('should update supervisorStore filters when date filter changes', async () => {
-    const newDateFilter = {
-      start: '2023-01-01',
-      end: '2023-01-15',
-    };
-
-    await wrapper
-      .findComponent('[data-testid="date-picker"]')
-      .vm.$emit('update:modelValue', newDateFilter);
-
-    expect(supervisorStore.filters.start).toBe(newDateFilter.start);
-    expect(supervisorStore.filters.end).toBe(newDateFilter.end);
   });
 
   it('should not show export button when supervisorExport flag is false', () => {

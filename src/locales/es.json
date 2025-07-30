@@ -85,20 +85,30 @@
       }
     },
     "supervisor": {
+      "learn_details_conversations": "Aprende sobre los detalles de una conversación.",
+      "conversations_count": "{count} conversaciones encontradas",
+      "unnamed_contact": "Contacto sin nombre",
+      "status": {
+        "in_progress": "En progreso",
+        "resolved": "Resuelto",
+        "unresolved": "No resuelto"
+      },
       "attended_by_agent": {
         "title": "Atendido por el agente",
         "tooltip": "Conversaciones resueltas por el agente"
       },
-      "forwarded_human_support": {
-        "title": "Encaminado a soporte humano",
-        "tooltip": "Conversaciones encaminadas a soporte humano"
+      "conversation_start_finish": {
+        "start": "Conversación iniciada: {datetime}",
+        "finish": "Conversación finalizada: {datetime}"
       },
+      "contact_urn": "URN del contacto: {urn}",
       "view_logs": "Ver logs",
       "hide_logs": "Esconder logs",
       "search": "Buscar",
+      "conversations_empty": "No se encontraron conversaciones",
       "no_messages_found": {
-        "title": "No se encontraron mensajes en esta conversación.",
-        "description": "Si el mensaje fue enviado por soporte humano o mensajes disparados, puedes encontrarlo en el {studio_link}.",
+        "title": "No se encontraron mensajes en esta conversación",
+        "description": "Si el mensaje fue enviado por soporte humano o mensajes disparados, puedes encontrarlo en el {studio_link}",
         "studio_link": "Studio"
       },
       "export": {
@@ -112,6 +122,27 @@
         "send": "Enviar exportación",
         "success": "La exportación será enviada a todas las direcciones de correo electrónico listadas pronto",
         "error": "Error al enviar exportación. Intente nuevamente más tarde."
+      },
+      "filters": {
+        "status": {
+          "conversations": "Conversaciones",
+          "in_progress": "En progreso",
+          "resolved": "Resuelto",
+          "unresolved": "No resuelto",
+          "unengaged": "No engajado",
+          "transferred_to_human_support": "Encaminado a soporte humano"
+        },
+        "csat": {
+          "csat": "CSAT",
+          "very_satisfied": "🤩 Muy satisfecho",
+          "satisfied": "😃 Satisfecho",
+          "neutral": "😐 Neutral",
+          "dissatisfied": "😔 Insatisfecho",
+          "very_dissatisfied": "😡 Muy insatisfecho"
+        },
+        "topic": {
+          "topic": "Tópico"
+        }
       }
     },
     "traces": {

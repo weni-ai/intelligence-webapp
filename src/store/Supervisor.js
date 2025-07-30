@@ -7,7 +7,6 @@ import { useRoute } from 'vue-router';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 
-import { PerformanceAdapter } from '@/api/adapters/supervisor/performance';
 import i18n from '@/utils/plugins/i18n';
 
 export const useSupervisorStore = defineStore('Supervisor', () => {
@@ -15,63 +14,36 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const supervisorApi = nexusaiAPI.agent_builder.supervisor;
   const alertStore = useAlertStore();
   const route = useRoute();
-  const last30Days = format(subDays(new Date(), 30), 'yyyy-MM-dd');
+  const thisMonth = format(subDays(new Date(), 29), 'yyyy-MM-dd');
   const today = format(new Date(), 'yyyy-MM-dd');
-
-  const forwardStats = reactive({
-    status: null,
-    data: {
-      attendedByAgent: 0,
-      forwardedHumanSupport: 0,
-    },
-  });
 
   const conversations = reactive({
     status: null,
-    data: [],
+    data: {
+      results: [],
+    },
   });
 
   const selectedConversation = ref(null);
 
   const filters = reactive({
-    start: route.query.start || last30Days,
+    start: route.query.start || thisMonth,
     end: route.query.end || today,
     search: route.query.search || '',
-    type: route.query.type || '',
-    conversationId: route.query.conversationId || '',
+    status: route.query.status || '',
+    csat: route.query.csat || '',
+    topics: route.query.topics || '',
   });
 
-  async function loadForwardStats() {
-    forwardStats.status = 'loading';
-    try {
-      const response = await supervisorApi.conversations.forwardStats({
-        projectUuid: projectUuid.value,
-        start: format(parseISO(filters.start), 'dd-MM-yyyy'),
-        end: format(parseISO(filters.end), 'dd-MM-yyyy'),
-      });
-
-      const adaptedData = PerformanceAdapter.fromApi(response);
-      const total =
-        adaptedData.attendedByAgent + adaptedData.forwardedHumanSupport;
-
-      const calculatePercentage = (value) =>
-        total === 0 ? 0 : Math.round((value / total) * 100);
-
-      forwardStats.data = {
-        attendedByAgent: calculatePercentage(adaptedData.attendedByAgent),
-        forwardedHumanSupport: calculatePercentage(
-          adaptedData.forwardedHumanSupport,
-        ),
-      };
-
-      forwardStats.status = 'complete';
-    } catch (error) {
-      forwardStats.status = 'error';
-    }
-  }
+  const queryConversationId = ref(route.query.conversationId || '');
 
   async function loadConversations(page = 1) {
+    if (conversations.status === 'loading') {
+      return;
+    }
+
     conversations.status = 'loading';
+    if (page === 1) conversations.data.results = [];
 
     const formatDateParam = (date) => format(parseISO(date), 'dd-MM-yyyy');
 
@@ -82,11 +54,16 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
         start: formatDateParam(filters.start),
         end: formatDateParam(filters.end),
         search: filters.search,
-        type: filters.type,
+        status: filters.status,
+        csat: filters.csat,
+        topics: filters.topics,
       });
 
       conversations.status = 'complete';
-      conversations.data = response;
+      conversations.data = {
+        ...response,
+        results: [...conversations.data.results, ...response.results],
+      };
     } catch (error) {
       conversations.status = 'error';
     }
@@ -104,8 +81,8 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
       const params = {
         projectUuid: projectUuid.value,
-        start: selectedConversation.value.created_on,
-        end: selectedConversation.value.end_on,
+        start: selectedConversation.value.start,
+        end: selectedConversation.value.end,
         urn: selectedConversation.value.urn,
         next: next ? selectedConversation.value.data.next : null,
       };
@@ -134,21 +111,21 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   function selectConversation(conversationId) {
     if (!conversationId) {
       selectedConversation.value = null;
-      filters.conversationId = '';
+      queryConversationId.value = '';
       return;
     }
 
-    const conversation = conversations.data.results.find(
+    const conversation = conversations.data.results?.find(
       (conversation) => conversation.id == conversationId,
     );
 
+    queryConversationId.value = conversationId;
     selectedConversation.value = {
       ...conversation,
       data: {
         status: null,
       },
     };
-    filters.conversationId = conversationId;
   }
 
   async function exportSupervisorData({ token }) {
@@ -172,14 +149,13 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   }
 
   return {
-    forwardStats,
-    loadForwardStats,
     conversations,
     loadConversations,
     loadSelectedConversationData,
     selectConversation,
     selectedConversation,
     filters,
+    queryConversationId,
     exportSupervisorData,
   };
 });

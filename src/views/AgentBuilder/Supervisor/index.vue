@@ -23,7 +23,7 @@
 
 <script setup>
 import { computed, onBeforeMount, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 import SupervisorHeader from './SupervisorHeader.vue';
 import SupervisorConversations from './SupervisorConversations/index.vue';
@@ -34,13 +34,14 @@ import { cleanParams } from '@/utils/http';
 
 const supervisorStore = useSupervisorStore();
 const router = useRouter();
+const route = useRoute();
 
 const selectedConversation = computed(() => {
   return supervisorStore.selectedConversation;
 });
 
-function updateQuery() {
-  const cleanedFilters = cleanParams(supervisorStore.filters);
+function updateQuery(filters = supervisorStore.filters) {
+  const cleanedFilters = cleanParams(filters);
   router.replace({
     query: {
       ...cleanedFilters,
@@ -50,14 +51,31 @@ function updateQuery() {
 
 watch(
   () => supervisorStore.filters,
-  (filters) => {
+  () => {
     updateQuery();
   },
   { deep: true },
 );
 
-onBeforeMount(() => {
+watch(
+  () => supervisorStore.queryConversationId,
+  (conversationId) => {
+    updateQuery({
+      ...route.query,
+      conversationId,
+    });
+  },
+);
+
+onBeforeMount(async () => {
   updateQuery();
+
+  await supervisorStore.loadConversations();
+
+  const { selectedConversation, queryConversationId } = supervisorStore;
+  if (queryConversationId && !selectedConversation) {
+    supervisorStore.selectConversation(queryConversationId);
+  }
 });
 </script>
 
@@ -65,13 +83,15 @@ onBeforeMount(() => {
 .supervisor {
   margin: -$unnnic-spacing-sm;
 
+  min-height: 100%;
+
   display: grid;
+  grid-template-rows: auto 1fr;
 
   overflow: hidden auto;
 
   &--with-conversation {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-columns: 7fr 5fr;
   }
 
   &__header {
@@ -83,10 +103,14 @@ onBeforeMount(() => {
   }
 
   &__conversations {
-    padding: 0 $unnnic-spacing-sm;
+    padding-left: $unnnic-spacing-sm;
 
     grid-column: 1 / 1;
     grid-row: 2 / 3;
+
+    & > * {
+      margin-right: $unnnic-spacing-sm;
+    }
   }
 
   &__conversation {
