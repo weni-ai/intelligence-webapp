@@ -1,52 +1,100 @@
 import nexusRequest from '../nexusaiRequest';
+import { ConversationAdapter } from '../adapters/supervisor/conversation';
 
 export const Supervisor = {
   conversations: {
-    async list({
-      projectUuid,
-      page,
-      start,
-      end,
-      search,
-      status,
-      csat,
-      topics,
-    }) {
-      const statusMap = {
-        in_progress: 0,
-        resolved: 1,
-        unresolved: 2,
-        unengaged: 3,
+    async list(filterData) {
+      const { projectUuid, ...filters } = filterData;
+
+      // Transform frontend filters to API format
+      // const params = ConversationAdapter.toApi(filters);
+
+      // const { data } = await nexusRequest.$http.get(
+      //   `/api/${projectUuid}/supervisor/?${new URLSearchParams(params)}`,
+      // );
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1000);
+      }, 1000);
+
+      const data = {
+        count: 5,
+        results: [
+          {
+            created_on: '2025-07-29T17:39:59Z',
+            urn: 'telegram:6122765895',
+            uuid: null,
+            external_id: '33',
+            csat: 3,
+            topic: null,
+            has_chats_room: false,
+            start_date: '2025-07-29T17:39:59.000000Z',
+            end_date: '2025-07-30T17:39:59.000000Z',
+            resolution: 0,
+            name: 'Alan Severo',
+            is_billing_only: true,
+          },
+          {
+            created_on: '2025-07-29T17:38:20Z',
+            urn: 'ext:1591388878567@',
+            uuid: null,
+            external_id: '32',
+            csat: 5,
+            topic: null,
+            has_chats_room: true,
+            start_date: '2025-07-29T17:38:20.000000Z',
+            end_date: '2025-07-30T17:38:20.000000Z',
+            resolution: 1,
+            name: 'Julian Casablancas',
+            is_billing_only: true,
+          },
+          {
+            created_on: '2025-07-29T17:35:04Z',
+            urn: 'ext:1684982829738@',
+            uuid: null,
+            external_id: '31',
+            csat: null,
+            topic: null,
+            has_chats_room: false,
+            start_date: '2025-07-29T17:35:04.000000Z',
+            end_date: '2025-07-30T17:35:04.000000Z',
+            resolution: 2,
+            name: null,
+            is_billing_only: true,
+          },
+          {
+            created_on: '2025-07-26T13:54:05.461631Z',
+            urn: 'ext:272851456667@',
+            uuid: '677d3d56-eb48-47b0-ba18-ef20db40ae07',
+            external_id: '29',
+            csat: 2,
+            topic: null,
+            has_chats_room: true,
+            start_date: '2025-07-25T13:50:19Z',
+            end_date: '2025-07-26T13:50:19Z',
+            resolution: 3,
+            name: null,
+            is_billing_only: false,
+          },
+          {
+            created_on: '2025-07-26T13:54:05.461631Z',
+            urn: 'ext:272851456667@',
+            uuid: '677d3d56-eb48-47b0-ba18-ef20db40ae07',
+            external_id: '29',
+            csat: 1,
+            topic: null,
+            has_chats_room: false,
+            start_date: '2025-07-25T13:50:19Z',
+            end_date: '2025-07-26T13:50:19Z',
+            resolution: null,
+            name: null,
+            is_billing_only: false,
+          },
+        ],
       };
 
-      const csatMap = {
-        very_satisfied: 0,
-        satisfied: 1,
-        neutral: 2,
-        unsatisfied: 3,
-        very_unsatisfied: 4,
-      };
-
-      const params = {
-        page,
-        start_date: start,
-        end_date: end,
-        ...(search && { search }),
-        ...(status.length > 0 && {
-          resolution: status.map((status) => statusMap[status]),
-        }),
-        ...(csat.length > 0 && { csat: csat.map((csat) => csatMap[csat]) }),
-        ...(topics.length > 0 && { topics }),
-        ...(status.includes('transferred_to_human_support') && {
-          has_chats_room: true,
-        }),
-      };
-
-      const { data } = await nexusRequest.$http.get(
-        `/api/${projectUuid}/supervisor/?${new URLSearchParams(params)}`,
-      );
-
-      return data;
+      // Transform API response to frontend format
+      return ConversationAdapter.fromApi(data);
     },
 
     async getById({ projectUuid, start, end, urn, next }) {
