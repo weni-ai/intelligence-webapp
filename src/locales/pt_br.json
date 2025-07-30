@@ -86,6 +86,13 @@
     },
     "supervisor": {
       "learn_details_conversations": "Aprenda sobre os detalhes de uma conversa.",
+      "conversation_details": {
+        "title": "Sobre conversa",
+        "what_is_a_conversation": "O que é uma conversa?",
+        "what_is_a_conversation_description": "Consideramos todas as mensagens trocadas dentro de 24 horas do primeiro contato como uma única conversa.",
+        "when_is_a_conversation_considered_resolved": "Quando uma conversa é considerada resolvida?",
+        "description": "Uma conversa é considerada resolvida quando o usuário vai além do primeiro contato e realmente interage: \n- Pergunta; \n- Solicita dados; \n- Confirma informações; \n- Recebe orientação que permite completar todo ou parte do seu pedido. \nMensagens limitadas a saudações, emojis ou fechadas sem interação útil permanecem não resolvidas, enquanto interações que entregam valor ao usuário são marcadas como resolvidas."
+      },
       "conversations_count": "{count} conversas encontradas",
       "unnamed_contact": "Contato sem nome",
       "status": {

@@ -11,21 +11,26 @@
     showCloseIcon
     showActionsDivider
     size="md"
-    title="About conversation"
+    :title="detailsTranslation('title')"
     class="supervisor-header-details__modal"
     @update:model-value="handleDetailsModal"
   >
     <section class="modal__topic">
-      <p class="topic__title">What is a conversation?</p>
+      <p class="topic__title">
+        {{ detailsTranslation('what_is_a_conversation') }}
+      </p>
       <p class="topic__description">
-        We consider all messages exchanged within 24 hours of the contact's
-        first message as a single conversation.
+        {{ detailsTranslation('what_is_a_conversation_description') }}
       </p>
     </section>
 
     <section class="modal__topic">
-      <p class="topic__title">When is a conversation considered resolved?</p>
-      <p class="topic__description">{{ description }}</p>
+      <p class="topic__title">
+        {{ detailsTranslation('when_is_a_conversation_considered_resolved') }}
+      </p>
+      <p class="topic__description">
+        {{ detailsTranslation('description') }}
+      </p>
     </section>
   </UnnnicModalDialog>
 </template>
@@ -33,19 +38,16 @@
 <script setup>
 import { ref } from 'vue';
 
+import i18n from '@/utils/plugins/i18n';
+const t = i18n.global.t;
+const detailsTranslation = (key) =>
+  t(`agent_builder.supervisor.conversation_details.${key}`);
+
 const isDetailsModalOpen = ref(false);
 
 function handleDetailsModal() {
   isDetailsModalOpen.value = !isDetailsModalOpen.value;
 }
-
-const description = `A conversation is only considered resolved when the user goes beyond the initial greeting and actually engages:
-- Asks questions;
-- Requests data;
-- Confirms information;
-- Receives guidance that allows them to complete all or part of their request.
-Messages limited to greetings, emojis or closed without useful interaction remain unresolved, while interaction that delivers value to the user is marked as resolved.
-`;
 </script>
 
 <style scoped lang="scss">
@@ -75,9 +77,9 @@ Messages limited to greetings, emojis or closed without useful interaction remai
 
       .topic__description {
         color: $unnnic-color-neutral-cloudy;
-        font-size: $unnnic-font-size-body-md;
+        font-size: $unnnic-font-size-body-gt;
         font-family: $unnnic-font-family-secondary;
-        line-height: $unnnic-line-height-md + $unnnic-font-size-body-md;
+        line-height: $unnnic-line-height-md + $unnnic-font-size-body-gt;
         white-space: pre-line;
       }
     }
