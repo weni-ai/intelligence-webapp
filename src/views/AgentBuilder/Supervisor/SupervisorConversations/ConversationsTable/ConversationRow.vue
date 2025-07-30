@@ -175,9 +175,14 @@ const csatProps = computed(() => {
     align-items: center;
   }
 
-  &__main-infos {
-    .main-infos__status,
-    .secondary-infos__date {
+  .main-infos__status,
+  .secondary-infos__date,
+  .secondary-infos__csat {
+    white-space: nowrap;
+
+    :deep(.unnnic-tag),
+    :deep(.unnnic-tag__label) {
+      overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
@@ -189,6 +194,19 @@ const csatProps = computed(() => {
 
       display: flex;
       gap: $unnnic-spacing-nano;
+    }
+  }
+
+  &__secondary-infos {
+    .secondary-infos__csat {
+      :deep(.unnnic-tag) {
+        background-color: transparent;
+        border: 1px solid $unnnic-color-neutral-cleanest;
+      }
+
+      :deep(.unnnic-tag__label) {
+        color: $unnnic-color-neutral-cloudy;
+      }
     }
   }
 }

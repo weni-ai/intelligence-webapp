@@ -17,7 +17,14 @@
         {{ formattedUrn }}
       </UnnnicIntelligenceText>
 
-      <!-- TODO: Add topics -->
+      <section class="header__topics">
+        <UnnnicTag
+          v-for="topic in topics"
+          :key="topic"
+          scheme="neutral-light"
+          :text="topic"
+        />
+      </section>
     </section>
 
     <button
@@ -51,6 +58,9 @@ const formattedUrn = computed(() =>
     urn: formatWhatsappUrn(conversation.value?.urn),
   }),
 );
+
+const MOCKED_TOPICS = ['Topic 1', 'Topic 2', 'Topic 3'];
+const topics = computed(() => conversation.value?.topics || MOCKED_TOPICS);
 </script>
 
 <style lang="scss" scoped>
@@ -66,6 +76,19 @@ const formattedUrn = computed(() =>
     display: flex;
     flex-direction: column;
     gap: $unnnic-spacing-xs;
+  }
+
+  .header__topics {
+    display: flex;
+    gap: $unnnic-spacing-xs;
+
+    :deep(.unnnic-tag) {
+      background-color: $unnnic-color-neutral-light;
+    }
+
+    :deep(.unnnic-tag__label) {
+      color: $unnnic-color-neutral-cloudy;
+    }
   }
 
   .header__close-button {
