@@ -73,6 +73,8 @@ const topics = computed(() => conversation.value?.topics || MOCKED_TOPICS);
   border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
 
   .header__info {
+    overflow: hidden;
+
     display: flex;
     flex-direction: column;
     gap: $unnnic-spacing-xs;
@@ -81,6 +83,7 @@ const topics = computed(() => conversation.value?.topics || MOCKED_TOPICS);
   .header__topics {
     display: flex;
     gap: $unnnic-spacing-xs;
+    flex-wrap: wrap;
 
     :deep(.unnnic-tag) {
       background-color: $unnnic-color-neutral-light;

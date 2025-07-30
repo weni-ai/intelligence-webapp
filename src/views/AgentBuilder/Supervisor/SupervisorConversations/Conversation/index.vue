@@ -4,7 +4,6 @@
     data-testid="conversation"
   >
     <ConversationHeader data-testid="conversation-header" />
-
     <section
       ref="messagesContainer"
       class="conversation__messages"
@@ -27,6 +26,14 @@
       />
 
       <template v-else>
+        <ConversationStartFinish
+          v-if="conversation?.start"
+          class="conversation__start"
+          data-testid="start"
+          type="start"
+          :datetime="conversation?.start"
+        />
+
         <QuestionAndAnswer
           v-for="message in results"
           :key="message.id"
@@ -35,10 +42,12 @@
           data-testid="message"
         />
 
-        <ForwardedHumanSupport
-          v-if="conversation?.human_support"
-          class="conversation__forwarded-human-support"
-          data-testid="forwarded-human-support"
+        <ConversationStartFinish
+          v-if="conversation?.end"
+          class="conversation__finish"
+          data-testid="finish"
+          type="finish"
+          :datetime="conversation?.end"
         />
       </template>
     </section>
@@ -51,7 +60,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useSupervisorStore } from '@/store/Supervisor';
 
 import QuestionAndAnswer from './QuestionAndAnswer/index.vue';
-import ForwardedHumanSupport from './QuestionAndAnswer/ForwardedHumanSupport.vue';
+import ConversationStartFinish from './QuestionAndAnswer/ConversationStartFinish.vue';
 import NoMessagesFound from './NoMessagesFound.vue';
 import ConversationHeader from './Header.vue';
 
@@ -93,6 +102,8 @@ function handleScroll(event) {
 
 <style lang="scss" scoped>
 .conversation {
+  overflow-x: hidden;
+
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -107,8 +118,12 @@ function handleScroll(event) {
     height: 100%;
   }
 
-  &__forwarded-human-support {
-    margin-top: $unnnic-spacing-sm;
+  &__start {
+    margin-bottom: $unnnic-spacing-xs;
+  }
+
+  &__finish {
+    margin-top: $unnnic-spacing-xs;
   }
 }
 </style>

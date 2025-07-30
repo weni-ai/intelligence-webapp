@@ -97,9 +97,9 @@
         "title": "Attended by the agent",
         "tooltip": "Conversations solved by the agent"
       },
-      "forwarded_human_support": {
-        "title": "Forwarded to human support",
-        "tooltip": "Conversations forwarded to human support"
+      "conversation_start_finish": {
+        "start": "Conversation started: {datetime}",
+        "finish": "Conversation finished: {datetime}"
       },
       "contact_urn": "Contact URN: {urn}",
       "view_logs": "View logs",

@@ -75,7 +75,7 @@ import { useMonitoringStore } from '@/store/Monitoring';
 
 import Message from './Message.vue';
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
-import ForwardedHumanSupport from './ForwardedHumanSupport.vue';
+import ForwardedHumanSupport from './ConversationStartFinish.vue';
 import AvatarLetter from '@/components/AgentBuilder/Supervisor/AvatarLetter.vue';
 import ViewLogsButton from './ViewLogsButton.vue';
 

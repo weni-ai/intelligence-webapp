@@ -18,7 +18,7 @@ export const Supervisor = {
       }, 1000);
 
       const data = {
-        count: 5,
+        count: 4,
         results: [
           {
             created_on: '2025-07-29T17:39:59Z',
@@ -73,20 +73,6 @@ export const Supervisor = {
             start_date: '2025-07-25T13:50:19Z',
             end_date: '2025-07-26T13:50:19Z',
             resolution: 3,
-            name: null,
-            is_billing_only: false,
-          },
-          {
-            created_on: '2025-07-26T13:54:05.461631Z',
-            urn: 'ext:272851456667@',
-            uuid: '677d3d56-eb48-47b0-ba18-ef20db40ae07',
-            external_id: '29',
-            csat: 1,
-            topic: null,
-            has_chats_room: false,
-            start_date: '2025-07-25T13:50:19Z',
-            end_date: '2025-07-26T13:50:19Z',
-            resolution: null,
             name: null,
             is_billing_only: false,
           },
