@@ -25,9 +25,21 @@
 
       <td class="main-infos__status">
         <UnnnicTag
+          v-if="statusProps.text"
           class="cell__status"
           :scheme="statusProps.scheme"
           :text="statusProps.text"
+        />
+
+        <UnnnicTag
+          v-if="conversation.transferred_to_human_support"
+          class="cell__status"
+          scheme="aux-yellow-500"
+          :text="
+            $t(
+              'agent_builder.supervisor.filters.status.transferred_to_human_support',
+            )
+          "
         />
       </td>
     </section>
@@ -44,7 +56,7 @@
       </td>
 
       <td class="secondary-infos__date">
-        <ConversationDate :date="conversation.created_on" />
+        <ConversationDate :date="conversation.start" />
       </td>
     </section>
   </tr>
@@ -77,10 +89,10 @@ const props = defineProps({
 const t = (key) => i18n.global.t(key);
 
 const statusProps = computed(() => {
-  const status = props.conversation.status || 'in_progress';
+  const status = props.conversation.status;
 
   const baseStatus = {
-    text: t(`agent_builder.supervisor.status.${status}`),
+    text: status ? t(`agent_builder.supervisor.filters.status.${status}`) : '',
   };
 
   const mapStatus = {
@@ -93,6 +105,9 @@ const statusProps = computed(() => {
     unresolved: {
       scheme: 'aux-red-500',
     },
+    unengaged: {
+      scheme: 'aux-purple-500',
+    },
   };
 
   return {
@@ -102,30 +117,22 @@ const statusProps = computed(() => {
 });
 
 const csatProps = computed(() => {
-  const mapCsat = {
-    very_satisfied: {
-      text: 'Very satisfied',
-    },
-    satisfied: {
-      text: 'Satisfied',
-    },
-    neutral: {
-      text: 'Neutral',
-    },
-    unsatisfied: {
-      text: 'Unsatisfied',
-    },
-    very_unsatisfied: {
-      text: 'Very unsatisfied',
-    },
-  };
+  const csat = props.conversation.csat;
 
-  return mapCsat[props.conversation.csat];
+  return csat
+    ? {
+        text: i18n.global.t(
+          `agent_builder.supervisor.filters.csat.${props.conversation.csat}`,
+        ),
+      }
+    : null;
 });
 </script>
 
 <style lang="scss" scoped>
 .conversation-row {
+  overflow: hidden;
+
   position: relative;
 
   border-radius: $unnnic-border-radius-md;
@@ -172,6 +179,16 @@ const csatProps = computed(() => {
     .main-infos__status,
     .secondary-infos__date {
       white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__main-infos {
+    .main-infos__status {
+      overflow: hidden;
+
+      display: flex;
+      gap: $unnnic-spacing-nano;
     }
   }
 }
