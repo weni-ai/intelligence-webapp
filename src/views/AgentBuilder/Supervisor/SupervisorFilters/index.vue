@@ -54,9 +54,13 @@ function getQueryFilterArray(filter, filterOptions) {
   if (typeof supervisorStore.filters[filter] !== 'string')
     return supervisorStore.filters[filter];
 
-  return supervisorStore.filters[filter]
-    .split(',')
-    .map((item) => filterOptions.value.find((option) => option.value === item));
+  return supervisorStore.filters[filter].split(',').map((item) => {
+    if (item === '') return { label: '', value: '' };
+
+    return filterOptions.value.find(
+      (option) => option.value === item || option.label === item,
+    );
+  });
 }
 
 const dateFilter = ref({
@@ -86,7 +90,7 @@ const statusOptions = ref([
   },
   { label: getStatusTranslation('in_progress'), value: 'in_progress' },
 ]);
-const statusFilter = ref(getQueryFilterArray('status', statusOptions));
+const statusFilter = ref([]);
 
 watch(
   () => statusFilter.value,
@@ -128,20 +132,27 @@ const topicOptions = ref([
     value: '',
   },
 ]);
-const topicFilter = ref(getQueryFilterArray('topics', topicOptions));
+const topicFilter = ref([]);
+
+const isRequestedTopics = ref(false);
 
 watch(
   () => topicFilter.value,
-  () => {
+  async () => {
+    if (!isRequestedTopics.value) {
+      await getTopics();
+      topicFilter.value = getQueryFilterArray('topics', topicOptions);
+      isRequestedTopics.value = true;
+    }
     supervisorStore.filters.topics = topicFilter.value.map(
-      (subject) => subject.label,
+      (subject) => subject?.label || '',
     );
   },
   { immediate: true, deep: true },
 );
 
-function getTopics() {
-  supervisorStore.getTopics().then((topics) => {
+async function getTopics() {
+  await supervisorStore.getTopics().then((topics) => {
     topicOptions.value = [
       ...topicOptions.value,
       ...topics.map((topic) => ({
@@ -151,10 +162,6 @@ function getTopics() {
     ];
   });
 }
-
-onMounted(() => {
-  getTopics();
-});
 </script>
 
 <style scoped lang="scss">
