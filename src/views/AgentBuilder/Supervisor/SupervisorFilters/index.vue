@@ -134,7 +134,7 @@ watch(
   () => topicFilter.value,
   () => {
     supervisorStore.filters.topics = topicFilter.value.map(
-      (subject) => subject.value,
+      (subject) => subject.label,
     );
   },
   { immediate: true, deep: true },
