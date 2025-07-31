@@ -37,7 +37,6 @@ vi.mock('vue-router', () => ({
       status: '',
       csat: '',
       topics: '',
-      conversationId: '',
     },
   }),
 }));
@@ -90,7 +89,6 @@ describe('Supervisor Store', () => {
         status: '',
         csat: '',
         topics: '',
-        conversationId: '',
       });
     });
   });
@@ -132,7 +130,6 @@ describe('Supervisor Store', () => {
           status: '',
           csat: '',
           topics: '',
-          conversationId: '',
         });
 
         expect(store.conversations.status).toBe('complete');
@@ -162,7 +159,6 @@ describe('Supervisor Store', () => {
           status: '',
           csat: '',
           topics: '',
-          conversationId: '',
         });
       });
 
@@ -171,7 +167,6 @@ describe('Supervisor Store', () => {
         store.filters.status = 'test status';
         store.filters.csat = 'test csat';
         store.filters.topics = 'test topics';
-        store.filters.conversationId = 'test conversationId';
 
         nexusaiAPI.agent_builder.supervisor.conversations.list.mockResolvedValue(
           [],
@@ -190,7 +185,6 @@ describe('Supervisor Store', () => {
           status: 'test status',
           csat: 'test csat',
           topics: 'test topics',
-          conversationId: 'test conversationId',
         });
       });
 
@@ -263,6 +257,8 @@ describe('Supervisor Store', () => {
           id: 1,
           created_on: '2023-01-01',
           urn: 'urn:test',
+          start: '2023-01-01',
+          end: '2023-01-31',
           data: {
             status: null,
             results: [],
@@ -321,6 +317,7 @@ describe('Supervisor Store', () => {
         ).toHaveBeenCalledWith({
           projectUuid: 'test-project-uuid',
           start: '2023-01-01',
+          end: '2023-01-31',
           urn: 'urn:test',
           next: null,
         });
@@ -358,6 +355,7 @@ describe('Supervisor Store', () => {
         ).toHaveBeenCalledWith({
           projectUuid: 'test-project-uuid',
           start: '2023-01-01',
+          end: '2023-01-31',
           urn: 'urn:test',
           next: 'existing-token',
         });
@@ -468,13 +466,11 @@ describe('Supervisor Store', () => {
       store.filters.status = 'new status';
       store.filters.csat = 'new csat';
       store.filters.topics = 'new topics';
-      store.filters.conversationId = 'new conversationId';
 
       expect(store.filters.search).toBe('new search');
       expect(store.filters.status).toBe('new status');
       expect(store.filters.csat).toBe('new csat');
       expect(store.filters.topics).toBe('new topics');
-      expect(store.filters.conversationId).toBe('new conversationId');
     });
 
     it('conversations maintains reactive state', () => {
@@ -522,7 +518,6 @@ describe('Supervisor Store', () => {
         status: '',
         csat: '',
         topics: '',
-        conversationId: '',
       });
     });
   });

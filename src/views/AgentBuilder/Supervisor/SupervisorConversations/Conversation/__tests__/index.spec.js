@@ -177,23 +177,6 @@ describe('Conversation.vue', () => {
       expect(noMessagesFound().exists()).toBe(false);
       expect(loadingMessages()).toHaveLength(0);
     });
-
-    it('shows forwarded human support when enabled', async () => {
-      supervisorStore.selectedConversation =
-        mockConversationData.withHumanSupport;
-
-      await nextTick();
-
-      expect(forwardedHumanSupport().exists()).toBe(true);
-    });
-
-    it('does not show forwarded human support when disabled', async () => {
-      supervisorStore.selectedConversation = mockConversationData.withMessages;
-
-      await nextTick();
-
-      expect(forwardedHumanSupport().exists()).toBe(false);
-    });
   });
 
   describe('User interactions', () => {
