@@ -56,9 +56,9 @@ export const ConversationAdapter = {
     } = filterData;
 
     const statusMap = {
-      in_progress: 0,
-      resolved: 1,
-      unresolved: 2,
+      resolved: 0,
+      unresolved: 1,
+      in_progress: 2,
       unengaged: 3,
     };
 
