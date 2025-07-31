@@ -106,14 +106,14 @@ exports[`AgentsGalleryModal.vue > Component rendering > should match snapshot 1`
               class="unnnic-form md"
               data-testid="search-input"
               data-v-02909c7e=""
-              data-v-24f2d284=""
+              data-v-fefd47bc=""
             >
               <!---->
               <div
                 class="text-input size--md text-input--icon-right-size-sm unnnic-form-input"
                 data-testid="search-input"
-                data-v-24f2d284=""
                 data-v-c1401a33=""
+                data-v-fefd47bc=""
                 mask=""
               >
                 <input
