@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 import FilterText from './FilterText.vue';
 import { format } from 'date-fns';
@@ -128,10 +128,6 @@ const topicOptions = ref([
     label: i18n.global.t(`agent_builder.supervisor.filters.topic.topic`),
     value: '',
   },
-  { label: 'Order status', value: 'order_status' },
-  { label: 'Order tracking', value: 'order_tracking' },
-  { label: 'Order cancellation', value: 'order_cancellation' },
-  { label: 'Product concierge', value: 'product_concierge' },
 ]);
 const topicFilter = ref(getQueryFilterArray('topics', topicOptions));
 
@@ -144,6 +140,22 @@ watch(
   },
   { immediate: true, deep: true },
 );
+
+function getTopics() {
+  supervisorStore.getTopics().then((topics) => {
+    topicOptions.value = [
+      ...topicOptions.value,
+      ...topics.map((topic) => ({
+        label: topic.name,
+        value: topic.uuid,
+      })),
+    ];
+  });
+}
+
+onMounted(() => {
+  getTopics();
+});
 </script>
 
 <style scoped lang="scss">

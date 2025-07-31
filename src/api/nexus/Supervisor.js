@@ -115,6 +115,13 @@ export const Supervisor = {
       return data;
     },
 
+    async getTopics({ projectUuid }) {
+      const { data } = await nexusRequest.$http.get(
+        `/api/${projectUuid}/topics`,
+      );
+      return data;
+    },
+
     async export({ projectUuid, token }) {
       const { data } = await nexusRequest.$http.post('/api/reports', {
         auth_token: token,
