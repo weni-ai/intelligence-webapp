@@ -6,10 +6,9 @@ export const ConversationAdapter = {
    */
   fromApi(apiData) {
     const statusMap = {
-      0: 'in_progress',
-      1: 'resolved',
-      2: 'unresolved',
-      3: 'unengaged',
+      resolved: 'resolved',
+      unresolved: 'unresolved',
+      abandoned: 'unengaged',
     };
 
     const csatMap = {
@@ -29,7 +28,7 @@ export const ConversationAdapter = {
           end: result.end_date,
           username: result.name,
           urn: result.urn,
-          status: statusMap[result.resolution] || null,
+          status: statusMap[result.resolution] || 'in_progress',
           csat: csatMap[result.csat] || null,
           transferred_to_human_support: result.has_chats_room,
           topics: result.topic,
