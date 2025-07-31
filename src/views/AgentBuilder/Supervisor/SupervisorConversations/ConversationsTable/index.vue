@@ -10,7 +10,7 @@
         class="conversations-table__count"
         tag="p"
         color="neutral-clean"
-        family="primary"
+        family="secondary"
         size="body-gt"
       >
         {{
