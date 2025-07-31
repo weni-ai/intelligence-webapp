@@ -35,7 +35,7 @@ export const Supervisor = {
 
     async getTopics({ projectUuid }) {
       const { data } = await nexusRequest.$http.get(
-        `/api/${projectUuid}/topics`,
+        `/api/${projectUuid}/topics/`,
       );
       return data;
     },
