@@ -147,7 +147,7 @@ function getTopics() {
       ...topicOptions.value,
       ...topics.map((topic) => ({
         label: topic.name,
-        value: topic.id,
+        value: topic.uuid,
       })),
     ];
   });
