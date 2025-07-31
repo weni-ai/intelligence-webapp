@@ -128,6 +128,13 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     };
   }
 
+  async function getTopics() {
+    const response = await supervisorApi.conversations.getTopics({
+      projectUuid: projectUuid.value,
+    });
+    return response;
+  }
+
   async function exportSupervisorData({ token }) {
     try {
       await supervisorApi.conversations.export({
@@ -156,6 +163,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     selectedConversation,
     filters,
     queryConversationId,
+    getTopics,
     exportSupervisorData,
   };
 });
