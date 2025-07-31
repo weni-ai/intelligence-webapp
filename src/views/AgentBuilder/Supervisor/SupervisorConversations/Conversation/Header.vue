@@ -17,7 +17,10 @@
         {{ formattedUrn }}
       </UnnnicIntelligenceText>
 
-      <section class="header__topics">
+      <section
+        v-if="topics.length > 0"
+        class="header__topics"
+      >
         <UnnnicTag
           v-for="topic in topics"
           :key="topic"
@@ -58,9 +61,9 @@ const formattedUrn = computed(() =>
     urn: formatWhatsappUrn(conversation.value?.urn),
   }),
 );
-
-const MOCKED_TOPICS = ['Topic 1', 'Topic 2', 'Topic 3'];
-const topics = computed(() => conversation.value?.topics || MOCKED_TOPICS);
+const topics = computed(
+  () => conversation.value?.topics?.map((topic) => topic.name) || [],
+);
 </script>
 
 <style lang="scss" scoped>

@@ -43,7 +43,7 @@
         />
 
         <ConversationStartFinish
-          v-if="conversation?.end"
+          v-if="conversation?.end && conversation?.status !== 'in_progress'"
           class="conversation__finish"
           data-testid="finish"
           type="finish"
