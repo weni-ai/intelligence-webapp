@@ -16,14 +16,14 @@
         multipleWithoutSelectsMessage
         autocomplete
       />
-      <UnnnicSelectSmart
+      <!-- <UnnnicSelectSmart
         v-model:modelValue="csatFilter"
         :options="csatOptions"
         orderedByIndex
         multiple
         multipleWithoutSelectsMessage
         autocomplete
-      />
+      />-->
       <UnnnicSelectSmart
         v-model:modelValue="topicFilter"
         :options="topicOptions"
@@ -172,7 +172,7 @@ async function getTopics() {
 
   &__selects {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: $unnnic-spacing-sm;
 
     .selects__date-picker {
