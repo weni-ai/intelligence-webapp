@@ -6,9 +6,10 @@ export const ConversationAdapter = {
    */
   fromApi(apiData) {
     const statusMap = {
-      resolved: 'resolved',
-      unresolved: 'unresolved',
-      abandoned: 'unengaged',
+      0: 'resolved',
+      1: 'unresolved',
+      2: 'in_progress',
+      3: 'unengaged',
     };
 
     const csatMap = {
