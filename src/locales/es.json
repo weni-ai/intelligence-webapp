@@ -85,6 +85,14 @@
       }
     },
     "supervisor": {
+      "learn_details_conversations": "Aprende sobre los detalles de una conversación.",
+      "conversation_details": {
+        "title": "Sobre conversación",
+        "what_is_a_conversation": "¿Qué es una conversación?",
+        "what_is_a_conversation_description": "Consideramos todas las conversaciones dentro de 24 horas del primer contacto como una única conversación.",
+        "when_is_a_conversation_considered_resolved": "¿Cuándo se considera una conversación resuelta?",
+        "description": "Una conversación es considerada resuelta cuando el usuario va más allá del saludo inicial y realmente interactúa: \n- Pide preguntas; \n- Solicita datos; \n- Confirma información; \n- Recibe orientación que permite completar todo o parte de su pedido. \nMensajes limitados a saludos, emojis o cerrados sin interacción útil permanecen sin resolver, mientras que la interacción que entrega valor al usuario se marca como resuelta."
+      },
       "conversations_count": "{count} conversaciones encontradas",
       "unnamed_contact": "Contacto sin nombre",
       "status": {

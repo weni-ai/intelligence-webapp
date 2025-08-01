@@ -1,5 +1,8 @@
 <template>
-  <AgentBuilderHeader :withDivider="false">
+  <AgentBuilderHeader
+    :withDivider="false"
+    :actionsSize="showExport ? 'md' : 'none'"
+  >
     <template #actions>
       <section class="supervisor-header__actions">
         <UnnnicButton

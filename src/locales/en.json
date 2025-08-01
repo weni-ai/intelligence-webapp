@@ -85,6 +85,14 @@
       }
     },
     "supervisor": {
+      "learn_details_conversations": "Learn about the details of a conversation.",
+      "conversation_details": {
+        "title": "About conversation",
+        "what_is_a_conversation": "What is a conversation?",
+        "what_is_a_conversation_description": "We consider all messages exchanged within 24 hours of the contact's first message as a single conversation.",
+        "when_is_a_conversation_considered_resolved": "When is a conversation considered resolved?",
+        "description": "A conversation is only considered resolved when the user goes beyond the initial greeting and actually engages: \n- Asks questions; \n- Requests data; \n- Confirms information; \n- Receives guidance that allows them to complete all or part of their request. \nMessages limited to greetings, emojis or closed without useful interaction remain unresolved, while interaction that delivers value to the user is marked as resolved."
+      },
       "conversations_count": "{count} conversations found",
       "unnamed_contact": "Unnamed contact",
       "status": {
