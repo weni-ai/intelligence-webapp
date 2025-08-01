@@ -1,6 +1,4 @@
 <template>
-  <ConversationsSearch />
-
   <table
     class="conversations-table"
     data-testid="conversations-table"
@@ -12,7 +10,7 @@
         class="conversations-table__count"
         tag="p"
         color="neutral-clean"
-        family="primary"
+        family="secondary"
         size="body-gt"
       >
         {{
@@ -74,7 +72,6 @@ import { computed, nextTick, ref, watch } from 'vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
-import ConversationsSearch from './ConversationsSearch.vue';
 import ConversationRow from './ConversationRow.vue';
 
 const supervisorStore = useSupervisorStore();
@@ -95,16 +92,17 @@ function handleRowClick(row) {
 }
 
 watch(
-  [
-    () => supervisorStore.filters.search,
-    () => supervisorStore.filters.start,
-    () => supervisorStore.filters.end,
-  ],
-  ([newSearch, newStart, newEnd], [oldSearch, oldStart, oldEnd]) => {
-    if (newSearch !== oldSearch || newStart !== oldStart || newEnd !== oldEnd) {
+  () => supervisorStore.filters,
+  (newFilters, oldFilters) => {
+    if (newFilters.conversationId !== oldFilters.conversationId) return;
+
+    if (pagination.value.page === 1) {
+      supervisorStore.loadConversations();
+    } else {
       pagination.value.page = 1;
     }
   },
+  { deep: true },
 );
 
 function handleScroll(event) {

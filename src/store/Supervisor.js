@@ -14,7 +14,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const supervisorApi = nexusaiAPI.agent_builder.supervisor;
   const alertStore = useAlertStore();
   const route = useRoute();
-  const last30Days = format(subDays(new Date(), 30), 'yyyy-MM-dd');
+  const thisMonth = format(subDays(new Date(), 29), 'yyyy-MM-dd');
   const today = format(new Date(), 'yyyy-MM-dd');
 
   const conversations = reactive({
@@ -27,10 +27,12 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const selectedConversation = ref(null);
 
   const filters = reactive({
-    start: route.query.start || last30Days,
+    start: route.query.start || thisMonth,
     end: route.query.end || today,
     search: route.query.search || '',
-    type: route.query.type || '',
+    status: route.query.status || '',
+    csat: route.query.csat || '',
+    topics: route.query.topics || '',
     conversationId: route.query.conversationId || '',
   });
 
@@ -51,7 +53,10 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
         start: formatDateParam(filters.start),
         end: formatDateParam(filters.end),
         search: filters.search,
-        type: filters.type,
+        status: filters.status,
+        csat: filters.csat,
+        topics: filters.topics,
+        conversationId: filters.conversationId,
       });
 
       conversations.status = 'complete';
@@ -123,6 +128,13 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     filters.conversationId = conversationId;
   }
 
+  async function getTopics() {
+    const response = await supervisorApi.conversations.getTopics({
+      projectUuid: projectUuid.value,
+    });
+    return response;
+  }
+
   async function exportSupervisorData({ token }) {
     try {
       await supervisorApi.conversations.export({
@@ -150,6 +162,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     selectConversation,
     selectedConversation,
     filters,
+    getTopics,
     exportSupervisorData,
   };
 });
