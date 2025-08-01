@@ -33,8 +33,9 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     status: route.query.status || '',
     csat: route.query.csat || '',
     topics: route.query.topics || '',
-    conversationId: route.query.conversationId || '',
   });
+
+  const queryConversationId = ref(route.query.conversationId || '');
 
   async function loadConversations(page = 1) {
     if (conversations.status === 'loading') {
@@ -56,7 +57,6 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
         status: filters.status,
         csat: filters.csat,
         topics: filters.topics,
-        conversationId: filters.conversationId,
       });
 
       conversations.status = 'complete';
@@ -81,8 +81,8 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
       const params = {
         projectUuid: projectUuid.value,
-        start: selectedConversation.value.created_on,
-        end: selectedConversation.value.end_on,
+        start: selectedConversation.value.start,
+        end: selectedConversation.value.end,
         urn: selectedConversation.value.urn,
         next: next ? selectedConversation.value.data.next : null,
       };
@@ -111,21 +111,23 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   function selectConversation(conversationId) {
     if (!conversationId) {
       selectedConversation.value = null;
-      filters.conversationId = '';
+      queryConversationId.value = '';
       return;
     }
+
+    if (selectedConversation.value?.id === conversationId) return;
 
     const conversation = conversations.data.results?.find(
       (conversation) => conversation.id == conversationId,
     );
 
+    queryConversationId.value = conversationId;
     selectedConversation.value = {
       ...conversation,
       data: {
         status: null,
       },
     };
-    filters.conversationId = conversationId;
   }
 
   async function getTopics() {
@@ -162,6 +164,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     selectConversation,
     selectedConversation,
     filters,
+    queryConversationId,
     getTopics,
     exportSupervisorData,
   };

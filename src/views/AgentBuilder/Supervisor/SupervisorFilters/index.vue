@@ -90,7 +90,7 @@ const statusOptions = ref([
   },
   { label: getStatusTranslation('in_progress'), value: 'in_progress' },
 ]);
-const statusFilter = ref([]);
+const statusFilter = ref(getQueryFilterArray('status', statusOptions));
 
 watch(
   () => statusFilter.value,

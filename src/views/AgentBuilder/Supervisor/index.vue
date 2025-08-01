@@ -23,7 +23,7 @@
 
 <script setup>
 import { computed, onBeforeMount, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 import SupervisorHeader from './SupervisorHeader.vue';
 import SupervisorConversations from './SupervisorConversations/index.vue';
@@ -34,13 +34,14 @@ import { cleanParams } from '@/utils/http';
 
 const supervisorStore = useSupervisorStore();
 const router = useRouter();
+const route = useRoute();
 
 const selectedConversation = computed(() => {
   return supervisorStore.selectedConversation;
 });
 
-function updateQuery() {
-  const cleanedFilters = cleanParams(supervisorStore.filters);
+function updateQuery(filters = supervisorStore.filters) {
+  const cleanedFilters = cleanParams(filters);
   router.replace({
     query: {
       ...cleanedFilters,
@@ -56,14 +57,24 @@ watch(
   { deep: true },
 );
 
+watch(
+  () => supervisorStore.queryConversationId,
+  (conversationId) => {
+    updateQuery({
+      ...route.query,
+      conversationId,
+    });
+  },
+);
+
 onBeforeMount(async () => {
   updateQuery();
 
   await supervisorStore.loadConversations();
 
-  const { selectedConversation, filters } = supervisorStore;
-  if (filters.conversationId && !selectedConversation) {
-    supervisorStore.selectConversation(filters.conversationId);
+  const { selectedConversation, queryConversationId } = supervisorStore;
+  if (queryConversationId && !selectedConversation) {
+    supervisorStore.selectConversation(queryConversationId);
   }
 });
 </script>
@@ -80,8 +91,7 @@ onBeforeMount(async () => {
   overflow: hidden auto;
 
   &--with-conversation {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-columns: 7fr 5fr;
   }
 
   &__header {

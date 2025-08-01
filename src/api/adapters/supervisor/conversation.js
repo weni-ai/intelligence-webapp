@@ -13,11 +13,11 @@ export const ConversationAdapter = {
     };
 
     const csatMap = {
-      1: 'very_satisfied',
-      2: 'satisfied',
+      1: 'very_dissatisfied',
+      2: 'dissatisfied',
       3: 'neutral',
-      4: 'dissatisfied',
-      5: 'very_dissatisfied',
+      4: 'satisfied',
+      5: 'very_satisfied',
     };
 
     if (apiData.results) {
@@ -64,11 +64,11 @@ export const ConversationAdapter = {
     };
 
     const csatMap = {
-      very_satisfied: 1,
-      satisfied: 2,
+      very_dissatisfied: 1,
+      dissatisfied: 2,
       neutral: 3,
-      dissatisfied: 4,
-      very_dissatisfied: 5,
+      satisfied: 4,
+      very_satisfied: 5,
     };
 
     const params = {

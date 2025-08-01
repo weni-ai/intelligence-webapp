@@ -1,18 +1,18 @@
 <template>
   <section class="no-messages-found">
     <UnnnicIcon
-      icon="search_off"
-      scheme="neutral-dark"
+      icon="sms"
+      scheme="neutral-soft"
+      filled
       class="no-messages-found__icon"
       data-testid="no-messages-icon"
     />
 
     <UnnnicIntelligenceText
       tag="p"
-      color="neutral-dark"
+      color="neutral-cloudy"
       family="secondary"
       size="body-gt"
-      weight="bold"
       class="no-messages-found__title"
       data-testid="no-messages-title"
     >
@@ -21,9 +21,9 @@
 
     <UnnnicIntelligenceText
       tag="p"
-      color="neutral-dark"
+      color="neutral-clean"
       family="secondary"
-      size="body-gt"
+      size="body-md"
       data-testid="no-messages-description"
     >
       <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
@@ -60,8 +60,9 @@ const projectStore = useProjectStore();
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: $unnnic-spacing-nano;
 
-  height: calc(100vh - ($unnnic-spacing-xgiant + $unnnic-spacing-ant));
+  height: 100%;
 
   text-align: center;
 
@@ -71,13 +72,8 @@ const projectStore = useProjectStore();
     font-size: $icon-size;
   }
 
-  &__title {
-    margin: $unnnic-spacing-ant 0 $unnnic-spacing-nano 0;
-  }
-
   &__link {
-    color: $unnnic-color-neutral-dark;
-    font-weight: $unnnic-font-weight-bold;
+    color: $unnnic-color-neutral-clean;
     text-decoration: underline;
     text-underline-offset: 3px;
     cursor: pointer;

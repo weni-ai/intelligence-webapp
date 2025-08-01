@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { computed, nextTick, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
@@ -85,17 +85,12 @@ const pagination = ref({
 });
 
 function handleRowClick(row) {
-  supervisorStore.selectConversation(null);
-  nextTick(() => {
-    supervisorStore.selectConversation(row.id);
-  });
+  supervisorStore.selectConversation(row.id);
 }
 
 watch(
   () => supervisorStore.filters,
-  (newFilters, oldFilters) => {
-    if (newFilters.conversationId !== oldFilters.conversationId) return;
-
+  () => {
     if (pagination.value.page === 1) {
       supervisorStore.loadConversations();
     } else {

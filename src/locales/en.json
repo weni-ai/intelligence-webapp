@@ -104,17 +104,18 @@
         "title": "Attended by the agent",
         "tooltip": "Conversations solved by the agent"
       },
-      "forwarded_human_support": {
-        "title": "Forwarded to human support",
-        "tooltip": "Conversations forwarded to human support"
+      "conversation_start_finish": {
+        "start": "Conversation started: {datetime}",
+        "finish": "Conversation finished: {datetime}"
       },
+      "contact_urn": "Contact URN: {urn}",
       "view_logs": "View logs",
       "hide_logs": "Hide logs",
       "search": "Search",
       "conversations_empty": "No conversations found",
       "no_messages_found": {
-        "title": "No messages found on this conversation.",
-        "description": "If the message was sent by human support or triggered messages, you can find it on the {studio_link}.",
+        "title": "No messages found on this conversation",
+        "description": "If the message was sent by human support or triggered messages, you can find it on the {studio_link}",
         "studio_link": "Studio"
       },
       "export": {

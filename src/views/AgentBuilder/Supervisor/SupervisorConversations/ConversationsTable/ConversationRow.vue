@@ -13,7 +13,7 @@
   >
     <section class="conversation-row__main-infos">
       <td class="main-infos__avatar">
-        <p class="avatar__letter">{{ conversation?.username?.[0] || '-' }}</p>
+        <AvatarLetter :text="conversation?.username" />
       </td>
 
       <td class="main-infos__user-data">
@@ -25,9 +25,21 @@
 
       <td class="main-infos__status">
         <UnnnicTag
+          v-if="statusProps.text"
           class="cell__status"
           :scheme="statusProps.scheme"
           :text="statusProps.text"
+        />
+
+        <UnnnicTag
+          v-if="conversation.transferred_to_human_support"
+          class="cell__status"
+          scheme="aux-yellow-500"
+          :text="
+            $t(
+              'agent_builder.supervisor.filters.status.transferred_to_human_support',
+            )
+          "
         />
       </td>
     </section>
@@ -44,7 +56,7 @@
       </td>
 
       <td class="secondary-infos__date">
-        <ConversationDate :date="conversation.created_on" />
+        <ConversationDate :date="conversation.start" />
       </td>
     </section>
   </tr>
@@ -57,6 +69,7 @@ import i18n from '@/utils/plugins/i18n';
 
 import ConversationDate from './ConversationDate.vue';
 import ConversationInfos from './ConversationInfos.vue';
+import AvatarLetter from '@/components/AgentBuilder/Supervisor/AvatarLetter.vue';
 
 const props = defineProps({
   conversation: {
@@ -76,10 +89,10 @@ const props = defineProps({
 const t = (key) => i18n.global.t(key);
 
 const statusProps = computed(() => {
-  const status = props.conversation.status || 'in_progress';
+  const status = props.conversation.status;
 
   const baseStatus = {
-    text: t(`agent_builder.supervisor.status.${status}`),
+    text: status ? t(`agent_builder.supervisor.filters.status.${status}`) : '',
   };
 
   const mapStatus = {
@@ -92,6 +105,9 @@ const statusProps = computed(() => {
     unresolved: {
       scheme: 'aux-red-500',
     },
+    unengaged: {
+      scheme: 'aux-purple-500',
+    },
   };
 
   return {
@@ -101,30 +117,22 @@ const statusProps = computed(() => {
 });
 
 const csatProps = computed(() => {
-  const mapCsat = {
-    very_satisfied: {
-      text: 'Very satisfied',
-    },
-    satisfied: {
-      text: 'Satisfied',
-    },
-    neutral: {
-      text: 'Neutral',
-    },
-    unsatisfied: {
-      text: 'Unsatisfied',
-    },
-    very_unsatisfied: {
-      text: 'Very unsatisfied',
-    },
-  };
+  const csat = props.conversation.csat;
 
-  return mapCsat[props.conversation.csat];
+  return csat
+    ? {
+        text: i18n.global.t(
+          `agent_builder.supervisor.filters.csat.${props.conversation.csat}`,
+        ),
+      }
+    : null;
 });
 </script>
 
 <style lang="scss" scoped>
 .conversation-row {
+  overflow: hidden;
+
   position: relative;
 
   border-radius: $unnnic-border-radius-md;
@@ -167,29 +175,38 @@ const csatProps = computed(() => {
     align-items: center;
   }
 
-  &__main-infos {
-    .main-infos__avatar {
-      min-width: 35px;
-      min-height: 35px;
+  .main-infos__status,
+  .secondary-infos__date,
+  .secondary-infos__csat {
+    white-space: nowrap;
 
-      border-radius: 50%;
-      background-color: $unnnic-color-weni-100;
+    :deep(.unnnic-tag),
+    :deep(.unnnic-tag__label) {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__main-infos {
+    .main-infos__status {
+      overflow: hidden;
 
       display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .avatar__letter {
-        font-family: $unnnic-font-family-secondary;
-        font-size: $unnnic-font-size-body-gt;
-        font-weight: $unnnic-font-weight-bold;
-        color: $unnnic-color-weni-600;
-      }
+      gap: $unnnic-spacing-nano;
     }
+  }
 
-    .main-infos__status,
-    .secondary-infos__date {
-      white-space: nowrap;
+  &__secondary-infos {
+    .secondary-infos__csat {
+      :deep(.unnnic-tag) {
+        background-color: transparent;
+        border: 1px solid $unnnic-color-neutral-cleanest;
+      }
+
+      :deep(.unnnic-tag__label) {
+        color: $unnnic-color-neutral-cloudy;
+      }
     }
   }
 }
