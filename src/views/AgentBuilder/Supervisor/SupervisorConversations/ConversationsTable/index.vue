@@ -1,43 +1,86 @@
 <template>
-  <section class="conversations-table">
-    <ConversationsSearch />
+  <ConversationsSearch />
 
-    <UnnnicTableNext
-      v-model:pagination="pagination.page"
-      :class="{
-        'conversations-table__table': true,
-        'conversations-table__table--with-results':
-          supervisorStore.conversations.status === 'complete' &&
-          conversations.results.length,
-      }"
-      data-testid="conversations-table"
-      hideHeaders
-      :headers="table.headers"
-      :rows="table.rows"
-      :paginationTotal="conversations.count"
-      :paginationInterval="pagination.interval"
-      :isLoading="supervisorStore.conversations.status === 'loading'"
-      @row-click="handleRowClick"
-    />
-  </section>
+  <table
+    class="conversations-table"
+    data-testid="conversations-table"
+  >
+    <template v-if="hasConversations || conversations.status === 'loading'">
+      <UnnnicIntelligenceText
+        v-if="conversations.status !== 'loading'"
+        data-testid="conversations-count"
+        class="conversations-table__count"
+        tag="p"
+        color="neutral-clean"
+        family="primary"
+        size="body-gt"
+      >
+        {{
+          $t('agent_builder.supervisor.conversations_count', {
+            count: conversations.data.count,
+          })
+        }}
+      </UnnnicIntelligenceText>
+
+      <tbody
+        class="conversations-table__rows"
+        @scroll="handleScroll"
+      >
+        <ConversationRow
+          v-for="conversation in conversations.data.results"
+          :key="conversation.id"
+          data-testid="conversation-row"
+          :conversation="conversation"
+          :isSelected="
+            conversation.id === supervisorStore.selectedConversation?.id
+          "
+          @click="handleRowClick(conversation)"
+        />
+
+        <template v-if="conversations.status === 'loading'">
+          <ConversationRow
+            v-for="i in 8"
+            :key="i"
+            isLoading
+          />
+        </template>
+      </tbody>
+    </template>
+
+    <section
+      v-else
+      class="conversations-table__empty"
+    >
+      <UnnnicIcon
+        icon="sms"
+        size="avatar-sm"
+        scheme="neutral-soft"
+        filled
+      />
+
+      <UnnnicIntelligenceText
+        color="neutral-cloudy"
+        family="secondary"
+        size="body-gt"
+      >
+        {{ $t('agent_builder.supervisor.conversations_empty') }}
+      </UnnnicIntelligenceText>
+    </section>
+  </table>
 </template>
 
 <script setup>
 import { computed, nextTick, ref, watch } from 'vue';
-import Unnnic from '@weni/unnnic-system';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
-import i18n from '@/utils/plugins/i18n';
-
-import ConversationInfos from './ConversationInfos.vue';
-import ConversationDate from './ConversationDate.vue';
 import ConversationsSearch from './ConversationsSearch.vue';
+import ConversationRow from './ConversationRow.vue';
 
-const t = (key) => i18n.global.t(key);
 const supervisorStore = useSupervisorStore();
 
-const conversations = computed(() => supervisorStore.conversations.data);
+const conversations = computed(() => supervisorStore.conversations);
+const hasConversations = computed(() => conversations.value.data.count > 0);
 
 const pagination = ref({
   page: 1,
@@ -50,101 +93,6 @@ function handleRowClick(row) {
     supervisorStore.selectConversation(row.id);
   });
 }
-
-const table = computed(() => {
-  const getTagProps = (human_support) => {
-    if (human_support) {
-      return {
-        scheme: 'aux-blue-500',
-        leftIcon: 'forward',
-        text: t('agent_builder.supervisor.forwarded_human_support.title'),
-      };
-    }
-
-    return {
-      scheme: 'aux-green-500',
-      leftIcon: 'check',
-      text: t('agent_builder.supervisor.attended_by_agent.title'),
-    };
-  };
-  return {
-    headers: [
-      { content: '' },
-      { content: '', size: 'auto' },
-      { content: '', size: 'auto' },
-    ],
-    rows: conversations.value.results?.map(
-      ({ urn, created_on, last_message, human_support, id }) => {
-        const dateComponent = {
-          component: ConversationDate,
-          props: {
-            date: created_on,
-          },
-        };
-
-        const tagComponent = {
-          component: Unnnic.unnnicTag,
-          props: {
-            type: 'default',
-            ...getTagProps(human_support),
-          },
-        };
-
-        const infoComponent = {
-          component: ConversationInfos,
-          props: {
-            urn,
-            lastMessage: last_message,
-          },
-        };
-
-        return {
-          content: [infoComponent, tagComponent, dateComponent],
-          id,
-        };
-      },
-    ),
-  };
-});
-
-const selectedConversationIndex = computed(() =>
-  conversations.value.results?.findIndex(
-    (conversation) =>
-      conversation.id === supervisorStore.selectedConversation?.id,
-  ),
-);
-
-function highlightRow(index) {
-  const rowsElements = document.querySelectorAll(
-    '.unnnic-table-next__body-row',
-  );
-
-  rowsElements.forEach((row) => {
-    row.style.backgroundColor = '';
-  });
-
-  if (rowsElements[index]) {
-    const UNNNIC_COLOR_BACKGROUND_SKY = '#F4F6F8';
-    rowsElements[index].style.backgroundColor = UNNNIC_COLOR_BACKGROUND_SKY;
-  }
-}
-
-watch(selectedConversationIndex, (newConversation) => {
-  highlightRow(newConversation);
-});
-
-watch(
-  () => supervisorStore.filters,
-  async () => {
-    await supervisorStore.loadConversations();
-
-    const { selectedConversation, filters } = supervisorStore;
-    if (filters.conversationId && !selectedConversation) {
-      supervisorStore.selectConversation(filters.conversationId);
-    }
-  },
-  { immediate: true, deep: true },
-);
 
 watch(
   [
@@ -159,45 +107,62 @@ watch(
   },
 );
 
-watch(
-  () => pagination.value.page,
-  (newPage) => {
-    supervisorStore.loadConversations(newPage);
-  },
-);
+function handleScroll(event) {
+  const { next } = conversations.value.data;
+
+  if (!next || ['loading', 'error'].includes(conversations.value.status)) {
+    return;
+  }
+
+  const { scrollTop, clientHeight, scrollHeight } = event.target;
+
+  const safeDistance = 10;
+  const isInScrollBottom =
+    scrollTop + clientHeight + safeDistance >= scrollHeight;
+
+  const shouldLoadMore = isInScrollBottom;
+
+  if (shouldLoadMore) {
+    pagination.value.page++;
+    supervisorStore.loadConversations(pagination.value.page);
+  }
+}
 </script>
 
 <style scoped lang="scss">
 .conversations-table {
-  display: grid;
-  gap: $unnnic-spacing-xs;
+  margin-right: 0;
+  margin-bottom: $unnnic-spacing-sm;
 
-  &__table {
-    :deep(.unnnic-table-next__body) {
-      .unnnic-table-next__body-row {
-        $table-radius: $unnnic-border-radius-md;
+  overflow: hidden;
 
-        &:first-child {
-          border-radius: $table-radius $table-radius 0 0;
-        }
+  display: flex;
+  flex-direction: column;
 
-        &:last-child {
-          border-radius: 0 0 $table-radius $table-radius;
-        }
-      }
+  &__count {
+    margin-bottom: $unnnic-spacing-xs;
+  }
 
-      .unnnic-table-next__body-cell:nth-child(2) {
-        padding: $unnnic-spacing-ant 0;
-      }
-    }
+  &__rows {
+    $scroll-margin: calc($unnnic-spacing-nano / 2 + $unnnic-spacing-nano);
 
-    &--with-results {
-      :deep(.unnnic-table-next__body-row):hover {
-        background-color: $unnnic-color-background-sky;
+    height: 100%;
 
-        cursor: pointer;
-      }
-    }
+    overflow-y: auto;
+
+    padding-right: $scroll-margin;
+    margin-right: $scroll-margin;
+  }
+
+  &__empty {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: $unnnic-spacing-nano;
   }
 }
 </style>

@@ -85,6 +85,13 @@
       }
     },
     "supervisor": {
+      "conversations_count": "{count} conversaciones encontradas",
+      "unnamed_contact": "Contacto sin nombre",
+      "status": {
+        "in_progress": "En progreso",
+        "resolved": "Resuelto",
+        "unresolved": "No resuelto"
+      },
       "attended_by_agent": {
         "title": "Atendido por el agente",
         "tooltip": "Conversaciones resueltas por el agente"
@@ -96,6 +103,7 @@
       "view_logs": "Ver logs",
       "hide_logs": "Esconder logs",
       "search": "Buscar",
+      "conversations_empty": "No se encontraron conversaciones",
       "no_messages_found": {
         "title": "No se encontraron mensajes en esta conversación.",
         "description": "Si el mensaje fue enviado por soporte humano o mensajes disparados, puedes encontrarlo en el {studio_link}.",
