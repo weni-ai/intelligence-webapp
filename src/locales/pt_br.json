@@ -104,6 +104,10 @@
         "title": "Atendido pelo agente",
         "tooltip": "Conversas resolvidas pelo agente"
       },
+      "forwarded_human_support": {
+        "title": "Encaminhado para suporte humano",
+        "tooltip": "Conversas encaminhadas para suporte humano"
+      },
       "conversation_start_finish": {
         "start": "Conversa iniciada: {datetime}",
         "finish": "Conversa finalizada: {datetime}"
