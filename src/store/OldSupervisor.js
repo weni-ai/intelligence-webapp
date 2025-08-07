@@ -42,7 +42,6 @@ export const useOldSupervisorStore = defineStore('OldSupervisor', () => {
 
   async function loadForwardStats() {
     forwardStats.status = 'loading';
-    console.log('loadForwardStats');
     try {
       const response = await supervisorApi.conversations.forwardStats({
         projectUuid: projectUuid.value,
