@@ -1,39 +1,35 @@
 import { shallowMount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
-import { useSupervisorStore } from '@/store/Supervisor';
+import { useOldSupervisorStore } from '@/store/OldSupervisor';
 import { vi } from 'vitest';
 
-import ConversationsTable from '@/views/AgentBuilder/Supervisor/SupervisorConversations/ConversationsTable/index.vue';
-import ConversationInfos from '@/views/AgentBuilder/Supervisor/SupervisorConversations/ConversationsTable/ConversationInfos.vue';
-import ConversationDate from '@/views/AgentBuilder/Supervisor/SupervisorConversations/ConversationsTable/ConversationDate.vue';
+import ConversationsTable from '@/views/AgentBuilder/OldSupervisor/SupervisorConversations/ConversationsTable/index.vue';
+import ConversationInfos from '@/views/AgentBuilder/OldSupervisor/SupervisorConversations/ConversationsTable/ConversationInfos.vue';
+import ConversationDate from '@/views/AgentBuilder/OldSupervisor/SupervisorConversations/ConversationsTable/ConversationDate.vue';
 import Unnnic from '@weni/unnnic-system';
 
-vi.mock('@/api/nexusaiAPI', () => ({
+vi.mock('@/api/nexus/OldSupervisor', () => ({
   default: {
-    agent_builder: {
-      supervisor: {
-        conversations: {
-          list: vi.fn().mockResolvedValue({
-            results: [
-              {
-                id: '1',
-                urn: 'conversation-123',
-                created_on: '2023-05-15T14:30:00Z',
-                last_message: 'This is the last message',
-                human_support: false,
-              },
-              {
-                id: '2',
-                urn: 'conversation-456',
-                created_on: '2023-05-16T10:00:00Z',
-                last_message: 'Another message',
-                human_support: true,
-              },
-            ],
-            count: 2,
-          }),
-        },
-      },
+    conversations: {
+      list: vi.fn().mockResolvedValue({
+        results: [
+          {
+            id: '1',
+            urn: 'conversation-123',
+            created_on: '2023-05-15T14:30:00Z',
+            last_message: 'This is the last message',
+            human_support: false,
+          },
+          {
+            id: '2',
+            urn: 'conversation-456',
+            created_on: '2023-05-16T10:00:00Z',
+            last_message: 'Another message',
+            human_support: true,
+          },
+        ],
+        count: 2,
+      }),
     },
   },
 }));
@@ -73,7 +69,7 @@ describe('ConversationsTable.vue', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    supervisorStore = useSupervisorStore();
+    supervisorStore = useOldSupervisorStore();
 
     supervisorStore.filters.start = '2023-01-01';
     supervisorStore.filters.end = '2023-01-31';

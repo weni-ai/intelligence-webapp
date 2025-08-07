@@ -6,7 +6,7 @@ import { nextTick } from 'vue';
 import Unnnic from '@weni/unnnic-system';
 
 import ConversationsSearch from '../ConversationsSearch.vue';
-import { useSupervisorStore } from '@/store/Supervisor';
+import { useOldSupervisorStore } from '@/store/OldSupervisor';
 import i18n from '@/utils/plugins/i18n';
 
 vi.mock('vue-router', () => ({
@@ -50,7 +50,7 @@ describe('ConversationsSearch.vue', () => {
       },
     });
 
-    store = useSupervisorStore();
+    store = useOldSupervisorStore();
   });
 
   afterEach(() => {

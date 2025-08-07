@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 
 import Conversation from '../index.vue';
-import { useSupervisorStore } from '@/store/Supervisor';
+import { useOldSupervisorStore } from '@/store/OldSupervisor';
 import { nextTick } from 'vue';
 
 const mockConversationData = {
@@ -104,7 +104,7 @@ describe('Conversation.vue', () => {
     vi.clearAllMocks();
 
     wrapper = createWrapper();
-    supervisorStore = useSupervisorStore();
+    supervisorStore = useOldSupervisorStore();
     supervisorStore.selectedConversation = mockConversationData.basic;
   });
 
