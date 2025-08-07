@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import Header from '../Header.vue';
-import useBrainRoutes from '@/composables/useBrainRoutes';
+import { createTestingPinia } from '@pinia/testing';
 
 vi.mock('@/composables/useBrainRoutes', () => {
   return {
@@ -37,6 +37,7 @@ vi.mock('vue-router', () => {
 
 describe('Header.vue', () => {
   let wrapper;
+  const pinia = createTestingPinia({ stubActions: false });
 
   const title = () =>
     wrapper.findComponent('[data-testid="agent-builder-header-title"]');
@@ -54,6 +55,7 @@ describe('Header.vue', () => {
         ...props,
       },
       global: {
+        plugins: [pinia],
         stubs: {
           UnnnicIntelligenceText: false,
         },

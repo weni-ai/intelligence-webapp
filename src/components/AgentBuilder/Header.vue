@@ -31,7 +31,10 @@
         {{ currentBrainRoute?.description }}
 
         <SupervisorHeaderDetails
-          v-if="currentBrainRoute.page === 'supervisor'"
+          v-if="
+            currentBrainRoute.page === 'supervisor' &&
+            featureFlagsStore.flags.newSupervisor
+          "
         />
       </UnnnicIntelligenceText>
     </section>
@@ -54,6 +57,8 @@ import useBrainRoutes from '@/composables/useBrainRoutes';
 
 import SupervisorHeaderDetails from './Supervisor/SupervisorHeaderDetails.vue';
 
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+
 const route = useRoute();
 
 const props = defineProps({
@@ -75,6 +80,8 @@ const props = defineProps({
     },
   },
 });
+
+const featureFlagsStore = useFeatureFlagsStore();
 
 const currentBrainRoute = computed(() => {
   const brainRoutes = useBrainRoutes();
