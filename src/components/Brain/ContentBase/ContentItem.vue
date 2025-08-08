@@ -79,25 +79,16 @@
       </section>
     </section>
   </UnnnicToolTip>
-
-  <FilePreview
-    v-if="modalPreview"
-    v-bind="modalPreview"
-    modelValue
-    @update:model-value="modalPreview = null"
-  />
 </template>
 
 <script>
 import nexusaiAPI from '@/api/nexusaiAPI';
-import FilePreview from '@/views/ContentBases/components/FilePreview.vue';
 import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
 import { actionGroupIcon, createDownloadAnchor } from '@/utils';
 import i18n from '@/utils/plugins/i18n.js';
 
 export default {
   components: {
-    FilePreview,
     ContentItemActions,
   },
 
@@ -112,16 +103,12 @@ export default {
   data() {
     return {
       downloading: false,
-
-      modalPreview: null,
     };
   },
 
   computed: {
     actions() {
       const can = {
-        seeDetails: this.file.status === 'uploaded',
-
         edit: this.extension === 'action',
 
         accessSite:
@@ -139,15 +126,6 @@ export default {
       };
 
       const actions = [];
-
-      if (can.seeDetails) {
-        actions.push({
-          scheme: 'neutral-dark',
-          icon: 'info',
-          text: this.$t('content_bases.actions.see_details'),
-          onClick: this.preview,
-        });
-      }
 
       if (can.downloadFile) {
         actions.push({
@@ -324,19 +302,6 @@ export default {
       return i18n.global.t('content_bases.time_ago_days', {
         days: diffInDays,
       });
-    },
-
-    async preview() {
-      this.modalPreview = {
-        type: this.extension === 'site' ? 'site' : 'file',
-        projectUuid: this.$store.state.Auth.connectProjectUuid,
-        contentBaseUuid:
-          this.$store.state.router.contentBaseUuid ||
-          this.$route.params.contentBaseUuid,
-        fileUuid: this.file.uuid,
-        name: this.fileName,
-        createdAt: this.file.created_at,
-      };
     },
   },
 };
