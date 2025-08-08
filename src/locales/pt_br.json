@@ -6,39 +6,39 @@
   "next": "Avançar",
   "finish": "Concluir",
   "speed": "Velocidade",
-  "save_changes": "Salvar alterações",
   "new": "Novo",
+  "save_changes": "Salvar alterações",
   "announcements": {
-    "new_artificial_intelligence_module_is_here": "Chegou o novo módulo de Inteligência Artificial! Explore as novidades e saiba como criar chatbots ainda mais incríveis!"
+    "new_artificial_intelligence_module_is_here": "Chegou o novo módulo de inteligência artificial! Descubra as novidades e aprenda a criar chatbots ainda mais incríveis."
   },
-  "unauthorized": "Você não tem permissão para executar essa ação",
+  "unauthorized": "Você não tem permissão para executar esta ação",
   "internal_server_error": "Erro interno do servidor",
   "unexpected_error": "Ocorreu um erro inesperado",
   "intelligences": {
-    "content_intelligences": "Inteligências de Conteúdo",
-    "classification_intelligences": "Inteligências de Classificação",
-    "own_intelligences": "Inteligências próprias",
-    "public_intelligences": "Inteligências públicas",
+    "content_intelligences": "Inteligência de conteúdo",
+    "classification_intelligences": "Inteligência de classificação",
+    "own_intelligences": "Inteligência própria",
+    "public_intelligences": "Inteligência pública",
     "classification": {
-      "deprecation_notice": "Fique atento! Em breve, as Inteligências de Classificação serão descontinuadas",
-      "use_agents_builder": "Para criação de agentes inteligentes, utilize o {agents_builder_link}. Em caso de dúvidas, entre em contato com o suporte.",
-      "agents_builder": "Agents Builder"
+      "deprecation_notice": "Atenção: em breve, a inteligência de classificação será descontinuada.",
+      "use_agents_builder": "Para criar agentes inteligentes, use o {agents_builder_link}. Em caso de dúvidas, entre em contato com o Suporte.",
+      "agents_builder": "Agent Builder"
     },
-    "create_button": "Criar Inteligência",
-    "search_intelligence_placeholder": "Pesquisar Inteligência",
+    "create_button": "Criar inteligência",
+    "search_intelligence_placeholder": "Buscar inteligência",
     "categories_placeholder": "Categorias",
     "filter_label": "Filtrar:",
-    "no_intelligence_added": "Nenhuma Inteligência adicionada",
+    "no_intelligence_added": "Nenhuma inteligência para exibir",
     "view_bases": "Visualizar bases",
     "no_content_base_added": "Nenhuma base de conteúdo adicionada",
     "no_content_base_found": "Nenhuma base de conteúdo encontrada",
-    "search_content_base_placeholder": "Pesquisar base de conteúdo",
+    "search_content_base_placeholder": "Buscar base de conteúdo",
     "sidebar_view_content_bases_title": "Bases de conteúdo de {name}",
-    "sidebar_view_content_bases_description": "Visualize as bases de conteúdo que fazem parte dessa IA.",
-    "delete_intelligence": "Excluir Inteligência",
-    "delete_intelligence_confirmation_modal_description": "Tem certeza que deseja excluir a inteligência <b>{name}</b>?<br>Essa ação não poderá ser revertida.",
-    "filter_type_generative_label": "IAs Generativas",
-    "filter_type_classification_label": "IAs de Classificação"
+    "sidebar_view_content_bases_description": "Visualize as bases de conteúdo que fazem parte desta IA",
+    "delete_intelligence": "Excluir inteligência",
+    "delete_intelligence_confirmation_modal_description": "Tem certeza de que deseja excluir a inteligência <b>{name}</b>?<br>Esta ação não poderá ser desfeita.",
+    "filter_type_generative_label": "IAs generativas",
+    "filter_type_classification_label": "IAs de classificação"
   },
   "bases": {
     "create": {
@@ -65,41 +65,26 @@
     "tabs": {
       "supervisor": {
         "title": "Supervisor",
-        "description": "Analise e revise conversas entre agentes e clientes."
+        "description": "Analise e revise conversas entre agentes e clientes"
       },
       "profile": {
         "title": "Perfil",
-        "description": "Personalize as informações básicas e o comportamento do agente."
+        "description": "Personalize as informações básicas e o comportamento do agente"
       },
       "agents": {
         "title": "Agentes",
-        "description": "Crie a equipe de agentes perfeita."
+        "description": "Crie a equipe de agentes perfeita"
       },
       "knowledge": {
         "title": "Conhecimento",
-        "description": "Adicione conhecimento através de arquivos, links ou texto para que o agente possa responder com precisão."
+        "description": "Adicione conhecimento através de arquivos, links ou texto para que o agente possa responder com precisão"
       },
       "tunings": {
         "title": "Ajustes",
-        "description": "Gerencie as configurações e acompanhe as alterações realizadas."
+        "description": "Gerencie as configurações e acompanhe as alterações realizadas"
       }
     },
     "supervisor": {
-      "learn_details_conversations": "Aprenda sobre os detalhes de uma conversa.",
-      "conversation_details": {
-        "title": "Sobre conversa",
-        "what_is_a_conversation": "O que é uma conversa?",
-        "what_is_a_conversation_description": "Consideramos todas as mensagens trocadas dentro de 24 horas do primeiro contato como uma única conversa.",
-        "when_is_a_conversation_considered_resolved": "Quando uma conversa é considerada resolvida?",
-        "description": "Uma conversa é considerada resolvida quando o usuário vai além do primeiro contato e realmente interage: \n- Pergunta; \n- Solicita dados; \n- Confirma informações; \n- Recebe orientação que permite completar todo ou parte do seu pedido. \nMensagens limitadas a saudações, emojis ou fechadas sem interação útil permanecem não resolvidas, enquanto interações que entregam valor ao usuário são marcadas como resolvidas."
-      },
-      "conversations_count": "{count} conversas encontradas",
-      "unnamed_contact": "Contato sem nome",
-      "status": {
-        "in_progress": "Em progresso",
-        "resolved": "Resolvido",
-        "unresolved": "Não resolvido"
-      },
       "attended_by_agent": {
         "title": "Atendido pelo agente",
         "tooltip": "Conversas resolvidas pelo agente"
@@ -108,80 +93,52 @@
         "title": "Encaminhado para suporte humano",
         "tooltip": "Conversas encaminhadas para suporte humano"
       },
-      "conversation_start_finish": {
-        "start": "Conversa iniciada: {datetime}",
-        "finish": "Conversa finalizada: {datetime}"
-      },
-      "contact_urn": "URN do contato: {urn}",
-      "view_logs": "Visualizar logs",
-      "hide_logs": "Esconder logs",
-      "search": "Pesquisar",
-      "conversations_empty": "Nenhuma conversa encontrada",
+      "view_logs": "Mostrar logs",
+      "hide_logs": "Ocultar logs",
+      "search": "Buscar",
       "no_messages_found": {
         "title": "Nenhuma mensagem encontrada nesta conversa",
-        "description": "Se a mensagem foi enviada pelo suporte humano ou disparo de mensagens, você pode encontrá-la no {studio_link}",
+        "description": "Se a mensagem foi enviada pelo suporte humano ou ativou uma ação automática, você pode encontrá-la no {studio_link}.",
         "studio_link": "Estúdio"
       },
       "export": {
-        "title": "Enviar exportação por e-mail",
-        "description": "Vamos preparar o arquivo com os dados de IA e enviá-lo para os seguintes e-mails:",
-        "token_label": "Token de API do Projeto",
+        "title": "Enviar exportação por email",
+        "description": "Vamos preparar o arquivo com os dados de IA e enviá-lo para os seguintes emails:",
+        "token_label": "Token de API do projeto",
         "token_placeholder": "86d2ba6397cabd4b22f7da925ef89d78bfb2d90dd",
-        "token_help": "Você pode encontrar este token em suas",
+        "token_help": "Você pode encontrar este token nas",
         "project_settings": "configurações do projeto",
-        "and_paste": "e cole-o aqui.",
+        "and_paste": "e colá-lo aqui",
         "send": "Enviar exportação",
-        "success": "A exportação será enviada para todos os e-mails listados em breve",
+        "success": "A exportação será enviada para todos os emails listados em breve",
         "error": "Erro ao enviar exportação. Tente novamente mais tarde."
-      },
-      "filters": {
-        "status": {
-          "conversations": "Conversas",
-          "in_progress": "Em progresso",
-          "resolved": "Resolvido",
-          "unresolved": "Não resolvido",
-          "unengaged": "Não engajado",
-          "transferred_to_human_support": "Encaminhado para suporte humano"
-        },
-        "csat": {
-          "csat": "CSAT",
-          "very_satisfied": "🤩 Muito satisfeito",
-          "satisfied": "😃 Satisfeito",
-          "neutral": "😐 Neutro",
-          "dissatisfied": "😔 Insatisfeito",
-          "very_dissatisfied": "😡 Muito insatisfeito"
-        },
-        "topic": {
-          "topic": "Tópico"
-        }
       }
-      
     },
     "traces": {
       "search_result_received": "Resultado da busca recebido",
       "searching_knowledge_base": "Buscando informações na base de conhecimento",
-      "invoking_model": "Invocando o modelo",
+      "invoking_model": "Acionando o modelo",
       "model_response_received": "Resposta do modelo recebida",
       "thinking": "Pensando",
-      "delegating_to_agent": "Delegando tarefa ao agente",
-      "forwarding_to_manager": "Encaminhando para o Manager",
-      "executing_tool": "Executando tool {function}",
-      "tool_result_received": "Resultado da tool recebido",
-      "sending_response_for_manager": "Enviando resposta para o Manager",
+      "delegating_to_agent": "Atribuindo tarefa ao agente",
+      "forwarding_to_manager": "Encaminhando para o manager",
+      "executing_tool": "Executando ferramenta {function}",
+      "tool_result_received": "Resultado da ferramenta recebido",
+      "sending_response_for_manager": "Enviando resposta ao manager",
       "sending_final_response": "Enviando resposta final",
       "applying_safety_rules": "Aplicando regras de segurança",
       "processing_message": "Processando mensagem",
       "filter_logs": {
         "title": "Filtrar logs",
-        "placeholder": "Pesquisar por log",
+        "placeholder": "Buscar log",
         "categories": {
           "placeholder": "Categorias",
           "knowledge": "Conhecimento",
           "thinking": "Pensando",
-          "delegating_to_agent": "Delegando tarefa ao agente",
-          "forwarding_to_manager": "Encaminhando para o Manager",
-          "tool": "Tool",
-          "sending_response_for_manager": "Enviando resposta para o Manager",
+          "delegating_to_agent": "Atribuindo tarefa ao agente",
+          "forwarding_to_manager": "Encaminhando para o manager",
+          "tool": "Ferramenta",
+          "sending_response_for_manager": "Enviando para o manager",
           "sending_final_response": "Enviando resposta final",
           "applying_guardrails": "Aplicando regras de segurança"
         },
@@ -191,11 +148,11 @@
   },
   "router": {
     "modal_save_changes_error": {
-      "title": "Erro ao salvar as alterações",
+      "title": "Erro ao salvar alterações",
       "description": "Ocorreu um erro ao salvar as alterações na aba {tabs}. Tente salvar novamente.|Ocorreu um erro ao salvar as alterações nas abas {tabs}. Tente salvar novamente."
     },
     "warn": {
-      "brain_is_deactivated": "Agent Builder inativo, ative em",
+      "brain_is_deactivated": "Agent Builder inativo. Ative-o em",
       "click_here": "ajustes"
     },
     "tabs": {
@@ -206,7 +163,7 @@
       "tunings": "Ajustes"
     },
     "monitoring": {
-      "description": "Acompanhe as mensagens recebidas pelo seu agente e veja como ele respondeu.",
+      "description": "Acompanhe as mensagens recebidas pelo seu agente e veja as respostas",
       "performance": "Desempenho",
       "received_messages": "Mensagens recebidas",
       "success": {
@@ -221,23 +178,23 @@
         "title": "Mensagens que ativaram ações",
         "tooltip": "Porcentagem de mensagens que ativaram uma ação do agente"
       },
-      "search_message": "Pesquisar mensagem",
+      "search_message": "Buscar mensagem",
       "filters": {
-        "all_messages": "Todas mensagens",
+        "all_messages": "Todas as mensagens",
         "answers_found": "Respostas encontradas",
         "answers_not_found": "Respostas não encontradas",
         "messages_that_trigger_actions": "Mensagens que ativaram ações",
         "view": {
           "title": "Visualizar",
           "channels": "Mensagens recebidas por meio de canais",
-          "preview": "Mensagens do preview do Agent Builder"
+          "preview": "Mensagens da prévia do Agent Builder"
         }
       },
       "no_message_received": "Nenhuma mensagem recebida",
       "load_previous_messages": "Carregar mensagens anteriores",
       "activated_the_action": "ativou a ação {action}",
-      "error_loading_messages": "Erro ao carregar as mensagens",
-      "error_loading_previous_messages": "Erro ao carregar as mensagens anteriores",
+      "error_loading_messages": "Erro ao carregar mensagens",
+      "error_loading_previous_messages": "Erro ao carregar mensagens anteriores",
       "inspect_response": {
         "title": "Inspecionar resposta",
         "inspect": "Inspecionar",
@@ -251,7 +208,7 @@
         "not_found": "Não encontrado"
       },
       "improve_response": {
-        "title": "Aprimorar a resposta",
+        "title": "Aprimorar resposta",
         "agent_unable_respond": "O agente não soube responder ao contato",
         "add_new_content": "Adicionar novo conteúdo",
         "edit_action": "Editar ação {name}",
@@ -264,11 +221,11 @@
       },
       "new_messages_load": "{n} nova mensagem. Clique para carregar. | {n} novas mensagens. Clique para carregar.",
       "show_logs": "Mostrar logs",
-      "hide_logs": "Esconder logs"
+      "hide_logs": "Ocultar logs"
     },
     "actions": {
       "title": "Ações",
-      "description": "Ao receber uma mensagem, seu agente verificará se ela corresponde a uma ação criada. Se sim, o fluxo será iniciado e todas as mensagens seguintes serão direcionadas para esse fluxo até sua conclusão.",
+      "description": "Ao receber uma mensagem, seu agente irá verificar se ela corresponde a uma ação criada. Se sim, o fluxo será iniciado e todas as mensagens seguintes serão direcionadas para esse fluxo até sua conclusão.",
       "create_new_action": "Crie uma nova ação e selecione o fluxo que será iniciado",
       "create_action": "Crie ações atribuindo o fluxo que será iniciado",
       "pre_defined_or_customized_actions": "Ações pré-definidas ou personalizadas",
@@ -278,13 +235,13 @@
       "router_edited": "Descrição de {name} atualizada"
     },
     "agents_team": {
-      "description": "Crie a equipe de agentes perfeita.",
+      "description": "Crie a equipe de agentes perfeita",
       "card": {
         "assign": "Atribuir ao time",
         "assigned": "Atribuído",
         "success_assign_alert": "{agent} atribuído ao time com sucesso",
         "success_unassign_alert": "{agent} removido do time com sucesso",
-        "error_alert": "Erro ao tentar atualizar o time",
+        "error_alert": "Erro ao atualizar time",
         "official": "Oficial",
         "custom": "Personalizado",
         "remove_agent": "Remover agente"
@@ -292,7 +249,7 @@
       "drawer": {
         "title": "Atribuir {name} ao time",
         "description": "Insira as credenciais para atribuir o agente",
-        "use_credentials": "Usar credenciais do Ajustes",
+        "use_credentials": "Usar credenciais configuradas em Ajustes",
         "assign": "Atribuir",
         "credentials_used_by_this_agent": "Credenciais usadas por este agente",
         "credentials_shared_with_all_agents": "Essas credenciais serão compartilhadas para que todos os agentes tenham acesso"
@@ -304,21 +261,21 @@
       },
       "gallery": {
         "title": "Galeria de agentes",
-        "search_placeholder": "Pesquisar por agente ou habilidade",
+        "search_placeholder": "Buscar agente ou habilidade",
         "official_agents": "Agentes oficiais",
-        "custom_agents": "Agentes customizados",
+        "custom_agents": "Agentes personalizados",
         "no_agent_found": "Nenhum agente encontrado",
-        "custom_agents_description": "Agentes customizados são criados usando o Weni CLI.",
+        "custom_agents_description": "Agentes personalizados são criados usando o Weni CLI",
         "weni_cli_documentation": "Documentação do Weni CLI",
-        "weni_cli_documentation_description": "Consulte a {weni_cli_documentation} para instruções detalhadas."
+        "weni_cli_documentation_description": "Consulte a {weni_cli_documentation} para ver instruções detalhadas"
       },
-      "create_agent": "Crie um agente",
-      "preview": "Preview",
+      "create_agent": "Criar agente",
+      "preview": "Prévia",
       "assign_agents": "Atribuir agentes"
     },
     "content": {
       "fields": {
-        "search_placeholder": "Pesquisar"
+        "search_placeholder": "Buscar"
       }
     },
     "tunings": {
@@ -327,14 +284,14 @@
       "restore_default": "Restaurar padrão",
       "save_changes": "Salvar alterações",
       "changes_saved": "Alterações salvas",
-      "default_restored": "Configurações padrões restauradas",
+      "default_restored": "Configurações padrão restauradas",
       "restore_default_modal": {
         "title": "Restaurar padrão",
-        "description": "Tem certeza que deseja restaurar as configurações padrões? Essa ação não poderá ser revertida",
+        "description": "Tem certeza de que deseja restaurar as configurações padrão? Essa ação não poderá ser desfeita.",
         "cancel": "Cancelar",
         "restore": "Restaurar"
       },
-      "description": "Gerencie as configurações e acompanhe as alterações realizadas.",
+      "description": "Gerencie as configurações e acompanhe as alterações feitas",
       "tabs": {
         "config": "Configurações",
         "credentials": "Credenciais",
@@ -342,11 +299,11 @@
       },
       "upgrade_to_multi_agents": {
         "title": "Atualizar para Agent Builder 2.0",
-        "description": "Atualize seu projeto para usar um time de agentes inteligentes que colaboram para entender e responder de forma mais eficaz, tornando seu assistente mais inteligente com esforço mínimo.",
+        "description": "Atualize seu projeto para usar um time de agentes inteligentes que colaboram entre si para tornar seu assistente mais inteligente com o mínimo de esforço.",
         "button": "Atualizar agora",
         "modal": {
           "title": "Atualizar para Agent Builder 2.0",
-          "description": "Tem certeza que deseja atualizar para Agent Builder 2.0? Essa alteração é permanente e não pode ser revertida.",
+          "description": "Tem certeza de que deseja atualizar para Agent Builder 2.0? Essa alteração é permanente e não poderá ser desfeita.",
           "cancel": "Cancelar",
           "upgrade": "Atualizar"
         },
@@ -354,13 +311,13 @@
         "success": "Atualizado para Agent Builder 2.0 com sucesso"
       },
       "history": {
-        "no_changes": "Nenhuma alteração foi feita no Agent Builder.",
-        "description": "Veja o histórico de alterações feitos no Agent Builder",
+        "no_changes": "Nenhuma alteração foi feita no Agent Builder",
+        "description": "Acompanhe o histórico de alterações feitas no Agent Builder",
         "sub_description": "Veja a lista completa ou filtre pelo tipo de alteração",
         "fields": {
           "change": "Alteração",
           "date": "Data",
-          "all-changes": "Todas Alterações",
+          "all-changes": "Todas as alterações",
           "customization-changes": "Alterações de personalização",
           "content-changes": "Alterações de contéudo",
           "actions-changes": "Alterações de ações",
@@ -373,105 +330,105 @@
           "update-personality": "alterou a personalidade ({value})",
           "update-goal": "alterou o objetivo ({value})",
           "update-name": "alterou o nome ({value})",
-          "update-role": "alterou a ocupação ({value})",
+          "update-role": "alterou a função ({value})",
           "add-instruction": "adicionou uma instrução ({value})",
           "remove-instruction": "removeu uma instrução ({value})",
           "update-instruction": "alterou uma instrução ({value})",
-          "add-content": "adicionou um conteudo ({value})",
-          "update-content": "alterou um conteudo ({value})",
-          "remove-content": "removeu um conteudo ({value})",
+          "add-content": "adicionou um conteúdo ({value})",
+          "update-content": "alterou um conteúdo ({value})",
+          "remove-content": "removeu um conteúdo ({value})",
           "update-model": "alterou o modelo",
-          "brain-on": "ligou o Agent Builder",
-          "brain-off": "desligou o Agent Builder"
+          "brain-on": "ativou o Agent Builder",
+          "brain-off": "desativou o Agent Builder"
         }
       },
       "fields": {
         "model": "Selecione o modelo",
         "token": "Token",
-        "token_info": "Código necessário para acessar os serviços da OpenAI. Obtenha o seu token criando uma conta na OpenAI e gerando uma chave de API no painel de controle.",
+        "token_info": "Código necessário para acessar os serviços da OpenAI. Para obter o seu token, crie uma conta na OpenAI e gere uma chave de API no painel de controle.",
         "version": "Versão",
         "select-language": "Idioma",
         "language": "Selecione o idioma padrão",
         "languages": {
-          "pt_br": "Português Brasileiro",
+          "pt_br": "Português (Brasil)",
           "en": "Inglês",
           "es": "Espanhol"
         },
-        "golfinho-1": "Use quando precisar de equilíbrio entre qualidade e velocidade. Ideal para a maioria das aplicações com respostas rápidas e precisas.",
-        "shark-1": "Use quando a máxima precisão na resposta for essencial, mesmo que seja mais lento.",
+        "golfinho-1": "Use quando precisar unir qualidade e velocidade. Ideal para a maioria das aplicações com respostas rápidas e precisas.",
+        "shark-1": "Use quando a máxima precisão nas respostas for essencial, mesmo que isso reduza a velocidade.",
         "version-gpt": "Versão",
         "parameter": "Parâmetros",
         "temperature": "Temperatura",
-        "temperature_info": "Ajuste a Temperatura para controlar a diversidade das respostas geradas",
+        "temperature_info": "Ajuste a temperatura para controlar a diversidade das respostas geradas",
         "top_p": "Top P",
-        "top_p_info": "Ao configurar o \"top P\" de um modelo de inteligência artificial, você está ajustando como o modelo seleciona as próximas palavras durante a geração de texto",
+        "top_p_info": "Ao configurar o \"top P\" de um modelo de inteligência artificial, você ajusta como ele seleciona as próximas palavras durante a geração de texto.",
         "top_k": "Top K",
-        "top_k_info": "Ao configurar o \"top K\" de um modelo de inteligência artificial, você está determinando quantas das palavras mais prováveis o modelo considerará ao escolher a próxima palavra durante a geração de texto."
+        "top_k_info": "Ao configurar o \"top K\" de um modelo de inteligência artificial, você define quantas das palavras mais prováveis o modelo considerará ao escolher a próxima palavra durante a geração de texto."
       },
       "advanced": {
         "title": "Opções avançadas",
-        "description": "Essa opção pode desativar ou ativar suas triggers.",
+        "description": "Esta opção pode ativar ou desativar seus triggers.",
         "brain": "Agent Builder",
         "active_brain_modal": {
           "title": "Ativar Agent Builder",
-          "description": "Tem certeza que deseja ativar o Agent Builder? <br /> Isso fará com que suas triggers sejam substituídas pelas Ações e isso pode afetar diretamente o funcionamento do seu agente.",
+          "description": "Tem certeza de que deseja ativar o Agent Builder? <br /> Isso fará com que seus triggers sejam substituídos por ações, o que pode afetar diretamente o funcionamento do seu agente.",
           "cancel": "Cancelar",
           "action": "Ativar"
         },
         "deactivate_brain_modal": {
           "title": "Desativar Agent Builder",
-          "description": "Tem certeza que deseja desativar o Agent Builder? <br /> Isso fará com que suas ações sejam substituidas pelas triggers e isso pode afetar diretamente o funcionamento do seu bot.",
+          "description": "Tem certeza de que deseja desativar o Agent Builder? <br /> Isso fará com que suas ações sejam substituídas por triggers, o que pode afetar diretamente o funcionamento do seu bot.",
           "cancel": "Cancelar",
           "action": "Desativar"
         }
       },
       "credentials": {
-        "no_credentials": "Nenhuma credencial inserida",
+        "no_credentials": "Nenhuma credencial informada",
         "used_by_official_agents": "Credenciais usadas pelos agentes oficiais",
         "used_by_customized_agents": "Credenciais usadas pelos agentes personalizados",
         "used_by": "Usadas por",
         "no_agents_using": "Nenhum agente usando",
         "credentials_updated_successfully": "Credenciais atualizadas com sucesso",
-        "get_error": "Erro ao requisitar credenciais",
+        "get_error": "Erro ao solicitar credenciais",
         "save_error": "Erro ao salvar credenciais"
       },
       "settings": {
         "save_error": "Erro ao salvar configurações",
         "agents_preview": {
-          "title": "Preview dos agentes",
+          "title": "Prévia dos agentes",
           "agents_progressive_feedback": {
             "title": "Feedback progressivo dos agentes",
-            "description": "O agente pode fornecer atualizações breves enquanto formula a resposta final, ajudando o contato a entender seu processo em tempo real."
+            "description": "O agente pode fornecer atualizações breves enquanto formula a resposta final, ajudando o contato a acompanhar o processo em tempo real."
           },
           "multiple_message_format": {
             "title": "Formato de mensagem múltipla",
-            "description": "O agente pode enviar várias mensagens formatadas, como Quick Replies, List Message, CTA e Catálogo."
+            "description": "O agente pode enviar várias mensagens formatadas, como respostas rápidas, listas, CTAs e catálogos."
           }
         },
         "human_support": {
           "title": "Suporte humano",
-          "description": "Com essa função ativada, o agente poderá encaminhar a conversa para suporte humano."
+          "description": "O agente pode encaminhar a conversa ao suporte humano."
         }
       },
       "save_success": "Configurações salvas com sucesso"
     },
     "preview": {
-      "title": "Preview do agente",
+      "title": "Prévia do agente",
       "active": "Agent Builder ativo",
       "no_logs_registered": "Nenhum registro de logs",
       "see_full_details": "Ver detalhes",
       "manager_task": "Coordenando tarefas da equipe",
       "visual_flow": "Fluxo visual",
       "logs": "Logs",
-      "agents_preview": "Preview dos agentes",
+      "agents_preview": "Prévia dos agentes",
       "options": {
         "refresh": "Limpar conversas",
         "qr_code": "Visualizar pelo celular",
         "export": "Exportar conversas"
       },
       "modal_qr_code": {
-        "title": "Visualizar preview pelo celular",
-        "description": "Faça a leitura do QR Code para acessar o preview do agente pelo celular"
+        "title": "Testar prévia do agente pelo celular",
+        "description": "Escaneie o QR code para acessar a prévia do agente pelo celular"
       },
       "placeholder": "Inicie uma conversa com seu agente para testá-lo",
       "save_changes_to_test_the_agent": "Salve as alterações para testar o agente",
@@ -479,8 +436,8 @@
       "flow_started": "Fluxo {name} iniciado",
       "flow_finished": "Fluxo finalizado",
       "message_forwarded_to_brain": "Mensagem redirecionada para o Agent Builder",
-      "media_and_location_unavailable": "Não há ação de Mídias e Localização cadastrada",
-      "standby": "Standby",
+      "media_and_location_unavailable": "Nenhuma ação de mídias e localização cadastrada",
+      "standby": "Modo de espera",
       "catalog": {
         "title": "Catálogo de produtos",
         "view_cart": "Ver carrinho ({quantity} item) | Ver carrinho ({quantity} itens)",
@@ -488,26 +445,26 @@
         "subtotal": "Subtotal",
         "place_order": "Finalizar compra",
         "your_cart": "Seu carrinho",
-        "order_summary": "Resumo da compra",
-        "order_details": "Detalhes da compra",
-        "view_order_details": "Ver detalhes da compra",
+        "order_summary": "Resumo do pedido",
+        "order_details": "Detalhes do pedido",
+        "view_order_details": "Ver detalhes do pedido",
         "items": "item | itens",
         "remove": "Remover"
       }
     }
   },
   "content_bases": {
-    "description": "Adicione conhecimento através de arquivos, links ou texto para que o agente possa responder com precisão.",
+    "description": "Adicione informações através de arquivos, links ou texto para que o agente possa responder com precisão",
     "quick_test": "Teste rápido",
     "sidebar_quick_test_title": "Teste rápido da base {name}",
     "sidebar_quick_test_description": "Envie uma mensagem para testar essa base de conteúdo e saiba quais perguntas ela é capaz de responder",
     "write_content": "Escrever conteúdo",
-    "write_content_placeholder": "Escreva aqui o conteúdo",
+    "write_content_placeholder": "Digite aqui o conteúdo",
     "write_content_help": "Não sabe como adicionar conteúdo à base de conhecimento da IA? <a href=\"#\" target=\"_blank\">Veja a documentação</a>",
     "changes_saved": "Alterações salvas",
-    "time_ago_minutes": "Adicionado a {minutes} minutos",
-    "time_ago_hours": "Adicionado a {hours} horas",
-    "time_ago_days": "Adicionado a {days} dias",
+    "time_ago_minutes": "Adicionado {minutes} minutos atrás",
+    "time_ago_hours": "Adicionado {hours} horas atrás",
+    "time_ago_days": "Adicionado {days} dias atrás",
     "tabs": {
       "files": "Arquivos",
       "sites": "Sites",
@@ -515,7 +472,7 @@
     },
     "text": {
       "description": "Escreva manualmente o conteúdo que o agente usará para responder às perguntas",
-      "error": "Erro ao carregar o arquivo"
+      "error": "Erro ao carregar arquivo"
     },
     "file_with_error": "Arquivo com erro. Exclua e adicione-o novamente.",
     "site_with_error": "Site com erro. Exclua e adicione-o novamente.",
@@ -530,10 +487,10 @@
     },
     "files": {
       "upload_content": "Carregar conteúdo de arquivos",
-      "drag_and_drop_your_file_here": "Arraste e solte seu arquivo aqui para adicionar o conteúdo à base de conhecimento da IA.",
-      "supported_files": "Formatos suportados: {suportedFormats}.<br /> Limite de {limitMB}MB por arquivo.",
-      "sup_files": "{suportedFormats}.<br /> Limite de {limitMB}MB por arquivo.",
-      "description": "Carregue documentos e arquivos que o agente usará para fornecer respostas",
+      "drag_and_drop_your_file_here": "Arraste e solte seu arquivo aqui para adicionar o conteúdo à base de conhecimento da IA",
+      "supported_files": "Formatos suportados: {suportedFormats}.<br /> Limite de {limitMB} MB por arquivo.",
+      "sup_files": "{suportedFormats}.<br /> Limite de {limitMB} MB por arquivo.",
+      "description": "Carregue os documentos e arquivos que o agente usará para gerar as respostas",
       "file_error": "Arquivo com erro. Exclua e adicione-o novamente.",
       "browse_file": "Adicionar arquivo",
       "uploaded_files": "Arquivos carregados",
@@ -545,10 +502,10 @@
       "content_of_the_files_has_been_added": "O conteúdo dos arquivos foi adicionado à base",
       "file_removed_from_base": "{name} removido da base de conteúdo",
       "unsupported_format": "O formato do arquivo não é suportado",
-      "exceeds_limit": "O tamanho do arquivo excede o limite de {limitMB}MB",
+      "exceeds_limit": "O tamanho do arquivo excede o limite de {limitMB} MB",
       "delete_file": {
         "title": "Excluir arquivo",
-        "description": "Tem certeza que deseja excluir o arquivo <b>{name}</b>?<br />O conteúdo desse arquivo será removido da base da IA",
+        "description": "Tem certeza de que deseja excluir o arquivo <b>{name}</b>?<br />O conteúdo deste arquivo será removido da base da IA.",
         "cancel": "Cancelar",
         "delete": "Excluir"
       },
@@ -559,7 +516,7 @@
         "content_added_to_the_agent": "Conteúdo do arquivo adicionado ao agente:",
         "not_found": {
           "title": "Não foi possível visualizar o conteúdo do arquivo",
-          "description": "Não foi possível localizar o conteúdo do arquivo.<br />Por favor, exclua o arquivo e tente adicioná-lo novamente."
+          "description": "Não foi possível localizar o conteúdo do arquivo.<br />Exclua o arquivo e tente adicioná-lo novamente."
         },
         "bedrock": {
           "title": "A visualização de conteúdo não está disponível"
@@ -567,7 +524,7 @@
       }
     },
     "sites": {
-      "title": "Insira URLs de sites dos quais o agente pode extrair informações",
+      "title": "Insira as URLs dos sites dos quais o agente pode extrair informações",
       "description": "Certifique-se de que os sites sejam confiáveis e contenham dados relevantes",
       "modal": {
         "description": "Insira a URL do site para extrair o conteúdo",
@@ -582,10 +539,10 @@
         }
       },
       "uploaded_sites": "Sites carregados",
-      "content_of_the_sites_has_been_added": "O conteúdo dos sites foi adicionado à base",
+      "content_of_the_sites_has_been_added": "Conteúdo dos sites adicionado à base",
       "sidebar_add": {
-        "title": "Carregar conteúdo de site",
-        "description": "Adicione o conteúdo de sites à base de conhecimento da IA.",
+        "title": "Carregar conteúdo do site",
+        "description": "Adicione o conteúdo dos sites à base de conhecimento da IA",
         "fields": {
           "link": {
             "label": "Link do site",
@@ -598,7 +555,7 @@
       "add_site": "Adicionar site",
       "delete_site": {
         "title": "Excluir site",
-        "description": "Tem certeza que deseja excluir o site <b>{name}</b>?<br />O conteúdo desse site será removido da base da IA",
+        "description": "Tem certeza de que deseja excluir o site <b>{name}</b>?<br />O conteúdo deste site será removido da base da IA.",
         "cancel": "Cancelar",
         "delete": "Excluir"
       },
@@ -609,15 +566,15 @@
       }
     },
     "brain_use_warning": {
-      "title": "Utilize o Agent Builder para criar IA de Conteúdo",
-      "description": "O Agent Builder possui recursos aprimorados para criação de agente mais inteligentes, que respondem com base em conteúdos de diversos formatos carregados por você.",
-      "take_me_there": "Me leve até lá"
+      "title": "Use o Agent Builder para criar IA de conteúdo",
+      "description": "O Agent Builder conta com recursos avançados para criar agentes mais inteligentes, capazes de responder com base em conteúdos de diferentes formatos fornecidos por você.",
+      "take_me_there": "Ver mais"
     }
   },
   "quick_test": {
     "send_a_message": "Envie uma mensagem para testar a base de conteúdo...",
-    "unable_to_find_an_answer": "*Não foi possível encontrar uma resposta para essa pergunta*",
-    "rate_your_answer": "Classifique como foi a resposta",
+    "unable_to_find_an_answer": "*Não foi possível encontrar uma resposta para esta pergunta*",
+    "rate_your_answer": "Avalie a resposta",
     "completely_off_topic": "Saiu completamente do assunto perguntado",
     "partially_correct_went_off_base": "Parcialmente correta, saiu do conteúdo da base",
     "partially_correct_provided_information_on_a_different_topic": "Parcialmente correta, trouxe informações de um tema diferente",
@@ -638,29 +595,29 @@
   "webapp": {
     "layout": {
       "newbot": "nova inteligência",
-      "start_you_bot": "Comece sua inteligência",
+      "start_you_bot": "Crie sua inteligência",
       "logout": "Sair",
       "signin": "Entrar",
       "signup": "Cadastrar",
       "orgs": "Organizações",
-      "terms_conditions": "Termos & condições",
-      "contact_us": "Contate-nos",
+      "terms_conditions": "Termos e Condições",
+      "contact_us": "Entre em contato conosco",
       "subscribe": "Inscreva-se",
-      "newsletter": "Coloque seu email para receber novidades:",
+      "newsletter": "Informe seu email para receber novidades:",
       "you_best_email": "Seu email principal",
       "footer_license": "Copyright © 2012-2021 Weni. Todos os direitos reservados.",
       "created_by": "Criado por",
       "read_for_train": "Sua inteligência está pronta para ser treinada",
-      "request_authorization": "Solicitação de Autorização",
-      "authorization_requested": "Autorização Solicitada",
+      "request_authorization": "Solicitação de autorização",
+      "authorization_requested": "Autorização solicitada",
       "authorization_success": "Seu pedido foi enviado! Espere a resposta de um administrador.",
-      "error_to_retrieve_bot": "Erro ao trazer sua inteligência",
+      "error_to_retrieve_bot": "Erro ao acessar inteligência",
       "yes": "Sim",
       "no": "Não",
-      "items_total": "{initialItem}-{lastItem} de {total}",
+      "items_total": "{initialItem}–{lastItem} de {total}",
       "type_here": "Digite aqui...",
       "support": "Ajuda do Bothub",
-      "search_bots": "Procurar inteligências",
+      "search_bots": "Buscar inteligências",
       "copied": "Conteúdo copiado para a área de transferência",
       "my_intelligence": "Minhas inteligências"
     },
@@ -680,26 +637,26 @@
     },
     "intelligences_lib": {
       "title": "Inteligência Artificial",
-      "description": "Saiba como integrar uma inteligência ao seu projeto acessando a documentação <a href=\"https://docs.weni.ai/l/pt/bothub/integrar-uma-intelig-ncia-ao-projeto-na-plataforma-weni\" target=\"_blank\">como integrar uma I.A.</a>",
-      "new_intelligence": "Nova Inteligência",
-      "unused_projects": "Seu projeto não está fazendo uso de inteligências. Crie uma nova ou integre uma inteligência da sua organização ou da galeria de Inteligências da comunidade.",
+      "description": "Saiba como integrar uma inteligência ao seu projeto acessando a documentação <a href=\"https://docs.weni.ai/l/pt/bothub/integrar-uma-intelig-ncia-ao-projeto-na-plataforma-weni\" target=\"_blank\">Como integrar uma IA.</a>",
+      "new_intelligence": "Nova inteligência",
+      "unused_projects": "Seu projeto ainda não usa nenhuma inteligência. Crie uma nova ou integre uma existente da sua organização ou da galeria da comunidade.",
       "created_by": "Criada por",
       "open": "Abrir",
       "show_intents": "Visualizar intenções | Visualizar intenção | Visualizar intenções",
       "show_languages": "Visualizar idiomas | Visualizar idioma | Visualizar idiomas",
       "repository_type": {
-        "classifier": "Inteligência de Classificação",
-        "content": "Inteligência de Conteúdo"
+        "classifier": "Inteligência de classificação",
+        "content": "Inteligência de conteúdo"
       },
-      "intelligence_tooltip": "Utiliza intenções e entidades para interpretar e segmentar as mensagens do usuário.",
-      "intelligence_tooltip_content": "Cadastre textos informativos e a inteligência será capaz de responder perguntas feitas por usuários com base no texto.",
+      "intelligence_tooltip": "Utiliza intenções e entidades para interpretar e segmentar as mensagens do usuário",
+      "intelligence_tooltip_content": "Cadastre textos informativos e a inteligência será capaz de responder perguntas feitas por usuários com base nesses textos",
       "intent": "Intenções | Intenção | Intenções",
       "knowledge_bases": "Bases de conteúdo",
       "language": "Idiomas | Idioma | Idiomas",
       "intent_modal_title": "Intenções de {nick} | Intenção de {nick} | Intenções de {nick}",
-      "intent_modal_subtitle": "Visualize as intenções que fazem parte da inteligência selecionada.",
+      "intent_modal_subtitle": "Visualize as intenções que fazem parte da inteligência selecionada",
       "language_modal_title": "Idiomas de {nick} | Idioma de {nick} | Idiomas de {nick}",
-      "language_modal_subtitle": "Visualize os idiomas suportados pela inteligência selecionada.",
+      "language_modal_subtitle": "Visualize os idiomas suportados pela inteligência selecionada",
       "tab_project_title": "Inteligências no projeto",
       "tab_project_subtitle": "São as inteligências em uso no projeto",
       "tab_org_title": "Inteligências próprias",
@@ -708,40 +665,40 @@
       "tab_community_subtitle": "Inteligências públicas disponíveis para integração",
       "intent_count": "Número de frases da intenção",
       "clone": {
-        "success_modal_title": "Inteligência copiada!",
-        "success_modal_message": "A inteligência foi copiada com sucesso! É possível encontrá-la na aba Inteligências da organização 😉",
+        "success_modal_title": "Inteligência copiada",
+        "success_modal_message": "Inteligência copiada com sucesso! É possível encontrá-la na aba Inteligências da empresa.",
         "error_modal_title": "Erro ao copiar inteligência",
-        "confirm_modal_title": "Fazer uma cópia da inteligência “{intelligence}”?",
-        "confirm_modal_message": "Ao fazer uma cópia da inteligência, é possível utilizá-la na sua organização e também fazer as alterações que desejar.",
+        "confirm_modal_title": "Deseja fazer uma cópia da inteligência “{intelligence}”?",
+        "confirm_modal_message": "Ao fazer uma cópia da inteligência, você poderá usá-la na sua organização e também fazer as alterações que desejar.",
         "copy": "Copiar"
       },
       "intelligence_force": "Força",
-      "intelligence_force_tooltip": "A força da inteligência é uma forma simples de medir quão bem a inteligência está projetada. É recomendado que a força esteja acima de 80%",
+      "intelligence_force_tooltip": "A força da inteligência é um indicador de quão bem ela foi projetada. Recomendamos que esteja acima de 80%.",
       "integration_success_title": "Inteligência integrada",
-      "integration_success_description": "A Inteligência foi integrada com sucesso 😉",
-      "integration_error_title": "Não foi possível integrar a Inteligência",
-      "integration_error_description": "A Inteligência não foi integrada com sucesso",
-      "community_description": "Integre Inteligências prontas e de qualidade ao seu projeto"
+      "integration_success_description": "A inteligência foi integrada com sucesso",
+      "integration_error_title": "Não foi possível integrar a inteligência",
+      "integration_error_description": "Não foi possível integrar a inteligência",
+      "community_description": "Integre inteligências prontas e de qualidade ao seu projeto"
     },
     "create_repository": {
-      "intelligence": "Criar Inteligência Artificial",
+      "intelligence": "Criar inteligência artificial",
       "definitions": "Definições da inteligência",
       "first_indicator": "Inteligência",
       "second_indicator": "Definições",
       "intelligence_name_label": "Nome",
-      "intelligence_name_placeholder": "Defina o nome para a Inteligência",
+      "intelligence_name_placeholder": "Defina o nome para a inteligência",
       "description_label": "Descrição",
       "description_placeholder": "Descreva brevemente o propósito desta inteligência",
-      "intelligence_type": "Tipo de Inteligência",
-      "intelligence_type_classification_title": "Inteligência de Classificação",
+      "intelligence_type": "Tipo de inteligência",
+      "intelligence_type_classification_title": "Inteligência de classificação",
       "intelligence_type_classification_description": "Treine frases de exemplo atribuindo intenções e a IA identificará essas intenções em novas frases enviadas",
-      "intelligence_type_content_title": "Inteligência de Conteúdo",
-      "intelligence_type_content_description": "Cadastre textos informativos e a IA será capaz de responder perguntas feitas por usuários com base no texto",
+      "intelligence_type_content_title": "Inteligência de conteúdo",
+      "intelligence_type_content_description": "Carregue textos informativos e a IA será capaz de responder perguntas feitas por usuários com base nos textos",
       "cancel_create_intelligence_button": "Cancelar",
       "navigate_to_next_button": "Avançar",
       "language_label": "Idioma principal",
       "language_placeholder": "Selecione o idioma",
-      "language_placeholder_search": "Buscar por...",
+      "language_placeholder_search": "Buscar...",
       "category_label": "Categoria",
       "privacy_label": "Privacidade",
       "privacy_type_public_title": "Pública",
@@ -752,9 +709,9 @@
       "create_intelligence_button": "Criar inteligência",
       "repository_created_first": "A inteligência foi criada e já pode ser",
       "repository_created_second": "alimentada",
-      "navigate_to_intelligence_button": "Ir até para a inteligência",
+      "navigate_to_intelligence_button": "Ir para inteligência",
       "modal_title": "Cancelar a criação da IA",
-      "modal_description": "Tem certeza que deseja cancelar a criação da IA? <br> Ao confirmar, a IA não será criada",
+      "modal_description": "Tem certeza de que deseja cancelar a criação da IA? <br> Ao confirmar, a IA não será criada.",
       "modal_exit_button": "Sair e não criar",
       "modal_continue_button": "Cancelar"
     },
@@ -763,8 +720,8 @@
       "signin": "Entrar",
       "create_account_title": "Crie sua conta",
       "get_free": "Cadastre-se",
-      "policy_service": "Clicando em \"Cadastre-se\" eu concordo com as Políticas de Serviço e Privacidade do Bothub.",
-      "confirm_password_empty": "Este campo não pode ser em branco.",
+      "policy_service": "Ao clicar em \"Cadastre-se\", eu concordo com as Políticas de Serviço e Privacidade do Bothub.",
+      "confirm_password_empty": "Preencha este campo",
       "password_didnt_match": "As senhas não coincidem. Tente novamente.",
       "confirm_password": "Confirme a senha"
     },
@@ -772,59 +729,59 @@
       "signin": "Entrar",
       "signup": "Cadastrar",
       "or": "ou",
-      "header_content1": "Inteligência Artificial para chatbots",
-      "header_content2": "Personalize seu chatbot com a inteligência ideal em poucos minutos e sem precisar entender programação.",
+      "header_content1": "Inteligência artificial para chatbots",
+      "header_content2": "Personalize seu chatbot com a inteligência ideal em poucos minutos e sem precisar entender de programação.",
       "join_for_free": "Cadastre-se gratuitamente",
-      "grid_text1": "Fácil acesso a inteligêncies prontas e multilíngues",
-      "grid_text2": "Use, melhore ou traduza milhares de inteligências publicadas por pessoas de todo o mundo sobre incontáveis assuntos e diversos idiomas.",
+      "grid_text1": "Fácil acesso a inteligências prontas e multilíngues",
+      "grid_text2": "Use, melhore ou traduza milhares de inteligências publicadas por pessoas de todo o mundo, sobre incontáveis assuntos e em diversos idiomas.",
       "grid_text3": "Integre com sua plataforma de chatbot",
       "grid_text4": "Conecte inteligências a várias plataformas de chatbot através da nossa API e deixe seu bot mais eficiente.",
-      "grid_text5": "Construa e compartilhe sua própria IA",
+      "grid_text5": "Crie e compartilhe sua própria IA",
       "grid_text6": "Crie uma inteligência artificial que atenda às necessidades do seu chatbot. Você também pode permitir que outras pessoas vejam, contribuam e apliquem-na em seus projetos.",
       "best_bots": "Melhores inteligências",
-      "all_bots": "Todas inteligências",
-      "signup_grid": "Encante seu público com chatbots inteligentes e assertivos",
+      "all_bots": "Todas as inteligências",
+      "signup_grid": "Surpreenda seu público com chatbots inteligentes e assertivos",
       "signup_forfree": "Comece agora",
-      "reset_password": "Enviar e-mail",
-      "reset_password_success": "Cheque seu email, nós te enviamos instruções de como resetar sua senha.",
-      "forgot_password": "Esqueceu a senha?",
-      "register": "Registrar",
+      "reset_password": "Enviar email",
+      "reset_password_success": "Enviamos para o seu email instruções de como redefinir sua senha.",
+      "forgot_password": "Esqueceu sua senha?",
+      "register": "Cadastrar",
       "create_bot": "Criar inteligência"
     },
     "analyze_text": {
-      "grid1": "Faça uma requisição HTTP ao serviço NLP, siga o exemplo abaixo.",
-      "method_send": "POST Corpo:",
-      "tooltip_send": "Post com Application Json",
+      "grid1": "Faça uma requisição HTTP ao serviço NLP. Siga o exemplo abaixo.",
+      "method_send": "POST body:",
+      "tooltip_send": "POST com application/json",
       "language_code": "código do idioma",
       "text_to_analyze": "texto para análise",
       "response": "Resposta:",
       "code_generator": "Gerador de código",
       "code_generator_text": "Gere código para sua linguagem de programação preferida.",
-      "notification_info": "Faça o login na sua conta pra contribuir nessa inteligência.",
-      "analyze_text": "Analisar Texto",
+      "notification_info": "Faça login na sua conta para trabalhar nesta inteligência",
+      "analyze_text": "Analisar texto",
       "analyze": "Analisar",
       "no_detected": "Não detectado",
       "language": "Idioma",
       "message": "Mensagem",
-      "message_placeholder": "Digite uma mensagem que você deseja"
+      "message_placeholder": "Digite uma mensagem"
     },
     "quick_test": {
-      "quick_test": "TESTE RÁPIDO",
-      "internet_off_quick_test": "Você está offline, verifique sua conexão",
-      "without_train_quick_test": "Você ainda não adicionou frases ao treinamento, adicione para testar.",
-      "error_quick_test": "Algo de errado aconteceu, tente novamente mais tarde",
+      "quick_test": "Teste rápido",
+      "internet_off_quick_test": "Você está offline. Verifique sua conexão com a internet.",
+      "without_train_quick_test": "Você ainda não adicionou frases ao treinamento. Adicione-as para testar.",
+      "error_quick_test": "Algo deu errado. Tente novamente mais tarde.",
       "intent": "Intenção",
       "debug": "Debugar",
       "raw": "Raw",
       "add_a_sentence": "Adicionar uma frase",
       "entities": "Entidades",
-      "login_text": "Faça login ou cadastre-se para utilizar o Teste Rápido!"
+      "login_text": "Faça login ou cadastre-se para fazer o teste rápido!"
     },
     "debug": {
       "word": "Palavra",
       "intent": "Intenção",
       "relevance": "Relevância",
-      "debug_description": "Algo inesperado aconteceu! Nos não pudemos debugar seu texto.",
+      "debug_description": "Ocorreu algo inesperado. Não foi possível debugar seu texto.",
       "reload": "Recarregar",
       "debug": "Debugar",
       "debug_subtitle": "Analise a relevância de cada palavra da frase e entenda o resultado do seu teste rápido."
@@ -836,59 +793,59 @@
     "evaluate": {
       "results": "Resultados",
       "description": "Cada vez que você executa um teste, seus resultados serão salvos aqui para referência futura. <br><br> Você pode selecionar dois testes para comparar os resultados.",
-      "you_can_not_edit": "Você não pode editar essa inteligência",
-      "not_have_results": "Você não tem resultados ainda",
+      "you_can_not_edit": "Você não pode editar esta inteligência",
+      "not_have_results": "Nenhum resultado para exibir",
       "entity_is_group": "<strong>{entity}</strong> pertence a <strong>{group}</strong>",
-      "no_sentences": "Não há frases.",
-      "detailed_results": "Resultados Detalhados",
-      "summary_title1": "Taxa de acerto",
+      "no_sentences": "Nenhuma frase para exibir",
+      "detailed_results": "Resultados detalhados",
+      "summary_title1": "Porcentagem de acerto",
       "summary_title2": "Frases testadas",
       "summary_title3": "Idiomas",
       "tooltip_alert": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "login": "Faça login na sua conta para editar essa inteligência.",
-      "all_intents": "Todas intenções",
-      "all_entities": "Todas entidades",
+      "login": "Faça login na sua conta para editar esta inteligência",
+      "all_intents": "Todas as intenções",
+      "all_entities": "Todas as entidades",
       "all_languages": "Todos os idiomas",
       "intent": "Intenção",
       "no_versions": "Sem resultados para esta versão",
-      "add_sentences_intent": "Adicione mais sentenças para a intenção",
-      "intent_precision": "Relatório de Precisão",
+      "add_sentences_intent": "Adicione mais frases para a intenção",
+      "intent_precision": "Relatório de precisão",
       "entity_precision": "Relatório de precisão da entidade",
-      "precision_description": "Uma pontuação de precisão perfeita de 1,0 significa que todos os resultados de testes foram positivos."
+      "precision_description": "Uma pontuação de precisão de 1,0 significa que todos os resultados de testes foram positivos."
     },
     "evaluate-manual": {
       "header_title": "Teste sua inteligência",
-      "header_title_p": "Como seu modelo está performando? Você tem dados suficientes? Suas intenções e entidades foram bem desenhadas?",
+      "header_title_p": "Como está o desempenho do seu modelo? Você tem dados suficientes? Suas intenções e entidades foram bem definidas?",
       "tips_title": "Dicas para fazer um teste eficaz",
-      "tips_description": "Tente adicionar frases de teste reais, mas que nunca foram vistas pelo modelo (frases diferentes das que foram treinadas). Isso permitirá que você teste se a sua IA realmente consegue abstrair e entender o significado das intenções que tem sido treinada para classificar corretamente uma frase de teste sem olhar antes.",
+      "tips_description": "Tente adicionar frases de teste reais, mas que não tenham sido incluídas no treinamento do modelo. Isso permitirá verificar se sua IA é capaz de abstrair e compreender o significado das intenções, classificando corretamente uma nova frase mesmo sem tê-la processado anteriormente.",
       "test_title": "Fazer um novo teste manual de frase",
-      "test_p": "Execute um novo teste manual, adicionando frases que simulam a entrada do usuário final.",
+      "test_p": "Execute um novo teste manual adicionando frases que simulam a entrada do usuário final",
       "test_button": "Ir para o teste manual",
       "historic_title": "Histórico de testes manuais",
-      "header_title_p2": "Usando nossa função de teste, você pode avaliar a performance da sua inteligência facilmente.",
-      "header_title_lang": "Selecione o idioma para executar o teste.",
+      "header_title_p2": "Use nossa função de teste para avaliar a performance da sua inteligência facilmente",
+      "header_title_lang": "Selecione o idioma para executar o teste",
       "run_test": "Executar teste",
-      "login": "Faça login na sua conta para editar essa inteligência.",
+      "login": "Faça login na sua conta para editar esta inteligência",
       "get_examples_test_sentences": "{n} frase de teste | {n} frases de teste",
       "add_new_test_sentence": "Adicionar uma nova frase de teste",
-      "create_a_bench_of_test": "Crie um conjunto de frases de teste para medir a precisão de seu treinamento.",
-      "enter_your_sentence_here": "Coloque sua frase aqui",
+      "create_a_bench_of_test": "Crie um conjunto de frases de teste para medir a precisão de seu treinamento",
+      "enter_your_sentence_here": "Digite sua frase aqui",
       "submit": "Enviar",
       "you_need_type_a_text": "Você precisa escrever uma frase",
-      "intent_is_required": "Intenção é obrigatória",
-      "default_error": "Algo de errado aconteceu, tente novamente mais tarde."
+      "intent_is_required": "Preencha a intenção",
+      "default_error": "Algo deu errado. Tente novamente mais tarde."
     },
     "evaluate-automatic": {
       "header_title": "Teste sua inteligência",
-      "header_title_p": "Como seu modelo está performando? Você tem dados suficientes? Suas intenções e entidades foram bem desenhadas?",
-      "header_title_p2": "Usando nossa função de teste, você pode avaliar a performance da sua inteligência facilmente.",
-      "header_title_lang": "Selecione o idioma para executar o teste.",
+      "header_title_p": "Como está o desempenho do seu modelo? Você tem dados suficientes? Suas intenções e entidades foram bem definidas?",
+      "header_title_p2": "Use nossa função de teste para avaliar o desempenho da sua inteligência facilmente",
+      "header_title_lang": "Selecione o idioma para executar o teste",
       "run_test": "Executar teste"
     },
     "evaluate-automatic-new": {
       "header_title": "Testes automáticos",
-      "header_title_p": "Em cada nova interação, é automaticamente efetuada uma nova análise das frases para avaliar se a IA funciona corretamente.",
-      "quality_title": "Baseado na análise das interações mais recentes, sua qualidade atual da IA é:",
+      "header_title_p": "A cada interação, as frases são reanalisadas automaticamente para avaliar se a IA está funcionando corretamente",
+      "quality_title": "Com base na análise das interações mais recentes, a qualidade atual da IA é:",
       "summary_title1": "Frases testadas",
       "summary_title2": "Data do teste",
       "summary_chart_title": "Histórico de análise",
@@ -900,25 +857,25 @@
       "results_tab_title2": "Gráficos"
     },
     "result": {
-      "load_result": "Carregar Resultados",
+      "load_result": "Carregar resultados",
       "download": "Baixar",
       "test": "Teste",
       "evaluate_output": "Resultados do teste",
-      "evaluate_output_text": "Para mais informações, veja nossa",
+      "evaluate_output_text": "Para mais informações, leia nossa",
       "documentation": "documentação",
-      "recall_reports": "Relatório de Precisão e Revocação",
-      "recall_reports_text": "Um pontuação de precisão perfeita de 1.0 significa que todos os resultados dos testes foram positivos (mas não diz nada sobre se todos os resultados positivos foram encontrados), enquanto uma pontuação de revocação de 1.0 significa que todos os resultados positivos foram encontrados pela busca (mas não informa quantos falsos positivos foram trazidos).",
-      "see_more_in": "Leia mais na nossa ",
-      "intent_report": "Relatório das Intenções",
+      "recall_reports": "Relatório de precisão e revocação",
+      "recall_reports_text": "Uma pontuação de precisão igual a 1,0 indica que todos os resultados retornados eram realmente positivos (mas não garante que todos os positivos foram encontrados). Já uma pontuação de revocação igual a 1,0 significa que todos os resultados positivos foram identificados pela busca (mas não informa quantos falsos positivos também foram incluídos).",
+      "see_more_in": "Saiba mais na nossa ",
+      "intent_report": "Relatório das intenções",
       "entity": "Entidades | Entidade | Entidades",
-      "added_entity": "Entidades adiconadas | Entidade adiconada | Entidades adiconadas",
+      "added_entity": "Entidades adicionadas | Entidade adicionada | Entidades adicionadas",
       "intent_confusion_matrix": "Matriz de confusão de intenções",
-      "intent_confusion_matrix_text": "A Matriz de confusão de intenções mostra quais intenções foram confudidas por outras. Leia mais na nossa",
+      "intent_confusion_matrix_text": "A Matriz de confusão de intenções mostra quais intenções foram confundidas com outras. Saiba mais na nossa",
       "intent_confidence_distribution": "Distribuição de confiança das intenções",
-      "intent_confidence_distribution_text": "O histograma permite visualizar a disttribuição da confiança de todas as predições, com o volume de predições with the volume de predições corretas e incorretas sendo mostradas nas barras verdes e vermelhas, respectivamente. Melhorar a qualidade do conjunto de teste moverá as barras verdes do histograma para a direita e as vermelhas para a esquerda do gráfico.",
+      "intent_confidence_distribution_text": "O histograma mostra a distribuição da confiança de todas as predições, com barras verdes representando predições corretas e barras vermelhas, as incorretas. Melhorar a qualidade do conjunto de teste moverá as barras verdes do histograma para a direita e as vermelhas para a esquerda do gráfico.",
       "sentence_details": "Detalhes das frases",
       "sentence_details_text": "Compare os resultados de cada frase",
-      "do_not_log": "Nenhuma frase para mostrar",
+      "do_not_log": "Nenhuma frase para exibir",
       "expected_intent": "Intenção esperada",
       "predicted_intent": "Intenção predita",
       "expected_entity": "Entidade esperada",
@@ -926,41 +883,41 @@
       "no_expected_intent": "Nenhuma intenção esperada",
       "no_intent_predicted": "Nenhuma intenção predita",
       "confidence": "confiança",
-      "ok": "ok",
+      "ok": "OK",
       "is": "é",
       "failed": "falhou",
       "not_predicted": "não predito",
       "false_positive": "falso positivo",
       "intent": "Intenção",
-      "error": "Houve um erro ao buscar as frases"
+      "error": "Ocorreu um erro ao buscar as frases"
     },
     "home": {
-      "description": "Descrição da Inteligência",
-      "no_description": "Não há descrição para essa inteligência",
+      "description": "Descrição da inteligência",
+      "no_description": "Nenhuma descrição para esta inteligência",
       "intents_list": "Intenções",
       "entities_list": "Entidades",
-      "entities_label": "Esta inteligência possui {n} grupo de entidade | Esta inteligência possui {n} grupos de entidade",
+      "entities_label": "Esta inteligência tem {n} grupo de entidade | Esta inteligência tem {n} grupos de entidade",
       "non-grouped_entities": "e {n} entidade não agrupada. | e {n} entidades não agrupadas.",
-      "only_non-grouped_entities": "Esta inteligência possui {n} entidade não agrupada. | Esta inteligência possui {n} entidades não agrupadas.",
-      "bot_has_x_intents": "Essa inteligência tem <strong>{intents}</strong> intenções",
+      "only_non-grouped_entities": "Esta inteligência tem {n} entidade não agrupada. | Esta inteligência tem {n} entidades não agrupadas.",
+      "bot_has_x_intents": "Esta inteligência tem <strong>{intents}</strong> intenções",
       "labeled": "Grupo <strong>{label_value}</strong> ({n})",
       "unlabeled": "Entidades desagrupadas ({n})",
       "all_categories": "Todas as categorias",
       "all_languages": "Todos os idiomas",
-      "no_repo": "Nenhum repositório encontrado.",
-      "default_error": "Algo de errado aconteceu, tente novamente mais tarde.",
+      "no_repo": "Nenhum repositório encontrado",
+      "default_error": "Algo deu errado. Tente novamente mais tarde.",
       "edit_groups": "Editar grupos",
       "finish_editing": "Concluir edição",
       "enter": "Enviar",
       "create_new_group": "Criar grupo",
-      "drag_new": "Arraste as entidades para alterar o seu grupo ou para esta área em cinza para criar um novo.",
+      "drag_new": "Arraste as entidades para outro grupo ou para a área cinza para criar um novo",
       "edit_group_name": "Alterar nome",
       "new_group_named": "Novo grupo",
-      "delete_entity": "Deletar entidade",
-      "delete_entity_message": "Tem certeza que deseja remover a entidade \"{entity}\"?",
+      "delete_entity": "Excluir entidade",
+      "delete_entity_message": "Tem certeza de que deseja remover a entidade \"{entity}\"?",
       "delete_group": "Excluir grupo",
       "delete_group_message": "Deseja mesmo excluir o grupo \"{group}\"? Uma vez realizada a ação, não será possível revertê-la.",
-      "delete": "Deletar",
+      "delete": "Excluir",
       "cancel": "Cancelar",
       "edit_group_modal_title": "Alterar nome do grupo",
       "edit_group_modal_subtitle": "Qual o nome novo que você quer dar para o grupo <strong>{group}</strong>?",
@@ -969,35 +926,35 @@
       "edit_group_button_label": "Alterar nome",
       "save_changes": "Salvar e fechar",
       "create_group_modal_title": "Defina o nome do grupo",
-      "create_group_modal_subtitle": "Você criou um novo grupo, qual será o nome dele?",
+      "create_group_modal_subtitle": "Você criou um novo grupo. Dê um nome para ele.",
       "create_group_field_label": "Escolha um nome para o grupo",
       "create_group_field_title": "Nome do grupo",
       "remove_integrate": "Remover do projeto",
       "integrate": "Integrar ao projeto",
-      "integrate_modal_title": "Integrar a inteligência \"{intelligence}\" ao projeto ?",
-      "integrate_modal_subtitle": "A inteligência será adicionada ao Fluxos neste projeto e através do recurso “Dividir por Intenção” poderá utilizar as intenções desta inteligência.",
+      "integrate_modal_title": "Deseja integrar a inteligência \"{intelligence}\" ao projeto?",
+      "integrate_modal_subtitle": "A inteligência será adicionada aos fluxos deste projeto e você poderá usar suas intenções através do recurso \"Dividir por intenção\".",
       "confirm_integrate": "Integrar",
-      "remove_integrate_modal_title": "Remover a inteligência \"{intelligence}\" do projeto? ",
-      "remove_integrate_modal_subtitle": "Esta inteligência não será mais usada neste projeto. Caso mude de ideia, você precisará integrar novamente e ajustar os fluxos.",
+      "remove_integrate_modal_title": "Deseja remover a inteligência \"{intelligence}\" do projeto? ",
+      "remove_integrate_modal_subtitle": "Esta inteligência não será mais usada neste projeto. Caso mude de ideia, você precisará integrá-la novamente e ajustar os fluxos.",
       "confirm_with_username": "Digite <strong>{username}</strong> para confirmar a saída",
       "confirm_with_username_placeholder": "Confirme seu nome de usuário para excluir a conta",
       "confirm_remove_integrate": "Remover integração",
       "bases": {
         "knowledge_bases": "{n} base de conteúdo adicionada | {n} bases de conteúdo adicionadas",
-        "description": "As Bases de Conhecimento são as fontes de texto de uma Inteligência de Conteúdo. Distribua o texto da inteligência em bases, reunindo informações semelhantes sobre cada uma. Saiba mais em nossa <a href='https://docs.weni.ai/l/pt/bothub/introdu-o-intelig-ncia-de-conte-do' target='_blank' class='repository-base__description__text--link'>documentação</a>.",
+        "description": "As bases de conhecimento são as fontes de texto de uma inteligência de conteúdo. Distribua o texto da inteligência em bases, reunindo informações semelhantes em cada uma. Saiba mais em nossa <a href='https://docs.weni.ai/l/pt/bothub/introdu-o-intelig-ncia-de-conte-do' target='_blank' class='repository-base__description__text--link'>documentação</a>.",
         "new_knowledge_base": "Criar base de conteúdo",
         "adjustments": "Configurações",
-        "adjustments_subtitle": "Gerencie as configurações básicas da Inteligência",
+        "adjustments_subtitle": "Gerencie as configurações básicas da inteligência",
         "adjustments_button": "Salvar alterações",
         "adjustments_button_back": "Voltar",
-        "adjustuments_modal_title": "Alterações salvas!",
+        "adjustuments_modal_title": "Alterações salvas",
         "adjustments_modal_description": "As alterações foram salvas",
-        "adjustuments_modal_alert_title": "Salvar alterações antes de sair?",
-        "adjustments_modal_alert_description": "Os ajustes não serão aplicados a menos que você salve.",
+        "adjustuments_modal_alert_title": "Deseja salvar as alterações antes de sair?",
+        "adjustments_modal_alert_description": "Os ajustes não serão aplicados a menos que você os salve.",
         "adjustments_modal_alert_save": "Salvar alterações",
         "adjustments_modal_alert_discard": "Descartar alterações",
-        "tests": "Teste bases de conhecimento",
-        "tests_subtitle": "Teste a base de conhecimento fazendo perguntas e observando as respostas.",
+        "tests": "Testar bases de conhecimento",
+        "tests_subtitle": "Teste a base de conhecimento fazendo perguntas e observando as respostas",
         "preview_tests_placeholder": "Digite uma mensagem",
         "preview_tests_attachments": {
           "photos_or_videos": "Fotos e vídeos",
@@ -1008,29 +965,29 @@
         "tests_placeholder": "Mensagem",
         "api": "Integrar esta inteligência",
         "api_subtitle": "Nossa API é compatível com diversas plataformas via integração por APIs REST. Para saber mais, acesse a <a href='https://docs.ilhasoft.mobi/l/pt/inteligencia-conteudo/integrando-uma-intelig-ncia-de-conte-do' target='_blank' class='repository-api__header__subtitle--link'>documentação</a> e a <a href='https://api.bothub.it/#tag/repository' target='_blank' class='repository-api__header__subtitle--link'>API explorer</a>.",
-        "api_select": "Selecione a Base de Conhecimento:",
-        "api_tabs": "Integrar ao Weni Fluxos ou Rapidpro",
-        "api_tabs_subtitle": "Insira os seguintes dados onde for solicitado na plataforma:",
-        "api_tabs_intelligence_id": "ID Base de Inteligência",
+        "api_select": "Selecione a base de conhecimento:",
+        "api_tabs": "Integrar ao Weni Fluxos ou RapidPro",
+        "api_tabs_subtitle": "Insira os seguintes dados na plataforma:",
+        "api_tabs_intelligence_id": "ID da base de inteligência",
         "api_guide": "Como integrar e exemplo de resposta da API",
-        "api_integrate": "Como integrar ao Weni Fluxos ou Rapidpro",
+        "api_integrate": "Como integrar ao Weni Fluxos ou RapidPro",
         "api_body": "corpo",
         "api_tabs_post_lang": "código do idioma",
         "api_tabs_post_text": "Sua pergunta",
         "api_response": "Exemplo de resposta da API",
         "api_integrate_step_one": "Passo 1",
-        "api_integrate_step_one_text": "No Weni Fluxos, abra o fluxo desejado ou crie um novo fluxo.",
+        "api_integrate_step_one_text": "Em Weni Fluxos, abra o fluxo desejado ou crie um novo.",
         "api_integrate_step_two": "Passo 2",
-        "api_integrate_step_two_text": "Insira uma nova caixa de fluxo e selecione a opção 'Chamar um webhook'",
+        "api_integrate_step_two_text": "Insira uma nova caixa de fluxo e selecione a opção 'Chamar um webhook'.",
         "api_integrate_step_three": "Passo 3",
-        "api_integrate_step_three_text": "Selecione Post e insira a URL disponível acima",
+        "api_integrate_step_three_text": "Selecione POST e insira a URL disponível acima.",
         "api_integrate_step_four": "Passo 4",
-        "api_integrate_step_four_text": "Em “Headers HTTP” adicione o Access Token disponibilizado acima, inclusive com a palavra Bearer.",
+        "api_integrate_step_four_text": "Em \"Headers HTTP\", adicione o token de acesso disponibilizado acima, inclusive com a palavra Bearer.",
         "api_integrate_step_five": "Passo 5",
-        "api_integrate_step_five_text": "Clique em Post Corpo e insira o código acima correspondente ao POST Corpo. Você pode substituir os valores entre aspas por variáveis.",
-        "api_integrate_step_final": "Pronto! 😉",
-        "api_integrate_step_final_text": "Seguindo esses passos você terá integrado a Inteligência Artificial.",
-        "api_integrate_step_final_text_button": "Consulte nossa documentação para mais detalhes",
+        "api_integrate_step_five_text": "Clique em POST body e insira o código correspondente mostrado acima. Você pode substituir os valores entre aspas por variáveis.",
+        "api_integrate_step_final": "Pronto!",
+        "api_integrate_step_final_text": "Seguindo esses passos você terá integrado a inteligência artificial.",
+        "api_integrate_step_final_text_button": "Saiba mais",
         "edit-base-notitle": "Sem título",
         "edit-base-saved-at": "Salvo por último em",
         "edit-base-saved-time": "às",
@@ -1038,20 +995,20 @@
         "edit-base-save": "Salvar",
         "edit-base-test": "Testar",
         "edit-base_modal_delete_title": "Excluir base de conteúdo",
-        "edit-base_modal_delete_text": "Tem certeza que deseja excluir a base de conteúdo {base}? Essa ação não poderá ser revertida.",
-        "edit-base_modal_delete_placeholder": "Confirme o nome da base de conhecimento para removê-la.",
+        "edit-base_modal_delete_text": "Tem certeza de que deseja excluir a base de conteúdo {base}? Esta ação não poderá ser desfeita.",
+        "edit-base_modal_delete_placeholder": "Confirme o nome da base de conhecimento para excluí-la.",
         "edit-base_modal_delete_button_confirm": "Excluir",
         "edit-base_modal_delete_button_cancel": "Cancelar",
         "see-all_bases": "Ver todas as bases",
         "add_base": "+ Adicionar base",
         "edit-base_modal_alert_title": "Sair da base de conteúdo",
-        "edit-base_modal_alert_description": "Tem certeza que deseja sair da base de conteúdo agora? O conteúdo que não for salvo será descartado",
+        "edit-base_modal_alert_description": "Tem certeza de que deseja sair da base de conteúdo agora? O conteúdo que não for salvo será descartado.",
         "edit-base_modal_alert_save": "Sair",
         "edit-base_modal_alert_discard": "Cancelar"
       },
       "copy-intelligence": "Copiar inteligência",
       "intelligence_filter": {
-        "title": "Filtrar Inteligências da comunidade",
+        "title": "Filtrar inteligências da comunidade",
         "category": "Categorias",
         "languages": "Idioma",
         "languages_select": "Selecione um idioma",
@@ -1060,67 +1017,67 @@
       }
     },
     "summary": {
-      "training_information": "Informações do Treinamento",
+      "training_information": "Informações do treinamento",
       "information_sentences": "Frases | Frase | Frases",
       "information_intents": "Intenções | Intenção | Intenções",
       "information_entities": "Entidades | Entidade | Entidades",
-      "general_information": "Informações Gerais",
+      "general_information": "Informações gerais",
       "information_language": "Idiomas | Idioma | Idiomas",
       "information_contributors": "Contribuidores | Contribuidor | Contribuidores",
       "information_integrations": "Integrações | Integração | Integrações",
-      "intent_question": "INTENÇÃO é o desejo que a inteligência vai perceber que o usuário tem ao enviar uma mensagem específica. Por exemplo: ao enviar um \"obrigado\" a intenção do usuário é agradecer. Assim, a intenção para a frase poderia ser \"agradecimento\".",
-      "entity_question": "ENTIDADE é o substantivo relacionado ao desejo que foi detectado pela inteligência. Por exemplo: Se a frase enviada pelo usuário for \"gerar novo relatório\", a entidade pode ser \"relatório\" ou \"novo relatório\".",
-      "entity_groups_info": "Substantivo relacionado ao desejo que foi detectado pela inteligência. Por exemplo: se a frase enviada pelo usuário for “gerar novo relatório” a entidade pode ser “relatório” ou “novo relatório”.",
-      "intents_list_info": "Desejo que a inteligência percebe que o usuário tem ao enviar uma mensagem. Por exemplo: ao enviar “obrigado” a intenção do usuário é agradecer. Assim, a intenção poderia ser “agradecimento”.",
+      "intent_question": "Intenção é o objetivo que a inteligência deve identificar na mensagem do usuário. Por exemplo, ao enviar \"obrigado\", a intenção por trás da frase é agradecer. Nesse caso, a intenção poderia ser classificada como \"agradecimento\".",
+      "entity_question": "Entidade é o substantivo relacionado ao objetivo que foi identificado pela inteligência. Por exemplo, se a frase enviada pelo usuário for \"gerar novo relatório\", a entidade pode ser \"relatório\" ou \"novo relatório\".",
+      "entity_groups_info": "Substantivo relacionado ao objetivo que foi detectado pela inteligência. Por exemplo, se a frase enviada pelo usuário for \"gerar novo relatório\" a entidade pode ser \"relatório\" ou \"novo relatório\".",
+      "intents_list_info": "Objetivo que a inteligência percebe que o usuário tem ao enviar uma mensagem. Por exemplo, ao enviar \"obrigado\" a intenção do usuário é agradecer. Assim, a intenção poderia ser \"agradecimento\".",
       "intelligence_force": "Força da inteligência",
       "intelligence_force_low": "Fraca",
       "intelligence_force_regular": "Normal",
       "intelligence_force_high": "Forte",
-      "intelligence_force_info": "Há 3 níveis de força: fraca, regular e forte. Quanto maior a quantidade de frases por intenções, balanceamento entre as intenções e quantidade de frases de testes, maior será a sua força, que representa o quão bem a inteligência está treinada.",
-      "integrate": "Integrar ao Fluxos",
-      "remove_integrate": "Remover do Fluxos"
+      "intelligence_force_info": "Há 3 níveis de força: fraca, regular e forte. Quanto maior o número de frases por intenção, mais equilibrada for a distribuição entre as intenções e maior a quantidade de frases de teste, maior será a força, representando o quão bem a inteligência foi treinada.",
+      "integrate": "Integrar a Fluxos",
+      "remove_integrate": "Remover de Fluxos"
     },
     "integration": {
       "title": "API",
-      "description": "Integre esta inteligência com Weni fluxos em apenas um clique, veja a  <a href='https://docs.weni.ai/l/pt/bothub/integrar-uma-intelig-ncia-ao-projeto-na-plataforma-weni#' target='_blank'>documentação</a> completa de como utilizar esse recurso, você também pode ter acesso a nossa <a href='https://dash.weni.ai/api/intelligence/index' target='_blank'>API’s</a> de inteligência artificial.",
+      "description": "Integre esta inteligência com Weni Fluxos em apenas um clique. Veja a  <a href='https://docs.weni.ai/l/pt/bothub/integrar-uma-intelig-ncia-ao-projeto-na-plataforma-weni#' target='_blank'>documentação</a> completa de como usar esse recurso. Você também pode acessar nossas <a href='https://dash.weni.ai/api/intelligence/index' target='_blank'>APIs</a> de inteligência artificial.",
       "http_tab": "Requisição HTTP",
       "generator_tab": "Gerador de código",
-      "http_title": "Faça uma requisição HTTP para o serviço NLP, seguindo o exemplo abaixo",
+      "http_title": "Faça uma requisição HTTP para o serviço NLP, seguindo o exemplo abaixo.",
       "url_description": "A base URL é a URL raiz da API, ou seja, é o endereço inicial para acessar as funcionalidades e recursos disponíveis. É como o ponto de partida para explorar e interagir com a API.",
-      "headers_description": "Authentication é um dos tipos de Headers mais importantes em solicitações de API. Ele fornece informações sobre a autenticação do usuário que está fazendo a solicitação, garantindo que a API possa identificar corretamente o usuário e verificar se ele tem permissão para realizar a solicitação.",
-      "post_body_description": "O POST Body é uma parte da solicitação de API que contém os dados enviados para realizar uma determinada tarefa, como informações de mensagens do usuário. É importante que seja formatado corretamente em JSON para que a API possa processar as informações adequadamente.",
-      "response_description": "O response de uma API é a resposta que a API envia de volta informações para o cliente que fez uma solicitação. É como se fosse uma mensagem que a API envia de volta ao usuário, com as informações solicitadas ou indicando um erro que ocorreu durante o processamento da solicitação.",
+      "headers_description": "Authentication é um dos headers mais importantes em requisições de APIs. Ele fornece as informações necessárias sobre a autenticação do usuário que está fazendo a requisição e permite verificar se ele tem permissão para realizá-la.",
+      "post_body_description": "O POST body é a parte da requisição de API que contém os dados enviados para executar uma determinada tarefa, como informações de mensagens do usuário. É importante que esteja corretamente formatado em JSON, para que a API consiga processar as informações adequadamente.",
+      "response_description": "O response de uma API é a resposta enviada de volta ao cliente após uma requisição. Ele contém as informações solicitadas ou uma mensagem de erro, caso algo tenha ocorrido durante o processamento.",
       "token_title": "Acesso ao token:",
       "code_button": "Expandir código",
       "code_button_short": "Retrair código",
       "copy_label": "Copiar",
       "copy": "Token copiado",
       "my_user": "Meu usuário",
-      "new": "Novo! ",
-      "news_text": "Integre esta inteligência ao Weni Fluxos com um clique, na página de",
+      "new": "Novidade! ",
+      "news_text": "Integre esta inteligência ao Weni Fluxos com um clique, na página",
       "summary": "Resumo.",
       "see_more": "Saiba mais"
     },
     "intent": {
       "title": "Frases da intenção",
-      "description": "Essa intenção possui <strong>{n}</strong> frase | Essa intenção possui <strong>{n}</strong> frases no total.",
+      "description": "Esta intenção tem <strong>{n}</strong> frase | Esta intenção tem <strong>{n}</strong> frases.",
       "edit_button": "Alterar nome",
       "save_button": "Salvar",
-      "no_sentences": "Nenhuma frase.",
-      "error_intent": "Algo de errado aconteceu, tente novamente mais tarde.",
-      "error_intent_exists": "Intenção já existente",
+      "no_sentences": "Nenhuma frase para exibir",
+      "error_intent": "Algo deu errado. Tente novamente mais tarde.",
+      "error_intent_exists": "Essa intenção já existe",
       "edit_intent_modal_title": "Alterar nome da intenção",
       "edit_intent_modal_subtitle": "Qual o novo nome que você quer dar para a intenção <strong>{intent}</strong>?",
       "edit_intent_field_title": "Nome da intenção",
       "edit_intent_field_label": "Escolha um novo nome para a intenção",
       "edit_intent_button_label": "Alterar nome",
-      "success_modal_title": "Nome alterado!",
-      "success_modal_subtitle": "O nome da intenção foi alterado com sucesso 😉",
-      "delete_success_title": "Frase(s) excluída(s)!",
-      "delete_success_subtitle": "As frases selecionadas foram excluídas com sucesso 😉",
+      "success_modal_title": "Nome alterado",
+      "success_modal_subtitle": "Nome da intenção alterado com sucesso",
+      "delete_success_title": "Frases excluídas",
+      "delete_success_subtitle": "As frases selecionadas foram excluídas com sucesso",
       "delete_selected": "Excluir selecionadas ({n})",
       "sentences_perpage": "Frases exibidas por página:",
-      "search_sentence": "Busque por frase...",
+      "search_sentence": "Buscar frase...",
       "table_sentence": "Frase",
       "table_edit": "Editar",
       "table_delete": "Excluir"
@@ -1128,30 +1085,30 @@
     "settings": {
       "title_edit_repository": "Ajustes",
       "manage_your_team": "Gerencie seu time",
-      "authorization_requests": "Solicitações de Autorização",
-      "request_available": "Você já tem uma solicitação pendente. Espere a resposta de um administrador",
-      "not_can_edit_repository": "Você não pode editar essa inteligência",
-      "login": "Entre na sua conta para editar essa inteligência.",
+      "authorization_requests": "Solicitações de autorização",
+      "request_available": "Você já tem uma solicitação pendente. Espere a resposta de um administrador.",
+      "not_can_edit_repository": "Você não pode editar esta inteligência",
+      "login": "Entre na sua conta para editar esta inteligência",
       "users": "Usuários:",
-      "role": "Papéis:",
-      "no_requests": "Sem solicitações.",
+      "role": "Funções:",
+      "no_requests": "Nenhuma solicitação encontrada",
       "save": "Salvar alterações",
-      "request": "Fazer pedido",
+      "request": "Fazer solicitação",
       "invite": "Enviar convite",
-      "no_users": "Sem usuários no time.",
-      "search_user": "Digite um nome ou username",
-      "search_user_org": "Digite um nome ou username",
+      "no_users": "Nenhum usuário no time",
+      "search_user": "Digite um nome ou usuário",
+      "search_user_org": "Digite um nome ou usuário",
       "no_locale": "Sem local",
-      "remove_user_confirm": "Você tem certeza que deseja excluir <strong>{user}</> como <strong>{role}</strong>?",
-      "remove": "Remover",
+      "remove_user_confirm": "Tem certeza de que deseja excluir <strong>{user}</> como <strong>{role}</strong>?",
+      "remove": "Excluir",
       "cancel": "Cancelar",
-      "default_error": "Algo de errado aconteceu, tente novamente mais tarde.",
+      "default_error": "Algo deu errado. Tente novamente mais tarde.",
       "settings_tab": "Configurações",
       "versions_tab": "Versões",
       "settings_accordion": "Configurações avançadas",
-      "description": "Gerencie as informações básicas da Inteligência.",
-      "save_success_title": "Inteligência alterada com sucesso!",
-      "save_success_message": "As informações da Inteligência foram alteradas com sucesso 😉"
+      "description": "Gerencie as informações básicas da inteligência",
+      "save_success_title": "Inteligência alterada",
+      "save_success_message": "As informações da inteligência foram alteradas com sucesso"
     },
     "example": {
       "enter_sentence": "Digite sua frase aqui",
@@ -1159,25 +1116,25 @@
       "entity": "Entidade",
       "sentence": "Frase",
       "text_is": " <strong> {text} </strong> é",
-      "help_text": "Quando seu bot recebe uma mensaem, ele pode usar um reconhecedor para examiná-la e identificar a intenção.",
-      "delete_text": "Tem certeza? Este exemplo será deletado.",
-      "delete": "Deletar",
+      "help_text": "Quando seu bot recebe uma mensagem, ele pode usar um reconhecedor para examiná-la e identificar a intenção.",
+      "delete_text": "Tem certeza de que deseja excluir este exemplo? A ação não poderá ser desfeita.",
+      "delete": "Excluir",
       "cancel": "Cancelar",
       "sent_to_training": "Frases enviadas para treinamento!",
-      "sent_to_training_info": "As frases que você selecionou foram enviadas para treinamento com sucesso. Para treinar a inteligência com essas frases, vá ao menu Treinar Inteligência. 😉",
+      "sent_to_training_info": "As frases que você selecionou foram enviadas para treinamento com sucesso. Para treinar a inteligência com essas frases, vá ao menu Treinar inteligência.",
       "sent_to_test": "Frases enviadas para teste!",
-      "sent_to_test_info": "As frases que você selecionou foram enviadas para teste com sucesso. Para testá-las, vá ao menu Testar. 😉",
+      "sent_to_test_info": "As frases que você selecionou foram enviadas para teste com sucesso. Para testá-las, vá ao menu Testar.",
       "version_name": "Nome da versão",
-      "principal_version_label": "Tornar essa a versão principal da inteligência?",
+      "principal_version_label": "Deseja tornar essa a versão principal da inteligência?",
       "principal_version_text": "Versão principal",
-      "principal_version_info": "Ativar essa opção tornará essa a versão padrão da Inteligência"
+      "principal_version_info": "Ativar esta opção tornará esta a versão padrão da inteligência"
     },
     "trainings": {
       "export_results": "Exportar resultados",
       "grid_text1": "Treinar uma nova frase",
-      "grid_text2": "Adicionar exemplos para melhorar sua inteligência.",
-      "not_can_edit_repository": "Você não pode contribuir para essa inteligência",
-      "login": "Entre na sua conta para contribuir com essa inteligência.",
+      "grid_text2": "Adicione exemplos para melhorar sua inteligência",
+      "not_can_edit_repository": "Você não pode contribuir para esta inteligência",
+      "login": "Entre na sua conta para trabalhar nesta inteligência",
       "sentences_list": "Lista de frases",
       "run_training": "Executar treinamento",
       "submit": "Enviar frase para treinamento",
@@ -1187,50 +1144,50 @@
       "select_text": "Selecione parte do texto para adicionar uma entidade",
       "add_a_sentence": "Escreva a frase que deseja treinar",
       "intent": "Adicione ou selecione a intenção",
-      "train_response_title": "Frases treinadas com sucesso!",
-      "train_response_subtitle": "As frases que você enviou foram treinadas com sucesso. Você pode consultar todas frases treinadas no menu Repositório. 😉",
+      "train_response_title": "Frases treinadas com sucesso",
+      "train_response_subtitle": "As frases que você enviou foram treinadas com sucesso. Você pode consultar todas frases treinadas em Repositório.",
       "trained": "Treinado",
       "processing": "Processando",
       "no_changes": "Sem alterações",
-      "no_sentences": "Não há frases.",
-      "no_sentences_to_train": "Nenhuma frase foi adicionada para treinamento.",
-      "no_train_sentence": "Essa frase ainda não foi adicionada ao treinamento.",
+      "no_sentences": "Nenhuma frase para exibir",
+      "no_sentences_to_train": "Nenhuma frase foi adicionada para treinamento",
+      "no_train_sentence": "Essa frase ainda não foi adicionada ao treinamento",
       "failed": "Falhou",
-      "intention_or_sentence_already_exist": "Intenção ou frase já existe",
-      "delete_title": "Excluir frase(s)",
-      "delete_phrase_modal_title": "Deletar frase",
-      "delete_phrase_modal": "Deseja mesmo excluir a(s) frase(s) selecionadas? Uma vez realizada a ação não será possível revertê-la.",
-      "delete_button": "Deletar",
-      "cancel_button": "Cancelar Alterações",
-      "save_button": "Salvar Alterações",
+      "intention_or_sentence_already_exist": "Essa intenção ou frase já existe",
+      "delete_title": "Excluir frases",
+      "delete_phrase_modal_title": "Excluir frases",
+      "delete_phrase_modal": "Tem certeza de que deseja excluir as frases selecionadas? Ao confirmar, esta ação não poderá ser desfeita.",
+      "delete_button": "Excluir",
+      "cancel_button": "Cancelar alterações",
+      "save_button": "Salvar alterações",
       "train_progress": "Treinamento em execução",
       "empty_text_error": "Digite uma frase",
       "error_caracter_type": "A frase deve conter letras ou números. Inclua-os para continuar.",
       "intent_error": "Digite uma intenção",
-      "default_error": "Algo de errado aconteceu, tente novamente mais tarde.",
-      "more_than_200_words": "Você atingiu o limite de 200 palavras por frase. Ajuste o texto se necessário ou divida em frases menores.",
+      "default_error": "Algo deu errado. Tente novamente mais tarde.",
+      "more_than_200_words": "Você atingiu o limite de 200 palavras por frase. Ajuste o texto ou divida-o em frases menores.",
       "entities_info": "Como adicionar novas entidades a partir da frase?",
       "database": "Repositório",
-      "database_description": "Lista de todas as frases treinadas pela inteligência.",
-      "database_untrained": "Essa inteligência não possui nenhuma frase treinada. Adicione frases e treine-as no menu Treinamento.",
-      "database_modal_title": "Frase(s) editada(s)!",
-      "database_modal_description": "As sentenças foram editadas com sucesso. Execute o treinamento novamente para que a Inteligência reconheça essas sentenças 😉",
+      "database_description": "Lista de todas as frases treinadas pela inteligência",
+      "database_untrained": "Essa inteligência não foi treinada com nenhuma frase. Adicione frases para treinar a inteligência no menu Treinamento.",
+      "database_modal_title": "Frases editadas",
+      "database_modal_description": "As frases foram editadas com sucesso. Execute o treinamento novamente para que a inteligência reconheça essas frases.",
       "database_save_button": "Enviar frase para treinamento",
-      "train_title": "Treinar Inteligência",
-      "train_description": "Adicione frases para aprimorar a Inteligência Artificial. <a href={link}>Veja nossa documentação</a> e conheça as melhores práticas para criar uma IA de qualidade.",
+      "train_title": "Treinar inteligência",
+      "train_description": "Adicione frases para aprimorar a inteligência artificial. <a href={link}>Veja nossa documentação</a> e conheça as melhores práticas para criar uma IA de qualidade.",
       "entities": "Entidades (opcional)",
       "sentences_to_train": "Lista de frases prontas para treinamento",
-      "add_entity_info": "São elementos usados para que se possa extrair uma informação adicional ao mandar uma frase para o bot, além de sua intenção classificada.",
+      "add_entity_info": "Elementos usados para extrair informações adicionais ao enviar uma frase para o bot, além de sua intenção classificada.",
       "sentence_added": "Frase adicionada para treinamento",
-      "intent_info": "As intenções são o que definem o contexto da sua inteligência. Ao receber uma frase para classificar, sua inteligência vai responder em qual das intenções treinadas aquela frase tem mais probabilidade de pertencer.",
+      "intent_info": "As intenções definem o contexto da sua inteligência. Ao receber uma frase para classificar, sua inteligência vai responder em qual das intenções treinadas a frase se encaixa.",
       "add_entity_modal_title": "Adicionar entidade",
       "add_entity_field_label": "Adicione ou selecione uma entidade",
-      "add_entity_checkbox_title": "Selecione a(s) palavra(s) da frase relacionadas à essa entidade",
+      "add_entity_checkbox_title": "Selecione as palavras da frase relacionadas a esta entidade",
       "add_entity_finish_edit": "Concluir",
       "add_entity_cancel": "Cancelar",
-      "evaluate_results": "Das frases {count} enviadas para teste, a IA compreendeu {success} corretamente. Veja os resultados dos testes detalhados ou envie as sentenças diretamente para treinamento.",
+      "evaluate_results": "Das {count} frases enviadas para teste, a IA compreendeu {success} corretamente. Veja os resultados dos testes detalhados ou envie as frases diretamente para treinamento.",
       "see_result": "Ver resultado",
-      "accuracy": "Successfully tested sentences! The hit rate was {accuracy}%"
+      "accuracy": "Frases testadas com sucesso! A porcentagem de acerto foi de {precisão}%"
     },
     "resumeSentences": {
       "title": "Resumo das frases prontas para treinamento",
@@ -1241,54 +1198,54 @@
       "languages": "Idiomas"
     },
     "train_modal": {
-      "training_status": "Status do Treinamento",
+      "training_status": "Status do treinamento",
       "status_ok": "Seu bot está pronto para ser treinado!",
       "language_warning": "Não foi possível executar o treinamento",
-      "missing_requirements": "Alguns erros foram encontrados e o seu treinamento não foi concluído Corrija e tente novamente.",
+      "missing_requirements": "Alguns erros foram encontrados e não foi possível concluir seu treinamento. Corrija-os e tente novamente.",
       "ready_for_train_title": "Alguns erros foram encontrados",
       "ready_for_train_subtitle": "Volte e corrija os erros encontrados para executar o treinamento.",
       "language_available": "Não existem frases de idiomas novos para treinar. Adicione-os e tente novamente.",
       "warnings": "Alertas",
       "train": "Voltar e corrigir",
       "cancel": "Cancelar",
-      "ok": "ok"
+      "ok": "OK"
     },
     "translate": {
       "title_status_page": "Tradução",
-      "description_status_page": "Gerencie e traduza as frases da sua Inteligência",
-      "title_language_card": "Idiomas da Inteligência",
+      "description_status_page": "Gerencie e traduza as frases da sua inteligência",
+      "title_language_card": "Idiomas da inteligência",
       "description_progress_bar": "Frases traduzidas",
       "new_status_card": "Adicionar novo idioma",
-      "description_create_modal": "Qual novo idioma que você quer adicionar à Inteligência?",
-      "select_language_label": "Selecione o idioma",
-      "button_create_modal": "Prosseguir",
-      "title_translate": "Traduzir uma frase",
+      "description_create_modal": "Qual novo idioma você deseja adicionar à inteligência?",
+      "select_language_label": "Selecionar idioma",
+      "button_create_modal": "Continuar",
+      "title_translate": "Traduzir frase",
       "title_export": "Importar/exportar tradução",
-      "subtitle_export": "Importar tradução pronta ou exportar para um arquivo de planilha",
-      "not_can_edit_repository": "Você não pode contribuir com essa inteligência",
-      "login": "Entre na sua conta para contribuir com essa inteligência.",
-      "submit_translation": "Enviar Tradução",
+      "subtitle_export": "Importar tradução pronta ou exportar para um arquivo CSV",
+      "not_can_edit_repository": "Você não pode trabalhar nesta inteligência",
+      "login": "Entre na sua conta para trabalhar nesta inteligência",
+      "submit_translation": "Enviar tradução",
       "intent": "Intenção:",
-      "no_examples": "Todas as frases do idioma principal da Inteligência foram traduzidas para {language}.",
-      "show_translated": "Mostrar Tradução",
-      "show_original": "Mostrar Original",
-      "translated_from": "Traduzido de",
-      "no_translation": "Nenhuma frase do idioma principal da Inteligência foi traduzida para {language}.",
-      "click_here": "clique aqui para traduzir.",
-      "translate_from": "Traduzir de:",
+      "no_examples": "Todas as frases do idioma principal da inteligência foram traduzidas para {language}.",
+      "show_translated": "Mostrar tradução",
+      "show_original": "Mostrar original",
+      "translated_from": "Traduzido do",
+      "no_translation": "Nenhuma frase do idioma principal da inteligência foi traduzida para {language}.",
+      "click_here": "clique aqui para traduzir",
+      "translate_from": "Traduzir do:",
       "translate_to": "Traduzir para:",
       "to": "para",
-      "no_entities": "Nenhuma entidade para adicionar nessa tradução",
+      "no_entities": "Nenhuma entidade para adicionar nesta tradução",
       "languages_select": "Escolha um idioma",
       "translate_sentence": "Traduzir frase",
-      "example_translated": "Exemplo traduzido!",
+      "example_translated": "Exemplo traduzido",
       "import_title": "Importar tradução",
       "export_title": "Exportar tradução",
       "import_button": "Importar",
       "export_button": "Exportar",
       "import_field_text": "Nenhum arquivo selecionado",
       "import_select_button": "Clique para selecionar",
-      "import_select_error": "Ocorreu um erro com o arquivo.",
+      "import_select_error": "Ocorreu um erro com o arquivo",
       "import_button_cancel": "Cancelar",
       "export_all_sentences": "Todas as frases",
       "export_only_translated": "Frases não traduzidas",
@@ -1297,48 +1254,48 @@
       "more_than_half": "Mais que 50% traduzidas",
       "less_than_half": "Menos que 50% traduzidas",
       "all": "Todos os idiomas",
-      "search": "Pesquisar",
-      "showing": "Mostrando {count} de {available} idiomas disponíveis",
+      "search": "Buscar",
+      "showing": "Exibindo {count} de {available} idiomas disponíveis",
       "no_translated": "Nenhum idioma encontrado",
       "invalid_entities": "As entidades da tradução não correspondem às da frase original",
       "translation_edited": "Tradução editada",
-      "translation_delete_confirm": "Essa tradução para \"{language}\" será excluída. Deseja continuar?",
-      "error_load_translation": "Não foi possível carregar tradução.",
+      "translation_delete_confirm": "A tradução para \"{language}\" será excluída. Tem certeza de que deseja continuar?",
+      "error_load_translation": "Não foi possível carregar a tradução",
       "retry": "Recarregar",
       "sentences": "Frases",
       "translated": "Traduzidas",
       "not_translated": "Não traduzidas",
       "inconsistent": "Inconsistentes",
-      "delete_all": "Deletar Traduções",
+      "delete_all": "Excluir traduções",
       "save_all": "Salvar todas nesta página",
       "select_all": "Selecionar todas nesta página",
       "auto_translate": "Tradução automática",
-      "auto_translate_progress": "Tradução automática em progresso",
-      "auto_translate_confirm": "Traduzir todas as frases não traduzidas para {language}?",
+      "auto_translate_progress": "Tradução automática em andamento",
+      "auto_translate_confirm": "Deseja traduzir todas as frases não traduzidas para {language}?",
       "auto_percentage": "{progress}% da tradução concluída",
-      "unsupported": "Idioma não está disponível para tradução automática",
+      "unsupported": "Idioma não disponível para tradução automática",
       "share_title": "Enviar para tradutores",
-      "share_subtitle": "Compartilhe esse link com quem irá traduzir as frases",
+      "share_subtitle": "Compartilhe este link com o tradutor",
       "create_new_token": "Gerar link",
-      "delete_confirm": "Deseja mesmo excluir a tradução selecionada? Uma vez realizada a ação não será possível revertê-la.",
-      "default_error": "Algo de errado ocorreu.",
-      "okay": "ok",
+      "delete_confirm": "Tem certeza de que deseja excluir a tradução selecionada? Ao confirmar, a ação não poderá ser desfeita.",
+      "default_error": "Algo deu errado",
+      "okay": "OK",
       "cancel": "Cancelar",
       "send_to_translators": "Enviar para tradutores",
       "tab_translated": "Frases traduzidas",
       "tab_not_translated": "Frases não traduzidas",
-      "select_sentences_title": "Selecione as frases da Inteligência que deseja traduzir",
-      "select_sentences_subtitle": "{selected} selecionadas de {total}",
+      "select_sentences_title": "Selecione as frases da inteligência que deseja traduzir",
+      "select_sentences_subtitle": "{selected} de {total} selecionadas",
       "translate_sentences": "Traduzir frases",
       "select_method": "Selecione a forma que deseja fazer a tradução",
       "edit_sentence": "Editar tradução",
       "delete_sentence": "Excluir tradução",
       "translate_progress": "Traduzindo frases",
-      "translate_method": "Formato de tradução",
-      "export_description": "Quais frases que deseja exportar?",
+      "translate_method": "Formato da tradução",
+      "export_description": "Quais frases deseja exportar?",
       "export_method": "Selecione as frases que deseja exportar",
       "exporting": "O download do arquivo com as traduções está em andamento",
-      "examples_untrained": "{n} frases traduzidas ainda não foram treinadas pela Inteligência"
+      "examples_untrained": "{n} frases traduzidas ainda não foram treinadas pela inteligência"
     },
     "orgs": {
       "owner": "Pertence a",
@@ -1349,19 +1306,19 @@
       "members": "{n} membros | {n} membro | {n} membros",
       "create_org": "Criar organização",
       "create": "Criar",
-      "no_orgs": "Você ainda não é membro de nenhuma organização.",
+      "no_orgs": "Você ainda não é membro de nenhuma empresa",
       "manage_contributors": "Gerenciar contribuidores",
-      "manage_subtitle": "Gerencie quem pode contribuir para o seu dataset.",
+      "manage_subtitle": "Gerencie quem pode contribuir para o seu conjunto de dados",
       "edit": "Editar",
       "information": "Informações",
       "org_info": "Informações da organização",
-      "no_repo": "Esta organização ainda não possui inteligências.",
+      "no_repo": "Esta organização ainda não tem inteligências",
       "add_repo": "Criar inteligência",
       "from": "De <strong> {locale} </strong>",
       "default_error": "Erro ao carregar organização",
       "activities": {
         "title": "Atividades",
-        "recent": "Atividades Recentes"
+        "recent": "Atividades recentes"
       },
       "reports": {
         "title": "Relatórios",
@@ -1370,13 +1327,13 @@
       "payment": {
         "title": "Pagamentos",
         "history": "Histórico ",
-        "info": "Informações de Pagamento",
-        "payment": "{period} payment",
-        "credit_payment": "Por cartão de crédito",
+        "info": "Informações de pagamento",
+        "payment": "pagamento {period}",
+        "credit_payment": "Com cartão de crédito",
         "coupon_payment": "Com cupom",
-        "submit": "Submit",
+        "submit": "Enviar",
         "total": "Total:",
-        "no_payments": "No payments"
+        "no_payments": "Nenhum pagamento para exibir"
       },
       "intelligences": {
         "title": "Inteligências",
@@ -1385,30 +1342,30 @@
       },
       "create_org_title": "Vamos criar uma organização",
       "create_org_subtitle": "Aumente a produtividade do seu time criando suas inteligências em um só lugar",
-      "send_email": "Enviar um e-mail"
+      "send_email": "Enviar email"
     },
     "my_profile": {
-      "edit_your_profile": "Edite seu Perfil",
-      "change_password": "Mudar Senha",
+      "edit_your_profile": "Edite seu perfil",
+      "change_password": "Alterar senha",
       "repositories": "Inteligências",
       "modal_edit_your_profile": "Edite seu perfil",
-      "modal_change_password": "Mudar Senha",
-      "password_change_success": "Senha alterada!",
+      "modal_change_password": "Alterar senha",
+      "password_change_success": "Senha alterada",
       "edit": "Salvar",
       "trained_at": "Treinado às {trained} por {by}",
-      "train_fail": "Treinamento falhou às {failed}",
+      "train_fail": "O treinamento falhou às {failed}",
       "training": "Treinando...",
-      "not_trained": "Não há treinamento ainda.",
-      "training_log": "Log de Treinamento",
-      "personal_info": "Informações Pessoais",
-      "free_user": "USUÁRIO GRÁTIS",
+      "not_trained": "Nenhum treinamento para exibir",
+      "training_log": "Log de treinamento",
+      "personal_info": "Informações pessoais",
+      "free_user": "Usuário gratuito",
       "profile": "Perfil",
-      "no_repo": "Você ainda não possui nenhuma inteligência.",
-      "no_repo_filter": "Você ainda não possui esse tipo de inteligência.",
+      "no_repo": "Seu perfil ainda não tem nenhuma inteligência",
+      "no_repo_filter": "Seu perfil ainda não tem este tipo de inteligência",
       "add_repo": "Criar inteligência",
       "activities": {
         "title": "Atividades",
-        "recent": "Atividades Recentes",
+        "recent": "Atividades recentes",
         "activity_complement": "na inteligência <strong> {intelligence} </strong> da organização <strong> {org} </strong>"
       },
       "reports": {
@@ -1416,12 +1373,12 @@
         "predictions": "Nenhuma predição | {n} predição | {n} predições",
         "created_by": "Criado por",
         "today": "Hoje",
-        "this_week": "Essa semana",
-        "this_month": "Esse mês",
+        "this_week": "Esta semana",
+        "this_month": "Este mês",
         "last_three_months": "Últimos três meses",
-        "all_time": "Desde o começo",
+        "all_time": "Desde o início",
         "filter_by": "Filtrar por",
-        "no_reports": "Nenhum relatório",
+        "no_reports": "Nenhum relatório para exibir",
         "total": "Total de predições:"
       },
       "payment": {
@@ -1433,7 +1390,7 @@
         "coupon_payment": "Com cupom",
         "submit": "Enviar",
         "total": "Total:",
-        "no_payments": "Sem pagamentos"
+        "no_payments": "Nenhum pagamento para exibir"
       },
       "intelligences": {
         "title": "Inteligências",
@@ -1443,7 +1400,7 @@
       }
     },
     "menu": {
-      "hide": "Encolher",
+      "hide": "Esconder",
       "expand": "Expandir",
       "created_by": "Criado por",
       "back_text": "Voltar",
@@ -1473,30 +1430,30 @@
     },
     "phrase-suggestion": {
       "title": "Gerador de frases",
-      "subtitle": "Gere até centenas de novas frases a partir de apenas uma frase. Pode ser muito útil para aprimorar sua inteligência artificial.",
-      "empty": "Não há sugestão de frases para essa intenção",
+      "subtitle": "Gere centenas de novas frases a partir de apenas uma. Isso pode ser muito útil para aprimorar sua inteligência artificial.",
+      "empty": "Nenhuma sugestão de frase para esta intenção",
       "confirm-edit": "Confirmar edição",
       "cancel-edit": "Cancelar edição",
-      "tooltip_alert": "As palavras sugeridas são geradas através de contextos retirados da internet, portanto, podem acontecer sugestões que fujam do controle da nossa equipe.",
-      "add_a_sentence": "Escreva a frase que deseja utilizar",
+      "tooltip_alert": "As palavras sugeridas são geradas a partir de contextos da internet, portanto, algumas sugestões podem estar fora do controle da nossa equipe.",
+      "add_a_sentence": "Escreva a frase que deseja usar",
       "submit": "Enviar frase",
       "select_words_title": "Selecionar palavras",
-      "select_method": "Selecione o método que será utilizado para gerar as frases.",
-      "new_sentence": "Adicionar uma nova frase",
-      "new_sentence_info": "Adicione uma nova frase para utilizá-la como base para gerar novas frases",
+      "select_method": "Selecione o método que será usado para gerar as frases",
+      "new_sentence": "Adicionar frase",
+      "new_sentence_info": "Adicione uma nova frase para usá-la como base para gerar novas",
       "select_method_button": "Selecionar método",
-      "existing_sentence": "Utilizar uma frase existente",
-      "select_existing": "Selecione uma frase para utilizá-la como base para gerar novas frases",
-      "add_new": "Adicionar nova frase",
-      "add_existing": "Utilizar frase existente",
+      "existing_sentence": "Usar uma frase existente",
+      "select_existing": "Selecione uma frase para usá-la como base para gerar novas",
+      "add_new": "Adicionar frase",
+      "add_existing": "Usar frase existente",
       "select_intent": "Selecione a intenção para visualizar as frases",
-      "select_words": "Selecione quais palavras deseja gerar variações.",
+      "select_words": "Selecione as palavras para as quais deseja gerar variações",
       "finish_selection": "Concluir seleção",
       "select_variations": "Selecionar as variações de palavras",
-      "select_variations_info": "Selecione as variações de palavras. As variações selecionadas serão utilizadas para compôr as novas frases.",
+      "select_variations_info": "Selecione as variações de palavras. As variações selecionadas serão usadas para compôr as novas frases.",
       "variations_generated": "{n} variações geradas",
       "variations_selected": "{n} variações selecionadas",
-      "new_variation": "Adicionar variação diferente",
+      "new_variation": "Adicionar nova variação",
       "add": "Adicionar",
       "generate_sentences": "Gerar frases",
       "generated_sentences": "Frases geradas",
@@ -1505,8 +1462,8 @@
       "to_intent": "para a intenção",
       "send_to_training": "Enviar para treinamento",
       "go_to_training": "Ir para Treinamento",
-      "sent_to_training": "Frases enviadas para treinamento!",
-      "sent_to_training_info": "As frases geradas foram enviadas para treinamento. Para aprimorar a inteligência com essas frases, execute o treinamento no menu Treinar Inteligência. 😉"
+      "sent_to_training": "Frases enviadas para treinamento",
+      "sent_to_training_info": "As frases geradas foram enviadas para treinamento. Para aprimorar a inteligência com essas frases, execute o treinamento em Treinar inteligência."
     },
     "dashboard": {
       "sentences": "frases",
@@ -1518,46 +1475,46 @@
       "filter_by": "Exibir"
     },
     "versions": {
-      "edit_choose_version": "Adicione, edite e escolha versões da sua inteligência.",
+      "edit_choose_version": "Adicione, edite e escolha versões da sua inteligência",
       "date_created": "Data de criação",
       "last_modified": "Última modificação",
       "created_by": "Criado por",
       "main": "Principal",
-      "change_default_version": "Mudar a Versão Padrão",
-      "message_change_default_version": "Você tem certeza que quer mudar a versão padrão para \"{name}\"?",
-      "confirm_change_default_version": "Mudar padrão",
-      "version_has_edited": "A versão foi editada",
-      "something_wrong": "Algo deu errado ):",
-      "version_was_created": "Versão foi criada",
-      "you_cannot_delete_main_branch": "Você não pode deletar a versão principal",
-      "deleting_version": "Deletar Versão",
-      "message_deleting_version": "Você tem certeza que quer deletar essa versão? Essa ação não pode ser desfeita.",
-      "confirm_deleting_version": "Deletar Versão",
+      "change_default_version": "Mudar a versão padrão",
+      "message_change_default_version": "Tem certeza de que deseja alterar a versão padrão para \"{name}\"?",
+      "confirm_change_default_version": "Alterar padrão",
+      "version_has_edited": "Versão editada com sucesso",
+      "something_wrong": "Algo deu errado",
+      "version_was_created": "Versão criada com sucesso",
+      "you_cannot_delete_main_branch": "Você não pode excluir a versão principal",
+      "deleting_version": "Excluir versão",
+      "message_deleting_version": "Tem certeza de que deseja excluir esta versão? Esta ação não poderá ser desfeita.",
+      "confirm_deleting_version": "Excluir versão",
       "title": "Título",
       "version": "Versão",
       "cancel": "Cancelar",
-      "add_new": "Adicionar nova",
-      "signin": "Entre na sua conta para editar essa inteligência.",
+      "add_new": "Adicionar nova versão",
+      "signin": "Entre na sua conta para editar esta inteligência",
       "table_edit": "Editar",
       "table_duplicate": "Duplicar",
       "table_delete": "Excluir",
       "edit_title_modal": "Alterar versão",
-      "edit_phrase_modal": "Deseja mesmo fazer alterações na versão {name}?",
-      "edit_success_title_modal": "Alterações salvas!",
-      "edit_success_phrase_modal": "Alterações feitas com sucesso 😉",
-      "edit_confirm_button": "Fazer alterações",
+      "edit_phrase_modal": "Tem certeza de que deseja alterar a versão {name}?",
+      "edit_success_title_modal": "Alterações salvas",
+      "edit_success_phrase_modal": "As alterações foram salvas com sucesso",
+      "edit_confirm_button": "Alterar",
       "delete_title_modal": "Excluir versão",
-      "delete_phrase_modal": "Deseja mesmo excluir a versão <strong>{name}</strong>? Uma vez realizada a ação não será possível revertê-la.",
-      "delete_success_title_modal": "Versão excluída!",
-      "delete_success_phrase_modal": "A versão foi excluída com sucesso 😉",
+      "delete_phrase_modal": "Tem certeza de que deseja excluir a versão <strong>{name}</strong>? Ao realizar a ação, ela não poderá ser desfeita.",
+      "delete_success_title_modal": "Versão excluída",
+      "delete_success_phrase_modal": "A versão foi excluída com sucesso",
       "delete_alert_text": "Não é possível excluir a versão principal",
       "duplicate_title_modal": "Duplicar a versão {name}",
-      "duplicate_phrase_modal": "Qual o nome que você quer dar para a cópia dessa versão?",
+      "duplicate_phrase_modal": "Qual nome deseja atribuir à cópia desta versão?",
       "duplicate_input_label": "Nome da versão",
       "duplicate_input_placeholder": "Nome",
       "duplicate_confirm_button": "Definir nome",
-      "duplicate_success_title_modal": "Cópia criada!",
-      "duplicate_success_phrase_modal": "A cópia da versão foi criada com sucesso 😉",
+      "duplicate_success_title_modal": "Cópia criada",
+      "duplicate_success_phrase_modal": "A cópia da versão foi criada com sucesso",
       "duplicate_success_button_modal": "Definir nome"
     },
     "inbox": {
@@ -1565,33 +1522,33 @@
       "intent": "Intenção",
       "language": "Idioma",
       "version": "Versão",
-      "cannot_edit_this_repository": "Você não pode editar essa inteligência",
-      "signin_you_account": "Entre na sua conta para editar essa inteligência.",
+      "cannot_edit_this_repository": "Você não pode editar esta inteligência",
+      "signin_you_account": "Entre na sua conta para editar esta inteligência",
       "all_versions": "Todas as versões",
-      "test_sentences": "Frases de Teste",
+      "test_sentences": "Frases de teste",
       "training": "Enviar frases para treinamento",
-      "add_to": "Adicionar à",
-      "list_empty": "Nenhuma frase.",
+      "add_to": "Adicionar a",
+      "list_empty": "Nenhuma frase para exibir",
       "entry_has_add_to_train": "adicionada ao treinamento.",
       "entry_has_add_to_sentence": "adicionada às frases de teste.",
-      "entry_error": "Intenção e Frase já existem.",
-      "add_to_train_error": "Aconteceu um erro",
-      "add_to_sentences_error": "Um erro ocorreu.",
+      "entry_error": "Essa intenção e frase já existem",
+      "add_to_train_error": "Algo deu errado",
+      "add_to_sentences_error": "Algo deu errado",
       "add_to_train_button": "Enviar para treinamento ({n})",
       "add_to_sentence_button": "Enviar para teste ({n})",
       "add_to_train": "Enviar para treinamento",
       "add_to_sentence": "Enviar para teste",
-      "remove_log_button": "Deletar senteça",
+      "remove_log_button": "Excluir frase",
       "select_phrase": "Selecione uma frase",
-      "select_all": "Selecionar todos",
-      "send_to_evaluate": "Intenção e frase já existem",
+      "select_all": "Selecionar todas",
+      "send_to_evaluate": "Essa intenção e frase já existem",
       "error": "Erro",
       "add_log": {
-        "add": "Enviar",
+        "add": "Adicionar",
         "close": "Cancelar"
       },
-      "confirm_deleting_version": "Deletar versão",
-      "debug": "Debug",
+      "confirm_deleting_version": "Excluir versão",
+      "debug": "Debugar",
       "raw": "Raw",
       "confidence": "Confiança",
       "entities": "Entidade | Entidades",
@@ -1599,163 +1556,163 @@
     },
     "entity": {
       "title": "Frases da entidade",
-      "description": "Esta entidade está presente em <strong>{n}</strong> frase no total. | Esta entidade está presente em <strong>{n}</strong> frases no total.",
+      "description": "Esta entidade está presente em <strong>{n}</strong> frase. | Esta entidade está presente em <strong>{n}</strong> frases.",
       "edit_button": "Alterar nome",
       "save_button": "Salvar",
-      "no_sentences": "Nenhuma frase treinada.",
-      "error_entity": "Algo de errado aconteceu, tente novamente mais tarde.",
-      "error_entity_exists": "Entidade já existe",
+      "no_sentences": "Nenhuma frase treinada",
+      "error_entity": "Algo deu errado. Tente novamente mais tarde.",
+      "error_entity_exists": "Essa entidade já existe",
       "edit_entity_modal_title": "Alterar nome da entidade",
-      "edit_entity_modal_subtitle": "Qual o novo nome que você quer dar para a entidade <strong>{entity}</strong>?",
+      "edit_entity_modal_subtitle": "Qual o novo nome que você deseja atribuir à entidade <strong>{entity}</strong>?",
       "edit_entity_field_title": "Nome da entidade",
       "edit_entity_field_label": "Escolha um novo nome para a entidade",
       "edit_entity_button_label": "Alterar nome",
-      "success_modal_title": "Nome alterado!",
-      "success_modal_subtitle": "O nome da entidade foi alterado com sucesso 😉"
+      "success_modal_title": "Nome alterado",
+      "success_modal_subtitle": "O nome da entidade foi alterado com sucesso"
     },
     "payment": {
       "options": {
         "title": "Planos do Bothub",
-        "slogan": "Bothub hospeda inteligências que funcionam para você",
+        "slogan": "O Bothub hospeda inteligências que funcionam para você",
         "free": "Grátis",
         "professional": "Profissional",
-        "custom": "Plano customizado",
+        "custom": "Plano personalizado",
         "contact_us": "Entre em contato",
         "contact": "Fale conosco",
-        "free_text": "Ganhe acesso à nossa comunidade de repositórios de inteligência, crie inteligências, convide pessoas para contribuir no seu projeto. Este plano oferece até <strong>1000 predições grátis</strong>.",
-        "professional_text": "Ganhe acesso à nossa comunidade de repositórios de inteligência, crie inteligências, convide pessoas para contribuir no seu projeto. Este plano é pago, <strong>após alcançar 1,000 predições.</strong>",
-        "custom_text": "Superpoderes! Leve sua inteligência para o próximo níveis com soluções personalizadas, suporte impecável, e um grande número de predições.",
+        "free_text": "Tenha acesso à nossa comunidade de repositórios de inteligência, crie inteligências e convide pessoas para colaborar no seu projeto. Este plano oferece até <strong>1.000 predições gratuitas</strong>.",
+        "professional_text": "Tenha acesso à nossa comunidade de repositórios de inteligência, crie inteligências e convide pessoas para colaborar no seu projeto. Este plano é pago <strong>após atingir 1.000 predições.</strong>",
+        "custom_text": "Desbloqueie os superpoderes da IA! Leve sua inteligência para o próximo nível com soluções personalizadas, suporte dedicado e um alto volume de predições.",
         "per_prediction": "por predição",
         "get_free": "Começar gratuitamente",
         "get_started": "Começar"
       },
       "info": {
         "title": "Informações de pagamento",
-        "subtitle": "Insira as informações do seu cartão de crédito ou débito",
+        "subtitle": "Insira os dados do seu cartão de crédito ou débito",
         "back": "Voltar",
         "save": "Salvar",
-        "card_name": "Nome do cartão"
+        "card_name": "Nome impresso no cartão"
       }
     },
     "tutorial": {
-      "title": "Bem vindo ao Bothub",
-      "description": "Bothub é uma plataforma aberta para predizer, treinar e compartilhar conjuntos de dados de PNL em vários idiomas. <br> <br> Siga as etapas para fazer parte da nossa comunidade",
-      "skip": "Pular por agora",
+      "title": "Boas-vindas ao Bothub!",
+      "description": "Bothub é uma plataforma open source para predizer, treinar e compartilhar conjuntos de dados de PLN em vários idiomas. <br> <br> Siga as instruções para fazer parte da nossa comunidade.",
+      "skip": "Pular",
       "previous_step": "Anterior",
       "next_step": "Próximo",
       "finish_step": "Finalizar",
       "confirm_step": "Confirmar",
       "finish_tutorial": "Finalizar",
-      "alert_message": "Você precisa seguir a sequência de passos",
+      "alert_message": "Você precisa realizar todos os passos",
       "training_wait": "Sua inteligência está sendo treinada!",
-      "training_error": "Ocorreu um erro no treinamento da sua inteligência.",
-      "training_success": "Sua inteligência foi treinada com sucesso!",
+      "training_error": "Ocorreu um erro ao treinar a inteligência",
+      "training_success": "Inteligência treinada com sucesso",
       "items": {
         "create_account": "Criar conta",
         "create_intelligence": "Criar sua primeira inteligência",
-        "training": "Treinar sua inteligência",
+        "training": "Treinar inteligência",
         "quick_test": "Faça um teste rápido",
-        "evaluate": "Teste sua inteligência",
-        "inbox": "Adicionar frase ao inbox",
+        "evaluate": "Teste a inteligência",
+        "inbox": "Adicionar frase à caixa de entrada",
         "translate": "Traduzir para outro idioma",
-        "integrate": "Integrar sua inteligência em uma plataforma"
+        "integrate": "Integrar sua inteligência a uma plataforma"
       },
       "create_intelligence": {
-        "step_0": "Você pode usar uma das inteligências do repositório escolhendo e clicando em uma delas.",
-        "step_1": "Ou crie sua própria inteligência clicando aqui."
+        "step_0": "Escolha e clique em uma das inteligência do repositório para usá-la.",
+        "step_1": "Ou clique aqui para criar sua própria inteligência."
       },
       "create_intelligence_forms": {
         "step_0": "Preencha o formulário com os dados da sua inteligencia como nome, descrição e idioma.",
         "step_1": "Escolha as categorias para sua inteligência, com base na área em que será usada, e envie."
       },
       "training": {
-        "step_0": "<strong> Vamos para o treinamento! </strong> <br> Aqui você vai adicionar frases e classificar palavras para treinar sua inteligência",
-        "step_1": "Adicione a frase que você quer que sua inteligência entenda. <br> Depois selecione uma das palavra para classificar. <br> Ex: quero uma <mark style='background-color: #1E30EF; color: #fff; padding:2px'>pizza</mark>",
-        "step_2": "Agora clique aqui passa classificar a palavra que você selecionou.",
-        "step_3": "E escreva a classificação Ex: Se você selecionou ''pizza'' a classificação pode ser ''alimento''",
-        "step_4": "Identifique a intenção da frase que você digitou. Ex: pedido",
+        "step_0": "<strong> Hora do treinamento! </strong> <br> Aqui você vai adicionar frases e classificar palavras para treinar sua inteligência.",
+        "step_1": "Adicione a frase que você deseja que a inteligência entenda. <br> Depois, selecione uma das palavras para classificar. <br> Por exemplo, \"quero uma <mark style='background-color: #1E30EF; color: #fff; padding:2px'>pizza</mark>\"",
+        "step_2": "Agora clique aqui e classifique a palavra que você selecionou.",
+        "step_3": "E escreva a classificação. Por exemplo, se você selecionou ''pizza'' a classificação pode ser ''alimento''.",
+        "step_4": "Identifique a intenção da frase que você digitou. Por exemplo, \"pedido\".",
         "step_5": "Por fim, envie sua frase.",
-        "step_6": "Após adicionar as frases, clique aqui. <br> <strong>Dica</strong>: Para treinar, você deve adicionar pelo menos duas intenções com duas frases cada.",
+        "step_6": "Após adicionar as frases, clique aqui. <br> <strong>Dica</strong>: para treinar, você deve adicionar pelo menos duas intenções com duas frases cada.",
         "step_7": "Verifique se a sua inteligência está pronta para treinar e clique em \"Prosseguir\". <br> <br> <strong>Dica</strong>: Se algum requisito não for cumprido, clique em \"Cancelar\" para repetir."
       },
       "evaluate": {
-        "step_0": "<strong> Vamos para o teste de frases! </strong> <br> Com o teste, você poderá avaliar facilmente o desempenho de sua inteligência.",
+        "step_0": "<strong> Hora de testar as frases! </strong> <br> Com o teste, você poderá avaliar facilmente o desempenho da inteligência.",
         "step_1": "Selecione um idioma para testar.",
-        "step_2": "Digite aqui uma frase que você gostaria de testar. <br> Ex: quero uma pizza",
-        "step_3": "E aqui, selecione a intenção que mais se identifica com a frase que você digitou. Ex: afirmativa.",
+        "step_2": "Digite aqui uma frase que você gostaria de testar. <br> Por exemplo, \"quero uma pizza\".",
+        "step_3": "E aqui, selecione a intenção que mais se identifica com a frase que você digitou. Por exemplo, \"afirmativa\".",
         "step_4": "Por fim, envie sua frase.",
-        "step_5": "Clique aqui para executar seu teste. <br> <strong>Dica</strong>: Para testar, você deve adicionar pelo menos duas intenções com duas frases cada."
+        "step_5": "Clique aqui para executar seu teste. <br> <strong>Dica</strong>: para testar, você deve adicionar pelo menos duas intenções com duas frases cada."
       },
       "evaluate_result": {
-        "step_0": "Aqui você poderá ver o resultado do teste da sua inteligência."
+        "step_0": "Aqui você poderá ver o resultado do teste da inteligência."
       },
       "quick_test": {
-        "step_0": "<strong> Esse é o teste rápido! </strong> <br> Aqui você pode testar rapidamente as frases adicionadas ao treinamento.",
+        "step_0": "<strong> Este é o teste rápido! </strong> <br> Aqui você pode testar rapidamente as frases adicionadas ao treinamento.",
         "step_1": "Digite sua frase de teste e confirme.",
         "step_2": "Clique aqui para descobrir a relevância de cada palavra na frase dentro da intenção escolhida.",
-        "step_3": "Click here to see the Raw."
+        "step_3": "Clique aqui para ver o Raw."
       },
       "inbox": {
         "step_0": "<strong> Esta é a caixa de entrada! </strong> <br> Aqui você pode adicionar frases das interações do usuário com sua inteligência em treinamento ou teste.",
         "step_1": "Selecione as frases que você deseja adicionar.",
-        "step_2": "Adicionar ao treinamento.",
-        "step_3": "Adicionar a frases de teste.",
+        "step_2": "Adicione ao treinamento.",
+        "step_3": "Adicione as frases de teste.",
         "step_4": "Selecione a intenção que você deseja atribuir à frase e adicione."
       },
       "translate": {
-        "step_0": "<strong> Vamos traduzir! </strong> <br> Clique aqui para traduzir as frases da sua inteligência em outro idioma.",
-        "step_1": "Selecione o idioma treinado. <br> <strong>Dica</strong>: Você precisa ter frases adicionadas nesse idioma.",
-        "step_2": "Selecione o idioma para qual será feita a tradução.",
-        "step_3": "Escolha uma frase e clique em traduzir.",
-        "step_4": "Digite uma tradução de frase aqui.",
+        "step_0": "<strong> Hora de traduzir! </strong> <br> Clique aqui para traduzir as frases da sua inteligência para outro idioma.",
+        "step_1": "Selecione o idioma treinado. <br> <strong>Dica</strong>: adicione frases nesse idioma para que ele possa ser treinado.",
+        "step_2": "Selecione o idioma para o qual será feita a tradução.",
+        "step_3": "Escolha uma frase e clique em \"Traduzir\".",
+        "step_4": "Digite a tradução da frase aqui.",
         "step_5": "Por fim, envie sua frase para traduzir.",
-        "step_6": "Se preferir, também é possível exportar e importar frases do Excel para tradução clicando aqui"
+        "step_6": "Você também pode exportar e importar frases do Excel para tradução clicando aqui."
       },
       "integrate": {
-        "step_0": "<strong> Esta é integração! </strong> <br> Com esse recurso, você poderá integrar sua inteligência em uma plataforma.",
-        "step_1": "Copie este modelo no formato CURL, Python ou Javascript para integração."
+        "step_0": "<strong> Esta é a integração! </strong> <br> Com esse recurso, você poderá integrar sua inteligência a uma plataforma.",
+        "step_1": "Copie este modelo no formato CURL, Python ou JavaScript para usar na integração."
       },
       "tutorial_button": {
-        "step_0": "<strong> Você terminou! </strong> <br> Se você quiser pode assistir o tutorial novamente clicando aqui."
+        "step_0": "<strong> Processo concluído! </strong> <br> Se você quiser, pode acessar o tutorial novamente clicando aqui."
       }
     },
     "word_suggestion": {
       "title": "Sugestão de variação",
-      "subtitle": "Gere novas frases variando as frases de treinamento.",
+      "subtitle": "Gere novas frases variando as frases de treinamento",
       "cancel": "Cancelar",
       "add_training": "Adicionar ao treinamento",
-      "phrase_added": "Frase adicionada a lista de esperando treinamento | Frases adicionadas a lista de esperando treinamento",
-      "tooltip_alert": "As palavras sugeridas são geradas através de contextos retirados da internet, portanto, podem acontecer sugestões que fujam do controle da nossa equipe."
+      "phrase_added": "Frase adicionada à lista de espera do treinamento | Frases adicionadas à lista de espera do treinamento",
+      "tooltip_alert": "As palavras sugeridas são geradas a partir de contextos da internet, portanto, algumas sugestões podem estar fora do controle da nossa equipe."
     },
     "import_and_export_intelligence": {
-      "title": "Importar sua inteligência",
-      "subtitle": "Para importar/migrar, basta selecionar o arquivo correspondente ao Rasa ou coloque o access token do Wit.AI, e os dados serão reconhecidos automaticamente",
+      "title": "Importar inteligência",
+      "subtitle": "Para importar ou migrar, basta selecionar o arquivo compatível com o Rasa ou informar o token de acesso do Wit.AI. Os dados serão detectados automaticamente.",
       "import_rasa": "Importar do Rasa",
       "migrate_wit": "Migrar do Wit.AI"
     },
     "migrate_intelligence": {
       "title": "Migrar inteligência Wit.AI",
-      "token_input": "Adicione o Server Access Token",
+      "token_input": "Adicione o token de acesso do servidor",
       "language": "Selecione o idioma",
       "cancel": "Cancelar",
       "migrate": "Confirmar",
-      "migrate_success": "Migração feita com sucesso."
+      "migrate_success": "Migração feita com sucesso"
     },
     "import_dataset": {
-      "title": "Importar Dataset",
-      "empty_file": "Não há arquivo selecionado",
+      "title": "Importar conjunto de dados",
+      "empty_file": "Nenhum arquivo selecionado",
       "cancel": "Cancelar",
       "importar": "Importar arquivo",
-      "import_success": "Importação feita com sucesso.",
-      "import_error": "Algo de errado aconteceu, tente novamente mais tarde.",
-      "import_sentences_success_title": "Frases importadas com sucesso!",
-      "import_sentences_success_message": "As frases importadas foram adicionadas para treinamento. 😉",
-      "import_sentences_error_title": "Erro ao importar as frases",
-      "import_sentences_error_message": "Algo de errado aconteceu, tente novamente mais tarde."
+      "import_success": "Importação feita com sucesso",
+      "import_error": "Algo deu errado. Tente novamente mais tarde.",
+      "import_sentences_success_title": "Frases importadas com sucesso",
+      "import_sentences_success_message": "As frases importadas foram adicionadas para treinamento",
+      "import_sentences_error_title": "Erro ao importar frases",
+      "import_sentences_error_message": "Algo deu errado. Tente novamente mais tarde."
     },
     "weni_notification": {
       "title": "O Bothub agora é Weni Inteligência Artificial",
-      "subtitle": "Novo módulo que estará disponivel na nossa plataforma unificada em breve.",
+      "subtitle": "Novo módulo que estará disponível na nossa plataforma unificada em breve.",
       "button": "Saiba mais",
       "link": "https://www.ilhasoft.com.br/somos-weni"
     },
@@ -1765,16 +1722,16 @@
   },
   "upload_area": {
     "title": {
-      "text": "Arraste seu arquivo aqui, ou",
-      "highlight": "procure-o"
+      "text": "Arraste seu arquivo aqui ou",
+      "highlight": "clique para selecionar"
     },
     "subtitle": "Formatos suportados: ",
     "invalid": {
-      "subtitle": "Arquivo Inválido"
+      "subtitle": "Arquivo inválido"
     }
   },
   "import_card": {
-    "importing": "Importando.."
+    "importing": "Importando..."
   },
   "action_type_selector": {
     "title": "Selecione o tipo de ação",
@@ -1797,7 +1754,7 @@
       },
       "custom": {
         "title": "Personalizada",
-        "description": "Ações para atender necessidades específicas"
+        "description": "Ações para atender a necessidades específicas"
       }
     }
   },
@@ -1805,7 +1762,7 @@
     "actions": {
       "add": {
         "title": "Adicionar ação personalizada",
-        "description": "Crie uma nova ação e configure quando ela deve ser iniciada",
+        "description": "Crie uma nova ação e defina quando ela deve ser ativada",
         "custom_title": "Adicionar ação de {name}",
         "custom_description": "Selecione a ação e o fluxo que será iniciado",
         "messages": {
@@ -1823,18 +1780,18 @@
             },
             "send_response_to_flow": {
               "title": "Enviar resposta do modelo ao fluxo",
-              "tooltip": "Utilize {'@'}trigger.params.answer para inserir a resposta do modelo no fluxo"
+              "tooltip": "Use {'@'}trigger.params.answer para inserir a resposta do modelo no fluxo"
             }
           },
           "describe": {
             "title": "Configurar ação",
-            "explanation": "Descreva a ação e quando o usuário deve entrar nela. É partir dessa descrição que a ação vai ser iniciada",
+            "explanation": "Descreva a ação e em que momento o usuário deve participar. É partir dessa descrição que a ação será iniciada.",
             "inputs": {
               "description": {
-                "label": "Esta ação será iniciada quando...",
-                "placeholder": "o usuário disser que quer atendimento humano",
-                "help": "Tente ser objetivo. É a partir da descrição que a ação vai ser iniciada",
-                "aux_text_whatsapp_cart": "Quando o usuário enviar um produto no WhatsApp"
+                "label": "Esta ação será ativada quando...",
+                "placeholder": "o usuário disser que deseja atendimento humano",
+                "help": "Seja objetivo. É a partir da descrição que a ação será ativada.",
+                "aux_text_whatsapp_cart": "Quando o usuário enviar um produto via WhatsApp"
               }
             }
           },
@@ -1843,24 +1800,24 @@
             "explanation": "Selecione o fluxo que será iniciado com essa ação",
             "filters": {
               "flow_name": {
-                "placeholder": "Pesquisar fluxo"
+                "placeholder": "Buscar fluxo"
               }
             },
-            "flow_assigned_actions": "Esse fluxo já foi atribuído para {count} ação:\n{actions} | Esse fluxo já foi atribuído para {count} ações:\n{actions}"
+            "flow_assigned_actions": "Este fluxo já foi atribuído para {count} ação:\n{actions} | Este fluxo já foi atribuído para {count} ações:\n{actions}"
           },
           "nominate_action": {
             "title": "Nomear ação",
-            "explanation": "O nome da ação foi gerado automaticamente a partir da descrição adicionada e usado para auxiliar na classificação da ação",
+            "explanation": "O nome da ação é gerado automaticamente a partir da descrição adicionada e usado para auxiliar na classificação da ação",
             "inputs": {
               "name": {
                 "label": "Nome da ação",
                 "placeholder": "",
-                "help": "Se o nome gerado não for adequado, é possível editá-lo"
+                "help": "Se o nome gerado não for adequado, você pode editá-lo."
               }
             }
           },
           "generate_action_name": {
-            "chatbot_goal": "Chatbot que sugere nomes para ações baseado na descrição informada",
+            "chatbot_goal": "Chatbot que sugere nomes para ações com base na descrição informada",
             "context": "Descrição: {description}",
             "whatsapp_cart": "Carrinho de compras"
           }
@@ -1884,43 +1841,43 @@
         "title": "Selecionar fluxo",
         "fill_name": "Selecionar fluxo",
         "sub_title": "Selecione o fluxo que deseja adicionar à ação",
-        "placeholder": "Pesquisar fluxo",
+        "placeholder": "Buscar fluxo",
         "not_found_message": "Fluxo não encontrado"
       },
       "descriptions": {
         "title": "Configurar ação",
         "fill_name": "Adicionar ação",
-        "sub_title": "Explique seu fluxo e quando o usuário deve entrar nele. Busque ser objetivo.",
+        "sub_title": "Explique seu fluxo e quando o usuário deve participar dele. Seja objetivo.",
         "label": "Descrição",
         "change_title": "Alterar descrição da ação",
-        "change_sub_title": "A descrição ajuda o Agent Builder funcionar de forma mais adequada"
+        "change_sub_title": "A descrição ajuda o Agent Builder funcionar de forma mais eficiente"
       },
       "remove": {
-        "title": "Remover ação",
-        "description": "Tem certeza que deseja remover a ação <strong>{name}</strong>?<br/>Essa ação não poderá ser revertida"
+        "title": "Excluir ação",
+        "description": "Tem certeza de que deseja excluir a ação <strong>{name}</strong>?<br/>Esta ação não poderá ser desfeita."
       }
     },
     "cant_access": {
-      "title": "Ops, você ainda não pode usar esse módulo",
-      "description": "Para integrar uma inteligência artificial ao seu projeto, é necessário ter um fluxo de conversa criado.<br />Volte após criar um fluxo.",
-      "button_primary_label": "Ir para o módulo fluxo"
+      "title": "Você ainda não pode usar este módulo",
+      "description": "Para integrar uma inteligência artificial ao seu projeto, é necessário ter um fluxo de conversa criado.<br />Crie um fluxo primeiro.",
+      "button_primary_label": "Ir para o módulo Fluxos"
     },
     "how_to_integrate": {
-      "title": "Como integrar Inteligência Artificial",
+      "title": "Como integrar uma inteligência artificial",
       "first_step": {
-        "description": "1. Na aba “Galeria de Inteligências da comunidade”, escolha a opção que melhor se adequa ao seu projeto.<br />2. Clique no botão “+” para integrar a Inteligência Artificial ao seu projeto.<br />3. Pronto! Agora a inteligência estará disponível para uso no módulo Weni Fluxos.<br />4. Acesse o módulo de fluxos na plataforma Weni.",
+        "description": "1. Na aba \"Galeria de inteligências da comunidade\", escolha a opção que melhor se adequa ao seu projeto.<br />2. Clique no botão \"+\" para integrar a inteligência artificial ao seu projeto.<br />3. Pronto! Agora a inteligência estará disponível para uso no módulo Weni Fluxos.<br />4. Acesse o módulo Fluxos na plataforma Weni.",
         "next_step": "Próximo"
       },
       "second_step": {
-        "description": "5. Escolha o fluxo de sua preferência e utilize o card “Dividir por Intenção”.<br />6. Selecione a inteligência que você integrou antes, e escolha os critérios de intenções que o chatbot deve usar.<br />7. Ótimo! Agora o seu chatbot pode conversar com as pessoas de forma mais inteligente e eficaz com a nova inteligência.",
+        "description": "5. Escolha o fluxo da sua preferência e use o card \"Dividir por Intenção\".<br />6. Selecione a inteligência que você integrou antes e os critérios de intenções que o chatbot deve usar.<br />7. Ótimo! Agora o seu chatbot pode conversar com as pessoas de forma mais inteligente e eficaz com a nova inteligência.",
         "back_button": "Voltar",
         "close_button": "Começar"
       }
     }
   },
   "profile": {
-    "description": "Personalize as informações básicas e o comportamento do agente.",
-    "save_btn": "Salvar Alterações",
+    "description": "Personalize as informações básicas e o comportamento do agente",
+    "save_btn": "Salvar alterações",
     "invalid_field": "Campo obrigatório",
     "invalid_get_data": "Erro ao tentar buscar os dados",
     "fields": {
@@ -1931,7 +1888,7 @@
       },
       "occupation": {
         "title": "Qual é a função principal do agente?",
-        "placeholder": "Assistente de Suporte ao Cliente",
+        "placeholder": "Assistente de suporte ao cliente",
         "description": "Defina a função principal do agente para que os usuários entendam como isso os ajuda"
       },
       "goal": {
@@ -1941,7 +1898,7 @@
       },
       "personality": {
         "title": "Qual é o tom de voz do agente?",
-        "description": "Escolha como o agente se comunica com os usuários"
+        "description": "Escolha a forma como o agente se comunica com os usuários"
       },
       "personalities": {
         "friendly": "Amigável",
@@ -1958,17 +1915,17 @@
     },
     "instructions": {
       "title": "Instruções gerais",
-      "sub_title": "Como você quer que o agente se comporte.",
+      "sub_title": "Defina como você quer que o agente se comporte",
       "add_instruction_btn": "Adicionar instrução",
       "instruction": {
         "title": "Instrução",
         "placeholder": "Você é engraçado, mas não faz piadas"
       },
       "modals": {
-        "title": "Remover instrução",
-        "description": "Tem certeza que deseja remover a instrução?",
-        "success_message": "Instrução removida",
-        "error_message": "Erro ao remover Instrução",
+        "title": "Excluir instrução",
+        "description": "Tem certeza de que deseja excluir a instrução?",
+        "success_message": "Instrução excluída",
+        "error_message": "Erro ao excluir instrução",
         "back_btn": "Cancelar",
         "remove_btn": "Remover"
       }
@@ -1982,7 +1939,7 @@
       "fields": {
         "rules": {
           "title": "Quando o agente deve transferir a conversa para um humano?",
-          "placeholder": "Se o usuário pedir suporte humano, o agente deve rotear para o suporte humano"
+          "placeholder": "Se o usuário pedir suporte humano, o agente deve transferi-lo para o suporte humano."
         }
       }
     }
@@ -1993,8 +1950,8 @@
       "description": "Estamos trabalhando para resolver o problema o mais rápido possível"
     },
     "unauthorized": {
-      "title": "Você não tem permissão para acessar esse módulo",
-      "description": "Se você deseja acessar esse módulo, entre em contato com o administrador da organização"
+      "title": "Você não tem permissão para acessar este módulo",
+      "description": "Para acessar este módulo, entre em contato com o administrador da organização"
     }
   },
   "time": {
