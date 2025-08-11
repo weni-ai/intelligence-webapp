@@ -3,12 +3,13 @@ import { setActivePinia, createPinia } from 'pinia';
 
 import update from '../update.js';
 import { useFlowPreviewStore } from '@/store/FlowPreview';
+import i18n from '@/utils/plugins/i18n.js';
 
 vi.mock('@/store/FlowPreview', () => ({
   useFlowPreviewStore: vi.fn(),
 }));
 
-const fallbackMessage = '*Unable to find an answer to this question*';
+const fallbackMessage = i18n.global.t('quick_test.unable_to_find_an_answer');
 
 describe('src/websocket/listeners/preview/update.js', () => {
   let mockFlowPreviewStore;

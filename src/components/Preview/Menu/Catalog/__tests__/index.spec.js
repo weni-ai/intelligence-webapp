@@ -3,6 +3,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 import CatalogComponent from '../index.vue';
 import Text from '@/components/unnnic-intelligence/Text.vue';
+import i18n from '@/utils/plugins/i18n';
 
 describe('Catalog', () => {
   let wrapper;
@@ -221,13 +222,21 @@ describe('Catalog', () => {
     it('sets correct cart button text', async () => {
       const product = mockMessage.catalog_message.products[0];
       await wrapper.setProps({ selectedProduct: product });
-      expect(wrapper.vm.cartButtonText).toBe('Add to cart');
+      expect(wrapper.vm.cartButtonText).toBe(
+        i18n.global.t('router.preview.catalog.add_to_cart'),
+      );
 
       await wrapper.setProps({ selectedProduct: null });
       wrapper.vm.updateProductQuantity('1', 2);
       await wrapper.vm.$nextTick();
 
-      expect(wrapper.vm.cartButtonText).toBe('View cart (2 items)');
+      expect(wrapper.vm.cartButtonText).toBe(
+        i18n.global.tc(
+          'router.preview.catalog.view_cart',
+          mockMessage.catalog_message.products.length,
+          { quantity: mockMessage.catalog_message.products.length },
+        ),
+      );
     });
   });
 

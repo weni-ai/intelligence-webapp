@@ -10,6 +10,7 @@ import { useFlowPreviewStore } from '@/store/FlowPreview';
 import nexusaiAPI from '@/api/nexusaiAPI';
 
 import Preview from '../Preview.vue';
+import i18n from '@/utils/plugins/i18n';
 
 vi.mock('@/api/nexusaiAPI', () => ({
   default: {
@@ -152,7 +153,9 @@ describe('Preview.vue', () => {
 
     it('renders message input at the bottom', () => {
       expect(messageInput().exists()).toBe(true);
-      expect(messageInput().props('placeholder')).toBe('Type a message');
+      expect(messageInput().props('placeholder')).toBe(
+        i18n.global.t('webapp.home.bases.preview_tests_placeholder'),
+      );
     });
 
     it('does not show preview menu initially', () => {
@@ -194,7 +197,7 @@ describe('Preview.vue', () => {
 
       expect(saveWarning().exists()).toBe(true);
       expect(saveWarning().props('text')).toBe(
-        'Save the changes to test the agent',
+        i18n.global.t('router.preview.save_changes_to_test_the_agent'),
       );
     });
 

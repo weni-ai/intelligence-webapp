@@ -49,7 +49,9 @@ describe('AgentsPreview.vue', () => {
       expect(title.props('size')).toBe('body-lg');
       expect(title.props('color')).toBe('neutral-darkest');
       expect(title.props('weight')).toBe('bold');
-      expect(title.text()).toBe('Agents preview');
+      expect(title.text()).toBe(
+        i18n.global.t('router.tunings.settings.agents_preview.title'),
+      );
     });
 
     it('renders exactly two settings fields', () => {

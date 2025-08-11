@@ -1,4 +1,5 @@
 import HomeRepositoryCard from '@/components/repository/home/HomeRepositoryCard.vue';
+import i18n from '@/utils/plugins/i18n';
 import { mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 
@@ -15,8 +16,8 @@ const elements = {
   actionsDropdown: '[data-test="actions-dropdown"]',
   deleteBaseOption: '[data-test="Delete base"]',
   viewBasesOption: '[data-test="View bases"]',
-  deleteIntelligenceOption: '[data-test="Delete Intelligence"]',
-  viewIntentsOption: '[data-test="View intentions"]',
+  deleteIntelligenceOption: '[data-test="Delete intelligence"]',
+  viewIntentsOption: '[data-test="View intents"]',
   viewLanguagesOption: '[data-test="View languages"]',
   copyIntelligenceOption: '[data-test="Copy intelligence"]',
   integrateModal: { name: 'IntegrationModal' },
@@ -440,9 +441,12 @@ describe('HomeRepositoryCard.vue', () => {
           it('should pass the correct props to integrate modal', () => {
             expect(notificationModal.props()).toEqual(
               expect.objectContaining({
-                message:
-                  "The intelligence was successfully copied! You can find it in the Organization's Intelligences tab 😉",
-                title: 'Copied intelligence!',
+                message: wrapper.vm.$t(
+                  'webapp.intelligences_lib.clone.success_modal_message',
+                ),
+                title: wrapper.vm.$t(
+                  'webapp.intelligences_lib.clone.success_modal_title',
+                ),
                 type: 'success',
               }),
             );
@@ -582,16 +586,24 @@ describe('HomeRepositoryCard.vue', () => {
         {
           status: 'success',
           expectedProps: {
-            message: 'The Intelligence was successfully integrated 😉',
-            title: 'Integrated intelligence',
+            message: i18n.global.t(
+              'webapp.intelligences_lib.integration_success_description',
+            ),
+            title: i18n.global.t(
+              'webapp.intelligences_lib.integration_success_title',
+            ),
             type: 'success',
           },
         },
         {
           status: 'error',
           expectedProps: {
-            message: 'The Intelligence was not successfully integrated',
-            title: 'Unable to integrate Intelligence',
+            message: i18n.global.t(
+              'webapp.intelligences_lib.integration_error_description',
+            ),
+            title: i18n.global.t(
+              'webapp.intelligences_lib.integration_error_title',
+            ),
             type: 'error',
           },
         },

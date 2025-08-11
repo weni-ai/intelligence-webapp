@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import ModalSaveChangesError from '@/views/Brain/ModalSaveChangesError.vue';
 import { createStore } from 'vuex';
+import i18n from '@/utils/plugins/i18n';
 
 const store = createStore({
   state() {
@@ -37,7 +38,13 @@ describe('ModalSaveChangesError', () => {
 
     tabNamesFormatted =
       tabNames.slice(0, -1).join(', ') + ' and ' + tabNames.at(-1);
-    expectedDescription = `An error occurred while saving changes to the ${tabNamesFormatted} tabs. Try saving again.`;
+    expectedDescription = i18n.global.tc(
+      'router.modal_save_changes_error.description',
+      tabNames.length,
+      {
+        tabs: tabNamesFormatted,
+      },
+    );
   });
 
   test('renders the modal title correctly', () => {

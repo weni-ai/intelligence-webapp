@@ -99,7 +99,7 @@ describe('PreviewVisualFlow.vue', () => {
     expect(firstAgentCard.props()).toEqual({
       name: mockTeamAgents[0].name,
       active: false,
-      currentTask: i18n.global.t('router.preview.standby'),
+      currentTask: 'Standby',
       icon: undefined,
       bubbleDirection: 'left',
       type: 'agent',

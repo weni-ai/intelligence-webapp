@@ -9,6 +9,7 @@ import { useAlertStore } from '@/store/Alert';
 import nexusaiAPI from '@/api/nexusaiAPI';
 
 import RouterProfileInstructions from '../RouterProfileInstructions.vue';
+import i18n from '@/utils/plugins/i18n';
 
 vi.mock('@/api/nexusaiAPI', () => ({
   default: {
@@ -109,9 +110,11 @@ describe('RouterProfileInstructions.vue', () => {
     });
 
     it('renders title and subtitle with correct text', () => {
-      expect(instructionTitle().text()).toBe('General instructions');
+      expect(instructionTitle().text()).toBe(
+        i18n.global.t('profile.instructions.title'),
+      );
       expect(instructionSubtitle().text()).toBe(
-        'How you want the agent to behave.',
+        i18n.global.t('profile.instructions.sub_title'),
       );
     });
 
@@ -212,9 +215,11 @@ describe('RouterProfileInstructions.vue', () => {
         await deleteButtons()[1].trigger('click');
 
         const modal = removeModal();
-        expect(modal.props('text')).toBe('Remove instruction');
+        expect(modal.props('text')).toBe(
+          i18n.global.t('profile.instructions.modals.title'),
+        );
         expect(modal.props('description')).toBe(
-          'Are you sure you want to remove the instruction?',
+          i18n.global.t('profile.instructions.modals.description'),
         );
         expect(modal.props('scheme')).toBe('aux-red-500');
         expect(modal.props('modalIcon')).toBe('error');
@@ -259,7 +264,7 @@ describe('RouterProfileInstructions.vue', () => {
 
         expect(alertStore.add).toHaveBeenCalledWith({
           type: 'success',
-          text: 'Instruction removed',
+          text: i18n.global.t('profile.instructions.modals.success_message'),
         });
       });
 
@@ -274,7 +279,7 @@ describe('RouterProfileInstructions.vue', () => {
 
         expect(alertStore.add).toHaveBeenCalledWith({
           type: 'error',
-          text: 'Error removing Instruction',
+          text: i18n.global.t('profile.instructions.modals.error_message'),
         });
       });
 
