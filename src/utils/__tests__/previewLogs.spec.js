@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import * as Sentry from '@sentry/browser';
 
 import { processLog } from '../previewLogs.js';
+import i18n from '@/utils/plugins/i18n';
 
 vi.mock('@sentry/browser', () => ({
   captureException: vi.fn(),
@@ -82,7 +83,9 @@ describe('previewLogs.js', () => {
 
         const result = processLog({ log: mockLog, currentAgent: 'agent' });
 
-        expect(result.config.summary).toBe('Search result received');
+        expect(result.config.summary).toBe(
+          i18n.global.t('agent_builder.traces.search_result_received'),
+        );
         expect(result.config.icon).toBe('article');
         expect(result.config.category).toBe('knowledge');
       });
@@ -98,7 +101,9 @@ describe('previewLogs.js', () => {
 
         const result = processLog({ log: mockLog, currentAgent: 'agent' });
 
-        expect(result.config.summary).toBe('Searching knowledge base');
+        expect(result.config.summary).toBe(
+          i18n.global.t('agent_builder.traces.searching_knowledge_base'),
+        );
         expect(result.config.icon).toBe('article');
         expect(result.config.category).toBe('knowledge');
       });
@@ -112,7 +117,9 @@ describe('previewLogs.js', () => {
 
         const result = processLog({ log: mockLog, currentAgent: 'agent' });
 
-        expect(result.config.summary).toBe('Search result received');
+        expect(result.config.summary).toBe(
+          i18n.global.t('agent_builder.traces.search_result_received'),
+        );
         expect(result.config.icon).toBe('article');
         expect(result.config.category).toBe('knowledge');
       });
@@ -126,7 +133,9 @@ describe('previewLogs.js', () => {
 
         const result = processLog({ log: mockLog, currentAgent: 'agent' });
 
-        expect(result.config.summary).toBe('Invoking model');
+        expect(result.config.summary).toBe(
+          i18n.global.t('agent_builder.traces.invoking_model'),
+        );
         expect(result.config.icon).toBe('workspaces');
         expect(result.config.category).toBe('model');
         expect(result.data).toBeNull();
@@ -158,7 +167,9 @@ describe('previewLogs.js', () => {
 
         const result = processLog({ log: mockLog, currentAgent: 'agent' });
 
-        expect(result.config.summary).toBe('Delegating task to agent');
+        expect(result.config.summary).toBe(
+          i18n.global.t('agent_builder.traces.delegating_to_agent'),
+        );
         expect(result.config.icon).toBe('login');
         expect(result.config.category).toBe('delegating_to_agent');
         expect(result.config.currentAgent).toBe('collaborator-agent');
@@ -176,7 +187,9 @@ describe('previewLogs.js', () => {
 
         const result = processLog({ log: mockLog, currentAgent: 'agent' });
 
-        expect(result.config.summary).toBe('Forwarding to Manager');
+        expect(result.config.summary).toBe(
+          i18n.global.t('agent_builder.traces.forwarding_to_manager'),
+        );
         expect(result.config.icon).toBe('logout');
         expect(result.config.category).toBe('forwarding_to_manager');
         expect(result.config.currentAgent).toBe('');
@@ -224,7 +237,9 @@ describe('previewLogs.js', () => {
 
         const result = processLog({ log: mockLog, currentAgent: 'agent' });
 
-        expect(result.config.summary).toBe('Tool result received');
+        expect(result.config.summary).toBe(
+          i18n.global.t('agent_builder.traces.tool_result_received'),
+        );
         expect(result.config.icon).toBe('build');
         expect(result.config.category).toBe('tool');
       });
@@ -254,7 +269,9 @@ describe('previewLogs.js', () => {
 
         const result = processLog({ log: mockLog, currentAgent: 'agent' });
 
-        expect(result.config.summary).toBe('Sending response for Manager');
+        expect(result.config.summary).toBe(
+          i18n.global.t('agent_builder.traces.sending_response_for_manager'),
+        );
         expect(result.config.icon).toBe('chat_bubble');
         expect(result.config.category).toBe('sending_response_for_manager');
         expect(result.config.agentName).toBe('agent');
@@ -288,7 +305,9 @@ describe('previewLogs.js', () => {
 
         const result = processLog({ log: mockLog, currentAgent: 'agent' });
 
-        expect(result.config.summary).toBe('Applying safety rules');
+        expect(result.config.summary).toBe(
+          i18n.global.t('agent_builder.traces.applying_safety_rules'),
+        );
         expect(result.config.icon).toBe('shield');
         expect(result.config.category).toBe('applying_guardrails');
       });
