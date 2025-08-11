@@ -43,6 +43,18 @@ const mockConversationData = {
   },
 };
 
+vi.mock('vue-router', () => ({
+  useRoute: vi.fn().mockReturnValue({
+    query: {
+      start: '2023-01-01',
+      end: '2023-01-31',
+      search: '',
+      type: '',
+      conversationId: '',
+    },
+  }),
+}));
+
 const createWrapper = (initialState = {}) => {
   const pinia = createTestingPinia({
     initialState: {
@@ -72,12 +84,27 @@ describe('Conversation.vue', () => {
   let wrapper;
   let supervisorStore;
 
+  const defineScroll = ({
+    element = HTMLElement.prototype,
+    scrollTo = vi.fn(),
+    scrollHeight = 1000,
+  } = {}) => {
+    Object.defineProperty(element, 'scrollTo', {
+      value: scrollTo,
+      writable: true,
+      configurable: true,
+    });
+
+    Object.defineProperty(element, 'scrollHeight', {
+      value: scrollHeight,
+      writable: true,
+      configurable: true,
+    });
+  };
+
   const conversation = () => wrapper.find('[data-testid="conversation"]');
-  const conversationTitle = () =>
-    wrapper.find('[data-testid="conversation-title"]');
-  const closeButton = () => wrapper.find('[data-testid="close-button"]');
-  const closeButtonIcon = () =>
-    wrapper.findComponent('[data-testid="close-button-icon"]');
+  const conversationHeader = () =>
+    wrapper.find('[data-testid="conversation-header"]');
   const messagesContainer = () =>
     wrapper.find('[data-testid="messages-container"]');
   const noMessagesFound = () =>
@@ -94,26 +121,15 @@ describe('Conversation.vue', () => {
     wrapper = createWrapper();
     supervisorStore = useSupervisorStore();
     supervisorStore.selectedConversation = mockConversationData.basic;
+
+    defineScroll({});
   });
 
   describe('Component rendering', () => {
     it('renders correctly with basic structure', () => {
       expect(conversation().exists()).toBe(true);
-      expect(conversationTitle().exists()).toBe(true);
-      expect(closeButton().exists()).toBe(true);
+      expect(conversationHeader().exists()).toBe(true);
       expect(messagesContainer().exists()).toBe(true);
-    });
-
-    it('renders conversation title when conversation is selected', () => {
-      expect(conversationTitle().text()).toBe('conversation-123');
-    });
-
-    it('renders close button with correct icon', () => {
-      expect(closeButton().exists()).toBe(true);
-      expect(closeButtonIcon().exists()).toBe(true);
-      expect(closeButtonIcon().props('icon')).toBe('close');
-      expect(closeButtonIcon().props('size')).toBe('md');
-      expect(closeButtonIcon().props('scheme')).toBe('neutral-cloudy');
     });
   });
 
@@ -161,32 +177,9 @@ describe('Conversation.vue', () => {
       expect(noMessagesFound().exists()).toBe(false);
       expect(loadingMessages()).toHaveLength(0);
     });
-
-    it('shows forwarded human support when enabled', async () => {
-      supervisorStore.selectedConversation =
-        mockConversationData.withHumanSupport;
-
-      await nextTick();
-
-      expect(forwardedHumanSupport().exists()).toBe(true);
-    });
-
-    it('does not show forwarded human support when disabled', async () => {
-      supervisorStore.selectedConversation = mockConversationData.withMessages;
-
-      await nextTick();
-
-      expect(forwardedHumanSupport().exists()).toBe(false);
-    });
   });
 
   describe('User interactions', () => {
-    it('closes conversation when close button is clicked', async () => {
-      await closeButton().trigger('click');
-
-      expect(supervisorStore.selectConversation).toHaveBeenCalledWith(null);
-    });
-
     it('loads more data when scrolled to top of messages container', async () => {
       messagesContainer().element.scrollTop = 0;
 
@@ -218,19 +211,6 @@ describe('Conversation.vue', () => {
     });
   });
 
-  describe('Reactive behavior', () => {
-    it('updates display when selected conversation changes', async () => {
-      expect(conversationTitle().text()).toBe('conversation-123');
-
-      supervisorStore.selectedConversation = mockConversationData.withMessages;
-      await wrapper.vm.$nextTick();
-
-      expect(conversationTitle().text()).toBe('conversation-456');
-      expect(messages()).toHaveLength(3);
-      expect(noMessagesFound().exists()).toBe(false);
-    });
-  });
-
   describe('Edge cases', () => {
     it('handles null selected conversation gracefully', async () => {
       supervisorStore.selectedConversation = null;
@@ -238,7 +218,6 @@ describe('Conversation.vue', () => {
       await nextTick();
 
       expect(conversation().exists()).toBe(true);
-      expect(conversationTitle().text()).toBe('');
     });
 
     it('handles conversation without data property', () => {

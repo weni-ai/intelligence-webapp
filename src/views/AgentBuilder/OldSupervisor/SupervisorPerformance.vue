@@ -19,12 +19,12 @@
 <script setup>
 import { onMounted, computed } from 'vue';
 
-import { useSupervisorStore } from '@/store/Supervisor';
+import { useOldSupervisorStore } from '@/store/OldSupervisor';
 
 import PerformanceCard from '@/components/Brain/Monitoring/PerformanceCard.vue';
 import i18n from '@/utils/plugins/i18n';
 
-const supervisorStore = useSupervisorStore();
+const supervisorStore = useOldSupervisorStore();
 const t = (key) => i18n.global.t(key);
 
 const performanceStats = computed(() => {

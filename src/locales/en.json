@@ -85,6 +85,21 @@
       }
     },
     "supervisor": {
+      "learn_details_conversations": "Learn about the details of a conversation.",
+      "conversation_details": {
+        "title": "About conversation",
+        "what_is_a_conversation": "What is a conversation?",
+        "what_is_a_conversation_description": "We consider all messages exchanged within 24 hours of the contact's first message as a single conversation.",
+        "when_is_a_conversation_considered_resolved": "When is a conversation considered resolved?",
+        "description": "A conversation is only considered resolved when the user goes beyond the initial greeting and actually engages: \n- Asks questions; \n- Requests data; \n- Confirms information; \n- Receives guidance that allows them to complete all or part of their request. \nMessages limited to greetings, emojis or closed without useful interaction remain unresolved, while interaction that delivers value to the user is marked as resolved."
+      },
+      "conversations_count": "{count} conversations found",
+      "unnamed_contact": "Unnamed contact",
+      "status": {
+        "in_progress": "In progress",
+        "resolved": "Resolved",
+        "unresolved": "Unresolved"
+      },
       "attended_by_agent": {
         "title": "Attended by the agent",
         "tooltip": "Conversations solved by the agent"
@@ -93,12 +108,18 @@
         "title": "Forwarded to human support",
         "tooltip": "Conversations forwarded to human support"
       },
+      "conversation_start_finish": {
+        "start": "Conversation started: {datetime}",
+        "finish": "Conversation finished: {datetime}"
+      },
+      "contact_urn": "Contact URN: {urn}",
       "view_logs": "View logs",
       "hide_logs": "Hide logs",
       "search": "Search",
+      "conversations_empty": "No conversations found",
       "no_messages_found": {
-        "title": "No messages found on this conversation.",
-        "description": "If the message was sent by human support or triggered messages, you can find it on the {studio_link}.",
+        "title": "No messages found on this conversation",
+        "description": "If the message was sent by human support or triggered messages, you can find it on the {studio_link}",
         "studio_link": "Studio"
       },
       "export": {
@@ -112,6 +133,27 @@
         "send": "Send export",
         "success": "The export will be sent to all listed email addresses soon",
         "error": "Error sending export. Try again later."
+      },
+      "filters": {
+        "status": {
+          "conversations": "Conversations",
+          "in_progress": "In progress",
+          "resolved": "Resolved",
+          "unresolved": "Unresolved",
+          "unengaged": "Unengaged",
+          "transferred_to_human_support": "Transferred to human support"
+        },
+        "csat": {
+          "csat": "CSAT",
+          "very_satisfied": "🤩 Very satisfied",
+          "satisfied": "😃 Satisfied",
+          "neutral": "😐 Neutral",
+          "dissatisfied": "😔 Dissatisfied",
+          "very_dissatisfied": "😡 Very dissatisfied"
+        },
+        "topic": {
+          "topic": "Topic"
+        }
       }
     },
     "traces": {
@@ -747,11 +789,6 @@
       "forgot_password": "Forgot password?",
       "register": "Register",
       "create_bot": "Create bot"
-    },
-    "safari_alert": {
-      "title": "Unsupported browser",
-      "text": "Your browser isn’t compatible with this service yet 😥 We recommend the usage of the platform on another browser, such as the ones listed below:",
-      "button": "← Go back to the main page"
     },
     "analyze_text": {
       "grid1": "Make a HTTP request to NLP service, follow the example below.",

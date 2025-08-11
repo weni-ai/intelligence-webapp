@@ -3,10 +3,9 @@ import { createTestingPinia } from '@pinia/testing';
 import { useSupervisorStore } from '@/store/Supervisor';
 import { vi } from 'vitest';
 
-import ConversationsTable from '@/views/AgentBuilder/Supervisor/SupervisorConversations/ConversationsTable/index.vue';
-import ConversationInfos from '@/views/AgentBuilder/Supervisor/SupervisorConversations/ConversationsTable/ConversationInfos.vue';
-import ConversationDate from '@/views/AgentBuilder/Supervisor/SupervisorConversations/ConversationsTable/ConversationDate.vue';
-import Unnnic from '@weni/unnnic-system';
+import ConversationsTable from '../index.vue';
+import i18n from '@/utils/plugins/i18n';
+import { nextTick } from 'vue';
 
 vi.mock('@/api/nexusaiAPI', () => ({
   default: {
@@ -38,6 +37,18 @@ vi.mock('@/api/nexusaiAPI', () => ({
   },
 }));
 
+vi.mock('vue-router', () => ({
+  useRoute: vi.fn().mockReturnValue({
+    query: {
+      start: '2023-01-01',
+      end: '2023-01-31',
+      search: '',
+      type: '',
+      conversationId: '',
+    },
+  }),
+}));
+
 describe('ConversationsTable.vue', () => {
   let wrapper;
   let supervisorStore;
@@ -46,8 +57,11 @@ describe('ConversationsTable.vue', () => {
     initialState: {
       supervisor: {
         conversations: {
-          data: null,
-          status: null,
+          data: {
+            results: [],
+            count: 2,
+          },
+          status: 'loading',
         },
         filters: {},
       },
@@ -55,8 +69,13 @@ describe('ConversationsTable.vue', () => {
     stubActions: false,
   });
 
-  const table = () =>
-    wrapper.findComponent('[data-testid="conversations-table"]');
+  const table = () => wrapper.find('[data-testid="conversations-table"]');
+
+  const conversationsCount = () =>
+    wrapper.findComponent('[data-testid="conversations-count"]');
+
+  const conversationRows = () =>
+    wrapper.findAllComponents('[data-testid="conversation-row"]');
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -65,69 +84,58 @@ describe('ConversationsTable.vue', () => {
 
     supervisorStore.filters.start = '2023-01-01';
     supervisorStore.filters.end = '2023-01-31';
+    supervisorStore.loadConversations();
 
     wrapper = shallowMount(ConversationsTable, {
       global: {
         plugins: [pinia],
+        stubs: {
+          UnnnicIntelligenceText: {
+            template: '<div><slot /></div>',
+          },
+        },
       },
     });
   });
 
   it('renders the component correctly', () => {
+    console.log(wrapper.html());
+    console.log(wrapper.vm.supervisorStore.conversations);
+
     expect(table().exists()).toBe(true);
+    expect(conversationsCount().exists()).toBe(true);
+    expect(conversationRows().length).toBe(2);
   });
 
   it('loads conversations on mount', () => {
     expect(wrapper.vm.supervisorStore.loadConversations).toHaveBeenCalled();
   });
 
-  it('correctly computes table rows from conversation data', () => {
-    const tableRows = wrapper.vm.table.rows;
-
-    expect(tableRows.length).toBe(2);
-    expect(tableRows[0].id).toBe('1');
-    expect(tableRows[1].id).toBe('2');
-  });
-
-  it('passes correct props to ConversationInfos component', () => {
-    const tableRows = wrapper.vm.table.rows;
-    const infoComponent = tableRows[0].content[0];
-
-    expect(infoComponent.component).toBe(ConversationInfos);
-    expect(infoComponent.props.urn).toBe('conversation-123');
-    expect(infoComponent.props.lastMessage).toBe('This is the last message');
-  });
-
-  it('passes correct props to ConversationDate component', () => {
-    const tableRows = wrapper.vm.table.rows;
-    const dateComponent = tableRows[0].content[2];
-
-    expect(dateComponent.component).toBe(ConversationDate);
-    expect(dateComponent.props.date).toBe('2023-05-15T14:30:00Z');
-  });
-
-  it('configures tag correctly based on human_support', () => {
-    const tableRows = wrapper.vm.table.rows;
-
-    const noSupportTag = tableRows[0].content[1];
-    expect(noSupportTag.component).toBe(Unnnic.unnnicTag);
-    expect(noSupportTag.props.scheme).toBe('aux-green-500');
-    expect(noSupportTag.props.leftIcon).toBe('check');
-    expect(noSupportTag.props.text).toBe(
-      wrapper.vm.$t('agent_builder.supervisor.attended_by_agent.title'),
-    );
-
-    const withSupportTag = tableRows[1].content[1];
-    expect(withSupportTag.component).toBe(Unnnic.unnnicTag);
-    expect(withSupportTag.props.scheme).toBe('aux-blue-500');
-    expect(withSupportTag.props.leftIcon).toBe('forward');
-    expect(withSupportTag.props.text).toBe(
-      wrapper.vm.$t('agent_builder.supervisor.forwarded_human_support.title'),
+  it('correctly displays the conversations count', () => {
+    expect(conversationsCount().text()).toBe(
+      i18n.global.t('agent_builder.supervisor.conversations_count', {
+        count: 2,
+      }),
     );
   });
 
-  it('correctly sets pagination values', () => {
-    expect(wrapper.vm.pagination.interval).toBe(15);
-    expect(wrapper.vm.pagination.page).toBe(1);
+  it('passes correct props to ConversationRow component', () => {
+    const conversationRow = conversationRows()[0];
+
+    expect(conversationRow.props().conversation.urn).toBe('conversation-123');
+    expect(conversationRow.props().conversation.last_message).toBe(
+      'This is the last message',
+    );
+    expect(conversationRow.props().isSelected).toBe(false);
+  });
+
+  it('correctly handles row click', async () => {
+    const conversationRow = conversationRows()[0];
+
+    await conversationRow.trigger('click');
+
+    expect(wrapper.vm.supervisorStore.selectedConversation).toMatchObject({
+      id: '1',
+    });
   });
 });

@@ -1,47 +1,47 @@
 <template>
   <section class="conversation-infos">
+    <SupervisorUsername
+      :username="username"
+      data-testid="conversation-username"
+    />
+
     <UnnnicIntelligenceText
       data-testid="conversation-urn"
       class="conversation-infos__urn"
-      tag="h3"
-      color="neutral-darkest"
-      family="secondary"
-      size="body-gt"
-      weight="bold"
-    >
-      {{ urn }}
-    </UnnnicIntelligenceText>
-    <UnnnicIntelligenceText
-      data-testid="conversation-last-message"
-      class="conversation-infos__last-message"
       tag="p"
       color="neutral-cloudy"
       family="secondary"
       size="body-md"
     >
-      {{ lastMessage }}
+      {{ formattedUrn }}
     </UnnnicIntelligenceText>
   </section>
 </template>
+
 <script setup>
+import { computed } from 'vue';
+import SupervisorUsername from '@/components/AgentBuilder/Supervisor/SupervisorUsername.vue';
+import { formatWhatsappUrn } from '@/utils/formatters';
+
 const props = defineProps({
+  username: {
+    type: String,
+    required: true,
+  },
   urn: {
     type: String,
     required: true,
   },
-  lastMessage: {
-    type: String,
-    required: true,
-  },
 });
+
+const formattedUrn = computed(() => formatWhatsappUrn(props.urn));
 </script>
 
 <style scoped lang="scss">
 .conversation-infos {
   display: grid;
 
-  &__urn,
-  &__last-message {
+  &__urn {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

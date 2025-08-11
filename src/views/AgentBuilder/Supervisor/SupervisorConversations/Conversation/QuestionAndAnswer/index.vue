@@ -20,29 +20,38 @@
     <ForwardedHumanSupport
       v-else-if="data.forwarded_human_support"
       class="question-and-answer__forwarded-human-support"
+      data-testid="forwarded-human-support"
     />
 
     <template v-else>
-      <Message
+      <section
         v-if="data?.source_type === 'user'"
         class="question-and-answer__question"
-        :content="data"
-      />
+      >
+        <AvatarLetter :text="data?.username" />
+        <Message
+          data-testid="question"
+          :content="data"
+        />
+      </section>
 
       <section
         v-if="data?.source_type === 'agent'"
         class="question-and-answer__answer"
+        data-testid="answer"
       >
         <PreviewLogs
           v-if="showLogs"
           :logs="logs"
           logsSide="right"
+          data-testid="preview-logs"
         />
 
         <Message
           v-for="(content, index) in messagesToShow"
           :key="index"
           class="question-and-answer__answer-text"
+          data-testid="answer-text"
           :content="content"
           scheme="success"
         >
@@ -50,6 +59,7 @@
             :disabled="loadingLogs"
             :loading="loadingLogs"
             :active="showLogs"
+            data-testid="view-logs-button"
             @click="handleShowLogs"
           />
         </Message>
@@ -61,11 +71,14 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
 
-import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
-import ForwardedHumanSupport from './ForwardedHumanSupport.vue';
 import { useMonitoringStore } from '@/store/Monitoring';
+
 import Message from './Message.vue';
+import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
+import ForwardedHumanSupport from './ConversationStartFinish.vue';
+import AvatarLetter from '@/components/AgentBuilder/Supervisor/AvatarLetter.vue';
 import ViewLogsButton from './ViewLogsButton.vue';
+
 import { processLog } from '@/utils/previewLogs';
 
 const props = defineProps({
@@ -185,6 +198,11 @@ watch(
   &__skeleton-answer {
     grid-column: 2 / span 2;
     grid-row: 2;
+  }
+
+  &__question {
+    display: flex;
+    gap: $unnnic-spacing-xs;
   }
 
   &__answer {

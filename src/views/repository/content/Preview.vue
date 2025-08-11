@@ -1,6 +1,7 @@
 <template>
   <PreviewMenu
     v-if="showPreviewMenu"
+    data-testid="preview-menu"
     :modelValue="showPreviewMenu"
     :message="previewMenuMessage"
     @update:model-value="showPreviewMenu = false"
@@ -25,7 +26,7 @@
       data-testid="messages-container"
     >
       <MessageDisplay
-        v-for="(message, index) in flowPreviewStore.messages"
+        v-for="(message, index) in messages"
         :key="`message-${index}`"
         :message="message"
         :shouldShowSources="true"
@@ -87,7 +88,7 @@ const profileStore = useProfileStore();
 const flowPreviewStore = useFlowPreviewStore();
 
 const message = ref('');
-const messages = ref(flowPreviewStore.messages);
+const messages = computed(() => flowPreviewStore.messages);
 const messagesRef = ref(null);
 
 const showPreviewMenu = ref(false);

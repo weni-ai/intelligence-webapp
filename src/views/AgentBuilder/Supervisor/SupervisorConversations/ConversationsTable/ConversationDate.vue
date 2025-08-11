@@ -4,7 +4,7 @@
     tag="p"
     color="neutral-cloudy"
     family="secondary"
-    size="body-md"
+    size="body-gt"
   >
     {{ formattedDate }}
   </UnnnicIntelligenceText>

@@ -36,10 +36,10 @@ getJwtToken().then(() => {
       },
     });
 
-    if (env('VITE_BOTHUB_WEBAPP_SENTRY')) {
+    if (env('BOTHUB_WEBAPP_SENTRY')) {
       Sentry.init({
         app,
-        dsn: env('VITE_BOTHUB_WEBAPP_SENTRY'),
+        dsn: env('BOTHUB_WEBAPP_SENTRY'),
         environment: env('SENTRY_ENVIRONMENT'),
         integrations: [
           Sentry.browserTracingIntegration({ router }),
@@ -64,6 +64,7 @@ getJwtToken().then(() => {
     app.component('UnnnicIntelligenceText', UnnnicIntelligenceText);
 
     app.provide(gbKey, gbInstance);
+
     app.mount('#app');
   });
 });

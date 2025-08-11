@@ -80,7 +80,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
 
     return (
       JSON.stringify(settings.data) !== JSON.stringify(initialSettings.value) &&
-      isHumanSupportValid
+      Boolean(isHumanSupportValid)
     );
   });
 

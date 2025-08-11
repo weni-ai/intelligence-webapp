@@ -2,6 +2,7 @@
   <UnnnicInput
     v-model="search"
     iconLeft="search"
+    data-testid="search-input"
     :placeholder="$t('agent_builder.supervisor.search')"
   />
 </template>
@@ -10,11 +11,11 @@
 import { ref, watch } from 'vue';
 import { debounce } from 'lodash';
 
-import { useSupervisorStore } from '@/store/Supervisor';
+import { useOldSupervisorStore } from '@/store/OldSupervisor';
 
-const supervisorStore = useSupervisorStore();
+const supervisorStore = useOldSupervisorStore();
 
-const search = ref('');
+const search = ref(supervisorStore.filters.search);
 
 watch(
   () => search.value,

@@ -1,35 +1,24 @@
-import billingRequest from '../billingRequest';
 import nexusRequest from '../nexusaiRequest';
+import { ConversationAdapter } from '../adapters/supervisor/conversation';
 
 export const Supervisor = {
   conversations: {
-    async list({ projectUuid, page, start, end, search, type }) {
+    async list(filterData) {
+      const { projectUuid, ...filters } = filterData;
+
+      const params = ConversationAdapter.toApi(filters);
+
+      const { data } = await nexusRequest.$http.get(
+        `/api/${projectUuid}/supervisor/?${new URLSearchParams(params)}`,
+      );
+
+      return ConversationAdapter.fromApi(data);
+    },
+
+    async getById({ projectUuid, start, end, urn, next }) {
       const params = {
-        page,
         start,
         end,
-        ...(search && { search }),
-        ...(type && { human_support: type === 'forwarded_human_support' }),
-      };
-
-      const { data } = await billingRequest.$http.get(
-        `${projectUuid}/conversations/?${new URLSearchParams(params)}`,
-      );
-
-      return data;
-    },
-
-    async forwardStats({ projectUuid, start, end }) {
-      const { data } = await billingRequest.$http.get(
-        `${projectUuid}/forward-stats/?start=${start}&end=${end}`,
-      );
-
-      return data;
-    },
-
-    async getById({ projectUuid, start, urn, next }) {
-      const params = {
-        start,
         contact_urn: urn,
       };
 
@@ -41,6 +30,13 @@ export const Supervisor = {
 
       const { data } = await nexusRequest.$http.get(url);
 
+      return data;
+    },
+
+    async getTopics({ projectUuid }) {
+      const { data } = await nexusRequest.$http.get(
+        `/api/${projectUuid}/topics/`,
+      );
       return data;
     },
 
