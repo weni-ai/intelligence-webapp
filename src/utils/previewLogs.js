@@ -39,20 +39,28 @@ export function processLog({ log, currentAgent }) {
     } = {},
   } = trace;
 
-  const configData = {};
+  const configData = log?.trace?.config || {};
 
-  const updatedCollaborator = addAgentToConfig({
-    currentAgent,
-    input: agentCollaboratorInvocationInput,
-    output: agentCollaboratorInvocationOutput,
-    config: configData,
-  });
+  let updatedCollaborator = currentAgent;
+  if (!configData.agentName) {
+    updatedCollaborator = addAgentToConfig({
+      currentAgent,
+      input: agentCollaboratorInvocationInput,
+      output: agentCollaboratorInvocationOutput,
+      config: configData,
+    });
+  }
 
   const traceConfig = getLogConfig({ trace, config: configData });
 
   return {
     type: log?.type,
-    data: modelInvocationInput || modelInvocationOutput ? null : log?.trace,
+    data:
+      ['invoking_model', 'model_response_received'].includes(configData.type) ||
+      modelInvocationInput ||
+      modelInvocationOutput
+        ? null
+        : log?.trace,
     config: {
       ...configData,
       ...traceConfig,
@@ -83,86 +91,103 @@ function getLogConfig({ trace, config }) {
     postProcessingTrace,
   } = trace;
 
+  const { type: traceType } = config;
+
   const traceT = (key, params) =>
     i18n.global.t(`agent_builder.traces.${key}`, params);
 
   const mappingRules = [
     {
+      type: 'search_result_received',
       key: knowledgeBaseLookupOutput,
       summary: traceT('search_result_received'),
       category: 'knowledge',
       icon: 'article',
     },
     {
+      type: 'searching_knowledge_base',
       key: knowledgeBaseLookupInput,
       summary: traceT('searching_knowledge_base'),
       category: 'knowledge',
       icon: 'article',
     },
     {
+      type: 'invoking_model',
       key: modelInvocationInput,
       summary: traceT('invoking_model'),
       category: 'model',
       icon: 'workspaces',
     },
     {
+      type: 'model_response_received',
       key: modelInvocationOutput,
       summary: traceT('model_response_received'),
       category: 'model',
       icon: 'workspaces',
     },
     {
+      type: 'thinking',
       key: rationale,
       summary: traceT('thinking'),
       category: 'thinking',
       icon: 'lightbulb',
     },
     {
+      type: 'delegating_to_agent',
       key: agentCollaboratorInvocationInput,
       summary: traceT('delegating_to_agent'),
       category: 'delegating_to_agent',
       icon: 'login',
     },
     {
+      type: 'forwarding_to_manager',
       key: agentCollaboratorInvocationOutput,
       summary: traceT('forwarding_to_manager'),
       category: 'forwarding_to_manager',
       icon: 'logout',
     },
     {
+      type: 'executing_tool',
       key: actionGroupInvocationInput,
       summary: traceT('executing_tool', {
-        function: actionGroupInvocationInput?.function?.split('-')?.[0],
+        function:
+          config?.toolName ||
+          actionGroupInvocationInput?.function?.split('-')?.[0],
       }),
       category: 'tool',
       icon: 'build',
     },
     {
+      type: 'tool_result_received',
       key: actionGroupInvocationOutput,
       summary: traceT('tool_result_received'),
       category: 'tool',
       icon: 'build',
     },
-    config?.agentName
+    config?.agentName !== 'manager'
       ? {
+          type: 'sending_response',
           key: finalResponse,
           summary: traceT('sending_response_for_manager'),
           category: 'sending_response_for_manager',
           icon: 'chat_bubble',
         }
       : {
+          type: 'sending_response',
           key: finalResponse,
           summary: traceT('sending_final_response'),
           category: 'sending_final_response',
           icon: 'question_answer',
         },
     {
+      type: 'applying_safety_rules',
       key: guardrailTrace,
       summary: traceT('applying_safety_rules'),
       category: 'applying_guardrails',
       icon: 'shield',
     },
     {
+      type: 'processing_message',
       key: postProcessingTrace,
       summary: traceT('processing_message'),
       category: 'processing_message',
@@ -174,7 +199,9 @@ function getLogConfig({ trace, config }) {
   let icon = '';
   let category = '';
 
-  const matched = mappingRules.find(({ key }) => key !== undefined);
+  const matched = mappingRules.find(
+    ({ type, key }) => type === traceType || key !== undefined,
+  );
   if (matched) {
     summary = matched.summary;
     icon = matched.icon;
