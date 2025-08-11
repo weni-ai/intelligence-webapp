@@ -189,7 +189,7 @@ describe('Brain Component', () => {
 
     expect(wrapper.findComponent(ModalPreviewQRCode).exists()).toBe(false);
 
-    const dropdownItem = wrapper.find('[data-test="View from mobile"]');
+    const dropdownItem = wrapper.find('[data-test="View on mobile"]');
 
     await dropdownItem.trigger('click');
     expect(wrapper.vm.isMobilePreviewModalOpen).toBe(true);

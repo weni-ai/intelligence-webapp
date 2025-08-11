@@ -114,7 +114,7 @@ exports[`AssignAgentCard.vue > renders correctly 1`] = `
       >
         
         
-         Assign to team
+         Assign to the team
       </span>
       <!---->
     </button>
