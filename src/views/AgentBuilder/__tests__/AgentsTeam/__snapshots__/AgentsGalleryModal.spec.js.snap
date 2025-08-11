@@ -36,7 +36,7 @@ exports[`AgentsGalleryModal.vue > Component rendering > should match snapshot 1`
             data-testid="title-text"
             data-v-ab1febba=""
           >
-            Agents gallery
+            Agent gallery
           </h1>
         </section>
         <span
@@ -124,7 +124,7 @@ exports[`AgentsGalleryModal.vue > Component rendering > should match snapshot 1`
                   hascloudycolor="false"
                   iconleft="search"
                   iconrightsize="sm"
-                  placeholder="Search by agent or skill"
+                  placeholder="Search agent or skill"
                   type="text"
                   value=""
                 />
