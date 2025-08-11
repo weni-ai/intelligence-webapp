@@ -164,7 +164,7 @@ function getLogConfig({ trace, config }) {
       category: 'tool',
       icon: 'build',
     },
-    config?.agentName !== 'manager'
+    config?.agentName && config?.agentName !== 'manager'
       ? {
           type: 'sending_response',
           key: finalResponse,
