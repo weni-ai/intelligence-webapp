@@ -477,7 +477,7 @@
       "standby": "Standby mode",
       "catalog": {
         "title": "Product catalog",
-        "view_cart": "View cart ({quantity} item) | View cart (one, {quantity} items)",
+        "view_cart": "View cart ({quantity} item) | View cart ({quantity} items)",
         "add_to_cart": "Add to cart",
         "subtotal": "Subtotal",
         "place_order": "Checkout",
