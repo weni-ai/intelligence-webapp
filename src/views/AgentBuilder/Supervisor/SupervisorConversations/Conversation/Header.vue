@@ -1,10 +1,7 @@
 <template>
   <header class="conversation__header">
     <section class="header__info">
-      <SupervisorUsername
-        :username="conversation?.username"
-        size="title-sm"
-      />
+      <SupervisorUsername :username="conversation?.username" size="title-sm" />
 
       <UnnnicIntelligenceText
         tag="h2"
@@ -17,10 +14,7 @@
         {{ formattedUrn }}
       </UnnnicIntelligenceText>
 
-      <section
-        v-if="topics.length > 0"
-        class="header__topics"
-      >
+      <section v-if="topics.length > 0" class="header__topics">
         <UnnnicTag
           v-for="topic in topics"
           :key="topic"
@@ -46,34 +40,32 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed } from "vue";
 
-import { useSupervisorStore } from '@/store/Supervisor';
-import i18n from '@/utils/plugins/i18n';
-import { formatWhatsappUrn } from '@/utils/formatters';
-import SupervisorUsername from '@/components/AgentBuilder/Supervisor/SupervisorUsername.vue';
+import { useSupervisorStore } from "@/store/Supervisor";
+import i18n from "@/utils/plugins/i18n";
+import { formatWhatsappUrn } from "@/utils/formatters";
+import SupervisorUsername from "@/components/AgentBuilder/Supervisor/SupervisorUsername.vue";
 
 const supervisorStore = useSupervisorStore();
 
 const conversation = computed(() => supervisorStore.selectedConversation);
 const formattedUrn = computed(() =>
-  i18n.global.t('agent_builder.supervisor.contact_urn', {
+  i18n.global.t("agent_builder.supervisor.contact_urn", {
     urn: formatWhatsappUrn(conversation.value?.urn),
   }),
 );
-const topics = computed(
-  () => {
-    if (typeof conversation.value?.topics === 'string') {
-      return [conversation.value?.topics];
-    }
+const topics = computed(() => {
+  if (typeof conversation.value?.topics === "string") {
+    return [conversation.value?.topics];
+  }
 
-    if (conversation.value?.topics?.length === 0) {
-      return conversation.value?.topics;
-    }
+  if (conversation.value?.topics?.length === 0) {
+    return conversation.value?.topics;
+  }
 
-    return [];
-  },
-);
+  return [];
+});
 </script>
 
 <style lang="scss" scoped>

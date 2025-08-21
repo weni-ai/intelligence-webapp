@@ -1,21 +1,21 @@
-import { defineStore } from 'pinia';
-import { computed, reactive, ref } from 'vue';
-import { format, parseISO, subDays } from 'date-fns';
-import globalStore from '.';
-import { useAlertStore } from './Alert';
-import { useRoute } from 'vue-router';
+import { defineStore } from "pinia";
+import { computed, reactive, ref } from "vue";
+import { format, parseISO, subDays } from "date-fns";
+import globalStore from ".";
+import { useAlertStore } from "./Alert";
+import { useRoute } from "vue-router";
 
-import nexusaiAPI from '@/api/nexusaiAPI';
+import nexusaiAPI from "@/api/nexusaiAPI";
 
-import i18n from '@/utils/plugins/i18n';
+import i18n from "@/utils/plugins/i18n";
 
-export const useSupervisorStore = defineStore('Supervisor', () => {
+export const useSupervisorStore = defineStore("Supervisor", () => {
   const projectUuid = computed(() => globalStore.state.Auth.connectProjectUuid);
   const supervisorApi = nexusaiAPI.agent_builder.supervisor;
   const alertStore = useAlertStore();
   const route = useRoute();
-  const thisMonth = format(subDays(new Date(), 29), 'yyyy-MM-dd');
-  const today = format(new Date(), 'yyyy-MM-dd');
+  const thisMonth = format(subDays(new Date(), 29), "yyyy-MM-dd");
+  const today = format(new Date(), "yyyy-MM-dd");
 
   const conversations = reactive({
     status: null,
@@ -29,23 +29,23 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const filters = reactive({
     start: route.query.start || thisMonth,
     end: route.query.end || today,
-    search: route.query.search || '',
-    status: route.query.status || '',
-    csat: route.query.csat || '',
-    topics: route.query.topics || '',
+    search: route.query.search || "",
+    status: route.query.status || "",
+    csat: route.query.csat || "",
+    topics: route.query.topics || "",
   });
 
-  const queryConversationUrn = ref(route.query.urn || '');
+  const queryConversationUrn = ref(route.query.urn || "");
 
   async function loadConversations(page = 1) {
-    if (conversations.status === 'loading') {
+    if (conversations.status === "loading") {
       return;
     }
 
-    conversations.status = 'loading';
+    conversations.status = "loading";
     if (page === 1) conversations.data.results = [];
 
-    const formatDateParam = (date) => format(parseISO(date), 'dd-MM-yyyy');
+    const formatDateParam = (date) => format(parseISO(date), "dd-MM-yyyy");
 
     try {
       const response = await supervisorApi.conversations.list({
@@ -59,13 +59,13 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
         topics: filters.topics,
       });
 
-      conversations.status = 'complete';
+      conversations.status = "complete";
       conversations.data = {
         ...response,
         results: [...conversations.data.results, ...response.results],
       };
     } catch (error) {
-      conversations.status = 'error';
+      conversations.status = "error";
     }
   }
 
@@ -73,11 +73,11 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     const conversation = selectedConversation.value;
 
     if (!conversation) return;
-    if (conversation.data.status === 'loading') return;
+    if (conversation.data.status === "loading") return;
     if (next && !conversation.data.next) return;
 
     try {
-      selectedConversation.value.data.status = 'loading';
+      selectedConversation.value.data.status = "loading";
 
       const params = {
         projectUuid: projectUuid.value,
@@ -97,13 +97,13 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
         ...selectedConversation.value.data,
         ...response,
         results: mergedResults,
-        status: 'complete',
+        status: "complete",
       };
     } catch (error) {
-      console.error('Error loading conversation data:', error);
+      console.error("Error loading conversation data:", error);
 
       if (selectedConversation.value?.data) {
-        selectedConversation.value.data.status = 'error';
+        selectedConversation.value.data.status = "error";
       }
     }
   }
@@ -111,7 +111,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   function selectConversation(urn) {
     if (!urn) {
       selectedConversation.value = null;
-      queryConversationUrn.value = '';
+      queryConversationUrn.value = "";
       return;
     }
 
@@ -121,9 +121,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
       return conversation.urn === urn;
     };
 
-    const conversation = conversations.data.results?.find(
-      handleMatch
-    );
+    const conversation = conversations.data.results?.find(handleMatch);
 
     queryConversationUrn.value = urn;
 
@@ -151,13 +149,13 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
       });
 
       alertStore.add({
-        type: 'success',
-        text: i18n.global.t('agent_builder.supervisor.export.success'),
+        type: "success",
+        text: i18n.global.t("agent_builder.supervisor.export.success"),
       });
     } catch (error) {
       alertStore.add({
-        type: 'error',
-        text: i18n.global.t('agent_builder.supervisor.export.error'),
+        type: "error",
+        text: i18n.global.t("agent_builder.supervisor.export.error"),
       });
     }
   }
