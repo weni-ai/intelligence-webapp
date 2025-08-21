@@ -15,6 +15,8 @@ beforeAll(() => {
   config.global.plugins = config.global.plugins.filter(
     (plugin) => plugin !== i18n,
   );
+
+  vi.stubEnv('ORGS_CAN_CREATE_CONTENT_AI', '456, 789');
 });
 
 afterAll(() => {
@@ -31,6 +33,9 @@ const store = createStore({
   state() {
     return {
       alert: null,
+      Auth: {
+        connectOrgUuid: '123',
+      },
     };
   },
 

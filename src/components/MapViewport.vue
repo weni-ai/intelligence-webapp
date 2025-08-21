@@ -1,6 +1,7 @@
 <template>
   <section
     ref="mapElement"
+    data-testid="map-viewport"
     class="map-viewport"
   />
 </template>
@@ -15,7 +16,7 @@ import { fromLonLat } from 'ol/proj';
 import { Point } from 'ol/geom';
 import { Icon, Style } from 'ol/style';
 
-import PlaceIcon from '@/assets/icons/place.png';
+import PlaceIcon from '@/assets/images/icons/place.png';
 
 const props = defineProps({
   geolocation: {

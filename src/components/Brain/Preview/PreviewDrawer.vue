@@ -38,7 +38,7 @@
           data-testid="preview-drawer-preview"
           class="content__preview"
         >
-          <Preview :key="refreshPreviewValue" />
+          <Preview />
         </section>
 
         <section
@@ -53,8 +53,11 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, watch } from 'vue';
+import { useStore } from 'vuex';
+
 import { usePreviewStore } from '@/store/Preview';
+import { useFlowPreviewStore } from '@/store/FlowPreview';
 
 import Preview from '@/views/repository/content/Preview.vue';
 import PreviewDetails from './PreviewDetails.vue';
@@ -70,8 +73,9 @@ const props = defineProps({
 
 defineEmits(['update:modelValue']);
 
+const store = useStore();
 const previewStore = usePreviewStore();
-
+const flowPreviewStore = useFlowPreviewStore();
 watch(
   () => props.modelValue,
   (isModalOpen) => {
@@ -88,11 +92,12 @@ const previewHeaderActions = computed(() => [
   },
 ]);
 
-const refreshPreviewValue = ref(0);
-
 function refreshPreview() {
-  refreshPreviewValue.value += 1;
-  previewStore.clearTraces();
+  previewStore.clearLogs();
+  flowPreviewStore.clearMessages();
+  flowPreviewStore.previewInit({
+    contentBaseUuid: store.state.router.contentBaseUuid,
+  });
 }
 </script>
 

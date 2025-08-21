@@ -73,6 +73,7 @@ import CreateIntelligenceCancelModal from '@/components/repository/CreateReposit
 import repositoryV2 from '../../../api/v2/repository';
 import nexusaiAPI from '../../../api/nexusaiAPI';
 import { get } from 'lodash';
+import env from '@/utils/env';
 
 export default {
   name: 'CreateIntelligenceForm',
@@ -124,8 +125,7 @@ export default {
     },
 
     isOrgCanCreateContentAI() {
-      return runtimeVariables
-        .get('VITE_ORGS_CAN_CREATE_CONTENT_AI')
+      return env('ORGS_CAN_CREATE_CONTENT_AI')
         ?.split(', ')
         .includes(this.$store.state.Auth.connectOrgUuid);
     },

@@ -14,12 +14,10 @@ describe('PreviewVisualFlow.vue', () => {
     {
       id: 1,
       name: 'Agent 1',
-      external_id: 'ext1',
     },
     {
       id: 2,
       name: 'Agent 2',
-      external_id: 'ext2',
     },
   ];
 
@@ -32,7 +30,7 @@ describe('PreviewVisualFlow.vue', () => {
             data: {
               manager: {
                 name: 'Manager',
-                external_id: 'ext0',
+                id: 'manager',
               },
               agents: mockTeamAgents,
             },
@@ -40,7 +38,7 @@ describe('PreviewVisualFlow.vue', () => {
         },
         preview: {
           activeAgent: {
-            external_id: 'ext1',
+            id: 1,
             currentTask: 'Current Task',
           },
         },
@@ -83,7 +81,9 @@ describe('PreviewVisualFlow.vue', () => {
     expect(manager.props()).toEqual({
       name: 'Manager',
       active: true,
-      currentTask: i18n.global.t('router.preview.manager_task'),
+      currentTask: undefined,
+      icon: undefined,
+      bubbleDirection: 'bounce',
       type: 'manager',
     });
   });
@@ -93,16 +93,6 @@ describe('PreviewVisualFlow.vue', () => {
     expect(agents).toHaveLength(mockTeamAgents.length);
   });
 
-  it('should render manager card with correct props', () => {
-    const manager = managerCard();
-    expect(manager.props()).toEqual({
-      name: 'Manager',
-      active: true,
-      currentTask: i18n.global.t('router.preview.manager_task'),
-      type: 'manager',
-    });
-  });
-
   it('should pass correct props to agent cards', () => {
     const firstAgentCard = agentCards()[0];
 
@@ -110,6 +100,8 @@ describe('PreviewVisualFlow.vue', () => {
       name: mockTeamAgents[0].name,
       active: false,
       currentTask: i18n.global.t('router.preview.standby'),
+      icon: undefined,
+      bubbleDirection: 'left',
       type: 'agent',
     });
   });
@@ -121,6 +113,23 @@ describe('PreviewVisualFlow.vue', () => {
 
     expect(teamSection().exists()).toBe(true);
     expect(agentCards()).toHaveLength(0);
+  });
+
+  describe('bubble direction', () => {
+    it('should be bounce for manager', () => {
+      const manager = managerCard();
+      expect(manager.props().bubbleDirection).toBe('bounce');
+    });
+
+    it('should be left for odd agent', () => {
+      const agent = agentCards()[0];
+      expect(agent.props().bubbleDirection).toBe('left');
+    });
+
+    it('should be right for even agent', () => {
+      const agent = agentCards()[1];
+      expect(agent.props().bubbleDirection).toBe('right');
+    });
   });
 
   describe('branch positions', () => {
@@ -147,7 +156,7 @@ describe('PreviewVisualFlow.vue', () => {
     it('should update branch positions when active agent changes', async () => {
       const previewStore = usePreviewStore();
       const newActiveAgent = {
-        external_id: 'ext2',
+        id: 2,
         currentTask: 'New Task',
       };
 

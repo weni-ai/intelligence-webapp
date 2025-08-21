@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import * as Sentry from '@sentry/vue';
+import Particles from '@tsparticles/vue3';
+import { loadSlim } from '@tsparticles/slim';
 
 import App from './App.vue';
 import router from './router';
@@ -14,21 +16,31 @@ import UnnnicSystemPlugin from './utils/UnnnicSystemPlugin.js';
 import { gbKey, initializeGrowthBook } from './utils/Growthbook';
 import { getJwtToken } from './utils/jwt';
 import './utils/HandlerObstructiveError.js';
+import hotjarInit from '@/utils/plugins/Hotjar';
+import env from './utils/env';
 
 getJwtToken().then(() => {
   initializeGrowthBook().then((gbInstance) => {
     iframessa.register('ai');
+
+    hotjarInit();
 
     const pinia = createPinia();
     const app = createApp(App);
 
     app.use(store).use(pinia).use(router).use(UnnnicSystemPlugin).use(i18n);
 
-    if (runtimeVariables.get('VITE_BOTHUB_WEBAPP_SENTRY')) {
+    app.use(Particles, {
+      init: async (engine) => {
+        await loadSlim(engine);
+      },
+    });
+
+    if (env('BOTHUB_WEBAPP_SENTRY')) {
       Sentry.init({
         app,
-        dsn: runtimeVariables.get('VITE_BOTHUB_WEBAPP_SENTRY'),
-        environment: runtimeVariables.get('SENTRY_ENVIRONMENT'),
+        dsn: env('BOTHUB_WEBAPP_SENTRY'),
+        environment: env('SENTRY_ENVIRONMENT'),
         integrations: [
           Sentry.browserTracingIntegration({ router }),
           Sentry.replayIntegration(),
@@ -52,6 +64,7 @@ getJwtToken().then(() => {
     app.component('UnnnicIntelligenceText', UnnnicIntelligenceText);
 
     app.provide(gbKey, gbInstance);
+
     app.mount('#app');
   });
 });

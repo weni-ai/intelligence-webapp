@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 import nexusaiAPI from '@/api/nexusaiAPI.js';
 import { useAlertStore } from './Alert';
+import agentIconService from '@/utils/agentIconService';
 
 import i18n from '@/utils/plugins/i18n';
 
@@ -13,7 +14,10 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
   const activeTeam = reactive({
     status: null,
-    data: [],
+    data: {
+      manager: null,
+      agents: [],
+    },
   });
 
   const officialAgents = reactive({
@@ -26,6 +30,13 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
     data: [],
   });
 
+  const allAgents = computed(() => {
+    return {
+      manager: activeTeam.data.manager,
+      agents: [...officialAgents.data, ...myAgents.data],
+    };
+  });
+
   const isAgentsGalleryOpen = ref(false);
 
   async function loadActiveTeam() {
@@ -34,7 +45,10 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
 
       const { data } = await nexusaiAPI.router.agents_team.listActiveTeam();
 
-      activeTeam.data = data;
+      activeTeam.data = {
+        manager: data.manager,
+        agents: agentIconService.applyIconsToAgents(data.agents),
+      };
       activeTeam.status = 'complete';
     } catch (error) {
       console.error('error', error);
@@ -51,7 +65,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         search,
       });
 
-      officialAgents.data = data;
+      officialAgents.data = agentIconService.applyIconsToAgents(data);
       officialAgents.status = 'complete';
     } catch (error) {
       console.error('error', error);
@@ -68,7 +82,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         search,
       });
 
-      myAgents.data = data;
+      myAgents.data = agentIconService.applyIconsToAgents(data);
       myAgents.status = 'complete';
     } catch (error) {
       console.error('error', error);
@@ -77,16 +91,15 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
     }
   }
 
-  async function toggleAgentAssignment({ external_id, is_assigned }) {
-    if (!external_id || typeof is_assigned !== 'boolean') {
-      throw new Error('external_id and is_assigned are required');
+  async function toggleAgentAssignment({ uuid, is_assigned }) {
+    if (!uuid || typeof is_assigned !== 'boolean') {
+      throw new Error('uuid and is_assigned are required');
     }
 
     try {
       const agent =
-        officialAgents.data.find(
-          (agent) => agent.external_id === external_id,
-        ) || myAgents.data.find((agent) => agent.external_id === external_id);
+        officialAgents.data.find((agent) => agent.uuid === uuid) ||
+        myAgents.data.find((agent) => agent.uuid === uuid);
 
       if (!agent) {
         throw new Error('Agent not found');
@@ -104,7 +117,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
         activeTeam.data.agents.push(agent);
       } else {
         activeTeam.data.agents = activeTeam.data.agents.filter(
-          (agent) => agent.external_id !== external_id,
+          (agent) => agent.uuid !== uuid,
         );
       }
 
@@ -142,6 +155,7 @@ export const useAgentsTeamStore = defineStore('AgentsTeam', () => {
     activeTeam,
     officialAgents,
     myAgents,
+    allAgents,
     isAgentsGalleryOpen,
     loadActiveTeam,
     loadOfficialAgents,

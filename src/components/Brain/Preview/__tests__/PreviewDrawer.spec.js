@@ -1,8 +1,10 @@
 import { mount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 
 import { usePreviewStore } from '@/store/Preview';
+import { useFlowPreviewStore } from '@/store/FlowPreview';
 import WS from '@/websocket/setup';
 import i18n from '@/utils/plugins/i18n';
 
@@ -14,6 +16,14 @@ const pinia = createTestingPinia({
     preview: {
       ws: null,
     },
+  },
+});
+
+const store = createStore({
+  state() {
+    return {
+      router: { contentBaseUuid: '123' },
+    };
   },
 });
 
@@ -29,7 +39,7 @@ describe('PreviewDrawer.vue', () => {
   let connectMock;
 
   const previewStore = usePreviewStore();
-
+  const flowPreviewStore = useFlowPreviewStore();
   beforeEach(() => {
     previewStore.ws = null;
     connectMock = vi.fn();
@@ -43,7 +53,7 @@ describe('PreviewDrawer.vue', () => {
         modelValue: true,
       },
       global: {
-        plugins: [pinia],
+        plugins: [pinia, store],
         stubs: {
           PreviewDetails: true,
           Preview: true,
@@ -108,10 +118,9 @@ describe('PreviewDrawer.vue', () => {
   });
 
   it('should refresh preview when refresh action is clicked', async () => {
-    const initialRefreshValue = wrapper.vm.refreshPreviewValue;
     await wrapper.vm.previewHeaderActions[0].onClick();
 
-    expect(wrapper.vm.refreshPreviewValue).toBe(initialRefreshValue + 1);
-    expect(previewStore.clearTraces).toHaveBeenCalled();
+    expect(previewStore.clearLogs).toHaveBeenCalled();
+    expect(flowPreviewStore.clearMessages).toHaveBeenCalled();
   });
 });

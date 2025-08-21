@@ -9,8 +9,12 @@ import RouterPreviewFullPage from '../views/Brain/RouterPreviewFullPage.vue';
 import NotFound from '../views/NotFound.vue';
 
 import store from '../store';
-import nexusaiAPI from '../api/nexusaiAPI';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useProjectStore } from '@/store/Project';
+
+import nexusaiAPI from '../api/nexusaiAPI';
+
+import env from '@/utils/env';
 
 let nextFromRedirect = '';
 
@@ -34,8 +38,21 @@ const handleLogin = async (to, from, next) => {
   if (nextPath) {
     next({ path: nextPath, replace: true });
   } else {
-    next({ path: '/home', replace: true });
+    next({ path: '/intelligences/home', replace: true });
   }
+};
+
+const getMultiAgentsEnabled = async () => {
+  const projectStore = useProjectStore();
+
+  if (projectStore.isMultiAgents !== null) return;
+
+  const { data } = await nexusaiAPI.router.tunings.multiAgents.read({
+    projectUuid: store.state.Auth.connectProjectUuid,
+  });
+
+  useFeatureFlagsStore().editUpgradeToMultiAgents(data.can_view);
+  projectStore.updateIsMultiAgents(data.multi_agents);
 };
 
 const router = createRouter({
@@ -55,7 +72,7 @@ const router = createRouter({
       beforeEnter: handleLogin,
     },
     {
-      path: '/home',
+      path: '/intelligences/home',
       name: 'home',
       component: Home,
     },
@@ -85,6 +102,8 @@ const router = createRouter({
         return { name: 'router-monitoring' };
       },
       async beforeEnter(_to, _from, next) {
+        await getMultiAgentsEnabled();
+
         if (useFeatureFlagsStore().flags.agentsTeam) {
           next({ name: 'agent-builder' });
         }
@@ -132,9 +151,15 @@ const router = createRouter({
       name: 'agent-builder',
       component: AgentBuilder,
       redirect: () => {
-        return { name: 'monitoring' };
+        return { name: 'supervisor' };
       },
       async beforeEnter(_to, _from, next) {
+        await getMultiAgentsEnabled();
+
+        if (!useFeatureFlagsStore().flags.agentsTeam) {
+          next({ name: 'router' });
+        }
+
         const { data } = await nexusaiAPI.router.read({
           projectUuid: store.state.Auth.connectProjectUuid,
           obstructiveErrorProducer: true,
@@ -147,8 +172,8 @@ const router = createRouter({
       },
       children: [
         {
-          path: 'monitoring',
-          name: 'monitoring',
+          path: 'supervisor',
+          name: 'supervisor',
           component: () => import('@/views/AgentBuilder/Supervisor/index.vue'),
         },
         {
@@ -163,7 +188,7 @@ const router = createRouter({
         },
         {
           path: 'knowledge',
-          name: 'content',
+          name: 'knowledge',
           component: () => import('@/views/AgentBuilder/Knowledge.vue'),
         },
         {
@@ -204,10 +229,7 @@ const router = createRouter({
           const projectUuid = sessionStorage.getItem('projectUuid');
 
           const path = `/loginexternal/${bearerToken}/${intelligenceOrgId}/${projectUuid}/`;
-          const redirectUrl = new URL(
-            path,
-            runtimeVariables.get('INTELLIGENCE_LEGACY_URL'),
-          );
+          const redirectUrl = new URL(path, env('INTELLIGENCE_LEGACY_URL'));
 
           redirectUrl.searchParams.append('org_uuid', orgUuid);
           redirectUrl.searchParams.append('project_uuid', projectUuid);

@@ -66,7 +66,7 @@
         class="bases-list--empty"
       >
         <img
-          src="../../../assets/imgs/doris-yawning.png"
+          :src="DorisYawning"
           alt="Doris Yawning"
         />
 
@@ -113,7 +113,7 @@
           class="bases-list--empty"
         >
           <img
-            src="../../../assets/imgs/doris-doubt-reaction.png"
+            :src="DorisDoubtReaction"
             alt="Doris Doubt Reaction"
           />
 
@@ -212,6 +212,8 @@ import HomeRepositoryCard from '@/components/repository/home/HomeRepositoryCard.
 import RepositoryContentNavigation from './Navigation.vue';
 import nexusaiAPI from '../../../api/nexusaiAPI';
 import BaseSettingsForm from '../../../components/BaseSettingsForm.vue';
+import DorisYawning from '@/assets/images/doris-yawning.png';
+import DorisDoubtReaction from '@/assets/images/doris-doubt-reaction.png';
 
 export default {
   name: 'RepositoryBase',

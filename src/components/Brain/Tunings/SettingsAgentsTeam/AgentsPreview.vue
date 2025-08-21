@@ -6,36 +6,41 @@
       size="body-lg"
       color="neutral-darkest"
       weight="bold"
-      data-testid="credentials-description"
+      data-testid="title"
     >
       {{ $t('router.tunings.settings.agents_preview.title') }}
     </UnnnicIntelligenceText>
 
     <form class="agents-preview__form">
-      <section class="form__field">
-        <UnnnicSwitch
-          v-model="tuningsStore.settings.data.progressiveFeedback"
-          :textRight="
-            $t(
-              'router.tunings.settings.agents_preview.agents_progressive_feedback.title',
-            )
-          "
-        />
+      <SettingsField
+        v-model="tuningsStore.settings.data.progressiveFeedback"
+        data-testid="progressive-feedback"
+        :textRight="
+          $t(
+            'router.tunings.settings.agents_preview.agents_progressive_feedback.title',
+          )
+        "
+        :description="
+          $t(
+            'router.tunings.settings.agents_preview.agents_progressive_feedback.description',
+          )
+        "
+      />
 
-        <UnnnicIntelligenceText
-          tag="p"
-          family="secondary"
-          size="body-gt"
-          color="neutral-clean"
-          class="form__description"
-        >
-          {{
-            $t(
-              'router.tunings.settings.agents_preview.agents_progressive_feedback.description',
-            )
-          }}
-        </UnnnicIntelligenceText>
-      </section>
+      <SettingsField
+        v-model="tuningsStore.settings.data.components"
+        data-testid="components"
+        :textRight="
+          $t(
+            'router.tunings.settings.agents_preview.multiple_message_format.title',
+          )
+        "
+        :description="
+          $t(
+            'router.tunings.settings.agents_preview.multiple_message_format.description',
+          )
+        "
+      />
     </form>
   </section>
 </template>
@@ -43,6 +48,7 @@
 <script setup>
 import { useTuningsStore } from '@/store/Tunings';
 
+import SettingsField from './SettingsField.vue';
 const tuningsStore = useTuningsStore();
 </script>
 

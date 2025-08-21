@@ -5,7 +5,6 @@
       data-test="message-input-left-button"
     >
       <ContentItemActions
-        v-if="!isAgentsTeamEnabled"
         data-test="content-item-actions"
         triggerIcon="add"
         triggerSize="md"
@@ -29,10 +28,7 @@
       :value="typeof modelValue === 'string' ? modelValue : ''"
       :placeholder="placeholder"
       type="text"
-      :class="[
-        'message-input',
-        { 'message-input--without-actions': isAgentsTeamEnabled },
-      ]"
+      :class="['message-input']"
       @input="updateModelValue($event.target.value)"
       @keypress.enter="emitSend"
     />
@@ -89,31 +85,45 @@ const store = useStore();
 const inputFile = useTemplateRef('file');
 const currentAllowedMediaFormats = ref('');
 
-const attachActions = [
-  {
-    scheme: 'neutral-dark',
-    icon: 'image',
-    text: i18n.global.t(
-      'webapp.home.bases.preview_tests_attachments.photos_or_videos',
-    ),
-    onClick: () => openFileSelection('photo_and_video'),
-  },
-  {
-    scheme: 'neutral-dark',
-    icon: 'attach_file',
-    text: i18n.global.t('webapp.home.bases.preview_tests_attachments.file'),
-    onClick: () => openFileSelection('document'),
-  },
-  {
-    scheme: 'neutral-dark',
-    icon: 'location_on',
-    text: i18n.global.t('webapp.home.bases.preview_tests_attachments.location'),
-    onClick: () => getGeolocalization(),
-  },
-];
+const attachActions = isAgentsTeamEnabled
+  ? [
+      {
+        scheme: 'neutral-dark',
+        icon: 'image',
+        text: i18n.global.t(
+          'webapp.home.bases.preview_tests_attachments.photos',
+        ),
+        onClick: () => openFileSelection('photo'),
+      },
+    ]
+  : [
+      {
+        scheme: 'neutral-dark',
+        icon: 'image',
+        text: i18n.global.t(
+          'webapp.home.bases.preview_tests_attachments.photos_or_videos',
+        ),
+        onClick: () => openFileSelection('photo_and_video'),
+      },
+      {
+        scheme: 'neutral-dark',
+        icon: 'attach_file',
+        text: i18n.global.t('webapp.home.bases.preview_tests_attachments.file'),
+        onClick: () => openFileSelection('document'),
+      },
+      {
+        scheme: 'neutral-dark',
+        icon: 'location_on',
+        text: i18n.global.t(
+          'webapp.home.bases.preview_tests_attachments.location',
+        ),
+        onClick: () => getGeolocalization(),
+      },
+    ];
 
 function openFileSelection(type) {
   const mapTypes = {
+    photo: allowedMediaFormats.image,
     photo_and_video: allowedMediaFormats.image.concat(
       allowedMediaFormats.video,
     ),
@@ -174,8 +184,7 @@ const audioValue = computed(() =>
 );
 const rightButtonType = computed(() =>
   isRecordingAudio.value ||
-  (modelValue.value && typeof modelValue.value === 'string') ||
-  isAgentsTeamEnabled
+  (modelValue.value && typeof modelValue.value === 'string')
     ? 'send'
     : 'mic',
 );
@@ -239,10 +248,6 @@ function emitSend() {
 
   border-radius: $unnnic-border-radius-md;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
-
-  &--without-actions {
-    padding: $unnnic-spacing-sm;
-  }
 
   &::placeholder {
     color: $unnnic-color-neutral-clean;

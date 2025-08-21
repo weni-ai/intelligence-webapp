@@ -29,8 +29,8 @@ export const AgentsTeam = {
           skills,
           assigned,
           credentials,
-          external_id,
           is_official,
+          slug,
         }) => ({
           uuid,
           name,
@@ -38,8 +38,8 @@ export const AgentsTeam = {
           skills,
           assigned,
           credentials,
-          external_id,
           is_official,
+          id: slug,
         }),
       ),
     };
@@ -65,8 +65,8 @@ export const AgentsTeam = {
           skills,
           assigned,
           credentials,
-          external_id,
           is_official,
+          slug,
         }) => ({
           uuid,
           name,
@@ -74,8 +74,8 @@ export const AgentsTeam = {
           skills,
           assigned,
           credentials,
-          external_id,
           is_official,
+          id: slug,
         }),
       ),
     };
@@ -91,14 +91,14 @@ export const AgentsTeam = {
     return {
       data: {
         manager: {
-          external_id: manager.external_id,
+          id: manager.id || 'manager',
         },
         agents: agents.map(
           ({
             uuid,
             name,
             skills,
-            external_id,
+            id,
             description,
             credentials,
             is_official,
@@ -106,7 +106,7 @@ export const AgentsTeam = {
             uuid,
             name,
             skills,
-            external_id,
+            id,
             description,
             credentials,
             is_official,

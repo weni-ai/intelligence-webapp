@@ -1,6 +1,7 @@
 <template>
   <PreviewMenu
     v-if="showPreviewMenu"
+    data-testid="preview-menu"
     :modelValue="showPreviewMenu"
     :message="previewMenuMessage"
     @update:model-value="showPreviewMenu = false"
@@ -25,7 +26,7 @@
       data-testid="messages-container"
     >
       <MessageDisplay
-        v-for="(message, index) in flowPreviewStore.messages"
+        v-for="(message, index) in messages"
         :key="`message-${index}`"
         :message="message"
         :shouldShowSources="true"
@@ -78,6 +79,7 @@ import { getFileType } from '@/utils/medias';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 import i18n from '@/utils/plugins/i18n';
+import env from '@/utils/env';
 
 const emit = defineEmits(['messages']);
 
@@ -86,7 +88,7 @@ const profileStore = useProfileStore();
 const flowPreviewStore = useFlowPreviewStore();
 
 const message = ref('');
-const messages = ref(flowPreviewStore.messages);
+const messages = computed(() => flowPreviewStore.messages);
 const messagesRef = ref(null);
 
 const showPreviewMenu = ref(false);
@@ -146,7 +148,7 @@ function isEventCardBrain(event) {
   }
 
   const url = new URL(event.url);
-  const apiBaseUrl = new URL(runtimeVariables.get('NEXUS_API_BASE_URL')).origin;
+  const apiBaseUrl = new URL(env('NEXUS_API_BASE_URL')).origin;
 
   return (
     url.origin === apiBaseUrl &&
@@ -159,6 +161,7 @@ watch(
   () => flowPreviewStore.messages,
   (newMessages) => {
     emit('messages', newMessages);
+    scrollToLastMessage();
   },
   { deep: true },
 );
@@ -380,7 +383,9 @@ function scrollToLastMessage() {
   });
 }
 
-onMounted(() => {
+function initPreview() {
+  if (flowPreviewStore.preview.contact.uuid) return;
+
   flowPreviewStore.previewInit({
     contentBaseUuid: store.state.router.contentBaseUuid,
   });
@@ -388,6 +393,10 @@ onMounted(() => {
   window.brainPreviewAddMessage = (messageData) => {
     flowPreviewStore.addMessage(messageData);
   };
+}
+
+onMounted(() => {
+  initPreview();
 });
 </script>
 

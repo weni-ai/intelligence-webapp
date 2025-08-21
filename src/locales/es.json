@@ -61,6 +61,133 @@
       "delete": "Eliminar base"
     }
   },
+  "agent_builder": {
+    "tabs": {
+      "supervisor": {
+        "title": "Supervisor",
+        "description": "Analice y revise conversaciones entre agentes y clientes."
+      },
+      "profile": {
+        "title": "Perfil",
+        "description": "Personaliza la información básica y el comportamiento del agente"
+      },
+      "agents": {
+        "title": "Agentes",
+        "description": "Construye el equipo de agentes perfecto."
+      },
+      "knowledge": {
+        "title": "Conocimiento",
+        "description": "Agregue conocimiento a través de archivos, enlaces o texto para que el agente pueda responder con precisión."
+      },
+      "tunings": {
+        "title": "Ajustes",
+        "description": "Gestione las configuraciones y realice un seguimiento de los cambios realizados."
+      }
+    },
+    "supervisor": {
+      "learn_details_conversations": "Aprende sobre los detalles de una conversación.",
+      "conversation_details": {
+        "title": "Sobre conversación",
+        "what_is_a_conversation": "¿Qué es una conversación?",
+        "what_is_a_conversation_description": "Consideramos todas las conversaciones dentro de 24 horas del primer contacto como una única conversación.",
+        "when_is_a_conversation_considered_resolved": "¿Cuándo se considera una conversación resuelta?",
+        "description": "Una conversación es considerada resuelta cuando el usuario va más allá del saludo inicial y realmente interactúa: \n- Pide preguntas; \n- Solicita datos; \n- Confirma información; \n- Recibe orientación que permite completar todo o parte de su pedido. \nMensajes limitados a saludos, emojis o cerrados sin interacción útil permanecen sin resolver, mientras que la interacción que entrega valor al usuario se marca como resuelta."
+      },
+      "conversations_count": "{count} conversaciones encontradas",
+      "unnamed_contact": "Contacto sin nombre",
+      "status": {
+        "in_progress": "En progreso",
+        "resolved": "Resuelto",
+        "unresolved": "No resuelto"
+      },
+      "attended_by_agent": {
+        "title": "Atendido por el agente",
+        "tooltip": "Conversaciones resueltas por el agente"
+      },
+      "forwarded_human_support": {
+        "title": "Encaminado a soporte humano",
+        "tooltip": "Conversaciones encaminadas a soporte humano"
+      },
+      "conversation_start_finish": {
+        "start": "Conversación iniciada: {datetime}",
+        "finish": "Conversación finalizada: {datetime}"
+      },
+      "contact_urn": "URN del contacto: {urn}",
+      "view_logs": "Ver logs",
+      "hide_logs": "Esconder logs",
+      "search": "Buscar",
+      "conversations_empty": "No se encontraron conversaciones",
+      "no_messages_found": {
+        "title": "No se encontraron mensajes en esta conversación",
+        "description": "Si el mensaje fue enviado por soporte humano o mensajes disparados, puedes encontrarlo en el {studio_link}",
+        "studio_link": "Studio"
+      },
+      "export": {
+        "title": "Enviar exportación por correo electrónico",
+        "description": "Prepararemos el archivo con los datos de IA y lo enviaremos a las siguientes direcciones de correo electrónico:",
+        "token_label": "Token API del Proyecto",
+        "token_placeholder": "86d2ba6397cabd4b22f7da925ef89d78bfb2d90dd",
+        "token_help": "Puedes encontrar este token en tu",
+        "project_settings": "configuración del proyecto",
+        "and_paste": "y pegarlo aquí.",
+        "send": "Enviar exportación",
+        "success": "La exportación será enviada a todas las direcciones de correo electrónico listadas pronto",
+        "error": "Error al enviar exportación. Intente nuevamente más tarde."
+      },
+      "filters": {
+        "status": {
+          "conversations": "Conversaciones",
+          "in_progress": "En progreso",
+          "resolved": "Resuelto",
+          "unresolved": "No resuelto",
+          "unengaged": "No engajado",
+          "transferred_to_human_support": "Encaminado a soporte humano"
+        },
+        "csat": {
+          "csat": "CSAT",
+          "very_satisfied": "🤩 Muy satisfecho",
+          "satisfied": "😃 Satisfecho",
+          "neutral": "😐 Neutral",
+          "dissatisfied": "😔 Insatisfecho",
+          "very_dissatisfied": "😡 Muy insatisfecho"
+        },
+        "topic": {
+          "topic": "Tópico"
+        }
+      }
+    },
+    "traces": {
+      "search_result_received": "Resultado de búsqueda recibido",
+      "searching_knowledge_base": "Buscando información en la base de conocimiento",
+      "invoking_model": "Invocando el modelo",
+      "model_response_received": "Respuesta del modelo recibida",
+      "thinking": "Pensando",
+      "delegating_to_agent": "Delegando tarea al agente",
+      "forwarding_to_manager": "Enviando al Manager",
+      "executing_tool": "Ejecutando herramienta {function}",
+      "tool_result_received": "Resultado de la herramienta recibido",
+      "sending_response_for_manager": "Enviando respuesta para el Manager",
+      "sending_final_response": "Enviando respuesta final",
+      "applying_safety_rules": "Aplicando reglas de seguridad",
+      "processing_message": "Procesando mensaje",
+      "filter_logs": {
+        "title": "Filtrar logs",
+        "placeholder": "Pesquisar por log",
+        "categories": {
+          "placeholder": "Categorías",
+          "knowledge": "Conocimiento",
+          "thinking": "Pensando",
+          "delegating_to_agent": "Delegando tarea al agente",
+          "forwarding_to_manager": "Enviando al Manager",
+          "tool": "Tool",
+          "sending_response_for_manager": "Enviando respuesta para el Manager",
+          "sending_final_response": "Enviando respuesta final",
+          "applying_guardrails": "Aplicando reglas de seguridad"
+        },
+        "no_logs_found": "No se encontraron logs"
+      }
+    }
+  },
   "router": {
     "modal_save_changes_error": {
       "title": "Error al guardar los cambios",
@@ -73,7 +200,6 @@
     "tabs": {
       "monitoring": "Supervisor",
       "profile": "Perfil",
-      "agents": "Agentes",
       "content": "Conocimiento",
       "actions": "Acciones",
       "tunings": "Ajustes"
@@ -213,6 +339,19 @@
         "credentials": "Credenciales",
         "history": "Historial de cambios"
       },
+      "upgrade_to_multi_agents": {
+        "title": "Actualizar para Agent Builder 2.0",
+        "description": "Actualice su proyecto para usar un equipo de agentes inteligentes que colaboran para entender y responder de forma más eficaz, haciendo que su asistente sea más inteligente con esfuerzo mínimo.",
+        "button": "Actualizar ahora",
+        "modal": {
+          "title": "Actualizar para Agent Builder 2.0",
+          "description": "¿Está seguro de que desea actualizar para Agent Builder 2.0? Esta acción es permanente y no se puede revertir.",
+          "cancel": "Cancelar",
+          "upgrade": "Actualizar"
+        },
+        "error": "Error al actualizar para Agent Builder 2.0",
+        "success": "Actualizado a Agent Builder 2.0 con éxito"
+      },
       "history": {
         "no_changes": "No se realizaron cambios en Agent Builder.",
         "description": "Consulta el historial de cambios realizados en Agent builder",
@@ -301,8 +440,16 @@
           "title": "Vista previa de agentes",
           "agents_progressive_feedback": {
             "title": "Feedback progresivo de agentes",
-          "description": "El agente puede proporcionar actualizaciones breves mientras formula la respuesta final, ayudando al contacto a entender su proceso en tiempo real."
+            "description": "El agente puede proporcionar actualizaciones breves mientras formula la respuesta final, ayudando al contacto a entender su proceso en tiempo real."
+          },
+          "multiple_message_format": {
+            "title": "Formato de mensaje múltiple",
+            "description": "El agente puede enviar mensajes formatos múltiples, como Quick Replies, List Message, CTA y Catálogo."
           }
+        },
+        "human_support": {
+          "title": "Soporte humano",
+          "description": "Con esta función activada, el agente podrá reenviar la conversación a soporte humano."
         }
       },
       "save_success": "Ajustes guardados con éxito"
@@ -643,11 +790,6 @@
       "register": "Registrarse",
       "create_bot": "Crear inteligencia"
     },
-    "safari_alert": {
-      "title": "Navegador no soportado",
-      "text": "Su navegador aún no es compatible con este servicio 😥 Recomendamos usar la plataforma en otro navegador, ya que uno de los que se enumeran a continuación:",
-      "button": "← Volver a la página de inicio"
-    },
     "analyze_text": {
       "grid1": "Haga una solicitud HTTP al servicio de NLP, siga el siguiente ejemplo.",
       "method_send": "Cuerpo de POST:",
@@ -858,6 +1000,7 @@
         "preview_tests_placeholder": "Escriba un mensaje",
         "preview_tests_attachments": {
           "photos_or_videos": "Fotos y vídeos",
+          "photos": "Fotos",
           "file": "Archivo",
           "location": "Ubicación"
         },

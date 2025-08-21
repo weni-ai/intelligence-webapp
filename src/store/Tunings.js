@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { cloneDeep } from 'lodash';
 
 import globalStore from '.';
@@ -15,6 +15,12 @@ export const useTuningsStore = defineStore('Tunings', () => {
     () => globalStore.state.Auth.connectProjectUuid,
   );
 
+  const isLoadingTunings = computed(() => {
+    return (
+      credentials.value.status === 'loading' || settings.status === 'loading'
+    );
+  });
+
   const initialCredentials = ref(null);
   const credentials = ref({
     status: null,
@@ -22,10 +28,13 @@ export const useTuningsStore = defineStore('Tunings', () => {
   });
 
   const initialSettings = ref(null);
-  const settings = ref({
+  const settings = reactive({
     status: null,
     data: {
+      components: false,
       progressiveFeedback: false,
+      humanSupport: false,
+      humanSupportPrompt: '',
     },
   });
 
@@ -62,12 +71,16 @@ export const useTuningsStore = defineStore('Tunings', () => {
     return hasAllCredentials && hasChanges;
   });
 
-  const hasSettingsChanges = computed(() => {
-    if (!settings.value.data || !initialSettings.value) return false;
+  const isSettingsValid = computed(() => {
+    if (!settings.data || !initialSettings.value) return false;
+
+    const isHumanSupportValid = settings.data.humanSupport
+      ? settings.data.humanSupportPrompt
+      : true;
 
     return (
-      JSON.stringify(settings.value.data) !==
-      JSON.stringify(initialSettings.value)
+      JSON.stringify(settings.data) !== JSON.stringify(initialSettings.value) &&
+      Boolean(isHumanSupportValid)
     );
   });
 
@@ -167,46 +180,116 @@ export const useTuningsStore = defineStore('Tunings', () => {
           projectUuid: connectProjectUuid.value,
         });
 
-      settings.value.data = {
-        progressiveFeedback,
-      };
-      initialSettings.value = cloneDeep(settings.value.data);
+      const { components } = await nexusaiAPI.router.tunings.getComponents({
+        projectUuid: connectProjectUuid.value,
+      });
 
-      settings.value.status = 'success';
+      const { human_support, human_support_prompt } =
+        await nexusaiAPI.router.profile
+          .read({
+            projectUuid: connectProjectUuid.value,
+          })
+          .then(({ data }) => ({
+            human_support: data.team?.human_support || false,
+            human_support_prompt: data.team?.human_support_prompt || '',
+          }));
+
+      settings.data = {
+        components,
+        progressiveFeedback,
+        humanSupport: human_support,
+        humanSupportPrompt: human_support_prompt,
+      };
+      initialSettings.value = cloneDeep(settings.data);
+
+      settings.status = 'success';
     } catch (error) {
-      settings.value.status = 'error';
+      settings.status = 'error';
     }
   }
 
   async function saveSettings() {
     try {
-      settings.value.status = 'loading';
+      settings.status = 'loading';
 
-      const response = await nexusaiAPI.router.tunings.editProgressiveFeedback({
-        projectUuid: connectProjectUuid.value,
-        data: settings.value.data,
-        requestOptions: {
-          hideGenericErrorAlert: true,
-        },
-      });
+      const hasProgressiveFeedbackChanges =
+        initialSettings.value.progressiveFeedback !==
+        settings.data.progressiveFeedback;
 
-      initialSettings.value = cloneDeep(settings.value.data);
-      settings.value.status = 'success';
+      if (hasProgressiveFeedbackChanges) {
+        await nexusaiAPI.router.tunings.editProgressiveFeedback({
+          projectUuid: connectProjectUuid.value,
+          data: {
+            progressiveFeedback: settings.data.progressiveFeedback,
+          },
+          requestOptions: {
+            hideGenericErrorAlert: true,
+          },
+        });
+      }
+
+      const hasComponentsChanges =
+        initialSettings.value.components !== settings.data.components;
+
+      if (hasComponentsChanges) {
+        await nexusaiAPI.router.tunings.editComponents({
+          projectUuid: connectProjectUuid.value,
+          data: {
+            components: settings.data.components,
+          },
+          requestOptions: {
+            hideGenericErrorAlert: true,
+          },
+        });
+      }
+
+      const hasHumanSupportChanges =
+        initialSettings.value.humanSupport !== settings.data.humanSupport ||
+        initialSettings.value.humanSupportPrompt !==
+          settings.data.humanSupportPrompt;
+
+      if (hasHumanSupportChanges) {
+        await nexusaiAPI.router.profile.edit({
+          projectUuid: connectProjectUuid.value,
+          data: {
+            team: {
+              human_support: settings.data.humanSupport,
+              human_support_prompt: settings.data.humanSupportPrompt,
+            },
+          },
+          requestOptions: {
+            hideGenericErrorAlert: true,
+          },
+        });
+
+        if (initialSettings.value.humanSupport !== settings.data.humanSupport) {
+          window.parent.postMessage(
+            {
+              event: 'change-human-service-status',
+              value: JSON.stringify(settings.data.humanSupport),
+            },
+            '*',
+          );
+        }
+      }
+
+      initialSettings.value = cloneDeep(settings.data);
+      settings.status = 'success';
 
       return true;
     } catch (error) {
-      settings.value.status = 'error';
+      settings.status = 'error';
       return false;
     }
   }
 
-  async function createCredentials(agentUuid) {
+  async function createCredentials(agentUuid, credentialsToCreate) {
     try {
       credentials.value.status = 'loading';
 
       await nexusaiAPI.router.tunings.createCredentials({
         projectUuid: connectProjectUuid.value,
-        credentials: credentials.value.data.officialAgents,
+        credentials: credentialsToCreate,
         agent_uuid: agentUuid,
       });
 
@@ -232,10 +315,10 @@ export const useTuningsStore = defineStore('Tunings', () => {
       }
     }
 
-    if (hasSettingsChanges.value) {
+    if (isSettingsValid.value) {
       await saveSettings();
 
-      if (settings.value.status === 'error') {
+      if (settings.status === 'error') {
         hasSettingsError = true;
         alertStore.add({
           text: i18n.global.t('router.tunings.settings.save_error'),
@@ -253,10 +336,11 @@ export const useTuningsStore = defineStore('Tunings', () => {
   }
 
   return {
+    isLoadingTunings,
     credentials,
     settings,
     isCredentialsValid,
-    hasSettingsChanges,
+    isSettingsValid,
     initialCredentials,
     initialSettings,
     getCredentialIndex,

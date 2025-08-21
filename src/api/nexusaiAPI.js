@@ -3,9 +3,10 @@ import forceHttps from '@/api/utils/forceHttps';
 import { Actions } from './nexus/Actions';
 import { Monitoring } from './nexus/Monitoring';
 import { AgentsTeam } from './nexus/AgentsTeam';
+import { Supervisor } from './nexus/Supervisor';
 
 import { ProgressiveFeedbackAdapter } from './adapters/tunings/progressiveFeedback';
-
+import { ComponentsAdapter } from './adapters/tunings/components';
 import i18n from '@/utils/plugins/i18n';
 
 export default {
@@ -123,6 +124,10 @@ export default {
     );
   },
 
+  agent_builder: {
+    supervisor: Supervisor,
+  },
+
   router: {
     read({ projectUuid, obstructiveErrorProducer }) {
       return request.$http.get(`api/${projectUuid}/router/`, {
@@ -175,16 +180,10 @@ export default {
         );
       },
 
-      createCredentials({
-        projectUuid,
-        credentials = {},
-        agent_uuid,
-        is_confidential = true,
-      }) {
+      createCredentials({ projectUuid, credentials = {}, agent_uuid }) {
         return request.$http.post(`api/project/${projectUuid}/credentials`, {
           credentials,
           agent_uuid,
-          is_confidential,
         });
       },
 
@@ -200,6 +199,22 @@ export default {
         return request.$http.patch(
           `api/project/${projectUuid}/rationale`,
           ProgressiveFeedbackAdapter.toApi(data),
+          requestOptions,
+        );
+      },
+
+      async getComponents({ projectUuid }) {
+        const response = await request.$http.get(
+          `api/project/${projectUuid}/components`,
+        );
+
+        return ComponentsAdapter.fromApi(response.data);
+      },
+
+      editComponents({ projectUuid, data, requestOptions = {} }) {
+        return request.$http.patch(
+          `api/project/${projectUuid}/components`,
+          ComponentsAdapter.toApi(data),
           requestOptions,
         );
       },
@@ -223,6 +238,21 @@ export default {
           return request.$http.patch(`api/${projectUuid}/project`, {
             brain_on,
           });
+        },
+      },
+
+      multiAgents: {
+        read({ projectUuid }) {
+          return request.$http.get(`api/project/${projectUuid}/multi-agents`);
+        },
+
+        edit({ projectUuid, multi_agents }) {
+          return request.$http.patch(
+            `api/project/${projectUuid}/multi-agents`,
+            {
+              multi_agents,
+            },
+          );
         },
       },
     },

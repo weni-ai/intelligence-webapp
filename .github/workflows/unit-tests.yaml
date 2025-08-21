@@ -11,12 +11,18 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Install Dependencies
-        run: yarn --frozen-lockfile
+
+      - name: Install dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
+
       - name: Run lint
-        run: yarn lint --fix
+        run: npm run lint
+
       - name: Run Unit Tests with Coverage
-        run: yarn vitest run --coverage
+        run: npm run test:coverage
+
       - name: Check Coverage Threshold
         run: |
           COVERAGE=$(jq '.total.lines.pct' coverage/coverage-summary.json)
@@ -25,8 +31,8 @@ jobs:
             echo "Coverage is below 70%: $COVERAGE%"
             exit 1
           fi
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
-        with:
-          file: ./coverage/coverage-final.json
-          token: ${{ secrets.CODECOV_TOKEN }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

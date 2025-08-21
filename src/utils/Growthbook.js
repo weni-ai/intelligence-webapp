@@ -1,9 +1,10 @@
 import { reactive } from 'vue';
 import { configureCache, GrowthBook } from '@growthbook/growthbook';
 import globalStore from '@/store';
+import env from './env';
 
-const gbClientKey = runtimeVariables.get('VITE_GROWTHBOOK_CLIENT_KEY');
-const gbApiHost = runtimeVariables.get('VITE_GROWTHBOOK_API_HOST');
+const gbClientKey = env('GROWTHBOOK_CLIENT_KEY');
+const gbApiHost = env('GROWTHBOOK_API_HOST');
 
 const gbKey = Symbol('growthbook');
 const gbInstance = reactive(

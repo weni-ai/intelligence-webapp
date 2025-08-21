@@ -62,6 +62,133 @@
       "delete": "Delete base"
     }
   },
+  "agent_builder": {
+    "tabs": {
+      "supervisor": {
+        "title": "Supervisor",
+        "description": "Analyze and review conversations between agents and customers."
+      },
+      "profile": {
+        "title": "Profile",
+        "description": "Customize the agent’s basic information and behavior."
+      },
+      "agents": {
+        "title": "Agents",
+        "description": "Build the perfect agent team."
+      },
+      "knowledge": {
+        "title": "Knowledge",
+        "description": "Add knowledge through files, links, or text so the agent can respond accurately."
+      },
+      "tunings": {
+        "title": "Tunings",
+        "description": "Manage settings and track changes made."
+      }
+    },
+    "supervisor": {
+      "learn_details_conversations": "Learn about the details of a conversation.",
+      "conversation_details": {
+        "title": "About conversation",
+        "what_is_a_conversation": "What is a conversation?",
+        "what_is_a_conversation_description": "We consider all messages exchanged within 24 hours of the contact's first message as a single conversation.",
+        "when_is_a_conversation_considered_resolved": "When is a conversation considered resolved?",
+        "description": "A conversation is only considered resolved when the user goes beyond the initial greeting and actually engages: \n- Asks questions; \n- Requests data; \n- Confirms information; \n- Receives guidance that allows them to complete all or part of their request. \nMessages limited to greetings, emojis or closed without useful interaction remain unresolved, while interaction that delivers value to the user is marked as resolved."
+      },
+      "conversations_count": "{count} conversations found",
+      "unnamed_contact": "Unnamed contact",
+      "status": {
+        "in_progress": "In progress",
+        "resolved": "Resolved",
+        "unresolved": "Unresolved"
+      },
+      "attended_by_agent": {
+        "title": "Attended by the agent",
+        "tooltip": "Conversations solved by the agent"
+      },
+      "forwarded_human_support": {
+        "title": "Forwarded to human support",
+        "tooltip": "Conversations forwarded to human support"
+      },
+      "conversation_start_finish": {
+        "start": "Conversation started: {datetime}",
+        "finish": "Conversation finished: {datetime}"
+      },
+      "contact_urn": "Contact URN: {urn}",
+      "view_logs": "View logs",
+      "hide_logs": "Hide logs",
+      "search": "Search",
+      "conversations_empty": "No conversations found",
+      "no_messages_found": {
+        "title": "No messages found on this conversation",
+        "description": "If the message was sent by human support or triggered messages, you can find it on the {studio_link}",
+        "studio_link": "Studio"
+      },
+      "export": {
+        "title": "Send export by email",
+        "description": "We'll prepare the file with the AI data and send it to the following email addresses:",
+        "token_label": "Project API Token",
+        "token_placeholder": "86d2ba6397cabd4b22f7da925ef89d78bfb2d90dd",
+        "token_help": "You can find this token in your",
+        "project_settings": "project settings",
+        "and_paste": "and paste it here.",
+        "send": "Send export",
+        "success": "The export will be sent to all listed email addresses soon",
+        "error": "Error sending export. Try again later."
+      },
+      "filters": {
+        "status": {
+          "conversations": "Conversations",
+          "in_progress": "In progress",
+          "resolved": "Resolved",
+          "unresolved": "Unresolved",
+          "unengaged": "Unengaged",
+          "transferred_to_human_support": "Transferred to human support"
+        },
+        "csat": {
+          "csat": "CSAT",
+          "very_satisfied": "🤩 Very satisfied",
+          "satisfied": "😃 Satisfied",
+          "neutral": "😐 Neutral",
+          "dissatisfied": "😔 Dissatisfied",
+          "very_dissatisfied": "😡 Very dissatisfied"
+        },
+        "topic": {
+          "topic": "Topic"
+        }
+      }
+    },
+    "traces": {
+      "search_result_received": "Search result received",
+      "searching_knowledge_base": "Searching knowledge base",
+      "invoking_model": "Invoking model",
+      "model_response_received": "Model response received",
+      "thinking": "Thinking",
+      "delegating_to_agent": "Delegating task to agent",
+      "forwarding_to_manager": "Forwarding to Manager",
+      "executing_tool": "Executing tool {function}",
+      "tool_result_received": "Tool result received",
+      "sending_response_for_manager": "Sending response for Manager",
+      "sending_final_response": "Sending final response",
+      "applying_safety_rules": "Applying safety rules",
+      "processing_message": "Processing message",
+      "filter_logs": {
+        "title": "Filter logs",
+        "placeholder": "Search by log",
+        "categories": {
+          "placeholder": "Categories",
+          "knowledge": "Knowledge",
+          "thinking": "Thinking",
+          "delegating_to_agent": "Delegating to agent",
+          "forwarding_to_manager": "Forwarding to Manager",
+          "tool": "Tool",
+          "sending_response_for_manager": "Sending response for Manager",
+          "sending_final_response": "Sending final response",
+          "applying_guardrails": "Applying guardrails"
+        },
+        "no_logs_found": "No logs found"
+      }
+    }
+  },
   "router": {
     "modal_save_changes_error": {
       "title": "Error saving changes",
@@ -74,7 +201,6 @@
     "tabs": {
       "monitoring": "Supervisor",
       "profile": "Profile",
-      "agents": "Agents",
       "content": "Knowledge",
       "actions": "Actions",
       "tunings": "Tunings"
@@ -214,6 +340,19 @@
         "credentials": "Credentials",
         "history": "History of changes"
       },
+      "upgrade_to_multi_agents": {
+        "title": "Upgrade to Agent Builder 2.0",
+        "description": "Upgrade your project to use a smart team of agents that collaborate to understand and respond more effectively, making your assistant smarter with minimal effort.",
+        "button": "Upgrade now",
+        "modal": {
+          "title": "Upgrade to Agent Builder 2.0",
+          "description": "Are you sure you want to upgrade to Agent Builder 2.0? This change is permanent and cannot be undone.",
+          "cancel": "Cancel",
+          "upgrade": "Upgrade"
+        },
+        "error": "Error upgrading to Agent Builder 2.0",
+        "success": "Upgraded to Agent Builder 2.0 successfully"
+      },
       "history": {
         "no_changes": "No changes were made to the Agent Builder.",
         "description": "View the history of changes made to Agent Builder",
@@ -303,7 +442,15 @@
           "agents_progressive_feedback": {
             "title": "Agents progressive feedback",
             "description": "The agent can provide brief updates while formulating the final response, helping the contact understand its process in real-time."
+          },
+          "multiple_message_format": {
+            "title": "Multiple message format",
+            "description": "With this function enabled, the agent will be able to send multiple messages formats, like Quick Replies, List Message, CTA and Catalog."
           }
+        },
+        "human_support": {
+          "title": "Human support",
+          "description": "With this function enabled, the agent will be able to forward the conversation to human support."
         }
       },
       "save_success": "Tunings saved successfully"
@@ -644,11 +791,6 @@
       "register": "Register",
       "create_bot": "Create bot"
     },
-    "safari_alert": {
-      "title": "Unsupported browser",
-      "text": "Your browser isn’t compatible with this service yet 😥 We recommend the usage of the platform on another browser, such as the ones listed below:",
-      "button": "← Go back to the main page"
-    },
     "analyze_text": {
       "grid1": "Make a HTTP request to NLP service, follow the example below.",
       "method_send": "POST Body:",
@@ -859,6 +1001,7 @@
         "preview_tests_placeholder": "Type a message",
         "preview_tests_attachments": {
           "photos_or_videos": "Photos and videos",
+          "photos": "Photos",
           "file": "File",
           "location": "Location"
         },

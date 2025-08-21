@@ -14,6 +14,11 @@ describe('PreviewAgentCard.vue', () => {
         currentTask: 'Processing',
         ...props,
       },
+      global: {
+        stubs: {
+          AgentIcon: true,
+        },
+      },
     });
   };
 
@@ -23,7 +28,9 @@ describe('PreviewAgentCard.vue', () => {
 
   const agentCard = () => wrapper.find('[data-testid="preview-agent-card"]');
   const agentCardIcon = () =>
-    wrapper.find('[data-testid="preview-agent-card-icon"]');
+    wrapper.findComponent('[data-testid="preview-agent-card-icon-agent"]');
+  const managerCardIcon = () =>
+    wrapper.findComponent('[data-testid="preview-agent-card-icon-manager"]');
   const agentCardName = () =>
     wrapper.find('[data-testid="preview-agent-card-name"]');
   const agentCardStatus = () =>
@@ -46,18 +53,32 @@ describe('PreviewAgentCard.vue', () => {
     expect(agentCardStatus().text()).toBe(currentTask);
   });
 
-  it('should display "Standby" when no currentTask is active', () => {
+  it('should display empty string when no currentTask is active', () => {
     wrapper = createWrapper({ currentTask: '' });
-    expect(agentCardStatus().text()).toBe('Standby');
+    expect(agentCardStatus().text()).toBe('');
   });
 
-  it('should show icon only for manager type', () => {
-    wrapper = createWrapper({ type: 'manager' });
+  describe('icon rendering', () => {
+    it('should render manager icon when type is manager', () => {
+      wrapper = createWrapper({ type: 'manager' });
 
-    expect(agentCardIcon().exists()).toBe(true);
+      expect(managerCardIcon().exists()).toBe(true);
+      expect(agentCardIcon().exists()).toBe(false);
+    });
 
-    wrapper = createWrapper({ type: 'agent' });
-    expect(agentCardIcon().exists()).toBe(false);
+    it('should not show any icon when type is agent and not active', () => {
+      wrapper = createWrapper({ type: 'agent', active: false });
+
+      expect(managerCardIcon().exists()).toBe(false);
+      expect(agentCardIcon().isVisible()).toBe(false);
+    });
+
+    it('should render agent icon when type is agent and active', () => {
+      wrapper = createWrapper({ type: 'agent', active: true });
+
+      expect(managerCardIcon().exists()).toBe(false);
+      expect(agentCardIcon().exists()).toBe(true);
+    });
   });
 
   it('should apply active class when active prop is true', () => {

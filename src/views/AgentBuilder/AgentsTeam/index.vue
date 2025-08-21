@@ -1,14 +1,14 @@
 <template>
   <section class="agents-team">
     <AgentBuilderHeader
-      title="Agents Team"
-      subtitle="Assign agents to your team"
       withDivider
       actionsSize="lg"
+      data-testid="agents-team-header"
     >
       <template #actions>
         <section class="agents-team__actions">
           <UnnnicButton
+            data-testid="assign-agents-button"
             type="secondary"
             iconLeft="add"
             @click="handleAgentsGallery"
@@ -17,6 +17,7 @@
           </UnnnicButton>
 
           <UnnnicButton
+            data-testid="preview-button"
             type="primary"
             iconLeft="play_arrow"
             iconsFilled
@@ -28,11 +29,14 @@
       </template>
     </AgentBuilderHeader>
 
-    <ActiveTeam />
+    <ActiveTeam data-testid="active-team" />
 
-    <AgentsGalleryModal />
+    <AgentsGalleryModal data-testid="agents-gallery-modal" />
 
-    <PreviewDrawer v-model="isPreviewOpen" />
+    <PreviewDrawer
+      v-model="isPreviewOpen"
+      data-testid="preview-drawer"
+    />
   </section>
 </template>
 
@@ -63,7 +67,7 @@ const handlePreview = () => {
 onUnmounted(() => {
   if (previewStore.ws) {
     previewStore.disconnectWS();
-    previewStore.clearTraces();
+    previewStore.clearLogs();
   }
 });
 </script>
@@ -71,7 +75,8 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 section.agents-team {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  height: 100%;
 
   .agents-team__actions {
     display: grid;

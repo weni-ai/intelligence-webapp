@@ -9,15 +9,59 @@ FROM node:${NODE_VERSION}-${BASE_VERSION} AS builder
 
 WORKDIR /app
 
+ARG INTELLIGENCE_LEGACY_URL
+ARG API_BASE_URL
+ARG NEXUS_API_BASE_URL
+ARG NEXUS_WEBSOCKET_BASE_URL
+ARG FLOWS_API_BASE_URL
+ARG SUPPORTED_LANGUAGES
+ARG BOTHUB_WEBAPP_SENTRY
+ARG OPTIONS_WENIGPT
+ARG SENTRY_ENVIRONMENT
+ARG ORGS_CAN_CREATE_CONTENT_AI
+ARG GROWTHBOOK_CLIENT_KEY
+ARG GROWTHBOOK_API_HOST
+ARG HOTJAR_ID
+ARG TEMPLATE_LINK_FLOW_EDITOR
+ARG KEYCLOAK_SERVER
+ARG KEYCLOAK_REALM
+ARG PUBLIC_PATH_URL
+ARG MODULE_FEDERATION_CONNECT_URL
+ARG CONNECT_URL
+ARG FF_SUPERVISOR_EXPORT
+ARG BILLING_API_BASE_URL
+
+ENV INTELLIGENCE_LEGACY_URL=${INTELLIGENCE_LEGACY_URL}
+ENV API_BASE_URL=${API_BASE_URL}
+ENV NEXUS_API_BASE_URL=${NEXUS_API_BASE_URL}
+ENV NEXUS_WEBSOCKET_BASE_URL=${NEXUS_WEBSOCKET_BASE_URL}
+ENV FLOWS_API_BASE_URL=${FLOWS_API_BASE_URL}
+ENV SUPPORTED_LANGUAGES=${SUPPORTED_LANGUAGES}
+ENV BOTHUB_WEBAPP_SENTRY=${BOTHUB_WEBAPP_SENTRY}
+ENV OPTIONS_WENIGPT=${OPTIONS_WENIGPT}
+ENV SENTRY_ENVIRONMENT=${SENTRY_ENVIRONMENT}
+ENV ORGS_CAN_CREATE_CONTENT_AI=${ORGS_CAN_CREATE_CONTENT_AI}
+ENV GROWTHBOOK_CLIENT_KEY=${GROWTHBOOK_CLIENT_KEY}
+ENV GROWTHBOOK_API_HOST=${GROWTHBOOK_API_HOST}
+ENV HOTJAR_ID=${HOTJAR_ID}
+ENV TEMPLATE_LINK_FLOW_EDITOR=${TEMPLATE_LINK_FLOW_EDITOR}
+ENV KEYCLOAK_SERVER=${KEYCLOAK_SERVER}
+ENV KEYCLOAK_REALM=${KEYCLOAK_REALM}
+ENV PUBLIC_PATH_URL=${PUBLIC_PATH_URL}
+ENV MODULE_FEDERATION_CONNECT_URL=${MODULE_FEDERATION_CONNECT_URL}
+ENV CONNECT_URL=${CONNECT_URL}
+ENV FF_SUPERVISOR_EXPORT=${FF_SUPERVISOR_EXPORT}
+ENV BILLING_API_BASE_URL=${BILLING_API_BASE_URL}
+
 RUN apk add --no-cache git
 
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 
-RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn install
+RUN --mount=type=cache,target=/root/.npm NPM_CONFIG_CACHE=/root/.npm npm install
 
 COPY . ./
 
-RUN yarn build
+RUN npm run build
 
 RUN ls /app
 RUN ls /app/dist/assets
@@ -32,13 +76,12 @@ COPY --chown=nginx:nginx docker/nginx.conf /etc/nginx/nginx.conf
 COPY --chown=nginx:nginx docker/headers /usr/share/nginx/html/headers
 COPY --chown=nginx:nginx docker/file_handler.sh /
 COPY docker/docker-entrypoint.sh /
-COPY --from=builder --chown=nginx:nginx /app/dist /app/config.js.tmpl /usr/share/nginx/html/bothub-webapp/
+COPY --from=builder --chown=nginx:nginx /app/dist /usr/share/nginx/html/bothub-webapp/
 COPY --from=old_css --chown=nginx:nginx /usr/share/nginx/html/bothub-webapp/assets/all.tx[t] /usr/share/nginx/html/bothub-webapp/assets/*.css /usr/share/nginx/html/bothub-webapp/assets/
 
 RUN cd /usr/share/nginx/html/bothub-webapp/ \
     && ln -s /tmp/config.js \
     && /file_handler.sh css
-#mv /usr/share/nginx/html/bothub-webapp/config.js /usr/share/nginx/html/bothub-webapp/config.js.tmpl \
 
 EXPOSE 8080
 

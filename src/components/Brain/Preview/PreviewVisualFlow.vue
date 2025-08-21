@@ -9,12 +9,9 @@
       data-testid="visual-flow-manager"
       name="Manager"
       :active="true"
-      :currentTask="
-        isActiveAgent(manager)
-          ? activeAgent?.currentTask || $t('router.preview.manager_task')
-          : $t('router.preview.manager_task')
-      "
+      :currentTask="isActiveAgent(manager) ? activeAgent?.currentTask : ''"
       type="manager"
+      bubbleDirection="bounce"
     />
 
     <BranchLines
@@ -25,9 +22,7 @@
       :height="visualFlowHeight"
       :startY="managerRef?.$el.getBoundingClientRect().height"
       :coloredLineIndex="
-        teamAgents?.findIndex(
-          (agent) => agent.external_id === activeAgent?.external_id,
-        )
+        teamAgents?.findIndex((agent) => agent.id === activeAgent?.id)
       "
     />
 
@@ -41,11 +36,11 @@
         :ref="(el) => (agentRefs[index] = el)"
         data-testid="visual-flow-agent"
         :name="agent.name"
+        :icon="agent.icon"
         :active="isActiveAgent(agent)"
+        :bubbleDirection="index % 2 === 0 ? 'left' : 'right'"
         :currentTask="
-          isActiveAgent(agent)
-            ? activeAgent?.currentTask
-            : $t('router.preview.standby')
+          isActiveAgent(agent) ? activeAgent?.currentTask : 'Standby'
         "
         type="agent"
       />
@@ -59,7 +54,7 @@ import { computed, nextTick, ref, watch } from 'vue';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { usePreviewStore } from '@/store/Preview';
 
-import BranchLines from '@/assets/icons/BranchLines.vue';
+import BranchLines from './BranchLines.vue';
 import PreviewAgentCard from './PreviewAgentCard.vue';
 
 const agentsTeamStore = useAgentsTeamStore();
@@ -100,7 +95,7 @@ const branchPositions = computed(() => {
 });
 
 function isActiveAgent(agent) {
-  return agent.external_id === activeAgent.value?.external_id;
+  return agent?.id === activeAgent.value?.id;
 }
 
 const visualFlowHeight = ref(0);

@@ -1,8 +1,9 @@
 <template>
-  <BrainHeader />
+  <BrainHeader data-testid="brain-header" />
   <section class="tunings">
     <section class="tunings__tabs">
       <UnnnicTab
+        data-testid="unnnic-tab"
         :tabs="tabs.map((e) => e.page)"
         :activeTab="activeTab"
         @change="onTabChange"
@@ -17,11 +18,20 @@
       </UnnnicTab>
     </section>
     <section>
-      <Credentials v-if="activeTab === 'credentials'" />
+      <Credentials
+        v-if="activeTab === 'credentials'"
+        data-testid="credentials"
+      />
 
-      <Settings v-if="activeTab === 'config'" />
+      <Settings
+        v-if="activeTab === 'config'"
+        data-testid="settings"
+      />
 
-      <ChangesHistory v-if="activeTab === 'hist'" />
+      <ChangesHistory
+        v-if="activeTab === 'hist'"
+        data-testid="changes-history"
+      />
     </section>
   </section>
 </template>

@@ -6,10 +6,8 @@ import listeners from '@/websocket/listeners';
 
 vi.mock('@/websocket/socket');
 vi.mock('@/websocket/listeners');
-vi.mock('@/utils/env', () => ({
-  default: vi.fn(() => 'ws://mock-url'),
-}));
 vi.mock('@/store/modules/dashboard');
+vi.stubEnv('NEXUS_WEBSOCKET_BASE_URL', 'ws://mock-url');
 
 describe('WebSocketSetup', () => {
   let webSocketSetup;
@@ -102,6 +100,21 @@ describe('WebSocketSetup', () => {
       webSocketSetup.clearPingInterval();
 
       expect(clearIntervalSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('disconnect', () => {
+    it('should clear the ping interval and close the WebSocket', () => {
+      const spyClearPingInterval = vi.spyOn(
+        webSocketSetup,
+        'clearPingInterval',
+      );
+      const spyClose = vi.spyOn(webSocketSetup.ws.ws, 'close');
+
+      webSocketSetup.disconnect();
+
+      expect(spyClearPingInterval).toHaveBeenCalled();
+      expect(spyClose).toHaveBeenCalled();
     });
   });
 

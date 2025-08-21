@@ -14,6 +14,7 @@ exports[`AssignAgentCard.vue > renders correctly 1`] = `
       class="assign-agent-card__content"
       data-v-73104bd4=""
     >
+      <!--v-if-->
       <header
         class="content__header"
         data-v-73104bd4=""
@@ -29,17 +30,18 @@ exports[`AssignAgentCard.vue > renders correctly 1`] = `
           
         </p>
         <!--v-if-->
+        <p
+          class="unnnic-text unnnic-text--size-body-gt unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-regular unnnic-text--color-neutral-cloudy header__description header__description"
+          data-testid="description"
+          data-v-73104bd4=""
+          data-v-ec8da4ad=""
+          title="Test Description"
+        >
+          
+          Test Description
+          
+        </p>
       </header>
-      <p
-        class="unnnic-text unnnic-text--size-body-gt unnnic-text--line-height-md unnnic-text--family-secondary unnnic-text--weight-regular unnnic-text--color-neutral-cloudy content__description content__description"
-        data-testid="description"
-        data-v-73104bd4=""
-        data-v-ec8da4ad=""
-      >
-        
-        Test Description
-        
-      </p>
       <section
         class="content__skills"
         data-v-73104bd4=""

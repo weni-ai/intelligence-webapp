@@ -71,14 +71,10 @@ const store = createStore({
   },
 });
 
-global.runtimeVariables = {
-  get(name) {
-    return {
-      TEMPLATE_LINK_FLOW_EDITOR:
-        'https://floweditor/{dashProjectUuid}/flow/{flowUuid}',
-    }[name];
-  },
-};
+vi.stubEnv(
+  'TEMPLATE_LINK_FLOW_EDITOR',
+  'https://floweditor/{dashProjectUuid}/flow/{flowUuid}',
+);
 
 const pinia = createTestingPinia({ stubActions: false });
 

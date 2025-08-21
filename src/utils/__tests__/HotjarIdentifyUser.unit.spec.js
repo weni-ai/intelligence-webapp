@@ -1,12 +1,6 @@
 import { HotjarIdentifyUser } from '@/utils/HotjarIdentifyUser.js';
 import axios from 'axios';
 
-let envVariables = {};
-
-global.runtimeVariables = {
-  get: vi.fn((key) => envVariables[key]),
-};
-
 const getRequest = vi.spyOn(axios, 'get').mockResolvedValue({
   data: {
     email: 'user@email.com',
@@ -35,10 +29,8 @@ describe('HotjarIdentifyUser.js', () => {
       beforeEach(() => {
         vi.clearAllMocks();
 
-        envVariables = {
-          KEYCLOAK_SERVER: server,
-          KEYCLOAK_REALM: realm,
-        };
+        vi.stubEnv('KEYCLOAK_SERVER', server);
+        vi.stubEnv('KEYCLOAK_REALM', realm);
 
         HotjarIdentifyUser({ token: '1234' });
       });
@@ -54,10 +46,8 @@ describe('HotjarIdentifyUser.js', () => {
       vi.clearAllMocks();
       vi.useFakeTimers();
 
-      envVariables = {
-        KEYCLOAK_SERVER: 'server-2',
-        KEYCLOAK_REALM: 'realm-2',
-      };
+      vi.stubEnv('KEYCLOAK_SERVER', 'server-2');
+      vi.stubEnv('KEYCLOAK_REALM', 'realm-2');
 
       HotjarIdentifyUser({ token: 'Bearer 1234' });
     });

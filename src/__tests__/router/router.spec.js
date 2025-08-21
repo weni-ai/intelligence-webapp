@@ -1,7 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { createTestingPinia } from '@pinia/testing';
 import router from '@/router';
 import store from '@/store';
 import nexusaiAPI from '@/api/nexusaiAPI';
+import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useProjectStore } from '@/store/Project';
 
 vi.mock('@/views/Home.vue', () => ({
   default: {
@@ -66,9 +69,15 @@ global.location = {
 };
 
 describe('router', () => {
+  let featureFlagsStore;
+  let projectStore;
   beforeEach(() => {
     vi.clearAllMocks();
     vi.spyOn(store, 'dispatch').mockImplementation(() => Promise.resolve());
+    createTestingPinia();
+
+    featureFlagsStore = useFeatureFlagsStore();
+    projectStore = useProjectStore();
   });
 
   it('should create router with history mode', () => {
@@ -82,7 +91,10 @@ describe('router', () => {
     };
     const next = vi.fn();
     await router.options.routes[0].beforeEnter(to, null, next);
-    expect(next).toHaveBeenCalledWith({ path: '/home', replace: true });
+    expect(next).toHaveBeenCalledWith({
+      path: '/intelligences/home',
+      replace: true,
+    });
   });
 
   it('should handle brain preview full page route correctly', async () => {
@@ -90,7 +102,7 @@ describe('router', () => {
       query: { token: 'token', project_uuid: 'project_uuid' },
     };
     const next = vi.fn();
-    await router.options.routes[2].beforeEnter(to, null, next);
+    await router.options.routes[3].beforeEnter(to, null, next);
     expect(store.dispatch).toHaveBeenCalledWith('externalLogin', {
       token: 'Bearer token',
     });
@@ -106,8 +118,14 @@ describe('router', () => {
       intelligence: 'intelligenceUuid',
     };
     vi.spyOn(nexusaiAPI.router, 'read').mockResolvedValue({ data });
+    vi.spyOn(nexusaiAPI.router.tunings.multiAgents, 'read').mockResolvedValue({
+      data: {
+        can_view: true,
+        multi_agents: true,
+      },
+    });
     const next = vi.fn();
-    await router.options.routes[3].beforeEnter({}, {}, next);
+    await router.options.routes[4].beforeEnter({}, {}, next);
     expect(store.state.router.contentBaseUuid).toBe(data.uuid);
     expect(store.state.router.intelligenceUuid).toBe(data.intelligence);
     expect(next).toHaveBeenCalled();
@@ -124,10 +142,7 @@ describe('router', () => {
       return null;
     });
 
-    global.runtimeVariables.get = (key) => {
-      if (key === 'INTELLIGENCE_LEGACY_URL') return 'http://example.com';
-      return '';
-    };
+    vi.stubEnv('INTELLIGENCE_LEGACY_URL', 'http://example.com');
 
     const to = { fullPath: '/some-path' };
     const from = {};
@@ -162,16 +177,16 @@ describe('router', () => {
     const from = {};
     const next = vi.fn();
 
-    await router.options.routes[3].beforeEnter(to, from, next);
+    await router.options.routes[4].beforeEnter(to, from, next);
 
     expect(next).toHaveBeenCalled();
-    expect(router.options.routes[3].redirect()).toStrictEqual({
+    expect(router.options.routes[4].redirect()).toStrictEqual({
       name: 'router-monitoring',
     });
   });
 
   it('should redirect 404 route to next()', async () => {
-    const to = { fullPath: '/redirect-path' };
+    const to = { fullPath: '' };
     const from = {};
     const next = vi.fn();
 
@@ -180,5 +195,47 @@ describe('router', () => {
       .beforeEnter(to, from, next);
 
     expect(next).toHaveBeenCalled();
+  });
+
+  describe('Multi-agents feature flag', () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('should make a request to get multi-agents feature flag configuration before entering the router or agent builder route', async () => {
+      const next = vi.fn();
+      await router.options.routes[4].beforeEnter({}, {}, next);
+      expect(nexusaiAPI.router.tunings.multiAgents.read).toHaveBeenCalledTimes(
+        1,
+      );
+
+      await router.options.routes[5].beforeEnter({}, {}, next);
+      expect(nexusaiAPI.router.tunings.multiAgents.read).toHaveBeenCalledTimes(
+        2,
+      );
+    });
+
+    it('should not make a request before entering bothub routes', async () => {
+      const next = vi.fn();
+      await router.options.routes[3].beforeEnter({}, {}, next);
+      expect(nexusaiAPI.router.tunings.multiAgents.read).not.toHaveBeenCalled();
+    });
+
+    it('should update the multi-agents feature flag configuration when the request is successful', async () => {
+      const next = vi.fn();
+      await router.options.routes[4].beforeEnter({}, {}, next);
+      expect(featureFlagsStore.editUpgradeToMultiAgents).toHaveBeenCalledWith(
+        true,
+      );
+    });
+
+    it('should not make the request if the multi-agents project field is different of null', async () => {
+      projectStore.isMultiAgents = true;
+
+      const next = vi.fn();
+      await router.options.routes[4].beforeEnter({}, {}, next);
+
+      expect(nexusaiAPI.router.tunings.multiAgents.read).not.toHaveBeenCalled();
+    });
   });
 });

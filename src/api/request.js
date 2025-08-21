@@ -1,11 +1,12 @@
 import axios from 'axios';
 import * as Sentry from '@sentry/browser';
 import store from '../store';
+import env from '@/utils/env';
 
 export default {
   get $http() {
     const client = axios.create({
-      baseURL: runtimeVariables.get('VITE_API_BASE_URL'),
+      baseURL: env('API_BASE_URL'),
       headers: {
         ...(store.getters.authenticated
           ? { Authorization: `${store.getters.authToken}` }

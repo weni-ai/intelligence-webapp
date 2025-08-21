@@ -4,7 +4,6 @@ import { createPinia } from 'pinia';
 import Unnnic from '@weni/unnnic-system';
 
 import { usePreviewStore } from '@/store/Preview';
-import i18n from '@/utils/plugins/i18n';
 
 import PreviewLogs from '@/components/Brain/PreviewLogs.vue';
 import PreviewDetails from '../PreviewDetails.vue';
@@ -15,6 +14,7 @@ vi.mock('../PreviewVisualFlow.vue');
 describe('PreviewDetails.vue', () => {
   let wrapper;
   let previewStore;
+  let mockScrollTo;
 
   const pinia = createPinia();
 
@@ -29,7 +29,42 @@ describe('PreviewDetails.vue', () => {
     });
   };
 
+  const defineScroll = ({
+    element = HTMLElement.prototype,
+    scrollTo = vi.fn(),
+    scrollHeight = 1000,
+    scrollTop = 0,
+    clientHeight = 500,
+  } = {}) => {
+    Object.defineProperty(element, 'scrollTo', {
+      value: scrollTo,
+      writable: true,
+      configurable: true,
+    });
+
+    Object.defineProperty(element, 'scrollHeight', {
+      value: scrollHeight,
+      writable: true,
+      configurable: true,
+    });
+
+    Object.defineProperty(element, 'scrollTop', {
+      value: scrollTop,
+      writable: true,
+      configurable: true,
+    });
+
+    Object.defineProperty(element, 'clientHeight', {
+      value: clientHeight,
+      writable: true,
+      configurable: true,
+    });
+  };
+
   beforeEach(() => {
+    mockScrollTo = vi.fn();
+    defineScroll({ scrollTo: mockScrollTo });
+
     wrapper = createWrapper();
     previewStore = usePreviewStore();
   });
@@ -71,26 +106,43 @@ describe('PreviewDetails.vue', () => {
     expect(wrapper.vm.detailTabs).toEqual(['visual_flow', 'logs']);
   });
 
-  it('should scroll content to bottom when logs component emits scroll event', async () => {
+  it('should scroll content to bottom when logs component emits scroll event if it is near the bottom', async () => {
     await switchToLogsTab();
-
-    const mockScrollTo = vi.fn();
-    wrapper.vm.contentRef = {
-      scrollTo: mockScrollTo,
-      scrollHeight: 100,
-    };
 
     await wrapper.findComponent(PreviewLogs).vm.$emit('scroll-to-bottom');
 
     expect(mockScrollTo).toHaveBeenCalledWith({
-      top: 100,
+      top: 1000,
       behavior: 'smooth',
     });
   });
 
-  it('should translate tab headers correctly', () => {
-    const tabs = previewDetailsTabs();
-    expect(tabs.text()).toContain(i18n.global.t('router.preview.visual_flow'));
-    expect(tabs.text()).toContain(i18n.global.t('router.preview.logs'));
+  it('should not scroll content to bottom when user is not near the bottom', async () => {
+    await switchToLogsTab();
+
+    defineScroll({
+      element: wrapper.vm.$refs.contentRef || wrapper.vm.contentRef,
+      scrollTop: 100,
+      clientHeight: 200,
+      scrollHeight: 1000,
+    });
+
+    mockScrollTo.mockClear();
+
+    await wrapper.findComponent(PreviewLogs).vm.$emit('scroll-to-bottom');
+
+    expect(mockScrollTo).not.toHaveBeenCalled();
+  });
+
+  it('should scroll to bottom when tab changes', async () => {
+    mockScrollTo.mockClear();
+
+    await switchToLogsTab();
+    await wrapper.vm.$nextTick();
+
+    expect(mockScrollTo).toHaveBeenCalledWith({
+      top: 1000,
+      behavior: 'smooth',
+    });
   });
 });

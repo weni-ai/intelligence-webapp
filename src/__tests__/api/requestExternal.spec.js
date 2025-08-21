@@ -8,14 +8,11 @@ vi.mock('axios', () => ({
   },
 }));
 
-global.runtimeVariables = {
-  get: vi.fn(() => 'http://brain.weni.com'),
-};
+vi.stubEnv('API_BASE_URL', 'http://brain.weni.com');
 
 describe('requestExternal.js', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    runtimeVariables.get.mockReturnValue('http://brain.weni.com');
   });
 
   it('should create axios client with correct baseURL', () => {
@@ -44,8 +41,8 @@ describe('requestExternal.js', () => {
     });
   });
 
-  it('should handle when runtimeVariables returns a different URL', () => {
-    runtimeVariables.get.mockReturnValueOnce('http://another-url.com');
+  it('should handle when env variable returns a different URL', () => {
+    vi.stubEnv('API_BASE_URL', 'http://another-url.com');
     requestExternal.$http('anotherToken');
     expect(axios.create).toHaveBeenCalledWith({
       baseURL: 'http://another-url.com',

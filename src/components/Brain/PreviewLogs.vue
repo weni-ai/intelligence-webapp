@@ -16,7 +16,7 @@
       :class="`preview-logs__logs preview-logs__logs--${props.logsSide}`"
       name="logs"
       tag="ol"
-      @enter="updateProgressBarHeight('agent')"
+      @before-enter="updateProgressBarHeight('agent')"
     >
       <li
         v-for="(log, logIndex) in processedLogs"
@@ -28,14 +28,15 @@
           :class="`log__agent-name log__agent-name--${props.logsSide}`"
           data-testid="preview-logs-log-agent-name"
         >
-          {{ log.agent_name }}
+          {{ log.agent }}
         </p>
 
         <TransitionGroup
           name="steps"
           tag="ol"
           class="log__steps"
-          @enter="updateProgressBarHeight('step')"
+          @before-enter="updateProgressBarHeight('step')"
+          @before-leave="updateProgressBarHeight('step')"
         >
           <li
             v-for="(step, stepIndex) in log.steps"
@@ -43,11 +44,32 @@
             :class="`steps__step steps__step--${props.logsSide}`"
             data-testid="preview-logs-log-step"
           >
+            <section
+              v-if="step.log?.config?.icon"
+              class="steps__step-icon"
+              data-testid="preview-logs-log-step-icon"
+            >
+              <UnnnicIcon
+                class="step-icon__background"
+                icon="circle"
+                size="lg"
+                filled
+              />
+
+              <UnnnicIcon
+                class="step-icon__icon"
+                data-testid="preview-logs-log-step-icon-icon"
+                :icon="step.log.config?.icon"
+                size="sm"
+                scheme="neutral-cloudy"
+              />
+            </section>
             <p>{{ step.title }}</p>
             <button
+              v-if="step.log?.data"
               class="step__see-full"
               data-testid="preview-logs-log-step-see-full"
-              @click="openModalLogFullDetails(step.title, step.trace)"
+              @click="openModalLogFullDetails(step.title, step.log)"
             >
               {{ $t('router.preview.see_full_details') }}
             </button>
@@ -64,7 +86,7 @@
     <PreviewLogsDetailsModal
       v-model="showDetailsModal"
       :title="selectedLog.summary"
-      :trace="selectedLog.trace"
+      :log="selectedLog.log"
       data-testid="preview-logs-details-modal"
     />
   </section>
@@ -72,7 +94,7 @@
 
 <script setup>
 import { ref, onMounted, nextTick, computed, watch } from 'vue';
-import { usePreviewStore } from '@/store/Preview';
+
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import PreviewLogsDetailsModal from './Preview/PreviewLogsDetailsModal.vue';
 
@@ -90,76 +112,87 @@ const props = defineProps({
       return ['left', 'right'].includes(value);
     },
   },
+  agents: {
+    type: Object,
+    default: () => ({
+      agents: [],
+      manager: {},
+    }),
+  },
 });
 
-const previewStore = usePreviewStore();
 const agentsTeamStore = useAgentsTeamStore();
 
 const showDetailsModal = ref(false);
 const selectedLog = ref({
   summary: '',
-  trace: '',
+  log: '',
 });
 
 const processedLogs = computed(() => {
-  if (!agentsTeamStore.activeTeam.data) return [];
+  const allAgents =
+    Object.keys(props.agents.manager).length && props.agents.agents.length
+      ? props.agents
+      : agentsTeamStore.allAgents;
+  if (!allAgents) return [];
 
-  const traces = props.logs;
-  const { agents: activeTeam, manager } = agentsTeamStore.activeTeam.data || {};
+  const logs = props.logs;
+  const { agents, manager } = allAgents;
 
-  return traces.reduce((logsByAgent, trace) => {
-    const agent = activeTeam.find(
-      (agent) => agent.external_id === trace.trace.agentId,
-    );
+  return logs.reduce((logsByAgent, log) => {
+    const { agentName = '' } = log.config || {};
 
-    const agentToLog = agent || manager;
-    if (!agentToLog) return logsByAgent;
+    const agent = agents.find((agent) => agent.id === agentName) || manager;
+
+    if (!agent) return logsByAgent;
 
     const lastLog = logsByAgent.at(-1);
-    if (lastLog?.external_id !== agentToLog.external_id) {
+    if (lastLog?.id !== agent.id) {
       logsByAgent.push({
-        external_id: agentToLog.external_id,
-        agent_name: agentToLog.name || 'Manager',
+        id: agent.id,
+        agent: agent.name || 'Manager',
         steps: [],
       });
     }
 
     logsByAgent.at(-1)?.steps.push({
-      title: getTraceSummary(trace) || 'Unknown',
-      trace,
+      title: getLogSummary(log) || 'Unknown',
+      log,
     });
     return logsByAgent;
   }, []);
 });
 
-function getTraceSummary(trace) {
-  if (trace.summary) {
-    return trace.summary;
+function getLogSummary(log) {
+  if (log.config?.summary) {
+    return log.config.summary;
   }
 
   function capitalizeWord(word) {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }
 
-  function formatTraceKey(key) {
+  function formatLogKey(key) {
     return key
       .split(/(?=[A-Z])|_/)
       .map(capitalizeWord)
       .join(' ');
   }
 
-  function findTraceKey(traceObject) {
-    return Object.keys(traceObject).find((key) =>
+  function findTraceKey(trace) {
+    if (!trace) return;
+
+    return Object.keys(trace).find((key) =>
       key.toLowerCase().includes('trace'),
     );
   }
 
-  if (!trace.trace || typeof trace.trace !== 'object') {
+  if (!log.data || typeof log.data !== 'object') {
     return 'Unknown';
   }
 
-  const traceKey = findTraceKey(trace.trace.trace || trace.trace);
-  return traceKey ? formatTraceKey(traceKey) : 'Unknown';
+  const logKey = findTraceKey(log.data.trace || log.data);
+  return logKey ? formatLogKey(logKey) : 'Unknown';
 }
 
 const progressHeight = ref(0);
@@ -170,15 +203,15 @@ onMounted(() => {
   });
 });
 
-function openModalLogFullDetails(summary, trace) {
-  selectedLog.value = { summary, trace };
+function openModalLogFullDetails(summary, log) {
+  selectedLog.value = { summary, log };
   showDetailsModal.value = true;
 }
 
 const logTranslateY = 24;
 
 function updateProgressBarHeight(type = 'agent') {
-  nextTick(() => {
+  setTimeout(() => {
     if (!['mount', 'agent', 'step'].includes(type)) {
       throw new Error('Invalid type passed to updateProgressHeight function');
     }
@@ -204,13 +237,13 @@ function updateProgressBarHeight(type = 'agent') {
     }
 
     emit('scroll-to-bottom');
-  });
+  }, 200);
 }
 
 watch(
-  () => previewStore.collaboratorsTraces,
-  (newTraces) => {
-    if (newTraces.length === 0) {
+  () => props.logs,
+  (newLogs) => {
+    if (newLogs.length === 0) {
       progressHeight.value = 0;
     }
   },
@@ -219,7 +252,7 @@ watch(
 
 <style scoped lang="scss">
 .logs-enter-active {
-  transition: all 0.5s ease-out;
+  transition: all 0.2s ease-out;
 }
 .logs-enter-from {
   $logTranslateY: -24px;
@@ -228,7 +261,7 @@ watch(
 }
 
 .steps-enter-active {
-  transition: all 0.5s ease-out;
+  transition: all 0.2s ease-out;
 }
 .steps-enter-from {
   opacity: 0;
@@ -236,10 +269,6 @@ watch(
 
 .preview-logs {
   position: relative;
-
-  &--left {
-    margin: 0 auto;
-  }
 
   .preview-logs__empty {
     margin: 0;
@@ -270,10 +299,9 @@ watch(
     }
 
     .logs__log {
-      $progressDotOffset: -($unnnic-spacing-sm + $unnnic-spacing-nano) + 0.5;
-
       margin-bottom: $unnnic-spacing-sm;
 
+      $progressDotOffset: -($unnnic-spacing-sm + $unnnic-spacing-nano);
       %progressDot {
         &::before {
           content: '•';
@@ -304,7 +332,7 @@ watch(
 
         &--right {
           &::before {
-            right: $progressDotOffset;
+            right: $progressDotOffset + 0.5px;
           }
         }
       }
@@ -316,30 +344,49 @@ watch(
         padding: 0;
 
         display: grid;
-        gap: $unnnic-spacing-xs;
+        gap: $unnnic-spacing-sm;
 
         list-style: none;
 
         .steps__step {
-          &:first-letter {
-            text-transform: uppercase;
-          }
+          $lineHeight: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+
+          position: relative;
+
           color: $unnnic-color-neutral-cloudy;
           font-family: $unnnic-font-family-secondary;
           font-size: $unnnic-font-size-body-gt;
-          line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+          line-height: $lineHeight;
 
-          @extend %progressDot;
+          &:first-letter {
+            text-transform: uppercase;
+          }
+
+          .steps__step-icon {
+            position: absolute;
+            top: calc($lineHeight / 8);
+
+            z-index: 10;
+
+            display: grid;
+            place-items: center;
+
+            .step-icon__background {
+              color: $unnnic-color-neutral-white;
+              position: absolute;
+              z-index: -1;
+            }
+          }
 
           &--left {
-            &::before {
-              left: $progressDotOffset;
+            .steps__step-icon {
+              left: -($unnnic-spacing-xl) + 4.5;
             }
           }
 
           &--right {
-            &::before {
-              right: $progressDotOffset;
+            .steps__step-icon {
+              right: -($unnnic-spacing-md) + 1;
             }
           }
 
@@ -363,7 +410,7 @@ watch(
         .steps__step:last-of-type {
           color: $unnnic-color-weni-600;
 
-          &::before {
+          .step-icon__icon {
             color: $unnnic-color-weni-600;
           }
 
