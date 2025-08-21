@@ -62,7 +62,17 @@ const formattedUrn = computed(() =>
   }),
 );
 const topics = computed(
-  () => conversation.value?.topics?.map((topic) => topic.name) || [],
+  () => {
+    if (typeof conversation.value?.topics === 'string') {
+      return [conversation.value?.topics];
+    }
+
+    if (conversation.value?.topics?.length === 0) {
+      return conversation.value?.topics;
+    }
+
+    return [];
+  },
 );
 </script>
 
