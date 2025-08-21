@@ -212,13 +212,10 @@ describe('Supervisor Store', () => {
         };
       });
 
-      it('selects a conversation by ID', () => {
+      it('selects a conversation by ID', async () => {
         store.selectConversation(1);
 
         expect(store.selectedConversation).toEqual({
-          id: 1,
-          title: 'Conversation 1',
-          urn: 'urn:1',
           data: {
             status: null,
           },

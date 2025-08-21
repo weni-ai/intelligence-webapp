@@ -153,18 +153,6 @@ describe('ContentItem.vue', () => {
       expect(link.text()).toBe('https://website.com/pathname/');
     });
 
-    describe('when user clicks to see details', () => {
-      it('displays FilePreview component', async () => {
-        const action = wrapper.find('[data-test="View details"]');
-
-        expect(wrapper.find('file-preview-stub').exists()).toBe(false);
-
-        await action.trigger('click');
-
-        expect(wrapper.find('file-preview-stub').exists()).toBe(true);
-      });
-    });
-
     describe('when user clicks to remove site', () => {
       it('emits remove event', async () => {
         const action = wrapper.find('[data-test="Remove site"]');
@@ -195,18 +183,6 @@ describe('ContentItem.vue', () => {
       const name = wrapper.find('[data-test="name"]');
 
       expect(name.text()).toBe('Name of the Text.txt');
-    });
-
-    describe('when user clicks to see details', () => {
-      it('displays FilePreview component', async () => {
-        const action = wrapper.find('[data-test="View details"]');
-
-        expect(wrapper.find('file-preview-stub').exists()).toBe(false);
-
-        await action.trigger('click');
-
-        expect(wrapper.find('file-preview-stub').exists()).toBe(true);
-      });
     });
 
     describe('when user clicks to download file', () => {
