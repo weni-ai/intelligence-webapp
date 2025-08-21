@@ -4,6 +4,7 @@ import Unnnic from '@weni/unnnic-system';
 
 import CatalogCartModal from '../CatalogCartModal.vue';
 import Text from '@/components/unnnic-intelligence/Text.vue';
+import i18n from '@/utils/plugins/i18n';
 
 describe('CatalogCartModal.vue', () => {
   let wrapper;
@@ -107,12 +108,16 @@ describe('CatalogCartModal.vue', () => {
 
   describe('Computed properties', () => {
     it('sets correct modal title when enablePlaceOrder is true', () => {
-      expect(modal().props('title')).toBe('Your cart');
+      expect(modal().props('title')).toBe(
+        i18n.global.t('router.preview.catalog.your_cart'),
+      );
     });
 
     it('sets correct modal title when enablePlaceOrder is false', async () => {
       await wrapper.setProps({ enablePlaceOrder: false });
-      expect(modal().props('title')).toBe('Order Details');
+      expect(modal().props('title')).toBe(
+        i18n.global.t('router.preview.catalog.order_details'),
+      );
     });
 
     it('formats subtotal correctly with currency', () => {

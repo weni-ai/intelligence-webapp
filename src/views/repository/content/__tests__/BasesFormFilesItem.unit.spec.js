@@ -119,7 +119,7 @@ describe('BasesFormFilesItem.vue', () => {
 
       describe('when user clicks to see details', () => {
         it('displays FilePreview component', async () => {
-          const action = wrapper.find('[data-test="See details"]');
+          const action = wrapper.find('[data-test="View details"]');
 
           expect(wrapper.find('file-preview-stub').exists()).toBe(false);
 
@@ -189,7 +189,7 @@ describe('BasesFormFilesItem.vue', () => {
 
       describe('when user clicks to see details', () => {
         it('displays FilePreview component', async () => {
-          const action = wrapper.find('[data-test="See details"]');
+          const action = wrapper.find('[data-test="View details"]');
 
           expect(wrapper.find('file-preview-stub').exists()).toBe(false);
 

@@ -3,6 +3,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 import MessageCatalogOrder from '../MessageCatalogOrder.vue';
 import Text from '@/components/unnnic-intelligence/Text.vue';
+import i18n from '@/utils/plugins/i18n';
 
 describe('MessageCatalogOrder.vue', () => {
   let wrapper;
@@ -82,7 +83,9 @@ describe('MessageCatalogOrder.vue', () => {
     });
 
     it('displays correct header text', () => {
-      expect(orderTitle().text()).toBe('Order Summary');
+      expect(orderTitle().text()).toBe(
+        i18n.global.t('router.preview.catalog.order_summary'),
+      );
     });
 
     it('displays correct items quantity and subtotal', () => {
