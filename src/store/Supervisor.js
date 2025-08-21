@@ -35,7 +35,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     topics: route.query.topics || '',
   });
 
-  const queryConversationId = ref(route.query.conversationId || '');
+  const queryConversationUrn = ref(route.query.urn || '');
 
   async function loadConversations(page = 1) {
     if (conversations.status === 'loading') {
@@ -108,20 +108,23 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     }
   }
 
-  function selectConversation(conversationId) {
-    if (!conversationId) {
+  function selectConversation(urn) {
+    if (!urn) {
       selectedConversation.value = null;
-      queryConversationId.value = '';
+      queryConversationUrn.value = '';
       return;
     }
 
-    if (selectedConversation.value?.id === conversationId) return;
+    if (selectedConversation.value?.urn === urn) return;
 
-    const conversation = conversations.data.results?.find(
-      (conversation) => conversation.id == conversationId,
-    );
+    const handleMatch = (conversation) => {
+      return conversation.urn === urn;
+    };
 
-    queryConversationId.value = conversationId;
+    const conversation = conversations.data.results?.find(handleMatch);
+
+    queryConversationUrn.value = urn;
+
     selectedConversation.value = {
       ...conversation,
       data: {
@@ -164,7 +167,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     selectConversation,
     selectedConversation,
     filters,
-    queryConversationId,
+    queryConversationUrn,
     getTopics,
     exportSupervisorData,
   };

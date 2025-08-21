@@ -81,7 +81,7 @@ async function loadConversationData() {
 }
 
 watch(
-  () => supervisorStore.queryConversationId,
+  () => supervisorStore.queryConversationUrn,
   (newValue, oldValue) => {
     if (newValue !== oldValue) {
       loadConversationData();

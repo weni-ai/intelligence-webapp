@@ -58,11 +58,11 @@ watch(
 );
 
 watch(
-  () => supervisorStore.queryConversationId,
-  (conversationId) => {
+  () => supervisorStore.queryConversationUrn,
+  (conversationUrn) => {
     updateQuery({
       ...route.query,
-      conversationId,
+      conversationUrn,
     });
   },
 );
@@ -72,9 +72,10 @@ onBeforeMount(async () => {
 
   await supervisorStore.loadConversations();
 
-  const { selectedConversation, queryConversationId } = supervisorStore;
-  if (queryConversationId && !selectedConversation) {
-    supervisorStore.selectConversation(queryConversationId);
+  const { selectedConversation, queryConversationUrn } = supervisorStore;
+
+  if (queryConversationUrn && !selectedConversation) {
+    supervisorStore.selectConversation(queryConversationUrn);
   }
 });
 </script>

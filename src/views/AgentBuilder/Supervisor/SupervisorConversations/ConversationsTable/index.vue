@@ -26,11 +26,11 @@
       >
         <ConversationRow
           v-for="conversation in conversations.data.results"
-          :key="conversation.id"
+          :key="conversation.urn"
           data-testid="conversation-row"
           :conversation="conversation"
           :isSelected="
-            conversation.id === supervisorStore.selectedConversation?.id
+            conversation.urn === supervisorStore.selectedConversation?.urn
           "
           @click="handleRowClick(conversation)"
         />
@@ -85,7 +85,7 @@ const pagination = ref({
 });
 
 function handleRowClick(row) {
-  supervisorStore.selectConversation(row.id);
+  supervisorStore.selectConversation(row.urn);
 }
 
 watch(
