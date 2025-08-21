@@ -53,6 +53,7 @@ const getMultiAgentsEnabled = async () => {
 
   useFeatureFlagsStore().editUpgradeToMultiAgents(data.can_view);
   projectStore.updateIsMultiAgents(data.multi_agents);
+  sessionStorage.setItem('agentsTeam', JSON.stringify(data.multi_agents));
 };
 
 const router = createRouter({
