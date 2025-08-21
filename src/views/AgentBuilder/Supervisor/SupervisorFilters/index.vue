@@ -16,14 +16,14 @@
         multipleWithoutSelectsMessage
         autocomplete
       />
-      <!-- <UnnnicSelectSmart
+      <UnnnicSelectSmart
         v-model:modelValue="csatFilter"
         :options="csatOptions"
         orderedByIndex
         multiple
         multipleWithoutSelectsMessage
         autocomplete
-      />-->
+      />
       <UnnnicSelectSmart
         v-model:modelValue="topicFilter"
         :options="topicOptions"
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 
 import FilterText from './FilterText.vue';
 import { format } from 'date-fns';
