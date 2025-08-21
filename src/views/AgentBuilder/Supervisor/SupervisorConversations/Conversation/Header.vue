@@ -61,19 +61,17 @@ const formattedUrn = computed(() =>
     urn: formatWhatsappUrn(conversation.value?.urn),
   }),
 );
-const topics = computed(
-  () => {
-    if (typeof conversation.value?.topics === 'string') {
-      return [conversation.value?.topics];
-    }
+const topics = computed(() => {
+  if (typeof conversation.value?.topics === 'string') {
+    return [conversation.value?.topics];
+  }
 
-    if (conversation.value?.topics?.length === 0) {
-      return conversation.value?.topics;
-    }
+  if (conversation.value?.topics?.length === 0) {
+    return conversation.value?.topics;
+  }
 
-    return [];
-  },
-);
+  return [];
+});
 </script>
 
 <style lang="scss" scoped>

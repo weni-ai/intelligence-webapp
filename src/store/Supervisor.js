@@ -121,9 +121,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
       return conversation.urn === urn;
     };
 
-    const conversation = conversations.data.results?.find(
-      handleMatch
-    );
+    const conversation = conversations.data.results?.find(handleMatch);
 
     queryConversationUrn.value = urn;
 
