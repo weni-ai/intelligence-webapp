@@ -154,6 +154,9 @@
         "topic": {
           "topic": "Tópico"
         }
+      },
+      "load_conversations": {
+        "error": "Error al cargar conversaciones"
       }
     },
     "traces": {
