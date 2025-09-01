@@ -37,7 +37,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     topics: route.query.topics || [],
   });
 
-  const queryConversationUrn = ref(route.query.urn || '');
+  const queryConversationUuid = ref(route.query.uuid || '');
 
   async function loadConversations(page = 1) {
     if (conversationsAbortController) {
@@ -127,22 +127,22 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     }
   }
 
-  function selectConversation(urn) {
-    if (!urn) {
+  function selectConversation(uuid) {
+    if (!uuid) {
       selectedConversation.value = null;
-      queryConversationUrn.value = '';
+      queryConversationUuid.value = '';
       return;
     }
 
-    if (selectedConversation.value?.urn === urn) return;
+    if (selectedConversation.value?.uuid === uuid) return;
 
     const handleMatch = (conversation) => {
-      return conversation.urn === urn;
+      return conversation.uuid === uuid;
     };
 
     const conversation = conversations.data.results?.find(handleMatch);
 
-    queryConversationUrn.value = urn;
+    queryConversationUuid.value = uuid;
 
     selectedConversation.value = {
       ...conversation,
@@ -186,7 +186,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     selectConversation,
     selectedConversation,
     filters,
-    queryConversationUrn,
+    queryConversationUuid,
     getTopics,
     exportSupervisorData,
   };

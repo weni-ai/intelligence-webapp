@@ -89,11 +89,11 @@ watch(
 );
 
 watch(
-  () => supervisorStore.queryConversationUrn,
-  (conversationUrn) => {
+  () => supervisorStore.queryConversationUuid,
+  (conversationUuid) => {
     updateQuery({
       ...route.query,
-      conversationUrn,
+      conversationUuid,
     });
   },
 );
@@ -101,10 +101,10 @@ watch(
 onBeforeMount(async () => {
   updateQuery();
 
-  const { selectedConversation, queryConversationUrn } = supervisorStore;
+  const { selectedConversation, queryConversationUuid } = supervisorStore;
 
-  if (queryConversationUrn && !selectedConversation) {
-    supervisorStore.selectConversation(queryConversationUrn);
+  if (queryConversationUuid && !selectedConversation) {
+    supervisorStore.selectConversation(queryConversationUuid);
   }
 });
 </script>

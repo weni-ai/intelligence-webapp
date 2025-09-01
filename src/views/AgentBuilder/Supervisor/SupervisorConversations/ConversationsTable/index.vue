@@ -24,11 +24,11 @@
       <tbody class="conversations-table__rows">
         <ConversationRow
           v-for="conversation in conversations.data.results"
-          :key="conversation.urn"
+          :key="conversation.uuid"
           data-testid="conversation-row"
           :conversation="conversation"
           :isSelected="
-            conversation.urn === supervisorStore.selectedConversation?.urn
+            conversation.uuid === supervisorStore.selectedConversation?.uuid
           "
           @click="handleRowClick(conversation)"
         />
@@ -84,7 +84,7 @@ const pagination = ref({
 });
 
 function handleRowClick(row) {
-  supervisorStore.selectConversation(row.urn);
+  supervisorStore.selectConversation(row.uuid);
 }
 
 function loadMoreConversations() {

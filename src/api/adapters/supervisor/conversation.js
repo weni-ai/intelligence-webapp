@@ -26,6 +26,7 @@ export const ConversationAdapter = {
       return {
         ...apiData,
         results: apiData.results.map((result) => ({
+          uuid: result.uuid,
           id: result.external_id,
           start: result.created_on,
           end: result.end_date,
