@@ -32,9 +32,9 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     start: route.query.start || thisMonth,
     end: route.query.end || today,
     search: route.query.search || '',
-    status: route.query.status || '',
-    csat: route.query.csat || '',
-    topics: route.query.topics || '',
+    status: route.query.status || [],
+    csat: route.query.csat || [],
+    topics: route.query.topics || [],
   });
 
   const queryConversationUrn = ref(route.query.urn || '');
@@ -76,6 +76,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
       if (error.code === 'ERR_CANCELED') return;
 
       conversations.status = 'error';
+      console.error('Error loading conversations:', error);
       alertStore.add({
         type: 'error',
         text: i18n.global.t(

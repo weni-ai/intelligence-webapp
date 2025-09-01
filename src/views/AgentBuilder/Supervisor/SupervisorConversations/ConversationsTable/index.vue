@@ -69,6 +69,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue';
+import { isEqual } from 'lodash';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
@@ -89,15 +90,26 @@ function handleRowClick(row) {
 }
 
 watch(
-  () => supervisorStore.filters,
-  () => {
+  [
+    () => supervisorStore.filters.start,
+    () => supervisorStore.filters.end,
+    () => supervisorStore.filters.search,
+    () => supervisorStore.filters.status,
+    () => supervisorStore.filters.csat,
+    () => supervisorStore.filters.topics,
+  ],
+  (newValue, oldValue) => {
+    const hasFiltersChanged = !isEqual(newValue, oldValue);
+
+    if (!hasFiltersChanged) return;
+
     if (pagination.value.page === 1) {
       supervisorStore.loadConversations();
     } else {
       pagination.value.page = 1;
     }
   },
-  { deep: true },
+  { immediate: true, deep: true },
 );
 
 function handleScroll(event) {

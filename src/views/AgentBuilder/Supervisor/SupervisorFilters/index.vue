@@ -95,8 +95,8 @@ const statusFilter = ref(getQueryFilterArray('status', statusOptions));
 watch(
   () => statusFilter.value,
   () => {
-    supervisorStore.filters.status = statusFilter.value?.map(
-      (status) => status.value,
+    supervisorStore.filters.status = statusFilter.value.map(
+      (status) => status.value || '',
     );
   },
   { immediate: true, deep: true },
@@ -121,9 +121,11 @@ const csatFilter = ref(getQueryFilterArray('csat', csatOptions));
 watch(
   () => csatFilter.value,
   () => {
-    supervisorStore.filters.csat = csatFilter.value?.map((csat) => csat.value);
+    supervisorStore.filters.csat = csatFilter.value.map(
+      (csat) => csat?.value || '',
+    );
   },
-  { deep: true },
+  { immediate: true, deep: true },
 );
 
 const topicOptions = ref([
@@ -144,7 +146,7 @@ watch(
       topicFilter.value = getQueryFilterArray('topics', topicOptions);
       isRequestedTopics.value = true;
     }
-    supervisorStore.filters.topics = topicFilter.value?.map(
+    supervisorStore.filters.topics = topicFilter.value.map(
       (subject) => subject?.label || '',
     );
   },

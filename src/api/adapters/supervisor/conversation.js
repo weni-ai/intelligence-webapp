@@ -1,3 +1,5 @@
+import { isArray } from 'lodash';
+
 export const ConversationAdapter = {
   /**
    * Transform API response data to frontend format
@@ -76,13 +78,15 @@ export const ConversationAdapter = {
       start_date: start,
       end_date: end,
       ...(search && { search }),
-      ...(status.length > 0 && {
-        resolution: status.map((statusItem) => statusMap[statusItem]),
-      }),
-      ...(csat.length > 0 && {
-        csat: csat.map((csatItem) => csatMap[csatItem]),
-      }),
-      ...(topics.length > 0 && { topics }),
+      ...(isArray(status) &&
+        status.length > 0 && {
+          resolution: status.map((statusItem) => statusMap[statusItem]),
+        }),
+      ...(isArray(csat) &&
+        csat.length > 0 && {
+          csat: csat.map((csatItem) => csatMap[csatItem]),
+        }),
+      ...(isArray(topics) && topics.length > 0 && { topics }),
       ...(status.includes('transferred_to_human_support') && {
         has_chats_room: true,
       }),

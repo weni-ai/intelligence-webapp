@@ -70,8 +70,6 @@ watch(
 onBeforeMount(async () => {
   updateQuery();
 
-  await supervisorStore.loadConversations();
-
   const { selectedConversation, queryConversationUrn } = supervisorStore;
 
   if (queryConversationUrn && !selectedConversation) {
