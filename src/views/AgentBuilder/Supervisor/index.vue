@@ -5,14 +5,20 @@
       { 'supervisor--with-conversation': selectedConversation },
     ]"
   >
-    <SupervisorHeader
-      class="supervisor__header"
-      data-testid="header"
-    />
-    <SupervisorConversations
-      class="supervisor__conversations"
-      data-testid="supervisor-conversations"
-    />
+    <section
+      class="supervisor__content"
+      @scroll="loadConversations"
+    >
+      <SupervisorHeader
+        class="supervisor__header"
+        data-testid="header"
+      />
+      <SupervisorConversations
+        ref="supervisorConversations"
+        class="supervisor__conversations"
+        data-testid="supervisor-conversations"
+      />
+    </section>
     <Conversation
       v-if="selectedConversation"
       class="supervisor__conversation"
@@ -22,7 +28,7 @@
 </template>
 
 <script setup>
-import { computed, onBeforeMount, watch } from 'vue';
+import { computed, onBeforeMount, watch, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 import SupervisorHeader from './SupervisorHeader.vue';
@@ -36,6 +42,8 @@ const supervisorStore = useSupervisorStore();
 const router = useRouter();
 const route = useRoute();
 
+const supervisorConversations = ref(null);
+
 const selectedConversation = computed(() => {
   return supervisorStore.selectedConversation;
 });
@@ -47,6 +55,29 @@ function updateQuery(filters = supervisorStore.filters) {
       ...cleanedFilters,
     },
   });
+}
+
+function loadConversations(event) {
+  const { next } = supervisorStore.conversations.data;
+
+  if (
+    !next ||
+    ['loading', 'error'].includes(supervisorStore.conversations.status)
+  ) {
+    return;
+  }
+
+  const { scrollTop, clientHeight, scrollHeight } = event.target;
+
+  const safeDistance = 10;
+  const isInScrollBottom =
+    scrollTop + clientHeight + safeDistance >= scrollHeight;
+
+  const shouldLoadMore = isInScrollBottom;
+
+  if (shouldLoadMore) {
+    supervisorConversations.value.loadMoreConversations();
+  }
 }
 
 watch(
@@ -78,43 +109,43 @@ onBeforeMount(async () => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .supervisor {
   margin: -$unnnic-spacing-sm;
 
   min-height: 100%;
 
   display: grid;
-  grid-template-rows: auto 1fr;
 
-  overflow: hidden auto;
+  overflow: hidden;
 
   &--with-conversation {
     grid-template-columns: 7fr 5fr;
   }
 
-  &__header {
-    padding: $unnnic-spacing-sm;
-    padding-bottom: $unnnic-spacing-md;
+  &__content {
+    display: flex;
+    flex-direction: column;
 
-    grid-column: 1 / 1;
-    grid-row: 1 / 2;
+    $scroll-margin: calc($unnnic-spacing-nano / 2 + $unnnic-spacing-nano);
+
+    overflow-y: auto;
+
+    margin: $unnnic-spacing-sm 0;
+    padding-right: $scroll-margin;
+    margin-right: $scroll-margin;
+  }
+
+  :deep(.supervisor__header) {
+    padding: 0 $unnnic-spacing-sm $unnnic-spacing-md;
   }
 
   &__conversations {
     padding-left: $unnnic-spacing-sm;
 
-    grid-column: 1 / 1;
-    grid-row: 2 / 3;
-
     & > * {
       margin-right: $unnnic-spacing-sm;
     }
-  }
-
-  &__conversation {
-    grid-column: 2 / 3;
-    grid-row: 1 / 3;
   }
 }
 </style>
