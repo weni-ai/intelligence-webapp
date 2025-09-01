@@ -65,7 +65,7 @@
     "tabs": {
       "supervisor": {
         "title": "Supervisor",
-        "description": "Analiza y revisa conversaciones entre agentes y clientes"
+        "description": "Analiza y revisa conversaciones entre agentes y clientes."
       },
       "profile": {
         "title": "Perfil",
@@ -108,6 +108,11 @@
         "title": "Enviado a soporte humano",
         "tooltip": "Conversaciones transferidas a soporte humano"
       },
+      "conversation_start_finish": {
+        "start": "Conversación iniciada: {datetime}",
+        "finish": "Conversación finalizada: {datetime}"
+      },
+      "contact_urn": "URN del contacto: {urn}",
       "view_logs": "Mostrar logs",
       "hide_logs": "Ocultar logs",
       "search": "Buscar",
