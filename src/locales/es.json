@@ -95,11 +95,6 @@
       },
       "conversations_count": "{count} conversaciones encontradas",
       "unnamed_contact": "Contacto sin nombre",
-      "status": {
-        "in_progress": "En progreso",
-        "resolved": "Resuelto",
-        "unresolved": "No resuelto"
-      },
       "attended_by_agent": {
         "title": "Atendido por el agente",
         "tooltip": "Conversaciones resueltas por el agente"
@@ -138,8 +133,8 @@
         "status": {
           "conversations": "Conversaciones",
           "in_progress": "En progreso",
-          "resolved": "Resuelto",
-          "unresolved": "No resuelto",
+          "optimized_resolutions": "Resoluciones Pptimizadas",
+          "other_conclusions": "Otras Conclusiones",
           "unengaged": "No engajado",
           "transferred_to_human_support": "Encaminado a soporte humano"
         },

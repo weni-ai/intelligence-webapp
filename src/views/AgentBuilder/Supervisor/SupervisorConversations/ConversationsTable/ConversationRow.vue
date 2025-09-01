@@ -99,10 +99,10 @@ const statusProps = computed(() => {
     in_progress: {
       scheme: 'aux-blue-500',
     },
-    resolved: {
+    optimized_resolutions: {
       scheme: 'aux-green-500',
     },
-    unresolved: {
+    other_conclusions: {
       scheme: 'aux-red-500',
     },
     unengaged: {

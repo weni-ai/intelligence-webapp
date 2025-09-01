@@ -95,11 +95,6 @@
       },
       "conversations_count": "{count} conversations found",
       "unnamed_contact": "Unnamed contact",
-      "status": {
-        "in_progress": "In progress",
-        "resolved": "Resolved",
-        "unresolved": "Unresolved"
-      },
       "attended_by_agent": {
         "title": "Assisted by an agent",
         "tooltip": "Conversations completed by an agent"
@@ -138,7 +133,8 @@
         "status": {
           "conversations": "Conversations",
           "in_progress": "In progress",
-          "resolved": "Resolved",
+          "optimized_resolutions": "Optimized Resolutions",
+          "other_conclusions": "Other Conclusions",
           "unresolved": "Unresolved",
           "unengaged": "Unengaged",
           "transferred_to_human_support": "Transferred to human support"
