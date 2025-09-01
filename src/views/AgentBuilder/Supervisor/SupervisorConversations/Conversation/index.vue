@@ -37,7 +37,7 @@
         <QuestionAndAnswer
           v-for="message in results"
           :key="message.id"
-          :data="message"
+          :data="{ ...message, username: conversation.username }"
           :isLoading="false"
           data-testid="message"
         />
