@@ -83,12 +83,12 @@ const getStatusTranslation = (filter) =>
 const statusOptions = ref([
   { label: getStatusTranslation('conversations'), value: '' },
   {
-    label: getStatusTranslation('optimized_resolutions'),
-    value: 'optimized_resolutions',
+    label: getStatusTranslation('optimized_resolution'),
+    value: 'optimized_resolution',
   },
   {
-    label: getStatusTranslation('other_conclusions'),
-    value: 'other_conclusions',
+    label: getStatusTranslation('other_conclusion'),
+    value: 'other_conclusion',
   },
   {
     label: getStatusTranslation('transferred_to_human_support'),

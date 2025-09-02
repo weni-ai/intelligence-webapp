@@ -8,8 +8,8 @@ export const ConversationAdapter = {
    */
   fromApi(apiData) {
     const statusMap = {
-      0: 'optimized_resolutions',
-      1: 'other_conclusions',
+      0: 'optimized_resolution',
+      1: 'other_conclusion',
       2: 'in_progress',
       3: 'unengaged',
     };
@@ -60,8 +60,8 @@ export const ConversationAdapter = {
     } = filterData;
 
     const statusMap = {
-      optimized_resolutions: 0,
-      other_conclusions: 1,
+      optimized_resolution: 0,
+      other_conclusion: 1,
       in_progress: 2,
       unengaged: 3,
     };

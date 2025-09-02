@@ -133,9 +133,8 @@
         "status": {
           "conversations": "Conversations",
           "in_progress": "In progress",
-          "optimized_resolutions": "Optimized Resolutions",
-          "other_conclusions": "Other Conclusions",
-          "unresolved": "Unresolved",
+          "optimized_resolution": "Optimized Resolution",
+          "other_conclusion": "Other Conclusion",
           "unengaged": "Unengaged",
           "transferred_to_human_support": "Transferred to human support"
         },
