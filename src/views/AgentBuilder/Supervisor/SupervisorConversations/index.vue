@@ -24,8 +24,10 @@ defineExpose({
 
 <style scoped lang="scss">
 .conversations {
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
   gap: $unnnic-spacing-sm;
 }
 </style>
