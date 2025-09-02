@@ -86,9 +86,9 @@ describe('Supervisor Store', () => {
         start: '2023-01-01',
         end: '2023-01-31',
         search: '',
-        status: '',
-        csat: '',
-        topics: '',
+        status: [],
+        csat: [],
+        topics: [],
       });
     });
   });
@@ -123,13 +123,17 @@ describe('Supervisor Store', () => {
           nexusaiAPI.agent_builder.supervisor.conversations.list,
         ).toHaveBeenCalledWith({
           projectUuid: 'test-project-uuid',
-          page: 1,
-          start: '01-01-2023',
-          end: '31-01-2023',
-          search: '',
-          status: '',
-          csat: '',
-          topics: '',
+          signal: expect.any(AbortSignal),
+          hideGenericErrorAlert: true,
+          filters: {
+            page: 1,
+            start: '01-01-2023',
+            end: '31-01-2023',
+            search: '',
+            status: [],
+            csat: [],
+            topics: [],
+          },
         });
 
         expect(store.conversations.status).toBe('complete');
@@ -152,13 +156,17 @@ describe('Supervisor Store', () => {
           nexusaiAPI.agent_builder.supervisor.conversations.list,
         ).toHaveBeenCalledWith({
           projectUuid: 'test-project-uuid',
-          page: 2,
-          start: '01-01-2023',
-          end: '31-01-2023',
-          search: '',
-          status: '',
-          csat: '',
-          topics: '',
+          signal: expect.any(AbortSignal),
+          hideGenericErrorAlert: true,
+          filters: {
+            page: 2,
+            start: '01-01-2023',
+            end: '31-01-2023',
+            search: '',
+            status: [],
+            csat: [],
+            topics: [],
+          },
         });
       });
 
@@ -178,13 +186,17 @@ describe('Supervisor Store', () => {
           nexusaiAPI.agent_builder.supervisor.conversations.list,
         ).toHaveBeenCalledWith({
           projectUuid: 'test-project-uuid',
-          page: 1,
-          start: '01-01-2023',
-          end: '31-01-2023',
-          search: 'test search',
-          status: 'test status',
-          csat: 'test csat',
-          topics: 'test topics',
+          signal: expect.any(AbortSignal),
+          hideGenericErrorAlert: true,
+          filters: {
+            page: 1,
+            start: '01-01-2023',
+            end: '31-01-2023',
+            search: 'test search',
+            status: 'test status',
+            csat: 'test csat',
+            topics: 'test topics',
+          },
         });
       });
 
@@ -508,13 +520,17 @@ describe('Supervisor Store', () => {
         nexusaiAPI.agent_builder.supervisor.conversations.list,
       ).toHaveBeenCalledWith({
         projectUuid: 'test-project-uuid',
-        page: 1,
-        start: '15-06-2023',
-        end: '30-06-2023',
-        search: '',
-        status: '',
-        csat: '',
-        topics: '',
+        signal: expect.any(AbortSignal),
+        hideGenericErrorAlert: true,
+        filters: {
+          page: 1,
+          start: '15-06-2023',
+          end: '30-06-2023',
+          search: '',
+          status: [],
+          csat: [],
+          topics: [],
+        },
       });
     });
   });

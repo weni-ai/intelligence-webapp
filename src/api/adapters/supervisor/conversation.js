@@ -1,3 +1,5 @@
+import { isArray } from 'lodash';
+
 export const ConversationAdapter = {
   /**
    * Transform API response data to frontend format
@@ -6,8 +8,8 @@ export const ConversationAdapter = {
    */
   fromApi(apiData) {
     const statusMap = {
-      0: 'resolved',
-      1: 'unresolved',
+      0: 'optimized_resolution',
+      1: 'other_conclusion',
       2: 'in_progress',
       3: 'unengaged',
     };
@@ -24,6 +26,7 @@ export const ConversationAdapter = {
       return {
         ...apiData,
         results: apiData.results.map((result) => ({
+          uuid: result.uuid,
           id: result.external_id,
           start: result.created_on,
           end: result.end_date,
@@ -57,8 +60,8 @@ export const ConversationAdapter = {
     } = filterData;
 
     const statusMap = {
-      resolved: 0,
-      unresolved: 1,
+      optimized_resolution: 0,
+      other_conclusion: 1,
       in_progress: 2,
       unengaged: 3,
     };
@@ -76,13 +79,15 @@ export const ConversationAdapter = {
       start_date: start,
       end_date: end,
       ...(search && { search }),
-      ...(status.length > 0 && {
-        resolution: status.map((statusItem) => statusMap[statusItem]),
-      }),
-      ...(csat.length > 0 && {
-        csat: csat.map((csatItem) => csatMap[csatItem]),
-      }),
-      ...(topics.length > 0 && { topics }),
+      ...(isArray(status) &&
+        status.length > 0 && {
+          resolution: status.map((statusItem) => statusMap[statusItem]),
+        }),
+      ...(isArray(csat) &&
+        csat.length > 0 && {
+          csat: csat.map((csatItem) => csatMap[csatItem]),
+        }),
+      ...(isArray(topics) && topics.length > 0 && { topics }),
       ...(status.includes('transferred_to_human_support') && {
         has_chats_room: true,
       }),

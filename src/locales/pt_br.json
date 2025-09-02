@@ -65,7 +65,7 @@
     "tabs": {
       "supervisor": {
         "title": "Supervisor",
-        "description": "Analise e revise conversas entre agentes e clientes"
+        "description": "Analise e revise conversas entre agentes e clientes."
       },
       "profile": {
         "title": "Perfil",
@@ -90,16 +90,15 @@
         "title": "Sobre conversa",
         "what_is_a_conversation": "O que é uma conversa?",
         "what_is_a_conversation_description": "Consideramos todas as mensagens trocadas dentro de 24 horas do primeiro contato como uma única conversa.",
-        "when_is_a_conversation_considered_resolved": "Quando uma conversa é considerada resolvida?",
-        "description": "Uma conversa é considerada resolvida quando o usuário vai além do primeiro contato e realmente interage: \n- Pergunta; \n- Solicita dados; \n- Confirma informações; \n- Recebe orientação que permite completar todo ou parte do seu pedido. \nMensagens limitadas a saudações, emojis ou fechadas sem interação útil permanecem não resolvidas, enquanto interações que entregam valor ao usuário são marcadas como resolvidas."
+        "optimized_resolution": "Resolução Otimizada",
+        "optimized_resolution_description": "Conversas que terminaram com uma resolução clara e eficaz para o contato.",
+        "other_conclusion": "Outras Conclusões",
+        "other_conclusion_description": "Conversas que terminaram de outras formas, como interações breves, saudações, desistências ou casos que seguiram um fluxo diferente sem uma resolução direta.",
+        "transferred_to_human_support": "Transferido para o Suporte Humano",
+        "transferred_to_human_support_description": "Inclui conversas (Resoluções Otimizadas e Outras Conclusões) que foram encaminhadas para um atendente humano."
       },
       "conversations_count": "{count} conversas encontradas",
       "unnamed_contact": "Contato sem nome",
-      "status": {
-        "in_progress": "Em progresso",
-        "resolved": "Resolvido",
-        "unresolved": "Não resolvido"
-      },
       "attended_by_agent": {
         "title": "Atendido pelo agente",
         "tooltip": "Conversas resolvidas pelo agente"
@@ -108,6 +107,11 @@
         "title": "Encaminhado para suporte humano",
         "tooltip": "Conversas encaminhadas para suporte humano"
       },
+      "conversation_start_finish": {
+        "start": "Conversa iniciada: {datetime}",
+        "finish": "Conversa finalizada: {datetime}"
+      },
+      "contact_urn": "URN do contato: {urn}",
       "view_logs": "Mostrar logs",
       "hide_logs": "Ocultar logs",
       "search": "Buscar",
@@ -133,8 +137,8 @@
         "status": {
           "conversations": "Conversas",
           "in_progress": "Em progresso",
-          "resolved": "Resolvido",
-          "unresolved": "Não resolvido",
+          "optimized_resolution": "Resolução Otimizada",
+          "other_conclusion": "Outra Conclusão",
           "unengaged": "Não engajado",
           "transferred_to_human_support": "Encaminhado para suporte humano"
         },
@@ -149,6 +153,9 @@
         "topic": {
           "topic": "Tópico"
         }
+      },
+      "load_conversations": {
+        "error": "Erro ao carregar conversas"
       }
     },
     "traces": {

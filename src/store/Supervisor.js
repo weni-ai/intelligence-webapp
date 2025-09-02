@@ -26,21 +26,25 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
   const selectedConversation = ref(null);
 
+  let conversationsAbortController = null;
+
   const filters = reactive({
     start: route.query.start || thisMonth,
     end: route.query.end || today,
     search: route.query.search || '',
-    status: route.query.status || '',
-    csat: route.query.csat || '',
-    topics: route.query.topics || '',
+    status: route.query.status || [],
+    csat: route.query.csat || [],
+    topics: route.query.topics || [],
   });
 
-  const queryConversationUrn = ref(route.query.urn || '');
+  const queryConversationUuid = ref(route.query.uuid || '');
 
   async function loadConversations(page = 1) {
-    if (conversations.status === 'loading') {
-      return;
+    if (conversationsAbortController) {
+      await conversationsAbortController.abort();
     }
+
+    conversationsAbortController = new AbortController();
 
     conversations.status = 'loading';
     if (page === 1) conversations.data.results = [];
@@ -50,13 +54,17 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     try {
       const response = await supervisorApi.conversations.list({
         projectUuid: projectUuid.value,
-        page,
-        start: formatDateParam(filters.start),
-        end: formatDateParam(filters.end),
-        search: filters.search,
-        status: filters.status,
-        csat: filters.csat,
-        topics: filters.topics,
+        signal: conversationsAbortController.signal,
+        hideGenericErrorAlert: true,
+        filters: {
+          page,
+          start: formatDateParam(filters.start),
+          end: formatDateParam(filters.end),
+          search: filters.search,
+          status: filters.status,
+          csat: filters.csat,
+          topics: filters.topics,
+        },
       });
 
       conversations.status = 'complete';
@@ -65,7 +73,18 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
         results: [...conversations.data.results, ...response.results],
       };
     } catch (error) {
+      if (error.code === 'ERR_CANCELED') return;
+
       conversations.status = 'error';
+      console.error('Error loading conversations:', error);
+      alertStore.add({
+        type: 'error',
+        text: i18n.global.t(
+          'agent_builder.supervisor.load_conversations.error',
+        ),
+      });
+    } finally {
+      conversationsAbortController = null;
     }
   }
 
@@ -108,22 +127,22 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     }
   }
 
-  function selectConversation(urn) {
-    if (!urn) {
+  function selectConversation(uuid) {
+    if (!uuid) {
       selectedConversation.value = null;
-      queryConversationUrn.value = '';
+      queryConversationUuid.value = '';
       return;
     }
 
-    if (selectedConversation.value?.urn === urn) return;
+    if (selectedConversation.value?.uuid === uuid) return;
 
     const handleMatch = (conversation) => {
-      return conversation.urn === urn;
+      return conversation.uuid === uuid;
     };
 
     const conversation = conversations.data.results?.find(handleMatch);
 
-    queryConversationUrn.value = urn;
+    queryConversationUuid.value = uuid;
 
     selectedConversation.value = {
       ...conversation,
@@ -167,7 +186,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     selectConversation,
     selectedConversation,
     filters,
-    queryConversationUrn,
+    queryConversationUuid,
     getTopics,
     exportSupervisorData,
   };

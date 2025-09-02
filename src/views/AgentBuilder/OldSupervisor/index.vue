@@ -1,21 +1,21 @@
 <template>
   <section
     :class="[
-      'supervisor',
-      { 'supervisor--with-conversation': selectedConversation },
+      'old-supervisor',
+      { 'old-supervisor--with-conversation': selectedConversation },
     ]"
   >
     <SupervisorHeader
-      class="supervisor__header"
+      class="old-supervisor__header"
       data-testid="header"
     />
     <SupervisorConversations
-      class="supervisor__conversations"
+      class="old-supervisor__conversations"
       data-testid="supervisor-conversations"
     />
     <Conversation
       v-if="selectedConversation"
-      class="supervisor__conversation"
+      class="old-supervisor__conversation"
       data-testid="supervisor-conversation"
     />
   </section>
@@ -61,8 +61,8 @@ onBeforeMount(() => {
 });
 </script>
 
-<style lang="scss">
-.supervisor {
+<style lang="scss" scoped>
+.old-supervisor {
   margin: -$unnnic-spacing-sm;
 
   display: grid;
@@ -74,7 +74,7 @@ onBeforeMount(() => {
     grid-template-rows: auto 1fr;
   }
 
-  &__header {
+  :deep(.old-supervisor__header) {
     padding: $unnnic-spacing-sm;
     padding-bottom: $unnnic-spacing-md;
 
