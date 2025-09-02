@@ -90,8 +90,12 @@
         "title": "Sobre conversa",
         "what_is_a_conversation": "O que é uma conversa?",
         "what_is_a_conversation_description": "Consideramos todas as mensagens trocadas dentro de 24 horas do primeiro contato como uma única conversa.",
-        "when_is_a_conversation_considered_resolved": "Quando uma conversa é considerada resolvida?",
-        "description": "Uma conversa é considerada resolvida quando o usuário vai além do primeiro contato e realmente interage: \n- Pergunta; \n- Solicita dados; \n- Confirma informações; \n- Recebe orientação que permite completar todo ou parte do seu pedido. \nMensagens limitadas a saudações, emojis ou fechadas sem interação útil permanecem não resolvidas, enquanto interações que entregam valor ao usuário são marcadas como resolvidas."
+        "optimized_resolution": "Resolução Otimizada",
+        "optimized_resolution_description": "Conversas que terminaram com uma resolução clara e eficaz para o contato.",
+        "other_conclusion": "Outras Conclusões",
+        "other_conclusion_description": "Conversas que terminaram de outras formas, como interações breves, saudações, desistências ou casos que seguiram um fluxo diferente sem uma resolução direta.",
+        "transferred_to_human_support": "Transferido para o Suporte Humano",
+        "transferred_to_human_support_description": "Inclui conversas (Resoluções Otimizadas e Outras Conclusões) que foram encaminhadas para um atendente humano."
       },
       "conversations_count": "{count} conversas encontradas",
       "unnamed_contact": "Contato sem nome",
