@@ -102,7 +102,7 @@ watch(
   () => statusFilter.value,
   () => {
     supervisorStore.filters.status = statusFilter.value.map(
-      (status) => status.value || '',
+      (status) => status?.value || '',
     );
   },
   { immediate: true, deep: true },
