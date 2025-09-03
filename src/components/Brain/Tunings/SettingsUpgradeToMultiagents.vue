@@ -43,6 +43,7 @@ function handleUpgradeToMultiagentsModal() {
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
 
   padding: $unnnic-spacing-sm;
+  margin-top: $unnnic-spacing-sm;
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
