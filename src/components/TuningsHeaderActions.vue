@@ -1,6 +1,15 @@
 <template>
-  <section class="tunings-header-actions">
+  <section
+    :class="[
+      'tunings-header-actions',
+      {
+        'tunings-header-actions--with-project-details':
+          showProjectDetailsButton,
+      },
+    ]"
+  >
     <UnnnicButton
+      v-if="showProjectDetailsButton"
       type="secondary"
       :loading="projectStore.projectDetails.status === 'loading'"
       @click="showModalProjectDetails = true"
@@ -37,6 +46,7 @@ import { useStore } from 'vuex';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useTuningsStore } from '@/store/Tunings';
 import { useProjectStore } from '@/store/Project';
+import { useUserStore } from '@/store/User';
 
 import ModalUpgradeToMultiagents from './Brain/Tunings/ModalUpgradeToMultiagents.vue';
 import ProjectDetailsModal from './ProjectDetailsModal/index.vue';
@@ -48,6 +58,13 @@ const store = useStore();
 
 const showModalProjectDetails = ref(false);
 const showUpgradeToMultiagentsModal = ref(false);
+
+const showProjectDetailsButton = computed(() => {
+  const email = useUserStore().user?.email;
+  if (!email) return false;
+
+  return email.includes('@weni.ai') || email.includes('@vtex.com');
+});
 
 const isTuningsSaveButtonDisabled = computed(() => {
   return isAgentsTeamEnabled
@@ -77,7 +94,10 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .tunings-header-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: $unnnic-spacing-xs;
+
+  &--with-project-details {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>
