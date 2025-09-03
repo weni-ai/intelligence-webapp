@@ -2,6 +2,7 @@
   <section class="tunings-header-actions">
     <UnnnicButton
       type="secondary"
+      :loading="projectStore.projectDetails.status === 'loading'"
       @click="showModalProjectDetails = true"
     >
       {{ $t('agent_builder.tunings.project_details') }}
@@ -42,6 +43,7 @@ import ProjectDetailsModal from './ProjectDetailsModal/index.vue';
 
 const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 const tuningsStore = useTuningsStore();
+const projectStore = useProjectStore();
 const store = useStore();
 
 const showModalProjectDetails = ref(false);
@@ -68,7 +70,7 @@ async function saveTunings() {
 }
 
 onMounted(async () => {
-  await useProjectStore().getProjectDetails();
+  await projectStore.getProjectDetails();
 });
 </script>
 

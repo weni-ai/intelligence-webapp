@@ -7,18 +7,27 @@ import nexusaiAPI from '@/api/nexusaiAPI';
 export const useProjectStore = defineStore('Project', () => {
   const uuid = computed(() => globalStore.state.Auth.connectProjectUuid);
   const isMultiAgents = ref(null);
-  const projectDetails = ref(null);
+  const projectDetails = ref({
+    status: null,
+  });
 
   async function updateIsMultiAgents(boolean) {
     isMultiAgents.value = boolean;
   }
 
   async function getProjectDetails() {
-    const data = await nexusaiAPI.router.tunings.projectDetails.read({
-      projectUuid: uuid.value,
-    });
+    projectDetails.value.status = 'loading';
 
-    projectDetails.value = data;
+    try {
+      const data = await nexusaiAPI.router.tunings.projectDetails.read({
+        projectUuid: uuid.value,
+      });
+
+      projectDetails.value = data;
+      projectDetails.value.status = 'success';
+    } catch (error) {
+      projectDetails.value.status = 'error';
+    }
   }
 
   return {
