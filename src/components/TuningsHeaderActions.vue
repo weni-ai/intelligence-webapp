@@ -14,31 +14,54 @@
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
 
+    <ModalUpgradeToMultiagents
+      v-if="showUpgradeToMultiagentsModal"
+      :modelValue="showUpgradeToMultiagentsModal"
+      @update:model-value="showUpgradeToMultiagentsModal = $event"
+    />
     <UnnnicModalDialog
+      v-else
       class="tunings-header-actions__modal-project-details"
       data-testid="tunings-header-actions__modal-project-details"
       :modelValue="showModalProjectDetails"
       showCloseIcon
       size="md"
       :title="$t('agent_builder.tunings.project_details')"
-      @update:model-value="showModalProjectDetails = false"
+      @update:model-value="showModalProjectDetails = $event"
     >
+      <section v-if="isAgentsTeamEnabled">
+        <UnnnicIntelligenceText
+          color="neutral-cloudy"
+          family="secondary"
+          size="body-gt"
+        >
+          {{ $t('agent_builder.tunings.project_details') }}
+        </UnnnicIntelligenceText>
+      </section>
+      <SettingsUpgradeToMultiagents
+        v-else
+        @upgrade-to-multiagents="showUpgradeToMultiagentsModal = true"
+      />
     </UnnnicModalDialog>
   </section>
 </template>
 
 <script setup>
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useTuningsStore } from '@/store/Tunings';
-import { computed, ref } from 'vue';
+
+import SettingsUpgradeToMultiagents from './Brain/Tunings/SettingsUpgradeToMultiagents.vue';
+import ModalUpgradeToMultiagents from './Brain/Tunings/ModalUpgradeToMultiagents.vue';
 
 const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 const tuningsStore = useTuningsStore();
 const store = useStore();
 
 const showModalProjectDetails = ref(false);
+const showUpgradeToMultiagentsModal = ref(false);
 
 const isTuningsSaveButtonDisabled = computed(() => {
   return isAgentsTeamEnabled
