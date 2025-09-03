@@ -4,7 +4,8 @@
     data-testid="conversations-table"
   >
     <template v-if="hasConversations || conversations.status === 'loading'">
-      <UnnnicIntelligenceText
+      <!-- Temporaly disabled while we're waiting for the endpoint is optimized -->
+      <!-- <UnnnicIntelligenceText
         v-if="conversations.status !== 'loading'"
         data-testid="conversations-count"
         class="conversations-table__count"
@@ -18,19 +19,16 @@
             count: conversations.data.count,
           })
         }}
-      </UnnnicIntelligenceText>
+      </UnnnicIntelligenceText> -->
 
-      <tbody
-        class="conversations-table__rows"
-        @scroll="handleScroll"
-      >
+      <tbody class="conversations-table__rows">
         <ConversationRow
           v-for="conversation in conversations.data.results"
-          :key="conversation.urn"
+          :key="conversation.uuid"
           data-testid="conversation-row"
           :conversation="conversation"
           :isSelected="
-            conversation.urn === supervisorStore.selectedConversation?.urn
+            conversation.uuid === supervisorStore.selectedConversation?.uuid
           "
           @click="handleRowClick(conversation)"
         />
@@ -68,7 +66,8 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, defineExpose } from 'vue';
+import { isEqual } from 'lodash';
 
 import { useSupervisorStore } from '@/store/Supervisor';
 
@@ -85,41 +84,40 @@ const pagination = ref({
 });
 
 function handleRowClick(row) {
-  supervisorStore.selectConversation(row.urn);
+  supervisorStore.selectConversation(row.uuid);
+}
+
+function loadMoreConversations() {
+  pagination.value.page++;
+  supervisorStore.loadConversations(pagination.value.page);
 }
 
 watch(
-  () => supervisorStore.filters,
-  () => {
+  [
+    () => supervisorStore.filters.start,
+    () => supervisorStore.filters.end,
+    () => supervisorStore.filters.search,
+    () => supervisorStore.filters.status,
+    () => supervisorStore.filters.csat,
+    () => supervisorStore.filters.topics,
+  ],
+  (newValue, oldValue) => {
+    const hasFiltersChanged = !isEqual(newValue, oldValue);
+
+    if (!hasFiltersChanged) return;
+
     if (pagination.value.page === 1) {
       supervisorStore.loadConversations();
     } else {
       pagination.value.page = 1;
     }
   },
-  { deep: true },
+  { immediate: true, deep: true },
 );
 
-function handleScroll(event) {
-  const { next } = conversations.value.data;
-
-  if (!next || ['loading', 'error'].includes(conversations.value.status)) {
-    return;
-  }
-
-  const { scrollTop, clientHeight, scrollHeight } = event.target;
-
-  const safeDistance = 10;
-  const isInScrollBottom =
-    scrollTop + clientHeight + safeDistance >= scrollHeight;
-
-  const shouldLoadMore = isInScrollBottom;
-
-  if (shouldLoadMore) {
-    pagination.value.page++;
-    supervisorStore.loadConversations(pagination.value.page);
-  }
-}
+defineExpose({
+  loadMoreConversations,
+});
 </script>
 
 <style scoped lang="scss">
@@ -134,17 +132,6 @@ function handleScroll(event) {
 
   &__count {
     margin-bottom: $unnnic-spacing-xs;
-  }
-
-  &__rows {
-    $scroll-margin: calc($unnnic-spacing-nano / 2 + $unnnic-spacing-nano);
-
-    height: 100%;
-
-    overflow-y: auto;
-
-    padding-right: $scroll-margin;
-    margin-right: $scroll-margin;
   }
 
   &__empty {

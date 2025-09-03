@@ -82,8 +82,14 @@ const getStatusTranslation = (filter) =>
 
 const statusOptions = ref([
   { label: getStatusTranslation('conversations'), value: '' },
-  { label: getStatusTranslation('resolved'), value: 'resolved' },
-  { label: getStatusTranslation('unresolved'), value: 'unresolved' },
+  {
+    label: getStatusTranslation('optimized_resolution'),
+    value: 'optimized_resolution',
+  },
+  {
+    label: getStatusTranslation('other_conclusion'),
+    value: 'other_conclusion',
+  },
   {
     label: getStatusTranslation('transferred_to_human_support'),
     value: 'transferred_to_human_support',
@@ -96,7 +102,7 @@ watch(
   () => statusFilter.value,
   () => {
     supervisorStore.filters.status = statusFilter.value.map(
-      (status) => status.value,
+      (status) => status?.value || '',
     );
   },
   { immediate: true, deep: true },
@@ -121,9 +127,11 @@ const csatFilter = ref(getQueryFilterArray('csat', csatOptions));
 watch(
   () => csatFilter.value,
   () => {
-    supervisorStore.filters.csat = csatFilter.value.map((csat) => csat.value);
+    supervisorStore.filters.csat = csatFilter.value.map(
+      (csat) => csat?.value || '',
+    );
   },
-  { deep: true },
+  { immediate: true, deep: true },
 );
 
 const topicOptions = ref([
@@ -172,7 +180,7 @@ async function getTopics() {
 
   &__selects {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: $unnnic-spacing-sm;
 
     .selects__date-picker {

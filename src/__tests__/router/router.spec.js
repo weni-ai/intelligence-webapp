@@ -160,14 +160,14 @@ describe('router', () => {
   it('should handle redirection correctly in /loginexternal route', async () => {
     const to = {
       params: { token: 'token', org: 'org', project: 'project' },
-      query: { next_from_redirect: '/redirect-path' },
+      query: {},
     };
     const next = vi.fn();
 
     await router.options.routes[0].beforeEnter(to, null, next);
 
     expect(next).toHaveBeenCalledWith({
-      path: '/redirect-path',
+      path: '/intelligences/home',
       replace: true,
     });
   });

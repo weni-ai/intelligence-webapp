@@ -50,7 +50,7 @@ export default {
 <style scoped>
 .content-section {
   word-wrap: break-word;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   max-width: 100%;
 }
 </style>

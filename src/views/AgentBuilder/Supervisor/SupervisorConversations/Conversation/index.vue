@@ -37,7 +37,7 @@
         <QuestionAndAnswer
           v-for="message in results"
           :key="message.id"
-          :data="message"
+          :data="{ ...message, username: conversation.username }"
           :isLoading="false"
           data-testid="message"
         />
@@ -81,7 +81,7 @@ async function loadConversationData() {
 }
 
 watch(
-  () => supervisorStore.queryConversationUrn,
+  () => supervisorStore.queryConversationUuid,
   (newValue, oldValue) => {
     if (newValue !== oldValue) {
       loadConversationData();

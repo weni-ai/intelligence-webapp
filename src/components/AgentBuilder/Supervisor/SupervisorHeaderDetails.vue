@@ -11,25 +11,24 @@
     showCloseIcon
     showActionsDivider
     size="md"
-    :title="detailsTranslation('title')"
+    :title="$t('agent_builder.supervisor.conversation_details.title')"
     class="supervisor-header-details__modal"
     @update:model-value="handleDetailsModal"
   >
-    <section class="modal__topic">
+    <section
+      v-for="topic in topics"
+      :key="topic"
+      class="modal__topic"
+    >
       <p class="topic__title">
-        {{ detailsTranslation('what_is_a_conversation') }}
+        {{ $t(`agent_builder.supervisor.conversation_details.${topic}`) }}
       </p>
       <p class="topic__description">
-        {{ detailsTranslation('what_is_a_conversation_description') }}
-      </p>
-    </section>
-
-    <section class="modal__topic">
-      <p class="topic__title">
-        {{ detailsTranslation('when_is_a_conversation_considered_resolved') }}
-      </p>
-      <p class="topic__description">
-        {{ detailsTranslation('description') }}
+        {{
+          $t(
+            `agent_builder.supervisor.conversation_details.${topic}_description`,
+          )
+        }}
       </p>
     </section>
   </UnnnicModalDialog>
@@ -38,10 +37,12 @@
 <script setup>
 import { ref } from 'vue';
 
-import i18n from '@/utils/plugins/i18n';
-const t = i18n.global.t;
-const detailsTranslation = (key) =>
-  t(`agent_builder.supervisor.conversation_details.${key}`);
+const topics = ref([
+  'what_is_a_conversation',
+  'optimized_resolution',
+  'other_conclusion',
+  'transferred_to_human_support',
+]);
 
 const isDetailsModalOpen = ref(false);
 

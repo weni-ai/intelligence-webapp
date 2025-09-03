@@ -4,12 +4,20 @@ import { ConversationAdapter } from '../adapters/supervisor/conversation';
 export const Supervisor = {
   conversations: {
     async list(filterData) {
-      const { projectUuid, ...filters } = filterData;
+      const {
+        projectUuid,
+        signal,
+        hideGenericErrorAlert = false,
+        filters = {},
+      } = filterData;
 
-      const params = ConversationAdapter.toApi(filters);
+      const params = ConversationAdapter.toApi({ ...filters });
+
+      const config = { signal, hideGenericErrorAlert };
 
       const { data } = await nexusRequest.$http.get(
         `/api/${projectUuid}/supervisor/?${new URLSearchParams(params)}`,
+        config,
       );
 
       return ConversationAdapter.fromApi(data);

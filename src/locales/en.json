@@ -65,7 +65,7 @@
     "tabs": {
       "supervisor": {
         "title": "Supervisor",
-        "description": "Review and analyze conversations between agents and customers"
+        "description": "Review and analyze conversations between agents and customers."
       },
       "profile": {
         "title": "Profile",
@@ -90,16 +90,15 @@
         "title": "About conversation",
         "what_is_a_conversation": "What is a conversation?",
         "what_is_a_conversation_description": "We consider all messages exchanged within 24 hours of the contact's first message as a single conversation.",
-        "when_is_a_conversation_considered_resolved": "When is a conversation considered resolved?",
-        "description": "A conversation is only considered resolved when the user goes beyond the initial greeting and actually engages: \n- Asks questions; \n- Requests data; \n- Confirms information; \n- Receives guidance that allows them to complete all or part of their request. \nMessages limited to greetings, emojis or closed without useful interaction remain unresolved, while interaction that delivers value to the user is marked as resolved."
+        "optimized_resolution": "Optimized Resolution",
+        "optimized_resolution_description": "Conversations that ended with a clear and effective resolution for the contact.",
+        "other_conclusion": "Other Conclusion",
+        "other_conclusion_description": "Conversations that ended in other ways, such as brief interactions, greetings, drop-offs, or cases that followed a different flow without a direct resolution.",
+        "transferred_to_human_support": "Transferred to Human Support",
+        "transferred_to_human_support_description": "Includes conversations (Optimized Resolutions e Other Conclusions) that were forwarded do a human agent."
       },
       "conversations_count": "{count} conversations found",
       "unnamed_contact": "Unnamed contact",
-      "status": {
-        "in_progress": "In progress",
-        "resolved": "Resolved",
-        "unresolved": "Unresolved"
-      },
       "attended_by_agent": {
         "title": "Assisted by an agent",
         "tooltip": "Conversations completed by an agent"
@@ -108,6 +107,11 @@
         "title": "Transferred to human support",
         "tooltip": "Conversations transferred to human support"
       },
+      "conversation_start_finish": {
+        "start": "Conversation started: {datetime}",
+        "finish": "Conversation finished: {datetime}"
+      },
+      "contact_urn": "Contact URN: {urn}",
       "view_logs": "Show logs",
       "hide_logs": "Hide logs",
       "search": "Search",
@@ -133,8 +137,8 @@
         "status": {
           "conversations": "Conversations",
           "in_progress": "In progress",
-          "resolved": "Resolved",
-          "unresolved": "Unresolved",
+          "optimized_resolution": "Optimized Resolution",
+          "other_conclusion": "Other Conclusion",
           "unengaged": "Unengaged",
           "transferred_to_human_support": "Transferred to human support"
         },
@@ -149,6 +153,9 @@
         "topic": {
           "topic": "Topic"
         }
+      },
+      "load_conversations": {
+        "error": "Error loading conversations"
       }
     },
     "traces": {

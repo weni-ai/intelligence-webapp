@@ -18,6 +18,23 @@ import env from '@/utils/env';
 
 let nextFromRedirect = '';
 
+const parseNextPath = (nextPath, to) => {
+  const [path, queryString] = nextPath.split('?');
+  const query = { ...to.query };
+
+  if (queryString) {
+    const urlParams = new URLSearchParams(queryString);
+    for (const [key, value] of urlParams) {
+      query[key] = value;
+    }
+  }
+
+  delete query.next;
+  delete query.next_from_redirect;
+
+  return { path, query };
+};
+
 const handleLogin = async (to, from, next) => {
   const { token, org, project } = to.params;
 
@@ -36,7 +53,8 @@ const handleLogin = async (to, from, next) => {
   const nextPath = to.query.next || to.query.next_from_redirect;
 
   if (nextPath) {
-    next({ path: nextPath, replace: true });
+    const { path, query } = parseNextPath(nextPath, to);
+    next({ path, query, replace: true });
   } else {
     next({ path: '/intelligences/home', replace: true });
   }
@@ -150,8 +168,8 @@ const router = createRouter({
       path: '/',
       name: 'agent-builder',
       component: AgentBuilder,
-      redirect: () => {
-        return { name: 'supervisor' };
+      redirect: (to) => {
+        return { name: 'supervisor', query: to.query };
       },
       async beforeEnter(_to, _from, next) {
         await getMultiAgentsEnabled();
