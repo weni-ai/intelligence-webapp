@@ -1,6 +1,9 @@
 <template>
   <section class="tunings-header-actions">
-    <UnnnicButton type="secondary">
+    <UnnnicButton
+      type="secondary"
+      @click="showModalProjectDetails = true"
+    >
       {{ $t('agent_builder.tunings.project_details') }}
     </UnnnicButton>
     <UnnnicButton
@@ -10,6 +13,17 @@
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
+
+    <UnnnicModalDialog
+      class="tunings-header-actions__modal-project-details"
+      data-testid="tunings-header-actions__modal-project-details"
+      :modelValue="showModalProjectDetails"
+      showCloseIcon
+      size="md"
+      :title="$t('agent_builder.tunings.project_details')"
+      @update:model-value="showModalProjectDetails = false"
+    >
+    </UnnnicModalDialog>
   </section>
 </template>
 
@@ -18,11 +32,13 @@ import { useStore } from 'vuex';
 
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useTuningsStore } from '@/store/Tunings';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 const tuningsStore = useTuningsStore();
 const store = useStore();
+
+const showModalProjectDetails = ref(false);
 
 const isTuningsSaveButtonDisabled = computed(() => {
   return isAgentsTeamEnabled
