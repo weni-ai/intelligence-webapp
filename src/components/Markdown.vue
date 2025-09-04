@@ -47,10 +47,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .content-section {
   word-wrap: break-word;
   overflow-wrap: anywhere;
   max-width: 100%;
+
+  & > * {
+    text-wrap: auto;
+  }
 }
 </style>
