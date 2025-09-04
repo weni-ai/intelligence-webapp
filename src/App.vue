@@ -144,12 +144,8 @@ export default {
   methods: {
     ...mapActions(['getMyProfileInfo', 'setUserName']),
     async profileInfo() {
-      let data;
-      if (this.$route.path.includes('intelligences')) {
-        data = await this.getMyProfileInfo();
-      } else {
-        data = await this.userStore.getUserDetails();
-      }
+      const { data } = await this.getMyProfileInfo();
+      this.userStore.getUserDetails();
 
       if (data) {
         this.$store.state.User.me = data;
