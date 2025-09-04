@@ -8,7 +8,7 @@ export const useUserStore = defineStore('User', () => {
 
   async function getUserDetails() {
     try {
-      const data = await nexusaiAPI.agent_builder.user.read();
+      const { data } = await nexusaiAPI.agent_builder.user.read();
 
       user.value = data;
     } catch (error) {

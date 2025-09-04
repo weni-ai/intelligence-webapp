@@ -128,7 +128,7 @@ export default {
   agent_builder: {
     user: {
       read() {
-        return request.$http.get(`api/users/details`);
+        return request.$http.get(`api/users/details/`);
       },
     },
     supervisor: Supervisor,
