@@ -51,7 +51,7 @@ import { isEmpty } from 'lodash';
 import { HotjarIdentifyUser } from '@/utils/HotjarIdentifyUser.js';
 import { useAlertStore } from '@/store/Alert.js';
 import { useActionsStore } from '@/store/Actions.js';
-import { useUserStore } from '@/store/User.js';
+import { useUserStore } from '@/store/UserStore';
 
 export default {
   name: 'App',

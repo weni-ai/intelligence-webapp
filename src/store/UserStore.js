@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 
-export const useUserStore = defineStore('User', () => {
+export const useUserStore = defineStore('UserStore', () => {
   const user = ref(null);
 
   async function getUserDetails() {
