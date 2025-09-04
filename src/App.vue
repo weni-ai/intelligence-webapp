@@ -89,17 +89,13 @@ export default {
   },
   watch: {
     '$route.name': {
-      handler() {
+      async handler() {
         if (
           this.$route.name !== undefined &&
           isEmpty(this.$store.state.User.me) &&
           isEmpty(this.userStore.user)
         ) {
-          if (this.$route.path.includes('intelligences')) {
-            this.profileInfo();
-          } else {
-            this.userStore.getUserDetails();
-          }
+          this.profileInfo();
 
           HotjarIdentifyUser({
             token: localStorage.getItem('authToken'),
@@ -148,7 +144,13 @@ export default {
   methods: {
     ...mapActions(['getMyProfileInfo', 'setUserName']),
     async profileInfo() {
-      const { data } = await this.getMyProfileInfo();
+      let data;
+      if (this.$route.path.includes('intelligences')) {
+        data = await this.getMyProfileInfo();
+      } else {
+        data = await this.userStore.getUserDetails();
+      }
+
       if (data) {
         this.$store.state.User.me = data;
 

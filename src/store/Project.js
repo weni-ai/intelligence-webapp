@@ -26,6 +26,7 @@ export const useProjectStore = defineStore('Project', () => {
       projectDetails.value = data;
       projectDetails.value.status = 'success';
     } catch (error) {
+      console.error(error);
       projectDetails.value.status = 'error';
     }
   }
