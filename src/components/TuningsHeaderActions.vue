@@ -46,7 +46,7 @@ import { useStore } from 'vuex';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useTuningsStore } from '@/store/Tunings';
 import { useProjectStore } from '@/store/Project';
-import { useUserStore } from '@/store/User.js';
+import { useUserStore } from '@/store/UserStore';
 
 import ModalUpgradeToMultiagents from './Brain/Tunings/ModalUpgradeToMultiagents.vue';
 import ProjectDetailsModal from './ProjectDetailsModal/index.vue';
