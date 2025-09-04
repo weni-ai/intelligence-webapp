@@ -1,45 +1,40 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { createRouter, createWebHistory } from 'vue-router';
-import { createStore } from 'vuex';
+import { createI18n } from 'vue-i18n';
 
 import SettingsUpgradeToMultiagents from '../SettingsUpgradeToMultiagents.vue';
 
+const i18n = createI18n({
+  locale: 'en',
+  messages: {
+    en: {
+      router: {
+        tunings: {
+          upgrade_to_multi_agents: {
+            title: 'Upgrade to Multi-Agents',
+            description: 'Upgrade your intelligence to use multiple agents',
+            button: 'Upgrade Now',
+          },
+        },
+      },
+    },
+  },
+});
+
 describe('SettingsUpgradeToMultiagents.vue', () => {
   let wrapper;
-  let store;
-  let router;
 
   const upgradeToMultiagentsTitle = () =>
-    wrapper.findComponent('[data-testid="upgrade-to-multi-agents-title"]');
+    wrapper.find('[data-testid="upgrade-to-multi-agents-title"]');
   const upgradeToMultiagentsDescription = () =>
-    wrapper.findComponent(
-      '[data-testid="upgrade-to-multi-agents-description"]',
-    );
+    wrapper.find('[data-testid="upgrade-to-multi-agents-description"]');
   const upgradeToMultiagentsButton = () =>
-    wrapper.findComponent('[data-testid="upgrade-to-multiagents-button"]');
-  const modal = () => wrapper.findComponent('[data-testid="modal"]');
+    wrapper.find('[data-testid="upgrade-to-multiagents-button"]');
 
   beforeEach(() => {
-    store = createStore({
-      actions: {
-        upgradeToMultiagents: vi.fn().mockResolvedValue({ status: 'success' }),
-      },
-    });
-
-    router = createRouter({
-      history: createWebHistory(),
-      routes: [
-        { path: '/', name: 'home' },
-        { path: '/agents', name: 'agents' },
-      ],
-    });
-
-    vi.spyOn(router, 'replace');
-
     wrapper = mount(SettingsUpgradeToMultiagents, {
       global: {
-        plugins: [store, router],
+        plugins: [i18n],
       },
     });
   });
@@ -49,81 +44,25 @@ describe('SettingsUpgradeToMultiagents.vue', () => {
       expect(upgradeToMultiagentsTitle().exists()).toBe(true);
       expect(upgradeToMultiagentsDescription().exists()).toBe(true);
       expect(upgradeToMultiagentsButton().exists()).toBe(true);
-      expect(modal().exists()).toBe(false);
     });
 
     it('displays the correct texts', () => {
-      const t = wrapper.vm.$t;
-
       expect(upgradeToMultiagentsTitle().text()).toBe(
-        t('router.tunings.upgrade_to_multi_agents.title'),
+        'Upgrade to Multi-Agents',
       );
       expect(upgradeToMultiagentsDescription().text()).toBe(
-        t('router.tunings.upgrade_to_multi_agents.description'),
+        'Upgrade your intelligence to use multiple agents',
       );
-      expect(upgradeToMultiagentsButton().text()).toBe(
-        t('router.tunings.upgrade_to_multi_agents.button'),
-      );
+      expect(upgradeToMultiagentsButton().text()).toBe('Upgrade Now');
     });
   });
 
-  describe('Modal behavior', () => {
-    it('opens the modal when the button is clicked', async () => {
-      expect(modal().exists()).toBe(false);
+  describe('Button behavior', () => {
+    it('emits upgrade-to-multiagents event when button is clicked', async () => {
       await upgradeToMultiagentsButton().trigger('click');
-      expect(modal().exists()).toBe(true);
-    });
 
-    it('closes the modal when the cancel button is clicked', async () => {
-      await upgradeToMultiagentsButton().trigger('click');
-      expect(modal().exists()).toBe(true);
-
-      expect(wrapper.vm.openUpgradeToMultiagentsModal).toBe(true);
-      await modal().vm.$emit('secondary-button-click');
-      expect(wrapper.vm.openUpgradeToMultiagentsModal).toBe(false);
-    });
-  });
-
-  describe('Upgrade functionality', () => {
-    let dispatchSpy;
-
-    beforeEach(async () => {
-      dispatchSpy = vi
-        .spyOn(store, 'dispatch')
-        .mockReturnValue({ status: 'success' });
-      await upgradeToMultiagentsButton().trigger('click');
-    });
-
-    it('calls the upgradeToMultiagents action when confirm button is clicked', async () => {
-      await modal().vm.$emit('primary-button-click');
-
-      expect(dispatchSpy).toHaveBeenCalledWith('upgradeToMultiagents');
-    });
-
-    it('shows loading state during upgrade', async () => {
-      const upgradePromiseResult = modal().vm.$emit('primary-button-click');
-
-      expect(wrapper.vm.isUpgrading).toBe(true);
-
-      await upgradePromiseResult;
-
-      expect(wrapper.vm.isUpgrading).toBe(false);
-    });
-
-    it('navigates to agents page after successful upgrade', async () => {
-      await modal().vm.$emit('primary-button-click');
-
-      expect(router.replace).toHaveBeenCalledWith({ name: 'agents' });
-    });
-
-    it('does not navigate if upgrade is not successful', async () => {
-      vi.spyOn(store, 'dispatch').mockResolvedValueOnce({ status: 'error' });
-
-      await modal().vm.$emit('primary-button-click');
-
-      expect(wrapper.vm.openUpgradeToMultiagentsModal).toBe(false);
-
-      expect(router.replace).not.toHaveBeenCalled();
+      expect(wrapper.emitted('upgrade-to-multiagents')).toBeTruthy();
+      expect(wrapper.emitted('upgrade-to-multiagents')).toHaveLength(1);
     });
   });
 });
