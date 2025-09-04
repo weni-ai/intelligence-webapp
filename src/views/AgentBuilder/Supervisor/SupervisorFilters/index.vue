@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 
 import FilterText from './FilterText.vue';
 import { format } from 'date-fns';
@@ -80,7 +80,7 @@ watch(
 const getStatusTranslation = (filter) =>
   i18n.global.t(`agent_builder.supervisor.filters.status.${filter}`);
 
-const statusOptions = ref([
+const statusOptions = computed(() => [
   { label: getStatusTranslation('conversations'), value: '' },
   {
     label: getStatusTranslation('optimized_resolution'),
@@ -111,7 +111,7 @@ watch(
 const getCsatTranslation = (filter) =>
   i18n.global.t(`agent_builder.supervisor.filters.csat.${filter}`);
 
-const csatOptions = ref([
+const csatOptions = computed(() => [
   { label: getCsatTranslation('csat'), value: '' },
   { label: getCsatTranslation('very_satisfied'), value: 'very_satisfied' },
   { label: getCsatTranslation('satisfied'), value: 'satisfied' },
@@ -134,7 +134,7 @@ watch(
   { immediate: true, deep: true },
 );
 
-const topicOptions = ref([
+const topicOptions = computed(() => [
   {
     label: i18n.global.t(`agent_builder.supervisor.filters.topic.topic`),
     value: '',

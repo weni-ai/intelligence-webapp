@@ -90,7 +90,7 @@
         "title": "Sobre conversación",
         "what_is_a_conversation": "¿Qué es una conversación?",
         "what_is_a_conversation_description": "Consideramos todas las conversaciones dentro de 24 horas del primer contacto como una única conversación.",
-        "optimized_resolution": "Resolución Optimizada",
+        "optimized_resolution": "Resoluciones Optimizadas",
         "optimized_resolution_description": "Conversaciones que finalizaron con una resolución clara y efectiva para el contacto.",
         "other_conclusion": "Otras Conclusiones",
         "other_conclusion_description": "Conversaciones que terminaron de otras maneras, como interacciones breves, saludos, abandonos o casos que siguieron un flujo diferente sin una resolución directa.",
@@ -137,8 +137,8 @@
         "status": {
           "conversations": "Conversaciones",
           "in_progress": "En progreso",
-          "optimized_resolution": "Resolución Optimizada",
-          "other_conclusion": "Otra Conclusión",
+          "optimized_resolution": "Resoluciones Optimizadas",
+          "other_conclusion": "Otras Conclusiones",
           "unengaged": "No engajado",
           "transferred_to_human_support": "Encaminado a soporte humano"
         },
