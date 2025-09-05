@@ -23,14 +23,9 @@
     >
       {{ $t('router.tunings.save_changes') }}
     </UnnnicButton>
-    <UnnnicButton
+    <TuningsHeaderActions
       v-else-if="currentBrainRoute?.page.includes('tunings')"
-      :disabled="isTuningsSaveButtonDisabled"
-      :loading="isTuningsSaveButtonLoading"
-      @click="saveTunings"
-    >
-      {{ $t('router.tunings.save_changes') }}
-    </UnnnicButton>
+    />
     <section
       v-else-if="showDateFilter"
       class="monitoring-filters"
@@ -48,19 +43,16 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue';
-import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { format, subDays } from 'date-fns';
 
 import useBrainRoutes from '@/composables/useBrainRoutes';
 
 import { useProfileStore } from '@/store/Profile';
-import { useFeatureFlagsStore } from '@/store/FeatureFlags';
-import { useTuningsStore } from '@/store/Tunings';
-import { usePreviewStore } from '@/store/Preview';
-import { useAgentsTeamStore } from '@/store/AgentsTeam';
 
 import MonitoringViewFilter from './Monitoring/ViewFilter.vue';
+import TuningsHeaderActions from '../TuningsHeaderActions.vue';
+
 const brainRoutes = useBrainRoutes();
 const dateFilter = ref({
   start: format(subDays(new Date(), 30), 'yyyy-MM-dd'),
@@ -71,9 +63,6 @@ const route = useRoute();
 const router = useRouter();
 
 const profile = useProfileStore();
-const isPreviewOpen = ref(false);
-
-const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 
 const currentBrainRoute = computed(() => {
   return (
@@ -82,29 +71,6 @@ const currentBrainRoute = computed(() => {
 });
 
 const showDateFilter = computed(() => route.name?.includes('monitoring'));
-
-const tuningsStore = useTuningsStore();
-const store = useStore();
-
-const isTuningsSaveButtonDisabled = computed(() => {
-  return isAgentsTeamEnabled
-    ? !tuningsStore.isCredentialsValid && !tuningsStore.isSettingsValid
-    : store.getters.isBrainSaveButtonDisabled;
-});
-
-const isTuningsSaveButtonLoading = computed(() => {
-  return isAgentsTeamEnabled
-    ? tuningsStore.isLoadingTunings
-    : store.state.Brain.isSavingChanges;
-});
-
-async function saveTunings() {
-  if (isAgentsTeamEnabled) {
-    tuningsStore.saveTunings();
-  } else {
-    store.dispatch('saveBrainChanges');
-  }
-}
 
 function updateQueriesAtFilterDate() {
   if (!showDateFilter.value) return;
@@ -132,14 +98,6 @@ watch(
     immediate: true,
   },
 );
-
-const handlePreview = () => {
-  isPreviewOpen.value = true;
-};
-
-const handleAgentsGallery = () => {
-  useAgentsTeamStore().isAgentsGalleryOpen = true;
-};
 </script>
 
 <style lang="scss" scoped>

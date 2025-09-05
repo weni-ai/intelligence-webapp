@@ -51,6 +51,7 @@ import { isEmpty } from 'lodash';
 import { HotjarIdentifyUser } from '@/utils/HotjarIdentifyUser.js';
 import { useAlertStore } from '@/store/Alert.js';
 import { useActionsStore } from '@/store/Actions.js';
+import { useUserStore } from '@/store/UserStore';
 
 export default {
   name: 'App',
@@ -62,10 +63,11 @@ export default {
   setup() {
     const alertStore = useAlertStore();
     const actionsStore = useActionsStore();
-
+    const userStore = useUserStore();
     return {
       alertStore,
       actionsStore,
+      userStore,
     };
   },
 
@@ -87,10 +89,11 @@ export default {
   },
   watch: {
     '$route.name': {
-      handler() {
+      async handler() {
         if (
           this.$route.name !== undefined &&
-          isEmpty(this.$store.state.User.me)
+          isEmpty(this.$store.state.User.me) &&
+          isEmpty(this.userStore.user)
         ) {
           this.profileInfo();
 
@@ -142,6 +145,8 @@ export default {
     ...mapActions(['getMyProfileInfo', 'setUserName']),
     async profileInfo() {
       const { data } = await this.getMyProfileInfo();
+      this.userStore.getUserDetails();
+
       if (data) {
         this.$store.state.User.me = data;
 

@@ -7,6 +7,7 @@ import { Supervisor } from './nexus/Supervisor';
 
 import { ProgressiveFeedbackAdapter } from './adapters/tunings/progressiveFeedback';
 import { ComponentsAdapter } from './adapters/tunings/components';
+import { ProjectDetailsAdapter } from './adapters/tunings/projectDetails';
 import i18n from '@/utils/plugins/i18n';
 
 export default {
@@ -125,6 +126,11 @@ export default {
   },
 
   agent_builder: {
+    user: {
+      read() {
+        return request.$http.get(`api/users/details/`);
+      },
+    },
     supervisor: Supervisor,
   },
 
@@ -253,6 +259,15 @@ export default {
               multi_agents,
             },
           );
+        },
+      },
+
+      projectDetails: {
+        async read({ projectUuid }) {
+          const response = await request.$http.get(
+            `api/${projectUuid}/ab-project-details`,
+          );
+          return ProjectDetailsAdapter.fromApi(response.data);
         },
       },
     },

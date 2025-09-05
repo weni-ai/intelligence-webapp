@@ -188,6 +188,13 @@
         },
         "no_logs_found": "Nenhum log encontrado"
       }
+    },
+    "tunings": {
+      "project_details": "Detalhes do projeto",
+      "agent_backend": "Backend do agente: | Backend dos agentes:",
+      "agent_model": "Modelo do {agent}:",
+      "characters_usage": "Uso de caracteres:",
+      "characters_usage_description": "Este é o número médio de caracteres que seu agente está usando em todas as áreas: Instruções, Base de Conhecimento e quaisquer outras configurações."
     }
   },
   "router": {
@@ -342,9 +349,9 @@
         "history": "Histórico de alterações"
       },
       "upgrade_to_multi_agents": {
-        "title": "Atualizar para Agent Builder 2.0",
+        "title": "Atualizar projeto para Agent Builder 2.0",
         "description": "Atualize seu projeto para usar um time de agentes inteligentes que colaboram entre si para tornar seu assistente mais inteligente com o mínimo de esforço.",
-        "button": "Atualizar agora",
+        "button": "Atualizar",
         "modal": {
           "title": "Atualizar para Agent Builder 2.0",
           "description": "Tem certeza de que deseja atualizar para Agent Builder 2.0? Essa alteração é permanente e não poderá ser desfeita.",
