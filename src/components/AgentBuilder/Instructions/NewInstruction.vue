@@ -10,7 +10,7 @@
       {{ $t('agent_builder.instructions.new_instruction.title') }}
     </h2>
     <UnnnicTextArea
-      v-model="instruction"
+      v-model="instructionsStore.newInstruction.text"
       data-testid="new-instruction-textarea"
       :placeholder="
         $t('agent_builder.instructions.new_instruction.textarea.placeholder')
@@ -23,16 +23,20 @@
     <UnnnicButton
       class="new-instruction__add-instruction-button"
       data-testid="add-instruction-button"
-      :disabled="!instruction.trim()"
+      :disabled="!newInstruction.text.trim()"
       :text="$t('agent_builder.instructions.new_instruction.add_instruction')"
+      :loading="newInstruction.status === 'loading'"
+      @click="instructionsStore.addInstruction"
     />
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed } from 'vue';
+import { useInstructionsStore } from '@/store/Instructions';
 
-const instruction = ref('');
+const instructionsStore = useInstructionsStore();
+const newInstruction = computed(() => instructionsStore.newInstruction);
 </script>
 
 <style lang="scss" scoped>

@@ -169,7 +169,9 @@
           "placeholder": "Você é engraçado, mas não faz piadas",
           "description": "Mantenha as instruções claras, diretas e imperativas."
         },
-        "add_instruction": "Adicionar instrução"
+        "add_instruction": "Adicionar instrução",
+        "success_alert": "Instrução adicionada",
+        "error_alert": "Erro ao adicionar instrução"
       }
     },
     "traces": {

@@ -169,7 +169,9 @@
           "placeholder": "You're funny, but don't make jokes",
           "description": "Keep instructions clear, direct, and in the imperative."
         },
-        "add_instruction": "Add instruction"
+        "add_instruction": "Add instruction",
+        "success_alert": "Instruction added",
+        "error_alert": "Error adding instruction"
       }
     },
     "traces": {
