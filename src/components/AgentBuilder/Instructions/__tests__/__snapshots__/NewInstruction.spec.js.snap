@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NewInstruction.vue > Component rendering > should match snapshot 1`] = `
+"<h2 data-testid="new-instruction-title">New instruction</h2>
+<anonymous-stub modelvalue="" placeholder="You're funny, but don't make jokes" maxlength="200" size="md" message="Keep instructions clear, direct, and in the imperative." disabled="false" type="normal" errors="" data-testid="new-instruction-textarea"></anonymous-stub>
+<unnnic-button-stub size="large" text="Add instruction" type="primary" float="false" iconleft="" iconright="" iconcenter="" iconsfilled="false" next="false" disabled="false" loading="false" data-testid="add-instruction-button"></unnnic-button-stub>"
+`;

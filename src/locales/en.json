@@ -162,6 +162,16 @@
         "error": "Error loading conversations"
       }
     },
+    "instructions": {
+      "new_instruction": {
+        "title": "New instruction",
+        "textarea": {
+          "placeholder": "You're funny, but don't make jokes",
+          "description": "Keep instructions clear, direct, and in the imperative."
+        },
+        "add_instruction": "Add instruction"
+      }
+    },
     "traces": {
       "search_result_received": "Search results received",
       "searching_knowledge_base": "Searching information in the knowledge base",

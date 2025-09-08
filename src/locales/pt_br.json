@@ -162,6 +162,16 @@
         "error": "Erro ao carregar conversas"
       }
     },
+    "instructions": {
+      "new_instruction": {
+        "title": "Nova instrução",
+        "textarea": {
+          "placeholder": "Você é engraçado, mas não faz piadas",
+          "description": "Mantenha as instruções claras, diretas e imperativas."
+        },
+        "add_instruction": "Adicionar instrução"
+      }
+    },
     "traces": {
       "search_result_received": "Resultado da busca recebido",
       "searching_knowledge_base": "Buscando informações na base de conhecimento",
