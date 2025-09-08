@@ -19,6 +19,7 @@ describe('NewInstruction.vue', () => {
     i18n.global.t(`agent_builder.instructions.new_instruction.${key}`);
 
   const SELECTORS = {
+    container: '[data-testid="new-instruction"]',
     title: '[data-testid="new-instruction-title"]',
     textarea: '[data-testid="new-instruction-textarea"]',
     addButton: '[data-testid="add-instruction-button"]',
@@ -30,6 +31,7 @@ describe('NewInstruction.vue', () => {
     });
 
     it('renders a title, description, textarea and add instruction button', () => {
+      expect(find('container').exists()).toBe(true);
       expect(find('title').exists()).toBe(true);
       expect(findComponent('textarea').exists()).toBe(true);
       expect(findComponent('addButton').exists()).toBe(true);
@@ -51,6 +53,12 @@ describe('NewInstruction.vue', () => {
         translation('textarea.description'),
       );
       expect(findComponent('textarea').props('maxLength')).toBe(200);
+    });
+  });
+
+  describe('Add button rendering', () => {
+    it('disables the button when the textarea is empty', () => {
+      expect(findComponent('addButton').props('disabled')).toBe(true);
     });
   });
 });

@@ -14,4 +14,10 @@ import AgentBuilderHeader from '@/components/AgentBuilder/Header.vue';
 import NewInstruction from '@/components/AgentBuilder/Instructions/NewInstruction.vue';
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.instructions {
+  display: flex;
+  flex-direction: column;
+  gap: $unnnic-spacing-md;
+}
+</style>
