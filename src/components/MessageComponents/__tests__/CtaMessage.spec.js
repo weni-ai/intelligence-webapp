@@ -51,5 +51,15 @@ describe('CtaMessage.vue', () => {
         '_blank',
       );
     });
+
+    it('opens secure URL in new tab when button is clicked', async () => {
+      mockMessage.cta_message.url = 'www.relative-path.com';
+      await ctaButton().trigger('click');
+
+      expect(mockWindowOpen).toHaveBeenCalledWith(
+        `https://${mockMessage.cta_message.url}`,
+        '_blank',
+      );
+    });
   });
 });

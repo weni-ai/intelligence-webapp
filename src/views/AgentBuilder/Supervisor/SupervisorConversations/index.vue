@@ -29,5 +29,6 @@ defineExpose({
   display: grid;
   grid-template-rows: auto 1fr;
   gap: $unnnic-spacing-sm;
+  align-items: start;
 }
 </style>
