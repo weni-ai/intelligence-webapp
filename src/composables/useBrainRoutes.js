@@ -24,6 +24,12 @@ export default function useBrainRoutes() {
           icon: 'person',
         },
         {
+          title: t('agent_builder.tabs.instructions.title'),
+          description: t('agent_builder.tabs.instructions.description'),
+          page: 'instructions',
+          icon: 'format_list_bulleted',
+        },
+        {
           title: t('agent_builder.tabs.agents.title'),
           description: t('agent_builder.tabs.agents.description'),
           page: 'agents',
