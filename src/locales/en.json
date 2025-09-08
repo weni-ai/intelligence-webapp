@@ -188,6 +188,13 @@
         },
         "no_logs_found": "No logs found"
       }
+    },
+    "tunings": {
+      "project_details": "Project details",
+      "agent_backend": "Agent backend: | Agents backend:",
+      "agent_model": "{agent} model:",
+      "characters_usage": "Characters usage:",
+      "characters_usage_description": "This is the average number of characters your agent is currently using in all areas: Instructions, Knowledge Base, and any other settings."
     }
   },
   "router": {
@@ -342,9 +349,9 @@
         "history": "Change history"
       },
       "upgrade_to_multi_agents": {
-        "title": "Upgrade to Agent Builder 2.0",
+        "title": "Upgrade project to Agent Builder 2.0",
         "description": "Upgrade your project to use a team of intelligent agents collaborating to make your assistant smarter with minimal effort.",
-        "button": "Upgrade now",
+        "button": "Upgrade",
         "modal": {
           "title": "Upgrade to Agent Builder 2.0",
           "description": "Are you sure you want to upgrade to Agent Builder 2.0? This change is permanent and can't be undone.",
