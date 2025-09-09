@@ -189,6 +189,14 @@
         "error_alert": "Error editing instruction",
         "save": "Save",
         "cancel": "Cancel"
+      },
+      "remove_instruction": {
+        "title": "Remove instruction",
+        "modal_description": "Are you sure you want to remove the instruction?",
+        "remove": "Remove",
+        "cancel": "Cancel",
+        "success_alert": "Instruction removed",
+        "error_alert": "Error removing instruction"
       }
     },
     "traces": {

@@ -189,6 +189,14 @@
         "error_alert": "Erro ao editar instrução",
         "save": "Salvar",
         "cancel": "Cancelar"
+      },
+      "remove_instruction": {
+        "title": "Remover instrução",
+        "modal_description": "Tem certeza de que deseja remover a instrução?",
+        "remove": "Remover",
+        "cancel": "Cancelar",
+        "success_alert": "Instrução removida",
+        "error_alert": "Erro ao remover instrução"
       }
     },
     "traces": {

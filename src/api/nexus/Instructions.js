@@ -53,4 +53,14 @@ export const Instructions = {
     };
     await request.$http.put(`api/${projectUuid}/customization/`, body);
   },
+
+  async delete({ projectUuid, id }) {
+    const instructionsStore = useInstructionsStore();
+    const body = {
+      instructions: instructionsStore.instructions.data
+        .filter((instruction) => instruction.id !== id)
+        .map(InstructionAdapter.toApi),
+    };
+    await request.$http.put(`api/${projectUuid}/customization/`, body);
+  },
 };

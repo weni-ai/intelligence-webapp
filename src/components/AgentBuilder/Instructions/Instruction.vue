@@ -58,6 +58,11 @@
       />
     </template>
   </section>
+
+  <ModalRemoveInstruction
+    v-model="showModalRemoveInstruction"
+    :instruction="instruction"
+  />
 </template>
 
 <script setup>
@@ -67,6 +72,7 @@ import i18n from '@/utils/plugins/i18n';
 import { useInstructionsStore } from '@/store/Instructions';
 
 import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
+import ModalRemoveInstruction from './ModalRemoveInstruction.vue';
 
 const props = defineProps({
   instruction: {
@@ -89,12 +95,20 @@ const isEditing = ref(false);
 const editingText = ref(props.instruction.text);
 const MAX_INSTRUCTION_LENGTH = 200;
 
+const showModalRemoveInstruction = ref(false);
+
 const actions = computed(() => [
   {
     text: i18n.global.t('agent_builder.instructions.edit_instruction.title'),
     icon: 'edit_square',
     scheme: 'neutral-dark',
     onClick: () => (isEditing.value = true),
+  },
+  {
+    text: i18n.global.t('agent_builder.instructions.remove_instruction.title'),
+    icon: 'delete',
+    scheme: 'aux-red-500',
+    onClick: () => (showModalRemoveInstruction.value = true),
   },
 ]);
 
