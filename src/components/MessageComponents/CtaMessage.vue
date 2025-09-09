@@ -27,7 +27,10 @@ const props = defineProps({
 
 function openUrl() {
   const url = props.message.cta_message.url;
-  window.open(url, '_blank');
+  const isAbsoluteUrl = /^https?:\/\//.test(url);
+  const finalUrl = isAbsoluteUrl ? url : `https://${url}`;
+
+  window.open(finalUrl, '_blank');
 }
 </script>
 
