@@ -200,6 +200,12 @@ const router = createRouter({
           component: () => import('@/views/AgentBuilder/Profile.vue'),
         },
         {
+          path: 'instructions',
+          name: 'instructions',
+          component: () =>
+            import('@/views/AgentBuilder/Instructions/index.vue'),
+        },
+        {
           path: 'agents',
           name: 'agents',
           component: () => import('@/views/AgentBuilder/AgentsTeam/index.vue'),

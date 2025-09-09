@@ -71,6 +71,10 @@
         "title": "Profile",
         "description": "Customize the agent's basic information and behavior"
       },
+      "instructions": {
+        "title": "Instructions",
+        "description": "Write quick rules to shape the agent’s behavior"
+      },
       "agents": {
         "title": "Agents",
         "description": "Create the perfect team of agents"
@@ -156,6 +160,43 @@
       },
       "load_conversations": {
         "error": "Error loading conversations"
+      }
+    },
+    "instructions": {
+      "new_instruction": {
+        "title": "New instruction",
+        "textarea": {
+          "placeholder": "You're funny, but don't make jokes",
+          "description": "Keep instructions clear, direct, and in the imperative."
+        },
+        "add_instruction": "Add instruction",
+        "success_alert": "Instruction added",
+        "error_alert": "Error adding instruction"
+      },
+      "instructions_added": {
+        "title": "Instructions added",
+        "default_instruction": "Default instruction",
+        "default_instructions": [
+          "Do not engage in discussions about partisan politics. Keep the focus on the company’s products and services.",
+          "Avoid conversations about religion or personal beliefs. Respect the diversity of customer perspectives.",
+          "Always use a friendly and welcoming tone.",
+          "You are fun, but you don’t make jokes."
+        ]
+      },
+      "edit_instruction": {
+        "title": "Edit instruction",
+        "success_alert": "Instruction edited",
+        "error_alert": "Error editing instruction",
+        "save": "Save",
+        "cancel": "Cancel"
+      },
+      "remove_instruction": {
+        "title": "Remove instruction",
+        "modal_description": "Are you sure you want to remove the instruction?",
+        "remove": "Remove",
+        "cancel": "Cancel",
+        "success_alert": "Instruction removed",
+        "error_alert": "Error removing instruction"
       }
     },
     "traces": {

@@ -71,6 +71,10 @@
         "title": "Perfil",
         "description": "Personalize as informações básicas e o comportamento do agente"
       },
+      "instructions": {
+        "title": "Instruções",
+        "description": "Escreva regras rápidas para moldar o comportamento do agente"
+      },
       "agents": {
         "title": "Agentes",
         "description": "Crie a equipe de agentes perfeita"
@@ -156,6 +160,43 @@
       },
       "load_conversations": {
         "error": "Erro ao carregar conversas"
+      }
+    },
+    "instructions": {
+      "new_instruction": {
+        "title": "Nova instrução",
+        "textarea": {
+          "placeholder": "Você é engraçado, mas não faz piadas",
+          "description": "Mantenha as instruções claras, diretas e imperativas."
+        },
+        "add_instruction": "Adicionar instrução",
+        "success_alert": "Instrução adicionada",
+        "error_alert": "Erro ao adicionar instrução"
+      },
+      "instructions_added": {
+        "title": "Instruções adicionadas",
+        "default_instruction": "Instrução padrão",
+        "default_instructions": [
+          "Não discuta temas relacionados à política partidária. Mantenha o foco nos produtos e serviços da empresa.",
+          "Evite conversas sobre religião ou crenças pessoais. Respeite a diversidade de pensamentos dos clientes.",
+          "Use sempre um tom amigável e acolhedor.",
+          "Você é divertido mas não faz piadas."
+        ]
+      },
+      "edit_instruction": {
+        "title": "Editar instrução",
+        "success_alert": "Instrução editada",
+        "error_alert": "Erro ao editar instrução",
+        "save": "Salvar",
+        "cancel": "Cancelar"
+      },
+      "remove_instruction": {
+        "title": "Remover instrução",
+        "modal_description": "Tem certeza de que deseja remover a instrução?",
+        "remove": "Remover",
+        "cancel": "Cancelar",
+        "success_alert": "Instrução removida",
+        "error_alert": "Erro ao remover instrução"
       }
     },
     "traces": {

@@ -63,7 +63,11 @@ const showProjectDetailsButton = computed(() => {
   const email = useUserStore().user?.email;
   if (!email) return false;
 
-  return email.includes('@weni.ai') || email.includes('@vtex.com');
+  return (
+    email.includes('@weni.ai') ||
+    email.includes('@vtex.com') ||
+    email.includes('@inspiria.studio')
+  );
 });
 
 const isTuningsSaveButtonDisabled = computed(() => {

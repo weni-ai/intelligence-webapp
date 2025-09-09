@@ -118,7 +118,7 @@ onMounted(() => {
         const style = child.el.computedStyleMap();
 
         function topBottom() {
-          return target.top + target.height + style.get('margin-top').value;
+          return target.top + target.height + style.get('margin-top')?.value;
         }
 
         function bottomTop() {
@@ -136,9 +136,9 @@ onMounted(() => {
         function rightRight() {
           return (
             target.left +
-            target.width -
-            child.dimensions.width -
-            style.get('margin-right').value
+              target.width -
+              child.dimensions.width -
+              style.get('margin-right')?.value || 0
           );
         }
 
@@ -148,9 +148,9 @@ onMounted(() => {
           child.el.style.top = `${target.top}px`;
         } else if (child.vertical === 'top-bottom') {
           if (topBottom() + child.dimensions.height > window.innerHeight) {
-            child.el.style.top = `${bottomTop() - style.get('margin-top').value}px`;
+            child.el.style.top = `${bottomTop() - (style.get('margin-top')?.value || 0)}px`;
           } else {
-            child.el.style.top = `${topBottom() - style.get('margin-top').value}px`;
+            child.el.style.top = `${topBottom() - (style.get('margin-top')?.value || 0)}px`;
           }
         } else if (child.vertical === 'bottom-top') {
           if (bottomTop() < 0) {
@@ -175,9 +175,9 @@ onMounted(() => {
           }
         } else if (child.horizontal === 'right-right') {
           if (rightRight() < 0) {
-            child.el.style.left = `${leftLeft() - style.get('margin-left').value}px`;
+            child.el.style.left = `${leftLeft() - style.get('margin-left')?.value || 0}px`;
           } else {
-            child.el.style.left = `${rightRight() - style.get('margin-left').value}px`;
+            child.el.style.left = `${rightRight() - style.get('margin-left')?.value || 0}px`;
           }
         } else if (child.horizontal === 'right-left') {
           child.el.style.left = `${target.left - child.dimensions.width}px`;

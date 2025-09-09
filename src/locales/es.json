@@ -71,6 +71,10 @@
         "title": "Perfil",
         "description": "Personaliza la información básica y el comportamiento del agente"
       },
+      "instructions": {
+        "title": "Instrucciones",
+        "description": "Escribe reglas rápidas para moldear el comportamiento del agente"
+      },
       "agents": {
         "title": "Agentes",
         "description": "Crea el equipo de agentes perfecto"
@@ -156,6 +160,43 @@
       },
       "load_conversations": {
         "error": "Error al cargar conversaciones"
+      }
+    },
+    "instructions": {
+      "new_instruction": {
+        "title": "Nueva instrucción",
+        "textarea": {
+          "placeholder": "Eres gracioso, pero no haces bromas",
+          "description": "Mantén las instrucciones claras, directas e imperativas."
+        },
+        "add_instruction": "Agregar instrucción",
+        "success_alert": "Instrucción agregada",
+        "error_alert": "Error al agregar instrucción"
+      },
+      "instructions_added": {
+        "title": "Instrucciones agregadas",
+        "default_instruction": "Instrucción predeterminada",
+        "default_instructions": [
+          "No hables de política partidista. Mantén el enfoque en los productos y servicios de la empresa.",
+          "Evita conversaciones sobre religión o creencias personales. Respeta la diversidad de pensamientos de los clientes.",
+          "Utiliza siempre un tono amigable y acogedor.",
+          "Eres divertido, pero no haces chistes."
+        ]
+      },
+      "edit_instruction": {
+        "title": "Editar instrucción",
+        "success_alert": "Instrucción editada",
+        "error_alert": "Error al editar instrucción",
+        "save": "Guardar",
+        "cancel": "Cancelar"
+      },
+      "remove_instruction": {
+        "title": "Eliminar instrucción",
+        "modal_description": "¿Realmente deseas eliminar la instrucción?",
+        "remove": "Eliminar",
+        "cancel": "Cancelar",
+        "success_alert": "Instrucción eliminada",
+        "error_alert": "Error al eliminar instrucción"
       }
     },
     "traces": {
