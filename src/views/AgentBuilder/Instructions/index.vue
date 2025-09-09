@@ -6,12 +6,14 @@
       actionsSize="none"
     />
     <NewInstruction data-testid="new-instruction" />
+    <InstructionsAdded data-testid="instructions-added" />
   </section>
 </template>
 
 <script setup>
 import AgentBuilderHeader from '@/components/AgentBuilder/Header.vue';
 import NewInstruction from '@/components/AgentBuilder/Instructions/NewInstruction.vue';
+import InstructionsAdded from '@/components/AgentBuilder/Instructions/InstructionsAdded.vue';
 </script>
 
 <style lang="scss" scoped>

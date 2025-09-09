@@ -172,6 +172,9 @@
         "add_instruction": "Adicionar instrução",
         "success_alert": "Instrução adicionada",
         "error_alert": "Erro ao adicionar instrução"
+      },
+      "instructions_added": {
+        "title": "Instruções adicionadas"
       }
     },
     "traces": {

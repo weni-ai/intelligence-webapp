@@ -23,6 +23,7 @@ export const useInstructionsStore = defineStore('Instructions', () => {
 
   const instructions = reactive({
     data: [],
+    status: null,
   });
 
   const newInstruction = reactive({

@@ -13,11 +13,11 @@ describe('Instructions.vue', () => {
   const SELECTORS = {
     instructionsHeader: '[data-testid="instructions-header"]',
     newInstruction: '[data-testid="new-instruction"]',
+    instructionsAdded: '[data-testid="instructions-added"]',
   };
 
   const findComponent = (component) =>
     wrapper.findComponent(SELECTORS[component]);
-  const find = (selector) => wrapper.find(selector);
 
   describe('Component rendering', () => {
     it('should match snapshot', () => {
@@ -27,6 +27,7 @@ describe('Instructions.vue', () => {
     it('renders components correctly', () => {
       expect(findComponent('instructionsHeader').exists()).toBe(true);
       expect(findComponent('newInstruction').exists()).toBe(true);
+      expect(findComponent('instructionsAdded').exists()).toBe(true);
     });
   });
 });

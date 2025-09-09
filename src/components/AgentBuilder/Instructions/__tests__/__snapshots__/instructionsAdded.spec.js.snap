@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InstructionsAdded.vue > should match snapshot 1`] = `
+"<section data-v-d1e6c271="" class="instructions-added">
+  <h2 data-v-d1e6c271="" class="instructions-added__title" data-testid="instructions-title">Instructions added</h2>
+  <section data-v-d1e6c271="" class="instructions-added__instructions instructions-added__instructions--loading" data-testid="instructions">
+    <unnnic-skeleton-loading-stub data-v-d1e6c271="" width="100%" height="60px" count="1" duration="1.5" tag="div" circle="false" direct="false" data-testid="instruction-loading"></unnnic-skeleton-loading-stub>
+    <unnnic-skeleton-loading-stub data-v-d1e6c271="" width="100%" height="60px" count="1" duration="1.5" tag="div" circle="false" direct="false" data-testid="instruction-loading"></unnnic-skeleton-loading-stub>
+    <unnnic-skeleton-loading-stub data-v-d1e6c271="" width="100%" height="60px" count="1" duration="1.5" tag="div" circle="false" direct="false" data-testid="instruction-loading"></unnnic-skeleton-loading-stub>
+    <unnnic-skeleton-loading-stub data-v-d1e6c271="" width="100%" height="60px" count="1" duration="1.5" tag="div" circle="false" direct="false" data-testid="instruction-loading"></unnnic-skeleton-loading-stub>
+    <unnnic-skeleton-loading-stub data-v-d1e6c271="" width="100%" height="60px" count="1" duration="1.5" tag="div" circle="false" direct="false" data-testid="instruction-loading"></unnnic-skeleton-loading-stub>
+    <unnnic-skeleton-loading-stub data-v-d1e6c271="" width="100%" height="60px" count="1" duration="1.5" tag="div" circle="false" direct="false" data-testid="instruction-loading"></unnnic-skeleton-loading-stub>
+    <unnnic-skeleton-loading-stub data-v-d1e6c271="" width="100%" height="60px" count="1" duration="1.5" tag="div" circle="false" direct="false" data-testid="instruction-loading"></unnnic-skeleton-loading-stub>
+    <unnnic-skeleton-loading-stub data-v-d1e6c271="" width="100%" height="60px" count="1" duration="1.5" tag="div" circle="false" direct="false" data-testid="instruction-loading"></unnnic-skeleton-loading-stub>
+    <unnnic-skeleton-loading-stub data-v-d1e6c271="" width="100%" height="60px" count="1" duration="1.5" tag="div" circle="false" direct="false" data-testid="instruction-loading"></unnnic-skeleton-loading-stub>
+    <unnnic-skeleton-loading-stub data-v-d1e6c271="" width="100%" height="60px" count="1" duration="1.5" tag="div" circle="false" direct="false" data-testid="instruction-loading"></unnnic-skeleton-loading-stub>
+  </section>
+</section>"
+`;
