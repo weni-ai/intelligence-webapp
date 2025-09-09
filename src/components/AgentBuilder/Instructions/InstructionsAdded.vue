@@ -27,16 +27,25 @@
           data-testid="instruction-loading"
         />
       </template>
-      <template v-else></template>
+      <template v-else>
+        <Instruction
+          v-for="instruction in instructionsStore.instructions.data"
+          :key="instruction.id"
+          :text="instruction.text"
+        />
+      </template>
     </section>
   </section>
 </template>
 
 <script setup>
 import { useInstructionsStore } from '@/store/Instructions';
+import Instruction from './Instruction.vue';
 
 const instructionsStore = useInstructionsStore();
-instructionsStore.instructions.status = 'loading';
+if (instructionsStore.instructions.status === null) {
+  instructionsStore.loadInstructions();
+}
 </script>
 
 <style lang="scss" scoped>

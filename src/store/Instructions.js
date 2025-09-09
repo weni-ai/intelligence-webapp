@@ -55,10 +55,25 @@ export const useInstructionsStore = defineStore('Instructions', () => {
     }
   }
 
+  async function loadInstructions() {
+    instructions.status = 'loading';
+    try {
+      const response = await nexusaiAPI.agent_builder.instructions.list({
+        projectUuid: connectProjectUuid.value,
+      });
+
+      instructions.data = [...instructions.data, ...response];
+      instructions.status = 'complete';
+    } catch (error) {
+      instructions.status = 'error';
+    }
+  }
+
   return {
     instructions,
     newInstruction,
 
     addInstruction,
+    loadInstructions,
   };
 });

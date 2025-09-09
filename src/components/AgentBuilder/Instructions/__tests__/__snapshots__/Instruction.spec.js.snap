@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Instruction.vue > Component rendering > should match snapshot 1`] = `
+"<section data-v-cba3a9e7="" class="instruction">
+  <p data-v-cba3a9e7="" class="instruction__text" data-testid="instruction-text">Test instruction</p>
+</section>"
+`;
