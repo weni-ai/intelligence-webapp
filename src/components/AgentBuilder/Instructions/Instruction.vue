@@ -6,6 +6,14 @@
     >
       {{ text }}
     </p>
+
+    <p
+      v-if="tag"
+      class="instruction__tag"
+      data-testid="instruction-tag"
+    >
+      {{ tag }}
+    </p>
   </section>
 </template>
 
@@ -14,6 +22,11 @@ const props = defineProps({
   text: {
     type: String,
     required: true,
+  },
+  tag: {
+    type: String,
+    default: '',
+    required: false,
   },
 });
 </script>
@@ -39,6 +52,19 @@ const props = defineProps({
     font-size: $unnnic-font-size-body-gt;
     font-weight: $unnnic-font-weight-regular;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+  }
+
+  &__tag {
+    border-radius: $unnnic-border-radius-pill;
+
+    padding: $unnnic-spacing-nano $unnnic-spacing-ant;
+
+    background-color: $unnnic-color-neutral-light;
+    color: $unnnic-color-neutral-darkest;
+    font-family: $unnnic-font-family-secondary;
+    font-size: $unnnic-font-size-body-md;
+    font-weight: $unnnic-font-weight-regular;
+    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
   }
 }
 </style>

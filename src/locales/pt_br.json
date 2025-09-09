@@ -174,7 +174,14 @@
         "error_alert": "Erro ao adicionar instrução"
       },
       "instructions_added": {
-        "title": "Instruções adicionadas"
+        "title": "Instruções adicionadas",
+        "default_instruction": "Instrução padrão",
+        "default_instructions": [
+          "Não discuta temas relacionados à política partidária. Mantenha o foco nos produtos e serviços da empresa.",
+          "Evite conversas sobre religião ou crenças pessoais. Respeite a diversidade de pensamentos dos clientes.",
+          "Use sempre um tom amigável e acolhedor.",
+          "Você é divertido mas não faz piadas."
+        ]
       }
     },
     "traces": {

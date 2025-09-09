@@ -174,7 +174,14 @@
         "error_alert": "Error adding instruction"
       },
       "instructions_added": {
-        "title": "Instructions added"
+        "title": "Instructions added",
+        "default_instruction": "Default instruction",
+        "default_instructions": [
+          "Do not engage in discussions about partisan politics. Keep the focus on the company’s products and services.",
+          "Avoid conversations about religion or personal beliefs. Respect the diversity of customer perspectives.",
+          "Always use a friendly and welcoming tone.",
+          "You are fun, but you don’t make jokes."
+        ]
       }
     },
     "traces": {

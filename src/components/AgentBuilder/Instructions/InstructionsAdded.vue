@@ -29,8 +29,20 @@
       </template>
       <template v-else>
         <Instruction
+          v-for="(instruction, index) in instructionsDefault"
+          :key="index"
+          data-testid="instruction-default"
+          :text="instruction"
+          :tag="
+            $t(
+              'agent_builder.instructions.instructions_added.default_instruction',
+            )
+          "
+        />
+        <Instruction
           v-for="instruction in instructionsStore.instructions.data"
           :key="instruction.id"
+          data-testid="instruction-added"
           :text="instruction.text"
         />
       </template>
@@ -39,13 +51,22 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { useInstructionsStore } from '@/store/Instructions';
+
 import Instruction from './Instruction.vue';
+import i18n from '@/utils/plugins/i18n';
 
 const instructionsStore = useInstructionsStore();
 if (instructionsStore.instructions.status === null) {
   instructionsStore.loadInstructions();
 }
+
+const instructionsDefault = computed(() =>
+  i18n.global.tm(
+    'agent_builder.instructions.instructions_added.default_instructions',
+  ),
+);
 </script>
 
 <style lang="scss" scoped>
