@@ -1,15 +1,15 @@
 import nexusRequest from '../nexusaiRequest';
 import { InstructionAdapter } from '../adapters/instructions/instruction';
-import { useProfileStore } from '@/store/Profile';
+import { useInstructionsStore } from '@/store/Instructions';
 
 const request = nexusRequest;
 
 export const Instructions = {
   async addInstruction({ projectUuid, instruction }) {
-    const profileStore = useProfileStore();
+    const instructionsStore = useInstructionsStore();
     const body = {
       instructions: [
-        ...profileStore.instructions.current,
+        ...instructionsStore.instructions.data,
         InstructionAdapter.toApi(instruction),
       ],
     };
@@ -39,5 +39,19 @@ export const Instructions = {
     );
 
     return response.data.instructions.map(InstructionAdapter.fromApi);
+  },
+
+  async edit({ projectUuid, id, text }) {
+    const instructionsStore = useInstructionsStore();
+
+    const body = {
+      instructions: [
+        ...instructionsStore.instructions.data.filter(
+          (instruction) => instruction.id !== id,
+        ),
+        { id, text },
+      ].map(InstructionAdapter.toApi),
+    };
+    await request.$http.put(`api/${projectUuid}/customization/`, body);
   },
 };

@@ -1,8 +1,9 @@
 export const InstructionAdapter = {
   toApi(data) {
-    const { text } = data;
+    const { text, id } = data;
     return {
       instruction: text.trim(),
+      id,
     };
   },
   fromApi(data) {
