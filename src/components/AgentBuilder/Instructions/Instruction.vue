@@ -14,12 +14,14 @@
         size="small"
         :disabled="editingText.trim() === ''"
         :loading="instruction.status === 'loading'"
+        data-testid="instruction-save-button"
         @click="saveEditingInstruction"
       />
       <UnnnicButton
         :text="$t('agent_builder.instructions.cancel_instruction')"
         type="tertiary"
         size="small"
+        data-testid="instruction-cancel-button"
         @click="cancelEditingInstruction"
       />
     </template>
@@ -40,12 +42,11 @@
         {{ tag }}
       </p>
 
-      <section
+      <ContentItemActions
         v-if="showActions"
-        class="instruction__actions"
-      >
-        <ContentItemActions :actions="actions" />
-      </section>
+        :actions="actions"
+        data-testid="instruction-actions"
+      />
     </template>
   </section>
 </template>

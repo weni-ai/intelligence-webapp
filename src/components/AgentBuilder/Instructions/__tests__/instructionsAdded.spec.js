@@ -68,9 +68,12 @@ describe('InstructionsAdded.vue', () => {
 
     it('renders default instructions correctly', () => {
       expect(findComponent('instructionDefault').exists()).toBe(true);
-      expect(findComponent('instructionDefault').props('text')).toBe(
-        translation('default_instructions.0'),
-      );
+      expect(
+        findComponent('instructionDefault').props('instruction'),
+      ).toStrictEqual({
+        id: 'default-0',
+        text: translation('default_instructions.0'),
+      });
       expect(findComponent('instructionDefault').props('tag')).toBe(
         translation('default_instruction'),
       );
@@ -78,9 +81,12 @@ describe('InstructionsAdded.vue', () => {
 
     it('renders added instructions correctly', () => {
       expect(findComponent('instructionAdded').exists()).toBe(true);
-      expect(findComponent('instructionAdded').props('text')).toBe(
-        'Instruction 1',
-      );
+      expect(
+        findComponent('instructionAdded').props('instruction'),
+      ).toStrictEqual({
+        id: 1,
+        text: 'Instruction 1',
+      });
     });
   });
 
