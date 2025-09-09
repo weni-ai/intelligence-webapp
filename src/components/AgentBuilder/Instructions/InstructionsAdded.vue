@@ -88,12 +88,13 @@ const instructionsDefault = computed(() =>
   &__instructions {
     display: flex;
     flex-direction: column;
-    gap: $unnnic-spacing-nano;
 
     border-radius: $unnnic-border-radius-md;
     border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
 
     &--loading {
+      gap: $unnnic-spacing-nano;
+
       border: none;
       border-radius: 0;
     }
