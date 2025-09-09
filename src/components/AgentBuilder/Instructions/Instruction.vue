@@ -8,6 +8,7 @@
           data-testid="instruction-input"
           size="sm"
           :maxLength="MAX_INSTRUCTION_LENGTH"
+          @keyup.enter="saveEditingInstruction"
         />
         <p
           class="input__length"

@@ -106,6 +106,9 @@ describe('Instruction.vue', () => {
   describe('Edit mode', () => {
     beforeEach(() => {
       wrapper.vm.isEditing = true;
+      instructionsStore.editInstruction = vi.fn().mockResolvedValue({
+        status: 'complete',
+      });
     });
 
     it('should match snapshot', () => {
@@ -162,12 +165,6 @@ describe('Instruction.vue', () => {
     });
 
     describe('Save button', () => {
-      beforeEach(() => {
-        instructionsStore.editInstruction = vi.fn().mockResolvedValue({
-          status: 'complete',
-        });
-      });
-
       it('is disabled when the input is empty', async () => {
         wrapper.vm.editingText = '';
         await wrapper.vm.$nextTick();
