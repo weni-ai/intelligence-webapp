@@ -121,6 +121,7 @@
         "description": "If the message was sent by human support or triggered an automatic action, you can find it in {studio_link}.",
         "studio_link": "Studio"
       },
+      "unclassified_status_tooltip": "Conversations closed before September 1, 2025 cannot be classified",
       "export": {
         "title": "Export to email",
         "description": "We'll prepare the file with the AI information and send it to the following emails:",

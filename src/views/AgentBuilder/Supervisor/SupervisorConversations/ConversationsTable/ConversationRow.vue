@@ -24,12 +24,18 @@
       </td>
 
       <td class="main-infos__status">
-        <UnnnicTag
+        <UnnnicToolTip
           v-if="statusProps.text"
-          class="cell__status"
-          :scheme="statusProps.scheme"
-          :text="statusProps.text"
-        />
+          side="top"
+          :text="$t('agent_builder.supervisor.unclassified_status_tooltip')"
+          :enabled="conversation.status === 'unclassified'"
+        >
+          <UnnnicTag
+            class="cell__status"
+            :scheme="statusProps.scheme"
+            :text="statusProps.text"
+          />
+        </UnnnicToolTip>
 
         <UnnnicTag
           v-if="conversation.transferred_to_human_support"
