@@ -105,8 +105,8 @@ const statusProps = computed(() => {
     other_conclusion: {
       scheme: 'aux-red-500',
     },
-    unengaged: {
-      scheme: 'aux-purple-500',
+    unclassified: {
+      scheme: 'gray-500',
     },
   };
 

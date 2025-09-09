@@ -139,7 +139,7 @@
           "in_progress": "In progress",
           "optimized_resolution": "Optimized Resolutions",
           "other_conclusion": "Other Conclusions",
-          "unengaged": "Unengaged",
+          "unclassified": "Unclassified",
           "transferred_to_human_support": "Transferred to human support"
         },
         "csat": {
