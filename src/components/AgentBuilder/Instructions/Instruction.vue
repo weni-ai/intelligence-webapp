@@ -1,13 +1,21 @@
 <template>
   <section class="instruction">
     <template v-if="isEditing">
-      <UnnnicInput
-        v-model="editingText"
-        class="instruction__input"
-        data-testid="instruction-input"
-        size="sm"
-        :maxLength="200"
-      />
+      <section class="instruction__input">
+        <UnnnicInput
+          v-model="editingText"
+          class="input__field"
+          data-testid="instruction-input"
+          size="sm"
+          :maxLength="MAX_INSTRUCTION_LENGTH"
+        />
+        <p
+          class="input__length"
+          data-testid="instruction-input-length"
+        >
+          {{ editingText.length }} / {{ MAX_INSTRUCTION_LENGTH }}
+        </p>
+      </section>
       <UnnnicButton
         :text="$t('agent_builder.instructions.save_instruction')"
         type="secondary"
@@ -78,6 +86,7 @@ const instructionsStore = useInstructionsStore();
 
 const isEditing = ref(false);
 const editingText = ref(props.instruction.text);
+const MAX_INSTRUCTION_LENGTH = 200;
 
 const actions = computed(() => [
   {
@@ -107,7 +116,7 @@ function cancelEditingInstruction() {
 .instruction {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: $unnnic-spacing-nano;
 
   padding: $unnnic-spacing-sm;
@@ -142,6 +151,19 @@ function cancelEditingInstruction() {
 
   &__input {
     width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: $unnnic-spacing-nano;
+
+    .input__length {
+      color: $unnnic-color-neutral-cloudy;
+
+      font-family: $unnnic-font-family-secondary;
+      font-size: $unnnic-font-size-body-md;
+      font-weight: $unnnic-font-weight-regular;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+    }
   }
 }
 </style>

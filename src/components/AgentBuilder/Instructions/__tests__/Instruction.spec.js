@@ -42,6 +42,7 @@ describe('Instruction.vue', () => {
     tag: '[data-testid="instruction-tag"]',
     actions: '[data-testid="instruction-actions"]',
     input: '[data-testid="instruction-input"]',
+    inputLength: '[data-testid="instruction-input-length"]',
     saveButton: '[data-testid="instruction-save-button"]',
     cancelButton: '[data-testid="instruction-cancel-button"]',
   };
@@ -111,6 +112,7 @@ describe('Instruction.vue', () => {
 
     it('renders the correct components', async () => {
       expect(findComponent('input').exists()).toBe(true);
+      expect(find('inputLength').exists()).toBe(true);
       expect(findComponent('saveButton').exists()).toBe(true);
       expect(findComponent('cancelButton').exists()).toBe(true);
       expect(findComponent('text').exists()).toBe(false);
@@ -123,6 +125,12 @@ describe('Instruction.vue', () => {
         'Test instruction',
       );
       expect(findComponent('input').props('size')).toBe('sm');
+    });
+
+    it('renders the correct input length', () => {
+      expect(find('inputLength').text()).toBe(
+        `${wrapper.vm.editingText.length} / ${wrapper.vm.MAX_INSTRUCTION_LENGTH}`,
+      );
     });
 
     it('renders the correct save button', () => {
