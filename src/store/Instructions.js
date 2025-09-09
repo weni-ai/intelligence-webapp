@@ -16,7 +16,7 @@ function callAlert(type, alertText) {
   });
 }
 
-export const useInstructionsStore = defineStore('instructions', () => {
+export const useInstructionsStore = defineStore('Instructions', () => {
   const connectProjectUuid = computed(
     () => globalStore.state.Auth.connectProjectUuid,
   );
