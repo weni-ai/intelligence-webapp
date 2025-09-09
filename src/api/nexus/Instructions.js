@@ -8,10 +8,9 @@ export const Instructions = {
   async addInstruction({ projectUuid, instruction }) {
     const instructionsStore = useInstructionsStore();
     const body = {
-      instructions: [
-        ...instructionsStore.instructions.data,
-        InstructionAdapter.toApi(instruction),
-      ],
+      instructions: [...instructionsStore.instructions.data, instruction].map(
+        InstructionAdapter.toApi,
+      ),
     };
     const response = await request.$http.put(
       `api/${projectUuid}/customization/`,
