@@ -84,8 +84,11 @@ export const useInstructionsStore = defineStore('Instructions', () => {
       });
       instruction.text = text;
       instruction.status = 'complete';
+
+      callAlert('success', 'edit_instruction.success_alert');
     } catch (error) {
       instruction.status = 'error';
+      callAlert('error', 'edit_instruction.error_alert');
     }
 
     return { status: instruction.status };

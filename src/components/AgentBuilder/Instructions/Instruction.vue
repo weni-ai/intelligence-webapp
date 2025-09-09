@@ -17,7 +17,7 @@
         </p>
       </section>
       <UnnnicButton
-        :text="$t('agent_builder.instructions.save_instruction')"
+        :text="$t('agent_builder.instructions.edit_instruction.save')"
         type="secondary"
         size="small"
         :disabled="editingText.trim() === ''"
@@ -26,7 +26,7 @@
         @click="saveEditingInstruction"
       />
       <UnnnicButton
-        :text="$t('agent_builder.instructions.cancel_instruction')"
+        :text="$t('agent_builder.instructions.edit_instruction.cancel')"
         type="tertiary"
         size="small"
         data-testid="instruction-cancel-button"
@@ -90,7 +90,7 @@ const MAX_INSTRUCTION_LENGTH = 200;
 
 const actions = computed(() => [
   {
-    text: i18n.global.t('agent_builder.instructions.edit_instruction'),
+    text: i18n.global.t('agent_builder.instructions.edit_instruction.title'),
     icon: 'edit_square',
     scheme: 'neutral-dark',
     onClick: () => (isEditing.value = true),

@@ -92,7 +92,9 @@ describe('Instruction.vue', () => {
       await wrapper.setProps({ showActions: true });
       expect(findComponent('actions').props('actions')).toEqual([
         {
-          text: i18n.global.t('agent_builder.instructions.edit_instruction'),
+          text: i18n.global.t(
+            'agent_builder.instructions.edit_instruction.title',
+          ),
           icon: 'edit_square',
           scheme: 'neutral-dark',
           onClick: expect.any(Function),
@@ -137,7 +139,7 @@ describe('Instruction.vue', () => {
       expect(findComponent('saveButton').props('disabled')).toBe(false);
       expect(findComponent('saveButton').props('loading')).toBe(false);
       expect(findComponent('saveButton').props('text')).toBe(
-        i18n.global.t('agent_builder.instructions.save_instruction'),
+        i18n.global.t('agent_builder.instructions.edit_instruction.save'),
       );
       expect(findComponent('saveButton').props('type')).toBe('secondary');
       expect(findComponent('saveButton').props('size')).toBe('small');
@@ -145,7 +147,7 @@ describe('Instruction.vue', () => {
 
     it('renders the correct cancel button', () => {
       expect(findComponent('cancelButton').props('text')).toBe(
-        i18n.global.t('agent_builder.instructions.cancel_instruction'),
+        i18n.global.t('agent_builder.instructions.edit_instruction.cancel'),
       );
       expect(findComponent('cancelButton').props('type')).toBe('tertiary');
       expect(findComponent('cancelButton').props('size')).toBe('small');
@@ -155,7 +157,7 @@ describe('Instruction.vue', () => {
       expect(findComponent('cancelButton').props('type')).toBe('tertiary');
       expect(findComponent('cancelButton').props('size')).toBe('small');
       expect(findComponent('cancelButton').props('text')).toBe(
-        i18n.global.t('agent_builder.instructions.cancel_instruction'),
+        i18n.global.t('agent_builder.instructions.edit_instruction.cancel'),
       );
     });
 

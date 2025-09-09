@@ -183,9 +183,13 @@
           "Você é divertido mas não faz piadas."
         ]
       },
-      "edit_instruction": "Editar instrução",
-      "save_instruction": "Salvar",
-      "cancel_instruction": "Cancelar"
+      "edit_instruction": {
+        "title": "Editar instrução",
+        "success_alert": "Instrução editada",
+        "error_alert": "Erro ao editar instrução",
+        "save": "Salvar",
+        "cancel": "Cancelar"
+      }
     },
     "traces": {
       "search_result_received": "Resultado da busca recebido",

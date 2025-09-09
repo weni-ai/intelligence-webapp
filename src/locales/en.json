@@ -183,9 +183,13 @@
           "You are fun, but you don’t make jokes."
         ]
       },
-      "edit_instruction": "Edit instruction",
-      "save_instruction": "Save",
-      "cancel_instruction": "Cancel"
+      "edit_instruction": {
+        "title": "Edit instruction",
+        "success_alert": "Instruction edited",
+        "error_alert": "Error editing instruction",
+        "save": "Save",
+        "cancel": "Cancel"
+      }
     },
     "traces": {
       "search_result_received": "Search results received",
