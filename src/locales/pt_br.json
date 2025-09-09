@@ -182,7 +182,10 @@
           "Use sempre um tom amigável e acolhedor.",
           "Você é divertido mas não faz piadas."
         ]
-      }
+      },
+      "edit_instruction": "Editar instrução",
+      "save_instruction": "Salvar",
+      "cancel_instruction": "Cancelar"
     },
     "traces": {
       "search_result_received": "Resultado da busca recebido",

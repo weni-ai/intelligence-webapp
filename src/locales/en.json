@@ -182,7 +182,10 @@
           "Always use a friendly and welcoming tone.",
           "You are fun, but you don’t make jokes."
         ]
-      }
+      },
+      "edit_instruction": "Edit instruction",
+      "save_instruction": "Save",
+      "cancel_instruction": "Cancel"
     },
     "traces": {
       "search_result_received": "Search results received",

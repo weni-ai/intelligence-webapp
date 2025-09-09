@@ -32,7 +32,11 @@
           v-for="(instruction, index) in instructionsDefault"
           :key="index"
           data-testid="instruction-default"
-          :text="instruction"
+          :instruction="{
+            id: `default-${index}`,
+            text: instruction,
+          }"
+          :showActions="false"
           :tag="
             $t(
               'agent_builder.instructions.instructions_added.default_instruction',
@@ -42,8 +46,8 @@
         <Instruction
           v-for="instruction in instructionsStore.instructions.data"
           :key="instruction.id"
+          :instruction="instruction"
           data-testid="instruction-added"
-          :text="instruction.text"
         />
       </template>
     </section>

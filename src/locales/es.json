@@ -182,7 +182,10 @@
           "Utiliza siempre un tono amigable y acogedor.",
           "Eres divertido, pero no haces chistes."
         ]
-      }
+      },
+      "edit_instruction": "Editar instrucción",
+      "save_instruction": "Guardar",
+      "cancel_instruction": "Cancelar"
     },
     "traces": {
       "search_result_received": "Resultado de búsqueda recibido",

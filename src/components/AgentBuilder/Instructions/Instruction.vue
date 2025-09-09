@@ -1,34 +1,105 @@
 <template>
   <section class="instruction">
-    <p
-      class="instruction__text"
-      data-testid="instruction-text"
-    >
-      {{ text }}
-    </p>
+    <template v-if="isEditing">
+      <UnnnicInput
+        v-model="editingText"
+        class="instruction__input"
+        data-testid="instruction-input"
+        size="sm"
+        :maxLength="200"
+      />
+      <UnnnicButton
+        :text="$t('agent_builder.instructions.save_instruction')"
+        type="secondary"
+        size="small"
+        :disabled="editingText.trim() === ''"
+        :loading="instruction.status === 'loading'"
+        @click="saveEditingInstruction"
+      />
+      <UnnnicButton
+        :text="$t('agent_builder.instructions.cancel_instruction')"
+        type="tertiary"
+        size="small"
+        @click="cancelEditingInstruction"
+      />
+    </template>
 
-    <p
-      v-if="tag"
-      class="instruction__tag"
-      data-testid="instruction-tag"
-    >
-      {{ tag }}
-    </p>
+    <template v-else>
+      <p
+        class="instruction__text"
+        data-testid="instruction-text"
+      >
+        {{ instruction.text }}
+      </p>
+
+      <p
+        v-if="tag"
+        class="instruction__tag"
+        data-testid="instruction-tag"
+      >
+        {{ tag }}
+      </p>
+
+      <section
+        v-if="showActions"
+        class="instruction__actions"
+      >
+        <ContentItemActions :actions="actions" />
+      </section>
+    </template>
   </section>
 </template>
 
 <script setup>
+import { ref, computed } from 'vue';
+import i18n from '@/utils/plugins/i18n';
+
+import { useInstructionsStore } from '@/store/Instructions';
+
+import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
+
 const props = defineProps({
-  text: {
-    type: String,
+  instruction: {
+    type: Object,
     required: true,
   },
   tag: {
     type: String,
     default: '',
-    required: false,
+  },
+  showActions: {
+    type: Boolean,
+    default: true,
   },
 });
+
+const instructionsStore = useInstructionsStore();
+
+const isEditing = ref(false);
+const editingText = ref(props.instruction.text);
+
+const actions = computed(() => [
+  {
+    text: i18n.global.t('agent_builder.instructions.edit_instruction'),
+    icon: 'edit_square',
+    scheme: 'neutral-dark',
+    onClick: () => (isEditing.value = true),
+  },
+]);
+
+async function saveEditingInstruction() {
+  const { status } = await instructionsStore.editInstruction(
+    props.instruction.id,
+    editingText.value,
+  );
+
+  if (status === 'complete') isEditing.value = false;
+}
+
+function cancelEditingInstruction() {
+  isEditing.value = false;
+  editingText.value = props.instruction.text;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -36,7 +107,7 @@ const props = defineProps({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: $unnnic-spacing-sm;
+  gap: $unnnic-spacing-nano;
 
   padding: $unnnic-spacing-sm;
 
@@ -58,6 +129,7 @@ const props = defineProps({
     border-radius: $unnnic-border-radius-pill;
 
     padding: $unnnic-spacing-nano $unnnic-spacing-ant;
+    margin-left: $unnnic-spacing-ant;
 
     background-color: $unnnic-color-neutral-light;
     color: $unnnic-color-neutral-darkest;
@@ -65,6 +137,10 @@ const props = defineProps({
     font-size: $unnnic-font-size-body-md;
     font-weight: $unnnic-font-weight-regular;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+  }
+
+  &__input {
+    width: 100%;
   }
 }
 </style>
