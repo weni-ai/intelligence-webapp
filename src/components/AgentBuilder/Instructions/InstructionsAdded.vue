@@ -1,6 +1,7 @@
 <template>
   <section class="instructions-added">
     <InstructionsAddedHeader
+      v-model:filters="filters"
       data-testid="instructions-header"
       :instructionsCount="instructionsCount"
     />
@@ -26,34 +27,48 @@
         />
       </template>
       <template v-else>
-        <Instruction
-          v-for="(instruction, index) in instructionsDefault"
-          :key="index"
-          data-testid="instruction-default"
-          :instruction="{
-            id: `default-${index}`,
-            text: instruction,
-          }"
-          :showActions="false"
-          :tag="
-            $t(
-              'agent_builder.instructions.instructions_added.default_instruction',
-            )
+        <template
+          v-if="
+            filtersValues.includes('default_instructions') ||
+            filtersValues.length === 0
           "
-        />
-        <Instruction
-          v-for="instruction in instructionsStore.instructions.data"
-          :key="instruction.id"
-          :instruction="instruction"
-          data-testid="instruction-added"
-        />
+        >
+          <Instruction
+            v-for="(instruction, index) in instructionsDefault"
+            :key="index"
+            data-testid="instruction-default"
+            :instruction="{
+              id: `default-${index}`,
+              text: instruction,
+            }"
+            :showActions="false"
+            :tag="
+              $t(
+                'agent_builder.instructions.instructions_added.default_instruction',
+              )
+            "
+          />
+        </template>
+        <template
+          v-if="
+            filtersValues.includes('personalized_instructions') ||
+            filtersValues.length === 0
+          "
+        >
+          <Instruction
+            v-for="instruction in instructionsStore.instructions.data"
+            :key="instruction.id"
+            :instruction="instruction"
+            data-testid="instruction-added"
+          />
+        </template>
       </template>
     </section>
   </section>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useInstructionsStore } from '@/store/Instructions';
 
 import i18n from '@/utils/plugins/i18n';
@@ -77,6 +92,11 @@ const instructionsCount = computed(
     instructionsStore.instructions.data.length +
     instructionsDefault.value.length,
 );
+
+const filters = ref([]);
+const filtersValues = computed(() => {
+  return filters.value.map((filter) => filter.value);
+});
 </script>
 
 <style lang="scss" scoped>

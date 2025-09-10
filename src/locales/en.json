@@ -176,6 +176,11 @@
       "instructions_added": {
         "title": "Instructions added",
         "subtitle": "{count} instructions",
+        "filters": {
+          "placeholder": "Instructions",
+          "default_instructions": "Default instructions",
+          "personalized_instructions": "Personalized instructions"
+        },
         "default_instruction": "Default instruction",
         "default_instructions": [
           "Do not engage in discussions about partisan politics. Keep the focus on the company’s products and services.",

@@ -176,6 +176,11 @@
       "instructions_added": {
         "title": "Instrucciones agregadas",
         "subtitle": "{count} instrucciones",
+        "filters": {
+          "placeholder": "Instrucciones",
+          "default_instructions": "Instrucciones predeterminadas",
+          "personalized_instructions": "Instrucciones personalizadas"
+        },
         "default_instruction": "Instrucción predeterminada",
         "default_instructions": [
           "No hables de política partidista. Mantén el enfoque en los productos y servicios de la empresa.",
