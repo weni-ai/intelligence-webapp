@@ -55,7 +55,7 @@ describe('InstructionsAdded.vue', () => {
 
   describe('Component rendering', () => {
     it('renders components correctly', () => {
-      expect(find('instructionsHeader').exists()).toBe(true);
+      expect(findComponent('instructionsHeader').exists()).toBe(true);
       expect(find('instructions').exists()).toBe(true);
       expect(findComponent('instructionLoading').exists()).toBe(false);
       expect(findComponent('instructionDefault').exists()).toBe(true);
@@ -83,6 +83,14 @@ describe('InstructionsAdded.vue', () => {
         id: 1,
         text: 'Instruction 1',
       });
+    });
+  });
+
+  describe('Component props', () => {
+    it('renders instructions count correctly', () => {
+      expect(
+        findComponent('instructionsHeader').props('instructionsCount'),
+      ).toBe(wrapper.vm.instructionsCount);
     });
   });
 

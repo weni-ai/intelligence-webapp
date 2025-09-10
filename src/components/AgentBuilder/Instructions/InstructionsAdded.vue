@@ -1,6 +1,9 @@
 <template>
   <section class="instructions-added">
-    <InstructionsAddedHeader data-testid="instructions-header" />
+    <InstructionsAddedHeader
+      data-testid="instructions-header"
+      :instructionsCount="instructionsCount"
+    />
 
     <section
       :class="[
@@ -67,6 +70,12 @@ const instructionsDefault = computed(() =>
   i18n.global.tm(
     'agent_builder.instructions.instructions_added.default_instructions',
   ),
+);
+
+const instructionsCount = computed(
+  () =>
+    instructionsStore.instructions.data.length +
+    instructionsDefault.value.length,
 );
 </script>
 
