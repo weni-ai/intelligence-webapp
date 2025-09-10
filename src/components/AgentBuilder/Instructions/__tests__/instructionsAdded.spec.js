@@ -35,7 +35,7 @@ describe('InstructionsAdded.vue', () => {
   });
 
   const SELECTORS = {
-    title: '[data-testid="instructions-title"]',
+    instructionsHeader: '[data-testid="instructions-header"]',
     instructions: '[data-testid="instructions"]',
     instructionLoading: '[data-testid="instruction-loading"]',
     instructionDefault: '[data-testid="instruction-default"]',
@@ -55,15 +55,11 @@ describe('InstructionsAdded.vue', () => {
 
   describe('Component rendering', () => {
     it('renders components correctly', () => {
-      expect(find('title').exists()).toBe(true);
+      expect(find('instructionsHeader').exists()).toBe(true);
       expect(find('instructions').exists()).toBe(true);
       expect(findComponent('instructionLoading').exists()).toBe(false);
       expect(findComponent('instructionDefault').exists()).toBe(true);
       expect(findComponent('instructionAdded').exists()).toBe(true);
-    });
-
-    it('renders title correctly', () => {
-      expect(find('title').text()).toBe(translation('title'));
     });
 
     it('renders default instructions correctly', () => {

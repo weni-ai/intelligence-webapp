@@ -1,11 +1,6 @@
 <template>
   <section class="instructions-added">
-    <h2
-      class="instructions-added__title"
-      data-testid="instructions-title"
-    >
-      {{ $t('agent_builder.instructions.instructions_added.title') }}
-    </h2>
+    <InstructionsAddedHeader data-testid="instructions-header" />
 
     <section
       :class="[
@@ -58,8 +53,10 @@
 import { computed } from 'vue';
 import { useInstructionsStore } from '@/store/Instructions';
 
-import Instruction from './Instruction.vue';
 import i18n from '@/utils/plugins/i18n';
+
+import Instruction from './Instruction.vue';
+import InstructionsAddedHeader from './InstructionsAddedHeader.vue';
 
 const instructionsStore = useInstructionsStore();
 if (instructionsStore.instructions.status === null) {
@@ -78,16 +75,6 @@ const instructionsDefault = computed(() =>
   display: flex;
   flex-direction: column;
   gap: $unnnic-spacing-sm;
-
-  &__title {
-    margin: 0;
-
-    color: $unnnic-color-neutral-darkest;
-    font-family: $unnnic-font-family-secondary;
-    font-size: $unnnic-font-size-body-lg;
-    font-weight: $unnnic-font-weight-bold;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-  }
 
   &__instructions {
     display: flex;
