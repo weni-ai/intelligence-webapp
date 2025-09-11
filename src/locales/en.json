@@ -180,6 +180,7 @@
           "safety_topics": "Safety topics",
           "custom": "Custom instructions",
           "default_description": "Core, read-only rules set by the system. They apply to every conversation for this agent.",
+          "safety_topics_description": "The agent does not discuss these topics. They are automatically defined and cannot be edited.",
           "custom_description": " Your custom instructions for this agent. Editable and removable."
         },
         "default_instruction": "Default instruction",
@@ -191,6 +192,20 @@
           "Only communicate with the agents that are necessary to help with the User's query.",
           "Answer strictly with facts found in the knowledgebase block; do not rely on prior knowledge, assumptions, or external sources.",
           "Do not infer unstated details, generalize beyond what is written, fill gaps, or speculate—even if the topic seems obvious."
+        ],
+        "safety_topics": [
+          "Politics",
+          "Physical health",
+          "Physical or moral violence", 
+          "Sexual content",
+          "Prejudice",
+          "Hate",
+          "Religion",
+          "Suicide",
+          "Self-harm",
+          "Beliefs",
+          "Gender identity",
+          "Sex and relationships"
         ]
       },
       "edit_instruction": {

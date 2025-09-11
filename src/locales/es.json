@@ -192,6 +192,20 @@
           "Comunícate solo con los agentes necesarios para ayudar con la consulta del Usuario.",
           "Responde estrictamente con hechos encontrados en el bloque de la base de conocimiento; no uses conocimiento previo, suposiciones ni fuentes externas.",
           "No infieras detalles no declarados, no generalices más allá de lo escrito, no rellenes vacíos ni especules — incluso si el tema parece obvio."
+        ],
+        "safety_topics": [
+          "Política",
+          "Salud física",
+          "Violencia física o moral", 
+          "Contenido sexual",
+          "Prejuicio",
+          "Ódio",
+          "Religión",
+          "Suicidio",
+          "Autolesión",
+          "Crenzas",
+          "Identidad de género",
+          "Relaciones sexuales"
         ]
       },
       "edit_instruction": {

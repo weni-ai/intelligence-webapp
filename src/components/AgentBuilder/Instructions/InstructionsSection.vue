@@ -36,6 +36,12 @@
       :showActions="false"
     />
     <InstructionsList
+      v-if="activeTab === 'safety_topics'"
+      :instructions="instructionsSafetyTopics"
+      :isLoading="false"
+      :showActions="false"
+    />
+    <InstructionsList
       v-if="activeTab === 'custom'"
       :instructions="instructionsStore.instructions.data"
       :isLoading="instructionsStore.instructions.status === 'loading'"
@@ -45,7 +51,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { useInstructionsStore } from '@/store/Instructions';
 
 import InstructionsList from './InstructionsList.vue';
@@ -60,13 +66,21 @@ if (instructionsStore.instructions.status === null) {
 const tabs = ref(['default', 'safety_topics', 'custom']);
 const activeTab = computed(() => instructionsStore.activeInstructionsListTab);
 
-const instructionsDefault = computed(() =>
-  i18n.global
-    .tm('agent_builder.instructions.instructions_list.default_instructions')
+function generateMockedInstructions(type) {
+  return i18n.global
+    .tm(`agent_builder.instructions.instructions_list.${type}`)
     .map((instruction, index) => ({
-      id: `default-${index}`,
+      id: `${type}-${index}`,
       text: instruction,
-    })),
+    }));
+}
+
+const instructionsDefault = computed(() =>
+  generateMockedInstructions('default_instructions'),
+);
+
+const instructionsSafetyTopics = computed(() =>
+  generateMockedInstructions('safety_topics'),
 );
 </script>
 
