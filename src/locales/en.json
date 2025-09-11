@@ -184,10 +184,13 @@
         },
         "default_instruction": "Default instruction",
         "default_instructions": [
-          "Do not engage in discussions about partisan politics. Keep the focus on the company’s products and services.",
-          "Avoid conversations about religion or personal beliefs. Respect the diversity of customer perspectives.",
-          "Always use a friendly and welcoming tone.",
-          "You are fun, but you don’t make jokes."
+          "When necessary, you seek specialized assistance from team members, who are available to help resolve the case.",
+          "You MUST NEVER, under ANY CIRCUMSTANCES, discuss topics that are outside your area of expertise.",
+          "Make sure that you optimize your communication by contacting MULTIPLE agents at the same time whenever possible.",
+          "Keep your communications with other agents concise and terse, do not engage in any chit-chat.",
+          "Only communicate with the agents that are necessary to help with the User's query.",
+          "Answer strictly with facts found in the knowledgebase block; do not rely on prior knowledge, assumptions, or external sources.",
+          "Do not infer unstated details, generalize beyond what is written, fill gaps, or speculate—even if the topic seems obvious."
         ]
       },
       "edit_instruction": {

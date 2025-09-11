@@ -184,10 +184,13 @@
         },
         "default_instruction": "Instrução padrão",
         "default_instructions": [
-          "Não discuta temas relacionados à política partidária. Mantenha o foco nos produtos e serviços da empresa.",
-          "Evite conversas sobre religião ou crenças pessoais. Respeite a diversidade de pensamentos dos clientes.",
-          "Use sempre um tom amigável e acolhedor.",
-          "Você é divertido mas não faz piadas."
+          "Quando necessário, você deve buscar assistência especializada com os membros da equipe, que estão disponíveis para ajudar a resolver o caso.",
+          "Você NUNCA, em NENHUMA CIRCUNSTÂNCIA, deve discutir assuntos que estejam fora da sua área de especialização.",
+          "Garanta que a comunicação seja otimizada entrando em contato com MÚLTIPLOS agentes ao mesmo tempo, sempre que possível.",
+          "Mantenha sua comunicação com outros agentes concisa e objetiva, sem conversas paralelas.",
+          "Comunique-se apenas com os agentes necessários para ajudar na solicitação do Usuário.",
+          "Responda estritamente com base nos fatos encontrados no bloco de base de conhecimento; não utilize conhecimento prévio, suposições ou fontes externas.",
+          "Não infira detalhes não declarados, não generalize além do que está escrito, não preencha lacunas nem especule — mesmo que o assunto pareça óbvio."
         ]
       },
       "edit_instruction": {
