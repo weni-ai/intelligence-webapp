@@ -173,8 +173,8 @@
         "success_alert": "Instrucción agregada",
         "error_alert": "Error al agregar instrucción"
       },
-      "instructions_added": {
-        "title": "Instrucciones agregadas",
+      "instructions_list": {
+        "title": "Lista de instrucciones",
         "default_instruction": "Instrucción predeterminada",
         "default_instructions": [
           "No hables de política partidista. Mantén el enfoque en los productos y servicios de la empresa.",

@@ -173,8 +173,8 @@
         "success_alert": "Instrução adicionada",
         "error_alert": "Erro ao adicionar instrução"
       },
-      "instructions_added": {
-        "title": "Instruções adicionadas",
+      "instructions_list": {
+        "title": "Lista de instruções",
         "default_instruction": "Instrução padrão",
         "default_instructions": [
           "Não discuta temas relacionados à política partidária. Mantenha o foco nos produtos e serviços da empresa.",

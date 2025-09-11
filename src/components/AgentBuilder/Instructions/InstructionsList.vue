@@ -1,17 +1,17 @@
 <template>
-  <section class="instructions-added">
+  <section class="instructions-list">
     <h2
-      class="instructions-added__title"
+      class="instructions-list__title"
       data-testid="instructions-title"
     >
-      {{ $t('agent_builder.instructions.instructions_added.title') }}
+      {{ $t('agent_builder.instructions.instructions_list.title') }}
     </h2>
 
     <section
       :class="[
-        'instructions-added__instructions',
+        'instructions-list__instructions',
         {
-          'instructions-added__instructions--loading':
+          'instructions-list__instructions--loading':
             instructionsStore.instructions.status === 'loading',
         },
       ]"
@@ -39,7 +39,7 @@
           :showActions="false"
           :tag="
             $t(
-              'agent_builder.instructions.instructions_added.default_instruction',
+              'agent_builder.instructions.instructions_list.default_instruction',
             )
           "
         />
@@ -68,13 +68,13 @@ if (instructionsStore.instructions.status === null) {
 
 const instructionsDefault = computed(() =>
   i18n.global.tm(
-    'agent_builder.instructions.instructions_added.default_instructions',
+    'agent_builder.instructions.instructions_list.default_instructions',
   ),
 );
 </script>
 
 <style lang="scss" scoped>
-.instructions-added {
+.instructions-list {
   display: flex;
   flex-direction: column;
   gap: $unnnic-spacing-sm;

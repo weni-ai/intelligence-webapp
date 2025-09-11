@@ -173,8 +173,8 @@
         "success_alert": "Instruction added",
         "error_alert": "Error adding instruction"
       },
-      "instructions_added": {
-        "title": "Instructions added",
+      "instructions_list": {
+        "title": "Instructions list",
         "default_instruction": "Default instruction",
         "default_instructions": [
           "Do not engage in discussions about partisan politics. Keep the focus on the company’s products and services.",

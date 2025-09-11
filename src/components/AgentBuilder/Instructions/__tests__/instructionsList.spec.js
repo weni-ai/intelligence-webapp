@@ -2,10 +2,10 @@ import { shallowMount } from '@vue/test-utils';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 
-import InstructionsAdded from '../InstructionsAdded.vue';
+import InstructionsList from '../InstructionsList.vue';
 import i18n from '@/utils/plugins/i18n';
 
-describe('InstructionsAdded.vue', () => {
+describe('InstructionsList.vue', () => {
   let wrapper;
   const pinia = createTestingPinia({
     initialState: {
@@ -22,7 +22,7 @@ describe('InstructionsAdded.vue', () => {
   });
 
   function setup() {
-    wrapper = shallowMount(InstructionsAdded, {
+    wrapper = shallowMount(InstructionsList, {
       global: {
         plugins: [pinia],
         stubs: ['UnnnicSkeletonLoading'],
@@ -47,7 +47,7 @@ describe('InstructionsAdded.vue', () => {
   const find = (selector) => wrapper.find(SELECTORS[selector]);
 
   const translation = (key) =>
-    i18n.global.t(`agent_builder.instructions.instructions_added.${key}`);
+    i18n.global.t(`agent_builder.instructions.instructions_list.${key}`);
 
   it('should match snapshot', () => {
     expect(wrapper.html()).toMatchSnapshot();
@@ -96,7 +96,7 @@ describe('InstructionsAdded.vue', () => {
       await wrapper.vm.$nextTick();
       expect(find('instructions').exists()).toBe(true);
       expect(find('instructions').classes()).toContain(
-        'instructions-added__instructions--loading',
+        'instructions-list__instructions--loading',
       );
       expect(
         wrapper.findAllComponents(SELECTORS.instructionLoading).length,
