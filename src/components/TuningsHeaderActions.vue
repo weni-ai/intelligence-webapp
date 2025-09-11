@@ -60,6 +60,8 @@ const showModalProjectDetails = ref(false);
 const showUpgradeToMultiagentsModal = ref(false);
 
 const showProjectDetailsButton = computed(() => {
+  if (isAgentsTeamEnabled) return true;
+
   const email = useUserStore().user?.email;
   if (!email) return false;
 
