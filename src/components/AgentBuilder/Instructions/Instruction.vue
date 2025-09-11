@@ -61,6 +61,7 @@
 
   <ModalRemoveInstruction
     v-model="showModalRemoveInstruction"
+    data-testid="modal-remove-instruction"
     :instruction="instruction"
   />
 </template>

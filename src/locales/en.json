@@ -171,23 +171,48 @@
           "description": "Keep instructions clear, direct, and in the imperative."
         },
         "add_instruction": "Add instruction",
-        "success_alert": "Instruction added",
-        "error_alert": "Error adding instruction"
+        "success_alert": "Custom instruction added",
+        "error_alert": "Error adding instruction custom"
       },
-      "instructions_added": {
-        "title": "Instructions added",
+      "instructions_list": {
+        "title": "Instructions list",
+        "tabs": {
+          "default": "Default instructions",
+          "safety_topics": "Safety topics",
+          "custom": "Custom instructions",
+          "default_description": "Core, read-only rules set by the system. They apply to every conversation for this agent.",
+          "safety_topics_description": "The agent does not discuss these topics. They are automatically defined and cannot be edited.",
+          "custom_description": " Your custom instructions for this agent. Editable and removable."
+        },
         "default_instruction": "Default instruction",
         "default_instructions": [
-          "Do not engage in discussions about partisan politics. Keep the focus on the company’s products and services.",
-          "Avoid conversations about religion or personal beliefs. Respect the diversity of customer perspectives.",
-          "Always use a friendly and welcoming tone.",
-          "You are fun, but you don’t make jokes."
+          "When necessary, you seek specialized assistance from team members, who are available to help resolve the case.",
+          "You MUST NEVER, under ANY CIRCUMSTANCES, discuss topics that are outside your area of expertise.",
+          "Make sure that you optimize your communication by contacting MULTIPLE agents at the same time whenever possible.",
+          "Keep your communications with other agents concise and terse, do not engage in any chit-chat.",
+          "Only communicate with the agents that are necessary to help with the User's query.",
+          "Answer strictly with facts found in the knowledgebase block; do not rely on prior knowledge, assumptions, or external sources.",
+          "Do not infer unstated details, generalize beyond what is written, fill gaps, or speculate—even if the topic seems obvious."
+        ],
+        "safety_topics": [
+          "Politics",
+          "Physical health",
+          "Physical or moral violence", 
+          "Sexual content",
+          "Prejudice",
+          "Hate",
+          "Religion",
+          "Suicide",
+          "Self-harm",
+          "Beliefs",
+          "Gender identity",
+          "Sex and relationships"
         ]
       },
       "edit_instruction": {
         "title": "Edit instruction",
-        "success_alert": "Instruction edited",
-        "error_alert": "Error editing instruction",
+        "success_alert": "Custom instruction edited",
+        "error_alert": "Error editing instruction custom",
         "save": "Save",
         "cancel": "Cancel"
       },
@@ -196,8 +221,8 @@
         "modal_description": "Are you sure you want to remove the instruction?",
         "remove": "Remove",
         "cancel": "Cancel",
-        "success_alert": "Instruction removed",
-        "error_alert": "Error removing instruction"
+        "success_alert": "Custom instruction removed",
+        "error_alert": "Error removing instruction custom"
       }
     },
     "traces": {

@@ -20,7 +20,10 @@
     @primary-button-click="removeInstruction"
     @update:model-value="close"
   >
-    <p class="modal-remove-instruction__description">
+    <p
+      class="modal-remove-instruction__description"
+      data-testid="description"
+    >
       {{
         $t('agent_builder.instructions.remove_instruction.modal_description')
       }}

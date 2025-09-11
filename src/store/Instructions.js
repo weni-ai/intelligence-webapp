@@ -1,4 +1,4 @@
-import { reactive, computed } from 'vue';
+import { reactive, computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
 import globalStore from '.';
@@ -31,8 +31,11 @@ export const useInstructionsStore = defineStore('Instructions', () => {
     status: null,
   });
 
+  const activeInstructionsListTab = ref('default');
+
   async function addInstruction() {
     newInstruction.status = 'loading';
+    activeInstructionsListTab.value = 'custom';
 
     try {
       const instructionResponse =
@@ -121,7 +124,7 @@ export const useInstructionsStore = defineStore('Instructions', () => {
   return {
     instructions,
     newInstruction,
-
+    activeInstructionsListTab,
     addInstruction,
     loadInstructions,
     editInstruction,

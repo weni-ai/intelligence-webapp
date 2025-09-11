@@ -171,23 +171,48 @@
           "description": "Mantén las instrucciones claras, directas e imperativas."
         },
         "add_instruction": "Agregar instrucción",
-        "success_alert": "Instrucción agregada",
-        "error_alert": "Error al agregar instrucción"
+        "success_alert": "Instrucción personalizada agregada",
+        "error_alert": "Error al agregar instrucción personalizada"
       },
-      "instructions_added": {
-        "title": "Instrucciones agregadas",
+      "instructions_list": {
+        "title": "Lista de instrucciones",
+        "tabs": {
+          "default": "Instrucciones predeterminadas",
+          "safety_topics": "Tópicos de seguridad",
+          "custom": "Instrucciones personalizadas",
+          "default_description": "Reglas centrales, de solo lectura, definidas por el sistema. Se aplican a todas las conversaciones de este agente.",
+          "safety_topics_description": "El agente no discute estos temas. Están definidos automáticamente y no se pueden editar.",
+          "custom_description": "Tus instrucciones personalizadas para este agente. Editables y removibles."
+        },
         "default_instruction": "Instrucción predeterminada",
         "default_instructions": [
-          "No hables de política partidista. Mantén el enfoque en los productos y servicios de la empresa.",
-          "Evita conversaciones sobre religión o creencias personales. Respeta la diversidad de pensamientos de los clientes.",
-          "Utiliza siempre un tono amigable y acogedor.",
-          "Eres divertido, pero no haces chistes."
+          "Cuando sea necesario, debes solicitar asistencia especializada a los miembros del equipo, quienes están disponibles para ayudar a resolver el caso.",
+          "NUNCA, bajo NINGUNA CIRCUNSTANCIA, debes discutir temas que estén fuera de tu área de especialización.",
+          "Asegúrate de optimizar la comunicación contactando a MÚLTIPLES agentes al mismo tiempo siempre que sea posible.",
+          "Mantén tu comunicación con otros agentes concisa y directa, sin conversaciones innecesarias.",
+          "Comunícate solo con los agentes necesarios para ayudar con la consulta del Usuario.",
+          "Responde estrictamente con hechos encontrados en el bloque de la base de conocimiento; no uses conocimiento previo, suposiciones ni fuentes externas.",
+          "No infieras detalles no declarados, no generalices más allá de lo escrito, no rellenes vacíos ni especules — incluso si el tema parece obvio."
+        ],
+        "safety_topics": [
+          "Política",
+          "Salud física",
+          "Violencia física o moral", 
+          "Contenido sexual",
+          "Prejuicio",
+          "Ódio",
+          "Religión",
+          "Suicidio",
+          "Autolesión",
+          "Crenzas",
+          "Identidad de género",
+          "Relaciones sexuales"
         ]
       },
       "edit_instruction": {
         "title": "Editar instrucción",
-        "success_alert": "Instrucción editada",
-        "error_alert": "Error al editar instrucción",
+        "success_alert": "Instrucción personalizada editada",
+        "error_alert": "Error al editar instrucción personalizada",
         "save": "Guardar",
         "cancel": "Cancelar"
       },
@@ -196,8 +221,8 @@
         "modal_description": "¿Realmente deseas eliminar la instrucción?",
         "remove": "Eliminar",
         "cancel": "Cancelar",
-        "success_alert": "Instrucción eliminada",
-        "error_alert": "Error al eliminar instrucción"
+        "success_alert": "Instrucción personalizada eliminada",
+        "error_alert": "Error al eliminar instrucción personalizada"
       }
     },
     "traces": {
