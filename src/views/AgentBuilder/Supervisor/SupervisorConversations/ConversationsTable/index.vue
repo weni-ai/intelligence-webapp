@@ -125,6 +125,8 @@ defineExpose({
   margin-right: 0;
   margin-bottom: $unnnic-spacing-sm;
 
+  height: 100%;
+
   overflow: hidden;
 
   display: flex;

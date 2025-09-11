@@ -11,7 +11,7 @@ export const ConversationAdapter = {
       0: 'optimized_resolution',
       1: 'other_conclusion',
       2: 'in_progress',
-      3: 'unengaged',
+      3: 'unclassified',
     };
 
     const csatMap = {
@@ -63,7 +63,7 @@ export const ConversationAdapter = {
       optimized_resolution: 0,
       other_conclusion: 1,
       in_progress: 2,
-      unengaged: 3,
+      unclassified: 3,
     };
 
     const csatMap = {

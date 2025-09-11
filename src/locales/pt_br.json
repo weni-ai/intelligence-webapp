@@ -121,6 +121,7 @@
         "description": "Se a mensagem foi enviada pelo suporte humano ou ativou uma ação automática, você pode encontrá-la no {studio_link}.",
         "studio_link": "Estúdio"
       },
+      "unclassified_status_tooltip": "Conversas encerradas antes de 8 de setembro de 2025 não podem ser classificadas",
       "export": {
         "title": "Enviar exportação por email",
         "description": "Vamos preparar o arquivo com os dados de IA e enviá-lo para os seguintes emails:",
@@ -139,7 +140,7 @@
           "in_progress": "Em progresso",
           "optimized_resolution": "Resoluções Otimizadas",
           "other_conclusion": "Outras Conclusões",
-          "unengaged": "Não engajado",
+          "unclassified": "Não classificado",
           "transferred_to_human_support": "Encaminhado para suporte humano"
         },
         "csat": {

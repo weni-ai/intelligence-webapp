@@ -95,6 +95,7 @@ const statusOptions = computed(() => [
     value: 'transferred_to_human_support',
   },
   { label: getStatusTranslation('in_progress'), value: 'in_progress' },
+  { label: getStatusTranslation('unclassified'), value: 'unclassified' },
 ]);
 const statusFilter = ref(getQueryFilterArray('status', statusOptions));
 
