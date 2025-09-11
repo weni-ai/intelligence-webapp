@@ -170,8 +170,8 @@
           "description": "Mantenha as instruções claras, diretas e imperativas."
         },
         "add_instruction": "Adicionar instrução",
-        "success_alert": "Instrução adicionada",
-        "error_alert": "Erro ao adicionar instrução"
+        "success_alert": "Instrução personalizada adicionada",
+        "error_alert": "Erro ao adicionar instrução personalizada"
       },
       "instructions_list": {
         "title": "Lista de instruções",
@@ -210,8 +210,8 @@
       },
       "edit_instruction": {
         "title": "Editar instrução",
-        "success_alert": "Instrução editada",
-        "error_alert": "Erro ao editar instrução",
+        "success_alert": "Instrução personalizada editada",
+        "error_alert": "Erro ao editar instrução personalizada",
         "save": "Salvar",
         "cancel": "Cancelar"
       },
@@ -220,8 +220,8 @@
         "modal_description": "Tem certeza de que deseja remover a instrução?",
         "remove": "Remover",
         "cancel": "Cancelar",
-        "success_alert": "Instrução removida",
-        "error_alert": "Erro ao remover instrução"
+        "success_alert": "Instrução personalizada removida",
+        "error_alert": "Erro ao remover instrução personalizada"
       }
     },
     "traces": {
