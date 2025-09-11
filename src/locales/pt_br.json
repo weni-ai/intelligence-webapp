@@ -175,6 +175,13 @@
       },
       "instructions_list": {
         "title": "Lista de instruções",
+        "tabs": {
+          "default": "Instruções padrão",
+          "safety_topics": "Tópicos de segurança",
+          "custom": "Instruções personalizadas",
+          "default_description": "Regras centrais, somente leitura, definidas pelo sistema. Elas se aplicam a todas as conversas deste agente.",
+          "custom_description": "Suas instruções personalizadas para este agente. Podem ser editadas e removidas."
+        },
         "default_instruction": "Instrução padrão",
         "default_instructions": [
           "Não discuta temas relacionados à política partidária. Mantenha o foco nos produtos e serviços da empresa.",
