@@ -206,7 +206,8 @@
           "Crenças",
           "Identidade de gênero",
           "Relações sexuais"
-        ]
+        ],
+        "no_instructions": "Nenhuma instrução personalizada adicionada"
       },
       "edit_instruction": {
         "title": "Editar instrução",
