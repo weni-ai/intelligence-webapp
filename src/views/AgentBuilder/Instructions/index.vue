@@ -18,7 +18,10 @@ import InstructionsSection from '@/components/AgentBuilder/Instructions/Instruct
 
 <style lang="scss" scoped>
 .instructions {
-  display: flex;
+  height: 100%;
+
+  display: grid;
+  grid-template-rows: auto auto 1fr;
   flex-direction: column;
   gap: $unnnic-spacing-md;
 }
