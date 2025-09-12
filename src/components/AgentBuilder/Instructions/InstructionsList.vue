@@ -69,6 +69,8 @@ defineProps({
 
 <style lang="scss" scoped>
 .instructions-list {
+  margin-bottom: $unnnic-spacing-sm;
+
   display: flex;
   flex-direction: column;
 
