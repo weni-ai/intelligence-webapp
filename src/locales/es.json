@@ -207,7 +207,7 @@
           "Identidad de género",
           "Relaciones sexuales"
         ],
-        "no_instructions": "No hay instrucciones personalizadas agregadas"
+        "no_custom_instructions": "No hay instrucciones personalizadas agregadas"
       },
       "edit_instruction": {
         "title": "Editar instrucción",
