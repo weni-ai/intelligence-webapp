@@ -31,7 +31,7 @@ export const useInstructionsStore = defineStore('Instructions', () => {
     status: null,
   });
 
-  const activeInstructionsListTab = ref('default');
+  const activeInstructionsListTab = ref('custom');
 
   async function addInstruction() {
     newInstruction.status = 'loading';

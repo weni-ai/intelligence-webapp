@@ -30,6 +30,12 @@
       </template>
     </UnnnicTab>
     <InstructionsList
+      v-if="activeTab === 'custom'"
+      :instructions="instructionsStore.instructions.data"
+      :isLoading="instructionsStore.instructions.status === 'loading'"
+      showActions
+    />
+    <InstructionsList
       v-if="activeTab === 'default'"
       :instructions="instructionsDefault"
       :isLoading="false"
@@ -40,12 +46,6 @@
       :instructions="instructionsSafetyTopics"
       :isLoading="false"
       :showActions="false"
-    />
-    <InstructionsList
-      v-if="activeTab === 'custom'"
-      :instructions="instructionsStore.instructions.data"
-      :isLoading="instructionsStore.instructions.status === 'loading'"
-      showActions
     />
   </section>
 </template>
@@ -63,7 +63,7 @@ if (instructionsStore.instructions.status === null) {
   instructionsStore.loadInstructions();
 }
 
-const tabs = ref(['default', 'safety_topics', 'custom']);
+const tabs = ref(['custom', 'default', 'safety_topics']);
 const activeTab = computed(() => instructionsStore.activeInstructionsListTab);
 
 function generateMockedInstructions(type) {
