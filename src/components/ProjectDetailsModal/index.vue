@@ -4,7 +4,7 @@
     data-testid="project-details-modal"
     :modelValue="modelValue"
     showCloseIcon
-    size="md"
+    size="lg"
     :title="$t('agent_builder.tunings.project_details')"
     @update:model-value="emit('update:modelValue', $event)"
   >
