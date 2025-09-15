@@ -88,10 +88,9 @@ const instructionsSafetyTopics = computed(() =>
 .instructions-section {
   display: flex;
   flex-direction: column;
-  gap: $unnnic-spacing-sm;
 
   &__title {
-    margin: 0;
+    margin: 0 0 $unnnic-spacing-sm;
 
     color: $unnnic-color-neutral-darkest;
     font-family: $unnnic-font-family-secondary;
@@ -101,6 +100,8 @@ const instructionsSafetyTopics = computed(() =>
   }
 
   &__tab-description {
+    margin-bottom: $unnnic-spacing-xs;
+
     color: $unnnic-color-neutral-cloudy;
 
     font-family: $unnnic-font-family-secondary;
