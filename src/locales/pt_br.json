@@ -164,7 +164,7 @@
     },
     "instructions": {
       "new_instruction": {
-        "title": "Nova instrução",
+        "title": "Nova instrução personalizada",
         "textarea": {
           "placeholder": "Você é engraçado, mas não faz piadas",
           "description": "Mantenha as instruções claras, diretas e imperativas."

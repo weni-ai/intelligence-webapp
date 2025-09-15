@@ -164,7 +164,7 @@
     },
     "instructions": {
       "new_instruction": {
-        "title": "New instruction",
+        "title": "New custom instruction",
         "textarea": {
           "placeholder": "You're funny, but don't make jokes",
           "description": "Keep instructions clear, direct, and in the imperative."
