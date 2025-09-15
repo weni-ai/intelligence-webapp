@@ -29,15 +29,15 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   let conversationsAbortController = null;
 
   const filters = reactive({
-    start: route.query.start || thisMonth,
-    end: route.query.end || today,
-    search: route.query.search || '',
-    status: route.query.status || [],
-    csat: route.query.csat || [],
-    topics: route.query.topics || [],
+    start: route?.query.start || thisMonth,
+    end: route?.query.end || today,
+    search: route?.query.search || '',
+    status: route?.query.status || [],
+    csat: route?.query.csat || [],
+    topics: route?.query.topics || [],
   });
 
-  const queryConversationUuid = ref(route.query.uuid || '');
+  const queryConversationUuid = ref(route?.query.uuid || '');
 
   async function loadConversations(page = 1) {
     if (conversationsAbortController) {
