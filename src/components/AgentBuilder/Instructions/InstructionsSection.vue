@@ -30,6 +30,12 @@
       </template>
     </UnnnicTab>
     <InstructionsList
+      v-if="activeTab === 'custom'"
+      :instructions="instructionsStore.instructions.data"
+      :isLoading="instructionsStore.instructions.status === 'loading'"
+      showActions
+    />
+    <InstructionsList
       v-if="activeTab === 'default'"
       :instructions="instructionsDefault"
       :isLoading="false"
@@ -40,12 +46,6 @@
       :instructions="instructionsSafetyTopics"
       :isLoading="false"
       :showActions="false"
-    />
-    <InstructionsList
-      v-if="activeTab === 'custom'"
-      :instructions="instructionsStore.instructions.data"
-      :isLoading="instructionsStore.instructions.status === 'loading'"
-      showActions
     />
   </section>
 </template>
@@ -63,7 +63,7 @@ if (instructionsStore.instructions.status === null) {
   instructionsStore.loadInstructions();
 }
 
-const tabs = ref(['default', 'safety_topics', 'custom']);
+const tabs = ref(['custom', 'default', 'safety_topics']);
 const activeTab = computed(() => instructionsStore.activeInstructionsListTab);
 
 function generateMockedInstructions(type) {
@@ -88,10 +88,9 @@ const instructionsSafetyTopics = computed(() =>
 .instructions-section {
   display: flex;
   flex-direction: column;
-  gap: $unnnic-spacing-sm;
 
   &__title {
-    margin: 0;
+    margin: 0 0 $unnnic-spacing-sm;
 
     color: $unnnic-color-neutral-darkest;
     font-family: $unnnic-font-family-secondary;
@@ -101,6 +100,8 @@ const instructionsSafetyTopics = computed(() =>
   }
 
   &__tab-description {
+    margin-bottom: $unnnic-spacing-xs;
+
     color: $unnnic-color-neutral-cloudy;
 
     font-family: $unnnic-font-family-secondary;

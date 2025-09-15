@@ -165,7 +165,7 @@
     },
     "instructions": {
       "new_instruction": {
-        "title": "Nueva instrucción",
+        "title": "Nueva instrucción personalizada",
         "textarea": {
           "placeholder": "Eres gracioso, pero no haces bromas",
           "description": "Mantén las instrucciones claras, directas e imperativas."
@@ -208,7 +208,7 @@
           "Identidad de género",
           "Relaciones sexuales"
         ],
-        "no_instructions": "No hay instrucciones personalizadas agregadas"
+        "no_custom_instructions": "No hay instrucciones personalizadas agregadas"
       },
       "edit_instruction": {
         "title": "Editar instrucción",
