@@ -31,6 +31,17 @@ vi.mock('@/utils', () => ({
   WENIGPT_OPTIONS: [{ name: 'default', model: 'default-model' }],
 }));
 
+vi.mock('@/utils/Growthbook.js', () => ({
+  gbKey: Symbol('growthbook'),
+  gbInstance: {
+    init: vi.fn(),
+    isOn: vi.fn(() => false),
+    setAttributes: vi.fn(),
+    getAttributes: vi.fn(() => ({})),
+  },
+  initializeGrowthBook: vi.fn(),
+}));
+
 vi.mock('@/store/index.js', () => ({
   state: {
     Brain: {
