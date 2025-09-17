@@ -29,6 +29,7 @@ import { useStore } from 'vuex';
 import { useTuningsStore } from '@/store/Tunings';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useProfileStore } from '@/store/Profile';
 
 import Supervisor from './Supervisor/index.vue';
 import OldSupervisor from './OldSupervisor/index.vue';
@@ -63,6 +64,7 @@ onMounted(() => {
   agentsTeamStore.loadActiveTeam();
   agentsTeamStore.loadOfficialAgents();
   agentsTeamStore.loadMyAgents();
+  useProfileStore().load();
 });
 </script>
 

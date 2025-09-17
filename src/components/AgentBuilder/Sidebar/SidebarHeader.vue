@@ -7,8 +7,7 @@
       class="sidebar-header__title"
       data-testid="sidebar-header-title"
     >
-      <!-- TODO: Be this hardcoded name dynamic based on the agent name -->
-      Agent Name
+      {{ profileStore.name.old }}
     </h1>
     <p
       class="sidebar-header__description"

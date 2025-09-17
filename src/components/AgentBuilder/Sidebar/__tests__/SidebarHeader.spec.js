@@ -1,10 +1,17 @@
 import { mount } from '@vue/test-utils';
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import SidebarHeader from '../SidebarHeader.vue';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { createTestingPinia } from '@pinia/testing';
+
+import { useProfileStore } from '@/store/Profile';
 import i18n from '@/utils/plugins/i18n';
+
+import SidebarHeader from '../SidebarHeader.vue';
+
+const pinia = createTestingPinia();
 
 describe('SidebarHeader.vue', () => {
   let wrapper;
+  let profileStore;
 
   const elements = {
     sidebarHeader: '[data-testid="sidebar-header"]',
@@ -15,9 +22,11 @@ describe('SidebarHeader.vue', () => {
   beforeEach(() => {
     wrapper = mount(SidebarHeader, {
       global: {
-        plugins: [i18n],
+        plugins: [i18n, pinia],
       },
     });
+
+    profileStore = useProfileStore();
   });
 
   describe('Component structure', () => {
@@ -45,7 +54,10 @@ describe('SidebarHeader.vue', () => {
 
   describe('Content rendering', () => {
     it('displays the profile agent name in the title', () => {
-      //TODO: Make this test after the agent name is not hardcoded
+      const titleElement = wrapper.find(elements.title);
+      const expectedText = profileStore.name.old;
+
+      expect(titleElement.text()).toBe(expectedText);
     });
 
     it('displays the translated description text', () => {
