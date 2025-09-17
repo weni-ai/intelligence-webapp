@@ -366,7 +366,7 @@ watch(
             position: absolute;
             top: calc($lineHeight / 8);
 
-            z-index: 10;
+            z-index: 2;
 
             display: grid;
             place-items: center;

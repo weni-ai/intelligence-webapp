@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import { computed, reactive, ref, watch } from 'vue';
 import globalStore from '.';
 import { cloneDeep, differenceBy, get } from 'lodash';
+import { useFeatureFlagsStore } from './FeatureFlags';
 
 export const useProfileStore = defineStore('profile', () => {
   const connectProjectUuid = computed(
@@ -157,7 +158,13 @@ export const useProfileStore = defineStore('profile', () => {
       });
 
       setInitialValues(data);
+
+      return { status: 'success' };
     } catch (error) {
+      if (useFeatureFlagsStore().flags.agentsTeam) {
+        return { status: 'error' };
+      }
+
       const tabWithError =
         get(error, 'tab') ||
         {

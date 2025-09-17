@@ -2,6 +2,7 @@
   <section
     class="sidebar-header"
     data-testid="sidebar-header"
+    @click="isOpenEditManagerProfileDrawer = true"
   >
     <h1
       class="sidebar-header__title"
@@ -16,18 +17,29 @@
       {{ $t('profile.edit_manager_profile') }}
     </p>
   </section>
+
+  <EditManagerProfileDrawer
+    v-model="isOpenEditManagerProfileDrawer"
+    data-testid="edit-manager-profile-drawer"
+  />
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 import { useProfileStore } from '@/store/Profile';
 
+import EditManagerProfileDrawer from './EditManagerProfileDrawer.vue';
+
 const profileStore = useProfileStore();
+
+const isOpenEditManagerProfileDrawer = ref(false);
 </script>
 
 <style lang="scss" scoped>
 .sidebar-header {
   border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-  padding-bottom: $unnnic-spacing-sm;
+  padding: $unnnic-spacing-sm;
 
   display: flex;
   flex-direction: column;

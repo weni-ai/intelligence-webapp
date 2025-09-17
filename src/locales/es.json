@@ -1997,11 +1997,13 @@
     "edit_manager_profile": "Editar perfil del Manager",
     "description": "Personaliza la información básica y el comportamiento del agente",
     "save_btn": "Guardar cambios",
+    "save_success": "Cambios guardados con éxito",
+    "save_error": "Error al guardar cambios",
     "invalid_field": "Campo obligatorio",
     "invalid_get_data": "Error al intentar buscar los datos",
     "fields": {
       "name": {
-        "title": "¿Cómo se presenta el agente?",
+        "title": "¿Qué nombre usa el agente para presentarse?",
         "description": "Este es el nombre mostrado durante las interacciones con los usuarios",
         "placeholder": "Tatiana"
       },
