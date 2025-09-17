@@ -1,7 +1,19 @@
 <template>
-  <section class="sidebar-header">
-    <h1 class="sidebar-header__title">Agent Name</h1>
-    <p class="sidebar-header__description">
+  <section
+    class="sidebar-header"
+    data-testid="sidebar-header"
+  >
+    <h1
+      class="sidebar-header__title"
+      data-testid="sidebar-header-title"
+    >
+      <!-- TODO: Be this hardcoded name dynamic based on the agent name -->
+      Agent Name
+    </h1>
+    <p
+      class="sidebar-header__description"
+      data-testid="sidebar-header-description"
+    >
       {{ $t('profile.edit_manager_profile') }}
     </p>
   </section>
