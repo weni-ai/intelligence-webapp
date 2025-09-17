@@ -1,5 +1,5 @@
 <template>
-  <div
+  <nav
     :class="['sidebar', { collapsed: isCollapsed }]"
     @mouseover="handleMouseOver"
     @mouseleave="handleMouseLeave"
@@ -16,7 +16,7 @@
     <section v-if="isSideBarVisible">
       <SidebarMenu data-test="side-bar-menu">
         <SideBarItem
-          v-for="nav in brainRoutes"
+          v-for="nav in views"
           :key="nav.page"
           :text="nav.title"
           :icon="nav.icon"
@@ -28,22 +28,22 @@
         />
       </SidebarMenu>
     </section>
-  </div>
+  </nav>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import useBrainRoutes from '@/composables/useBrainRoutes';
+import useAgentBuilderViews from '@/composables/useAgentBuilderViews';
 import SideBarItem from '../Sidebar/SideBarItem.vue';
 import SidebarMenu from '../Sidebar/SidebarMenu.vue';
 
 const route = useRoute();
 const router = useRouter();
-const brainRoutes = useBrainRoutes();
+const views = useAgentBuilderViews();
 
 const activeNav = computed(() => {
-  return brainRoutes.value.find((e) => e.page === route.name)?.page;
+  return views.value.find((e) => e.page === route.name)?.page;
 });
 
 const isCollapsed = ref(false);
