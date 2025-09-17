@@ -106,11 +106,8 @@ watch(
 
     if (!hasFiltersChanged) return;
 
-    if (pagination.value.page === 1) {
-      supervisorStore.loadConversations();
-    } else {
-      pagination.value.page = 1;
-    }
+    pagination.value.page = 1;
+    supervisorStore.loadConversations();
   },
   { immediate: true, deep: true },
 );
