@@ -8,8 +8,9 @@
     :secondaryButtonText="$t('cancel')"
     :disabledPrimaryButton="profileStore.isSaveButtonDisabled"
     :loadingPrimaryButton="profileStore.isSaving"
-    @close="modelValue = false"
+    @close="close"
     @primary-button-click="save"
+    @secondary-button-click="close"
   >
     <template #content>
       <RouterProfileGeneralInfo data-testid="general-info" />
@@ -37,7 +38,7 @@ async function save() {
   const result = await profileStore.save();
 
   if (result.status === 'success') {
-    modelValue.value = false;
+    close();
     alertStore.add({
       text: i18n.global.t('profile.save_success'),
       type: 'success',
@@ -48,5 +49,9 @@ async function save() {
       type: 'error',
     });
   }
+}
+
+function close() {
+  modelValue.value = false;
 }
 </script>
