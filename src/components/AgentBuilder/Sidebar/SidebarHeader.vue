@@ -18,7 +18,11 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { useProfileStore } from '@/store/Profile';
+
+const profileStore = useProfileStore();
+</script>
 
 <style lang="scss" scoped>
 .sidebar-header {
