@@ -1,6 +1,6 @@
 <template>
   <section class="agent-builder">
-    <BrainSideBar
+    <Sidebar
       class="agent-builder__sidebar"
       data-testid="agent-builder-sidebar"
     />
@@ -40,7 +40,7 @@ import Instructions from './Instructions/index.vue';
 import Knowledge from './Knowledge.vue';
 import Profile from '@/views/AgentBuilder/Profile.vue';
 import Tunings from '@/views/AgentBuilder/Tunings.vue';
-import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
+import Sidebar from '@/components/AgentBuilder/Sidebar.vue';
 import ModalSaveChangesError from '../Brain/ModalSaveChangesError.vue';
 
 const route = useRoute();
