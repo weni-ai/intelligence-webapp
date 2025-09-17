@@ -4,7 +4,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import Header from '../Header.vue';
 import { createTestingPinia } from '@pinia/testing';
 
-vi.mock('@/composables/useBrainRoutes', () => {
+vi.mock('@/composables/useAgentBuilderViews', () => {
   return {
     default: vi.fn(() => {
       return {

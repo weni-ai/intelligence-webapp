@@ -38,7 +38,6 @@ import OldSupervisor from './OldSupervisor/index.vue';
 import AgentsTeam from './AgentsTeam/index.vue';
 import Instructions from './Instructions/index.vue';
 import Knowledge from './Knowledge.vue';
-import Profile from '@/views/AgentBuilder/Profile.vue';
 import Tunings from '@/views/AgentBuilder/Tunings.vue';
 import Sidebar from '@/components/AgentBuilder/Sidebar.vue';
 import ModalSaveChangesError from '../Brain/ModalSaveChangesError.vue';
@@ -50,14 +49,13 @@ const agentsTeamStore = useAgentsTeamStore();
 
 const currentView = computed(() => {
   const views = {
-    knowledge: Knowledge,
     supervisor: useFeatureFlagsStore().flags.newSupervisor
       ? Supervisor
       : OldSupervisor,
-    agents: AgentsTeam,
-    profile: Profile,
-    tunings: Tunings,
     instructions: Instructions,
+    agents: AgentsTeam,
+    knowledge: Knowledge,
+    tunings: Tunings,
   };
 
   return views[route.name];
