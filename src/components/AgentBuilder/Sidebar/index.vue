@@ -14,7 +14,12 @@
     />
 
     <section v-if="isSideBarVisible">
-      <SidebarMenu data-test="side-bar-menu">
+      <SidebarHeader class="sidebar__header" />
+
+      <SidebarMenu
+        class="sidebar__menu"
+        data-test="side-bar-menu"
+      >
         <SideBarItem
           v-for="nav in views"
           :key="nav.page"
@@ -34,9 +39,11 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
 import useAgentBuilderViews from '@/composables/useAgentBuilderViews';
-import SideBarItem from '../Sidebar/SideBarItem.vue';
-import SidebarMenu from '../Sidebar/SidebarMenu.vue';
+import SidebarHeader from './SidebarHeader.vue';
+import SideBarItem from '@/components/Sidebar/SideBarItem.vue';
+import SidebarMenu from '@/components/Sidebar/SidebarMenu.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -82,10 +89,7 @@ const handleMouseLeave = () => {
 
 <style lang="scss" scoped>
 .sidebar {
-  border-style: solid;
-  border-color: $unnnic-color-neutral-soft;
-  border-width: 0 0 0 $unnnic-border-width-thinner;
-  padding: $unnnic-spacing-sm;
+  border-right: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
   width: 182px;
   box-sizing: border-box;
   display: flex;
@@ -99,6 +103,11 @@ const handleMouseLeave = () => {
     padding-left: 18px;
     padding-right: 0;
     width: 0;
+  }
+
+  &__header,
+  &__menu {
+    padding: $unnnic-spacing-sm;
   }
 
   .floating-button {

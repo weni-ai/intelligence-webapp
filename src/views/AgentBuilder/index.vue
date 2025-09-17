@@ -1,9 +1,6 @@
 <template>
   <section class="agent-builder">
-    <Sidebar
-      class="agent-builder__sidebar"
-      data-testid="agent-builder-sidebar"
-    />
+    <Sidebar data-testid="agent-builder-sidebar" />
 
     <main
       class="agent-builder__content"
@@ -39,7 +36,7 @@ import AgentsTeam from './AgentsTeam/index.vue';
 import Instructions from './Instructions/index.vue';
 import Knowledge from './Knowledge.vue';
 import Tunings from '@/views/AgentBuilder/Tunings.vue';
-import Sidebar from '@/components/AgentBuilder/Sidebar.vue';
+import Sidebar from '@/components/AgentBuilder/Sidebar/index.vue';
 import ModalSaveChangesError from '../Brain/ModalSaveChangesError.vue';
 
 const route = useRoute();
@@ -49,13 +46,13 @@ const agentsTeamStore = useAgentsTeamStore();
 
 const currentView = computed(() => {
   const views = {
+    knowledge: Knowledge,
     supervisor: useFeatureFlagsStore().flags.newSupervisor
       ? Supervisor
       : OldSupervisor,
-    instructions: Instructions,
     agents: AgentsTeam,
-    knowledge: Knowledge,
     tunings: Tunings,
+    instructions: Instructions,
   };
 
   return views[route.name];
@@ -82,10 +79,6 @@ onMounted(() => {
 
   height: 100vh;
   width: 100vw;
-
-  .agent-builder__sidebar {
-    border-right: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-  }
 
   .agent-builder__content {
     padding: $unnnic-spacing-sm;
