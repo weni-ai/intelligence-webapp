@@ -195,11 +195,6 @@ const router = createRouter({
           component: () => import('@/views/AgentBuilder/Supervisor/index.vue'),
         },
         {
-          path: 'profile',
-          name: 'profile',
-          component: () => import('@/views/AgentBuilder/Profile.vue'),
-        },
-        {
           path: 'instructions',
           name: 'instructions',
           component: () =>

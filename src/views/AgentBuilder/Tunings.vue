@@ -1,6 +1,16 @@
 <template>
-  <BrainHeader data-testid="brain-header" />
   <section class="tunings">
+    <AgentBuilderHeader
+      data-testid="tunings-header"
+      class="tunings__header"
+      :withDivider="false"
+      actionsSize="md"
+    >
+      <template #actions>
+        <TuningsHeaderActions />
+      </template>
+    </AgentBuilderHeader>
+
     <section class="tunings__tabs">
       <UnnnicTab
         data-testid="unnnic-tab"
@@ -41,10 +51,11 @@ import { ref, onMounted } from 'vue';
 
 import { useTuningsStore } from '@/store/Tunings';
 
-import BrainHeader from '@/components/Brain/BrainHeader.vue';
 import ChangesHistory from '@/components/Brain/Tunings/ChangesHistory.vue';
 import Settings from '@/components/Brain/Tunings/SettingsAgentsTeam/index.vue';
 import Credentials from '@/components/Brain/Tunings/Credentials/index.vue';
+import AgentBuilderHeader from '@/components/AgentBuilder/Header.vue';
+import TuningsHeaderActions from '@/components/TuningsHeaderActions.vue';
 
 const tabs = ref(
   [
@@ -77,10 +88,12 @@ const onTabChange = (newTab) => {
 
 <style lang="scss" scoped>
 .tunings {
-  &__tabs {
-    :deep(.tab-header) {
-      margin-bottom: $unnnic-spacing-md;
-    }
+  display: flex;
+  flex-direction: column;
+  gap: $unnnic-spacing-md;
+
+  :deep(.tab-header) {
+    margin: 0;
   }
 }
 </style>

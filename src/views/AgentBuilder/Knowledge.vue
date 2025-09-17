@@ -1,7 +1,11 @@
 <template>
-  <BrainHeader data-testid="brain-header" />
-
   <section class="knowledge">
+    <AgentBuilderHeader
+      data-testid="knowledge-header"
+      :withDivider="false"
+      actionsSize="none"
+    />
+
     <RouterContentBase
       data-testid="router-content-base"
       :filesProp="files"
@@ -25,7 +29,7 @@ import RouterContentBase from '@/views/Brain/RouterContentBase.vue';
 import { useFilesPagination } from '@/views/ContentBases/filesPagination';
 import { useSitesPagination } from '@/views/ContentBases/sitesPagination';
 
-import BrainHeader from '@/components/Brain/BrainHeader.vue';
+import AgentBuilderHeader from '@/components/AgentBuilder/Header.vue';
 
 const route = useRoute();
 const store = useStore();
@@ -85,5 +89,7 @@ onMounted(() => {
   width: 100%;
 
   display: grid;
+  grid-template-rows: auto 1fr;
+  gap: $unnnic-spacing-md;
 }
 </style>

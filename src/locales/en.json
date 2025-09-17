@@ -67,10 +67,6 @@
         "title": "Supervisor",
         "description": "Review and analyze conversations between agents and customers."
       },
-      "profile": {
-        "title": "Profile",
-        "description": "Customize the agent's basic information and behavior"
-      },
       "instructions": {
         "title": "Instructions",
         "description": "Write quick rules to shape the agent’s behavior"
@@ -1995,6 +1991,7 @@
     }
   },
   "profile": {
+    "edit_manager_profile": "Edit Manager profile",
     "description": "Customize the basic information and behavior of the agent",
     "save_btn": "Save changes",
     "invalid_field": "Required field",

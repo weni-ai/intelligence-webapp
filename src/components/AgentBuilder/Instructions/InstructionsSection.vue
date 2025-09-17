@@ -10,6 +10,7 @@
     <UnnnicTab
       :tabs="tabs"
       :activeTab="activeTab"
+      data-testid="instructions-section-tab"
       @change="instructionsStore.activeInstructionsListTab = $event"
     >
       <template
@@ -31,18 +32,21 @@
     </UnnnicTab>
     <InstructionsList
       v-if="activeTab === 'custom'"
+      data-testid="instructions-custom"
       :instructions="instructionsStore.instructions.data"
       :isLoading="instructionsStore.instructions.status === 'loading'"
       showActions
     />
     <InstructionsList
       v-if="activeTab === 'default'"
+      data-testid="instructions-default"
       :instructions="instructionsDefault"
       :isLoading="false"
       :showActions="false"
     />
     <InstructionsList
       v-if="activeTab === 'safety_topics'"
+      data-testid="instructions-safety-topics"
       :instructions="instructionsSafetyTopics"
       :isLoading="false"
       :showActions="false"

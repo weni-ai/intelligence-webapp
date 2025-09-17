@@ -1995,6 +1995,7 @@
     }
   },
   "profile": {
+    "edit_manager_profile": "Editar perfil del Manager",
     "description": "Personaliza la información básica y el comportamiento del agente",
     "save_btn": "Guardar cambios",
     "invalid_field": "Campo obligatorio",

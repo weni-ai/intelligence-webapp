@@ -1,9 +1,6 @@
 <template>
   <section class="agent-builder">
-    <BrainSideBar
-      class="agent-builder__sidebar"
-      data-testid="agent-builder-sidebar"
-    />
+    <Sidebar data-testid="agent-builder-sidebar" />
 
     <main
       class="agent-builder__content"
@@ -32,15 +29,15 @@ import { useStore } from 'vuex';
 import { useTuningsStore } from '@/store/Tunings';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
+import { useProfileStore } from '@/store/Profile';
 
 import Supervisor from './Supervisor/index.vue';
 import OldSupervisor from './OldSupervisor/index.vue';
 import AgentsTeam from './AgentsTeam/index.vue';
 import Instructions from './Instructions/index.vue';
 import Knowledge from './Knowledge.vue';
-import Profile from '@/views/AgentBuilder/Profile.vue';
 import Tunings from '@/views/AgentBuilder/Tunings.vue';
-import BrainSideBar from '@/components/Brain/BrainSideBar.vue';
+import Sidebar from '@/components/AgentBuilder/Sidebar/index.vue';
 import ModalSaveChangesError from '../Brain/ModalSaveChangesError.vue';
 
 const route = useRoute();
@@ -55,7 +52,6 @@ const currentView = computed(() => {
       ? Supervisor
       : OldSupervisor,
     agents: AgentsTeam,
-    profile: Profile,
     tunings: Tunings,
     instructions: Instructions,
   };
@@ -68,6 +64,7 @@ onMounted(() => {
   agentsTeamStore.loadActiveTeam();
   agentsTeamStore.loadOfficialAgents();
   agentsTeamStore.loadMyAgents();
+  useProfileStore().load();
 });
 </script>
 
@@ -84,10 +81,6 @@ onMounted(() => {
 
   height: 100vh;
   width: 100vw;
-
-  .agent-builder__sidebar {
-    border-right: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-  }
 
   .agent-builder__content {
     padding: $unnnic-spacing-sm;

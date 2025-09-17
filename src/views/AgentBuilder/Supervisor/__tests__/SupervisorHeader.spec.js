@@ -22,7 +22,7 @@ const pinia = createTestingPinia({
   },
 });
 
-vi.mock('@/composables/useBrainRoutes', () => {
+vi.mock('@/composables/useAgentBuilderViews', () => {
   return {
     default: vi.fn(() => {
       return {
