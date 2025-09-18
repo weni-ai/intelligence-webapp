@@ -12,8 +12,7 @@ describe('Tunings.vue', () => {
   let wrapper;
   let tuningsStore;
 
-  const brainHeader = () =>
-    wrapper.findComponent('[data-testid="brain-header"]');
+  const header = () => wrapper.findComponent('[data-testid="tunings-header"]');
   const unnnicTab = () => wrapper.findComponent('[data-testid="unnnic-tab"]');
   const credentials = () =>
     wrapper.findComponent('[data-testid="credentials"]');
@@ -33,7 +32,7 @@ describe('Tunings.vue', () => {
 
   describe('Component rendering', () => {
     it('renders correctly', () => {
-      expect(brainHeader().exists()).toBe(true);
+      expect(header().exists()).toBe(true);
       expect(unnnicTab().exists()).toBe(true);
     });
 
