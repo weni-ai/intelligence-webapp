@@ -4,12 +4,12 @@ exports[`InstructionsAdded.vue > should match snapshot 1`] = `
 "<section data-v-d1e6c271="" class="instructions-added">
   <h2 data-v-d1e6c271="" class="instructions-added__title" data-testid="instructions-title">Instructions added</h2>
   <section data-v-d1e6c271="" class="instructions-added__instructions" data-testid="instructions">
-    <instruction-stub data-v-d1e6c271="" text="Do not engage in discussions about partisan politics. Keep the focus on the company’s products and services." tag="Default instruction" data-testid="instruction-default"></instruction-stub>
-    <instruction-stub data-v-d1e6c271="" text="Avoid conversations about religion or personal beliefs. Respect the diversity of customer perspectives." tag="Default instruction" data-testid="instruction-default"></instruction-stub>
-    <instruction-stub data-v-d1e6c271="" text="Always use a friendly and welcoming tone." tag="Default instruction" data-testid="instruction-default"></instruction-stub>
-    <instruction-stub data-v-d1e6c271="" text="You are fun, but you don’t make jokes." tag="Default instruction" data-testid="instruction-default"></instruction-stub>
-    <instruction-stub data-v-d1e6c271="" text="Instruction 1" tag="" data-testid="instruction-added"></instruction-stub>
-    <instruction-stub data-v-d1e6c271="" text="Instruction 2" tag="" data-testid="instruction-added"></instruction-stub>
+    <instruction-stub data-v-d1e6c271="" instruction="[object Object]" tag="Default instruction" showactions="false" data-testid="instruction-default"></instruction-stub>
+    <instruction-stub data-v-d1e6c271="" instruction="[object Object]" tag="Default instruction" showactions="false" data-testid="instruction-default"></instruction-stub>
+    <instruction-stub data-v-d1e6c271="" instruction="[object Object]" tag="Default instruction" showactions="false" data-testid="instruction-default"></instruction-stub>
+    <instruction-stub data-v-d1e6c271="" instruction="[object Object]" tag="Default instruction" showactions="false" data-testid="instruction-default"></instruction-stub>
+    <instruction-stub data-v-d1e6c271="" instruction="[object Object]" tag="" showactions="true" data-testid="instruction-added"></instruction-stub>
+    <instruction-stub data-v-d1e6c271="" instruction="[object Object]" tag="" showactions="true" data-testid="instruction-added"></instruction-stub>
   </section>
 </section>"
 `;

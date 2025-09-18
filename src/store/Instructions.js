@@ -68,6 +68,31 @@ export const useInstructionsStore = defineStore('Instructions', () => {
       instructions.status = 'error';
     }
   }
+  async function editInstruction(id, text) {
+    const instruction = instructions.data.find(
+      (instruction) => instruction.id === id,
+    );
+
+    if (!instruction) return;
+
+    try {
+      instruction.status = 'loading';
+      await nexusaiAPI.agent_builder.instructions.edit({
+        projectUuid: connectProjectUuid.value,
+        id,
+        text,
+      });
+      instruction.text = text;
+      instruction.status = 'complete';
+
+      callAlert('success', 'edit_instruction.success_alert');
+    } catch (error) {
+      instruction.status = 'error';
+      callAlert('error', 'edit_instruction.error_alert');
+    }
+
+    return { status: instruction.status };
+  }
 
   return {
     instructions,
@@ -75,5 +100,6 @@ export const useInstructionsStore = defineStore('Instructions', () => {
 
     addInstruction,
     loadInstructions,
+    editInstruction,
   };
 });
