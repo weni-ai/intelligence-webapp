@@ -19,7 +19,7 @@
         color="neutral-darkest"
         data-testid="agent-builder-header-title"
       >
-        {{ currentBrainRoute?.title }}
+        {{ currentView?.title }}
       </UnnnicIntelligenceText>
       <UnnnicIntelligenceText
         tag="h2"
@@ -28,11 +28,11 @@
         color="neutral-cloudy"
         data-testid="agent-builder-header-description"
       >
-        {{ currentBrainRoute?.description }}
+        {{ currentView?.description }}
 
         <SupervisorHeaderDetails
           v-if="
-            currentBrainRoute.page === 'supervisor' &&
+            currentView.page === 'supervisor' &&
             featureFlagsStore.flags.newSupervisor
           "
         />
@@ -53,7 +53,7 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-import useBrainRoutes from '@/composables/useBrainRoutes';
+import useAgentBuilderViews from '@/composables/useAgentBuilderViews';
 
 import SupervisorHeaderDetails from './Supervisor/SupervisorHeaderDetails.vue';
 
@@ -83,11 +83,9 @@ const props = defineProps({
 
 const featureFlagsStore = useFeatureFlagsStore();
 
-const currentBrainRoute = computed(() => {
-  const brainRoutes = useBrainRoutes();
-  return (
-    brainRoutes.value.find((e) => e.page === route.name) || brainRoutes.value[0]
-  );
+const currentView = computed(() => {
+  const views = useAgentBuilderViews();
+  return views.value.find((e) => e.page === route.name) || views.value[0];
 });
 </script>
 

@@ -5,6 +5,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import { useTuningsStore } from '@/store/Tunings';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import { useProfileStore } from '@/store/Profile';
 
 import AgentBuilder from '@/views/AgentBuilder/index.vue';
 
@@ -28,6 +29,7 @@ describe('AgentBuilder.vue', () => {
   let wrapper;
   let tuningsStore;
   let agentsTeamStore;
+  let profileStore;
 
   const sidebar = () =>
     wrapper.findComponent('[data-testid="agent-builder-sidebar"]');
@@ -52,6 +54,7 @@ describe('AgentBuilder.vue', () => {
 
     tuningsStore = useTuningsStore();
     agentsTeamStore = useAgentsTeamStore();
+    profileStore = useProfileStore();
   });
 
   describe('Component rendering', () => {
