@@ -175,6 +175,7 @@ function cancelEditingInstruction() {
     .input__length {
       color: $unnnic-color-neutral-cloudy;
 
+      text-align: end;
       font-family: $unnnic-font-family-secondary;
       font-size: $unnnic-font-size-body-md;
       font-weight: $unnnic-font-weight-regular;
