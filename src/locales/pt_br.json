@@ -71,6 +71,10 @@
         "title": "Perfil",
         "description": "Personalize as informações básicas e o comportamento do agente"
       },
+      "instructions": {
+        "title": "Instruções",
+        "description": "Escreva regras rápidas para moldar o comportamento do agente"
+      },
       "agents": {
         "title": "Agentes",
         "description": "Crie a equipe de agentes perfeita"

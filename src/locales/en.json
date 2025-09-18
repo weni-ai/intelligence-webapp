@@ -71,6 +71,10 @@
         "title": "Profile",
         "description": "Customize the agent's basic information and behavior"
       },
+      "instructions": {
+        "title": "Instructions",
+        "description": "Write quick rules to shape the agent’s behavior"
+      },
       "agents": {
         "title": "Agents",
         "description": "Create the perfect team of agents"

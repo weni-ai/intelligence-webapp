@@ -36,6 +36,7 @@ import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import Supervisor from './Supervisor/index.vue';
 import OldSupervisor from './OldSupervisor/index.vue';
 import AgentsTeam from './AgentsTeam/index.vue';
+import Instructions from './Instructions/index.vue';
 import Knowledge from './Knowledge.vue';
 import Profile from '@/views/AgentBuilder/Profile.vue';
 import Tunings from '@/views/AgentBuilder/Tunings.vue';
@@ -56,6 +57,7 @@ const currentView = computed(() => {
     agents: AgentsTeam,
     profile: Profile,
     tunings: Tunings,
+    instructions: Instructions,
   };
 
   return views[route.name];
