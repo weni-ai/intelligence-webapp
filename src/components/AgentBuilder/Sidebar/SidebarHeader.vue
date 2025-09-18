@@ -2,7 +2,7 @@
   <section
     :class="['sidebar-header', { 'sidebar-header--loading': isLoading }]"
     data-testid="sidebar-header"
-    @click="isOpenEditManagerProfileDrawer = true"
+    @click="openDrawer"
   >
     <template v-if="isLoading">
       <UnnnicSkeletonLoading
@@ -49,6 +49,11 @@ import EditManagerProfileDrawer from './EditManagerProfileDrawer.vue';
 const profileStore = useProfileStore();
 const isOpenEditManagerProfileDrawer = ref(false);
 const isLoading = computed(() => profileStore.status === 'loading');
+
+function openDrawer() {
+  if (isLoading.value) return;
+  isOpenEditManagerProfileDrawer.value = true;
+}
 </script>
 
 <style lang="scss" scoped>
