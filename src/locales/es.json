@@ -173,6 +173,16 @@
         "add_instruction": "Agregar instrucción",
         "success_alert": "Instrucción agregada",
         "error_alert": "Error al agregar instrucción"
+      },
+      "instructions_added": {
+        "title": "Instrucciones agregadas",
+        "default_instruction": "Instrucción predeterminada",
+        "default_instructions": [
+          "No hables de política partidista. Mantén el enfoque en los productos y servicios de la empresa.",
+          "Evita conversaciones sobre religión o creencias personales. Respeta la diversidad de pensamientos de los clientes.",
+          "Utiliza siempre un tono amigable y acogedor.",
+          "Eres divertido, pero no haces chistes."
+        ]
       }
     },
     "traces": {

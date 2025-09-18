@@ -32,4 +32,12 @@ export const Instructions = {
       ),
     );
   },
+
+  async list({ projectUuid }) {
+    const response = await request.$http.get(
+      `api/${projectUuid}/customization/`,
+    );
+
+    return response.data.instructions.map(InstructionAdapter.fromApi);
+  },
 };

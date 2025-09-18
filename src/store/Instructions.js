@@ -23,6 +23,7 @@ export const useInstructionsStore = defineStore('Instructions', () => {
 
   const instructions = reactive({
     data: [],
+    status: null,
   });
 
   const newInstruction = reactive({
@@ -34,23 +35,37 @@ export const useInstructionsStore = defineStore('Instructions', () => {
     newInstruction.status = 'loading';
 
     try {
-      instructions.data.push(newInstruction);
-
       const instructionResponse =
         await nexusaiAPI.agent_builder.instructions.addInstruction({
           projectUuid: connectProjectUuid.value,
           instruction: newInstruction,
         });
 
-      newInstruction.id = instructionResponse.id;
-      newInstruction.status = 'complete';
+      instructions.data.unshift({
+        ...newInstruction,
+        id: instructionResponse.id,
+      });
+      newInstruction.status = null;
       newInstruction.text = '';
 
       callAlert('success', 'new_instruction.success_alert');
     } catch (error) {
       newInstruction.status = 'error';
-      instructions.data.pop();
       callAlert('error', 'new_instruction.error_alert');
+    }
+  }
+
+  async function loadInstructions() {
+    instructions.status = 'loading';
+    try {
+      const response = await nexusaiAPI.agent_builder.instructions.list({
+        projectUuid: connectProjectUuid.value,
+      });
+
+      instructions.data = [...instructions.data, ...response];
+      instructions.status = 'complete';
+    } catch (error) {
+      instructions.status = 'error';
     }
   }
 
@@ -59,5 +74,6 @@ export const useInstructionsStore = defineStore('Instructions', () => {
     newInstruction,
 
     addInstruction,
+    loadInstructions,
   };
 });
