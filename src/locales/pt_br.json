@@ -165,29 +165,55 @@
     },
     "instructions": {
       "new_instruction": {
-        "title": "Nova instrução",
+        "title": "Nova instrução personalizada",
         "textarea": {
           "placeholder": "Você é engraçado, mas não faz piadas",
           "description": "Mantenha as instruções claras, diretas e imperativas."
         },
         "add_instruction": "Adicionar instrução",
-        "success_alert": "Instrução adicionada",
-        "error_alert": "Erro ao adicionar instrução"
+        "success_alert": "Instrução personalizada adicionada",
+        "error_alert": "Erro ao adicionar instrução personalizada"
       },
-      "instructions_added": {
-        "title": "Instruções adicionadas",
+      "instructions_list": {
+        "title": "Lista de instruções",
+        "tabs": {
+          "default": "Instruções padrão",
+          "safety_topics": "Tópicos de segurança",
+          "custom": "Instruções personalizadas",
+          "default_description": "Regras centrais, somente leitura, definidas pelo sistema. Elas se aplicam a todas as conversas deste agente.",
+          "safety_topics_description": "O agente não discute esses assuntos. São definidos automaticamente e não podem ser editados.",
+          "custom_description": "Suas instruções personalizadas para este agente. Podem ser editadas e removidas."
+        },
         "default_instruction": "Instrução padrão",
         "default_instructions": [
-          "Não discuta temas relacionados à política partidária. Mantenha o foco nos produtos e serviços da empresa.",
-          "Evite conversas sobre religião ou crenças pessoais. Respeite a diversidade de pensamentos dos clientes.",
-          "Use sempre um tom amigável e acolhedor.",
-          "Você é divertido mas não faz piadas."
-        ]
+          "Quando necessário, você deve buscar assistência especializada com os membros da equipe, que estão disponíveis para ajudar a resolver o caso.",
+          "Você NUNCA, em NENHUMA CIRCUNSTÂNCIA, deve discutir assuntos que estejam fora da sua área de especialização.",
+          "Garanta que a comunicação seja otimizada entrando em contato com MÚLTIPLOS agentes ao mesmo tempo, sempre que possível.",
+          "Mantenha sua comunicação com outros agentes concisa e objetiva, sem conversas paralelas.",
+          "Comunique-se apenas com os agentes necessários para ajudar na solicitação do Usuário.",
+          "Responda estritamente com base nos fatos encontrados no bloco de base de conhecimento; não utilize conhecimento prévio, suposições ou fontes externas.",
+          "Não infira detalhes não declarados, não generalize além do que está escrito, não preencha lacunas nem especule — mesmo que o assunto pareça óbvio."
+        ],
+        "safety_topics": [
+          "Política",
+          "Saúde física",
+          "Violência física ou moral", 
+          "Conteúdo sexual",
+          "Preconceito",
+          "Ódio",
+          "Religião",
+          "Suicídio",
+          "Autolesão",
+          "Crenças",
+          "Identidade de gênero",
+          "Relações sexuais"
+        ],
+        "no_custom_instructions": "Nenhuma instrução personalizada adicionada"
       },
       "edit_instruction": {
         "title": "Editar instrução",
-        "success_alert": "Instrução editada",
-        "error_alert": "Erro ao editar instrução",
+        "success_alert": "Instrução personalizada editada",
+        "error_alert": "Erro ao editar instrução personalizada",
         "save": "Salvar",
         "cancel": "Cancelar"
       },
@@ -196,8 +222,8 @@
         "modal_description": "Tem certeza de que deseja remover a instrução?",
         "remove": "Remover",
         "cancel": "Cancelar",
-        "success_alert": "Instrução removida",
-        "error_alert": "Erro ao remover instrução"
+        "success_alert": "Instrução personalizada removida",
+        "error_alert": "Erro ao remover instrução personalizada"
       }
     },
     "traces": {
