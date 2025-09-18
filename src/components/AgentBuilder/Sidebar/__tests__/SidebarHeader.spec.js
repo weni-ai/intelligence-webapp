@@ -7,7 +7,17 @@ import i18n from '@/utils/plugins/i18n';
 
 import SidebarHeader from '../SidebarHeader.vue';
 
-const pinia = createTestingPinia();
+const pinia = createTestingPinia({
+  initialState: {
+    profile: {
+      status: null,
+      name: {
+        current: 'Test Agent',
+        old: 'Test Agent',
+      },
+    },
+  },
+});
 
 describe('SidebarHeader.vue', () => {
   let wrapper;
@@ -17,12 +27,14 @@ describe('SidebarHeader.vue', () => {
     sidebarHeader: '[data-testid="sidebar-header"]',
     title: '[data-testid="sidebar-header-title"]',
     description: '[data-testid="sidebar-header-description"]',
+    skeletonLoadings: '[data-testid="sidebar-header-skeleton"]',
   };
 
   beforeEach(() => {
     wrapper = mount(SidebarHeader, {
       global: {
         plugins: [i18n, pinia],
+        stubs: ['UnnnicSkeletonLoading'],
       },
     });
 
@@ -87,6 +99,62 @@ describe('SidebarHeader.vue', () => {
       expect(descriptionElement.classes()).toContain(
         'sidebar-header__description',
       );
+    });
+  });
+
+  describe('Loading state', () => {
+    it('shows skeleton loading components when profile is loading', async () => {
+      profileStore.status = 'loading';
+      await wrapper.vm.$nextTick();
+
+      const skeletonLoadings = wrapper.findAllComponents(
+        elements.skeletonLoadings,
+      );
+      expect(skeletonLoadings).toHaveLength(2);
+    });
+
+    it('applies loading CSS class when profile is loading', async () => {
+      profileStore.status = 'loading';
+      await wrapper.vm.$nextTick();
+
+      const headerSection = wrapper.find(elements.sidebarHeader);
+      expect(headerSection.classes()).toContain('sidebar-header--loading');
+    });
+
+    it('removes loading CSS class when profile is not loading', async () => {
+      profileStore.status = 'complete';
+      await wrapper.vm.$nextTick();
+
+      const headerSection = wrapper.find(elements.sidebarHeader);
+      expect(headerSection.classes()).not.toContain('sidebar-header--loading');
+    });
+
+    it('transitions from loading to loaded state correctly', async () => {
+      // Start in loading state
+      profileStore.status = 'loading';
+      await wrapper.vm.$nextTick();
+
+      let headerSection = wrapper.find(elements.sidebarHeader);
+      let skeletonLoadings = wrapper.findAll(elements.skeletonLoadings);
+      let titleElement = wrapper.find(elements.title);
+
+      expect(headerSection.classes()).toContain('sidebar-header--loading');
+      expect(skeletonLoadings).toHaveLength(2);
+      expect(titleElement.exists()).toBe(false);
+
+      // Transition to loaded state
+      profileStore.status = 'complete';
+      await wrapper.vm.$nextTick();
+
+      headerSection = wrapper.find(elements.sidebarHeader);
+      skeletonLoadings = wrapper.findAll(elements.skeletonLoadings);
+      titleElement = wrapper.find(elements.title);
+      const descriptionElement = wrapper.find(elements.description);
+
+      expect(headerSection.classes()).not.toContain('sidebar-header--loading');
+      expect(skeletonLoadings).toHaveLength(0);
+      expect(titleElement.exists()).toBe(true);
+      expect(descriptionElement.exists()).toBe(true);
     });
   });
 });
