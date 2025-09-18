@@ -8,9 +8,9 @@
     :secondaryButtonText="$t('cancel')"
     :disabledPrimaryButton="profileStore.isSaveButtonDisabled"
     :loadingPrimaryButton="profileStore.isSaving"
-    @close="close"
+    @close="closeWithReset"
     @primary-button-click="save"
-    @secondary-button-click="close"
+    @secondary-button-click="closeWithReset"
   >
     <template #content>
       <RouterProfileGeneralInfo data-testid="general-info" />
@@ -53,5 +53,14 @@ async function save() {
 
 function close() {
   modelValue.value = false;
+}
+
+function closeWithReset() {
+  profileStore.personality.current = profileStore.personality.old;
+  profileStore.role.current = profileStore.role.old;
+  profileStore.goal.current = profileStore.goal.old;
+  profileStore.name.current = profileStore.name.old;
+
+  close();
 }
 </script>
