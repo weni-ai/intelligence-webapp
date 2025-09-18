@@ -4,6 +4,7 @@ import { Actions } from './nexus/Actions';
 import { Monitoring } from './nexus/Monitoring';
 import { AgentsTeam } from './nexus/AgentsTeam';
 import { Supervisor } from './nexus/Supervisor';
+import { Instructions } from './nexus/Instructions';
 
 import { ProgressiveFeedbackAdapter } from './adapters/tunings/progressiveFeedback';
 import { ComponentsAdapter } from './adapters/tunings/components';
@@ -132,6 +133,7 @@ export default {
       },
     },
     supervisor: Supervisor,
+    instructions: Instructions,
   },
 
   router: {

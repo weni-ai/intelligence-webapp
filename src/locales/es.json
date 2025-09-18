@@ -163,6 +163,18 @@
         "error": "Error al cargar conversaciones"
       }
     },
+    "instructions": {
+      "new_instruction": {
+        "title": "Nueva instrucción",
+        "textarea": {
+          "placeholder": "Eres gracioso, pero no haces bromas",
+          "description": "Mantén las instrucciones claras, directas e imperativas."
+        },
+        "add_instruction": "Agregar instrucción",
+        "success_alert": "Instrucción agregada",
+        "error_alert": "Error al agregar instrucción"
+      }
+    },
     "traces": {
       "search_result_received": "Resultado de búsqueda recibido",
       "searching_knowledge_base": "Buscando información en la base de conocimientos",
