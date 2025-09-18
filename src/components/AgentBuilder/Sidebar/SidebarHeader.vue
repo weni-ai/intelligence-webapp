@@ -2,6 +2,7 @@
   <section
     :class="['sidebar-header', { 'sidebar-header--loading': isLoading }]"
     data-testid="sidebar-header"
+    @click="openDrawer"
   >
     <template v-if="isLoading">
       <UnnnicSkeletonLoading
@@ -32,20 +33,33 @@
       </p>
     </template>
   </section>
+
+  <EditManagerProfileDrawer
+    v-model="isOpenEditManagerProfileDrawer"
+    data-testid="edit-manager-profile-drawer"
+  />
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useProfileStore } from '@/store/Profile';
 
+import EditManagerProfileDrawer from './EditManagerProfileDrawer.vue';
+
 const profileStore = useProfileStore();
+const isOpenEditManagerProfileDrawer = ref(false);
 const isLoading = computed(() => profileStore.status === 'loading');
+
+function openDrawer() {
+  if (isLoading.value) return;
+  isOpenEditManagerProfileDrawer.value = true;
+}
 </script>
 
 <style lang="scss" scoped>
 .sidebar-header {
   border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-  padding-bottom: $unnnic-spacing-sm;
+  padding: $unnnic-spacing-sm;
 
   display: flex;
   flex-direction: column;

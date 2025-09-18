@@ -28,13 +28,14 @@ describe('SidebarHeader.vue', () => {
     title: '[data-testid="sidebar-header-title"]',
     description: '[data-testid="sidebar-header-description"]',
     skeletonLoadings: '[data-testid="sidebar-header-skeleton"]',
+    editManagerProfileDrawer: '[data-testid="edit-manager-profile-drawer"]',
   };
 
   beforeEach(() => {
     wrapper = mount(SidebarHeader, {
       global: {
         plugins: [i18n, pinia],
-        stubs: ['UnnnicSkeletonLoading'],
+        stubs: ['UnnnicSkeletonLoading', 'EditManagerProfileDrawer'],
       },
     });
 
@@ -155,6 +156,49 @@ describe('SidebarHeader.vue', () => {
       expect(skeletonLoadings).toHaveLength(0);
       expect(titleElement.exists()).toBe(true);
       expect(descriptionElement.exists()).toBe(true);
+    });
+  });
+
+  describe('Drawer functionality', () => {
+    it('renders the edit manager profile drawer', async () => {
+      wrapper.vm.isOpenEditManagerProfileDrawer = true;
+      await wrapper.vm.$nextTick();
+
+      const drawer = wrapper.findComponent(elements.editManagerProfileDrawer);
+      expect(drawer.exists()).toBe(true);
+    });
+
+    it('opens drawer when header is clicked', async () => {
+      const header = wrapper.find(elements.sidebarHeader);
+      await header.trigger('click');
+
+      const drawer = wrapper.findComponent(elements.editManagerProfileDrawer);
+      expect(drawer.props('modelValue')).toBe(true);
+    });
+
+    it('does not open drawer when header is clicked during loading', async () => {
+      profileStore.status = 'loading';
+      await wrapper.vm.$nextTick();
+
+      const header = wrapper.find(elements.sidebarHeader);
+      await header.trigger('click');
+
+      const drawer = wrapper.findComponent(elements.editManagerProfileDrawer);
+      expect(drawer.props('modelValue')).toBe(false);
+    });
+
+    it('closes drawer when model value changes', async () => {
+      const drawer = wrapper.findComponent(elements.editManagerProfileDrawer);
+
+      // Open drawer first
+      wrapper.vm.isOpenEditManagerProfileDrawer = true;
+      await wrapper.vm.$nextTick();
+      expect(drawer.props('modelValue')).toBe(true);
+
+      // Close drawer
+      wrapper.vm.isOpenEditManagerProfileDrawer = false;
+      await wrapper.vm.$nextTick();
+      expect(drawer.props('modelValue')).toBe(false);
     });
   });
 });

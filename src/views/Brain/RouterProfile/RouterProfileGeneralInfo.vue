@@ -51,21 +51,17 @@
         element="textarea"
       />
 
-      <UnnnicFormElement
+      <UnnnicTextArea
         v-else
-        class="form__element"
+        v-model="profile.goal.current"
+        data-test="textarea"
         :label="$t('profile.fields.goal.title')"
         :message="$t('profile.fields.goal.description')"
-        :error="errorRequiredFields.goal ? $t('profile.invalid_field') : ''"
-      >
-        <UnnnicTextArea
-          v-bind="$props"
-          v-model="profile.goal.current"
-          data-test="textarea"
-          :placeholder="$t('profile.fields.goal.placeholder')"
-          :type="errorRequiredFields.goal ? 'error' : 'normal'"
-        />
-      </UnnnicFormElement>
+        :error="errorRequiredFields.goal ? $t('profile.invalid_field') : null"
+        :placeholder="$t('profile.fields.goal.placeholder')"
+        :type="errorRequiredFields.goal ? 'error' : 'normal'"
+        :maxLength="200"
+      />
     </section>
 
     <section class="general-info__form">

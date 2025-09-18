@@ -1994,11 +1994,13 @@
     "edit_manager_profile": "Edit Manager profile",
     "description": "Customize the basic information and behavior of the agent",
     "save_btn": "Save changes",
+    "save_success": "Changes saved successfully",
+    "save_error": "Error saving changes",
     "invalid_field": "Required field",
     "invalid_get_data": "Error trying to retrieve data",
     "fields": {
       "name": {
-        "title": "How does the agent introduce itself?",
+        "title": "What name does the agent use to introduce himself?",
         "description": "This is the name displayed during interactions with users",
         "placeholder": "Taylor"
       },
