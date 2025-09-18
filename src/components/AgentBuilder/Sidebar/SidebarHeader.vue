@@ -1,27 +1,45 @@
 <template>
   <section
-    class="sidebar-header"
+    :class="['sidebar-header', { 'sidebar-header--loading': isLoading }]"
     data-testid="sidebar-header"
   >
-    <h1
-      class="sidebar-header__title"
-      data-testid="sidebar-header-title"
-    >
-      {{ profileStore.name.old }}
-    </h1>
-    <p
-      class="sidebar-header__description"
-      data-testid="sidebar-header-description"
-    >
-      {{ $t('profile.edit_manager_profile') }}
-    </p>
+    <template v-if="isLoading">
+      <UnnnicSkeletonLoading
+        tag="div"
+        width="100%"
+        height="19px"
+        data-testid="sidebar-header-skeleton"
+      />
+      <UnnnicSkeletonLoading
+        tag="div"
+        width="100%"
+        height="17px"
+        data-testid="sidebar-header-skeleton"
+      />
+    </template>
+    <template v-else>
+      <h1
+        class="sidebar-header__title"
+        data-testid="sidebar-header-title"
+      >
+        {{ profileStore.name.old }}
+      </h1>
+      <p
+        class="sidebar-header__description"
+        data-testid="sidebar-header-description"
+      >
+        {{ $t('profile.edit_manager_profile') }}
+      </p>
+    </template>
   </section>
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { useProfileStore } from '@/store/Profile';
 
 const profileStore = useProfileStore();
+const isLoading = computed(() => profileStore.status === 'loading');
 </script>
 
 <style lang="scss" scoped>
@@ -33,9 +51,13 @@ const profileStore = useProfileStore();
   flex-direction: column;
   justify-content: space-between;
 
-  &:hover {
+  &:hover:not(&--loading) {
     cursor: pointer;
     background-color: $unnnic-color-bg-soft;
+  }
+
+  &--loading {
+    gap: $unnnic-spacing-nano;
   }
 
   &__title {
