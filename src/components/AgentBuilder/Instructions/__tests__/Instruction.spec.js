@@ -45,6 +45,7 @@ describe('Instruction.vue', () => {
     inputLength: '[data-testid="instruction-input-length"]',
     saveButton: '[data-testid="instruction-save-button"]',
     cancelButton: '[data-testid="instruction-cancel-button"]',
+    modalRemoveInstruction: '[data-testid="modal-remove-instruction"]',
   };
   const find = (selector) => wrapper.find(SELECTORS[selector]);
   const findComponent = (component) =>
@@ -58,6 +59,7 @@ describe('Instruction.vue', () => {
     it('renders components correctly', () => {
       expect(find('text').exists()).toBe(true);
       expect(findComponent('actions').exists()).toBe(true);
+      expect(findComponent('modalRemoveInstruction').exists()).toBe(true);
       expect(find('tag').exists()).toBe(false);
       expect(find('input').exists()).toBe(false);
       expect(find('saveButton').exists()).toBe(false);
@@ -99,7 +101,26 @@ describe('Instruction.vue', () => {
           scheme: 'neutral-dark',
           onClick: expect.any(Function),
         },
+        {
+          text: i18n.global.t(
+            'agent_builder.instructions.remove_instruction.title',
+          ),
+          icon: 'delete',
+          scheme: 'aux-red-500',
+          onClick: expect.any(Function),
+        },
       ]);
+    });
+
+    it('closes the modal when the update:model-value event is emitted', async () => {
+      wrapper.vm.showModalRemoveInstruction = true;
+      expect(wrapper.vm.showModalRemoveInstruction).toBe(true);
+
+      findComponent('modalRemoveInstruction').vm.$emit(
+        'update:model-value',
+        false,
+      );
+      expect(wrapper.vm.showModalRemoveInstruction).toBe(false);
     });
   });
 

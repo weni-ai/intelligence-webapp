@@ -53,4 +53,8 @@ export const Instructions = {
     };
     await request.$http.put(`api/${projectUuid}/customization/`, body);
   },
+
+  async delete({ projectUuid, id }) {
+    await request.$http.delete(`api/${projectUuid}/customization/?id=${id}`);
+  },
 };

@@ -94,6 +94,30 @@ export const useInstructionsStore = defineStore('Instructions', () => {
     return { status: instruction.status };
   }
 
+  async function removeInstruction(id) {
+    const instruction = instructions.data.find(
+      (instruction) => instruction.id === id,
+    );
+    if (!instruction) return;
+    instruction.status = 'loading';
+
+    try {
+      await nexusaiAPI.agent_builder.instructions.delete({
+        projectUuid: connectProjectUuid.value,
+        id,
+      });
+      instructions.data = instructions.data.filter(
+        (instruction) => instruction.id !== id,
+      );
+      callAlert('default', 'remove_instruction.success_alert');
+    } catch (error) {
+      instruction.status = 'error';
+      callAlert('error', 'remove_instruction.error_alert');
+    }
+
+    return { status: instruction.status };
+  }
+
   return {
     instructions,
     newInstruction,
@@ -101,5 +125,6 @@ export const useInstructionsStore = defineStore('Instructions', () => {
     addInstruction,
     loadInstructions,
     editInstruction,
+    removeInstruction,
   };
 });
