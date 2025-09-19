@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
 import { configureCache, GrowthBook } from '@growthbook/growthbook';
-import globalStore from '@/store';
+import { useProjectStore } from '@/store/Project';
 import env from './env';
 
 const gbClientKey = env('GROWTHBOOK_CLIENT_KEY');
@@ -12,8 +12,7 @@ const gbInstance = reactive(
     apiHost: gbApiHost,
     clientKey: gbClientKey,
     attributes: {
-      weni_project: globalStore.state.Auth.connectProjectUuid || '',
-      weni_org: globalStore.state.Auth.connectOrgUuid || '',
+      weni_project: useProjectStore().uuid || '',
     },
   }),
 );

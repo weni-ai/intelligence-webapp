@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
 import { format, parseISO, subDays } from 'date-fns';
-import globalStore from '.';
+
+import { useProjectStore } from './Project';
 import { useAlertStore } from './Alert';
 import { useRoute } from 'vue-router';
 
@@ -11,7 +12,7 @@ import { PerformanceAdapter } from '@/api/adapters/supervisor/performance';
 import i18n from '@/utils/plugins/i18n';
 
 export const useOldSupervisorStore = defineStore('OldSupervisor', () => {
-  const projectUuid = computed(() => globalStore.state.Auth.connectProjectUuid);
+  const projectUuid = computed(() => useProjectStore().uuid);
   const alertStore = useAlertStore();
   const route = useRoute();
   const last30Days = format(subDays(new Date(), 30), 'yyyy-MM-dd');

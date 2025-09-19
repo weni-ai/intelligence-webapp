@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { reactive } from 'vue';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 
 export const useUserStore = defineStore('UserStore', () => {
-  const user = ref({
+  const user = reactive({
     email: null,
     token: null,
   });
@@ -13,7 +13,7 @@ export const useUserStore = defineStore('UserStore', () => {
     try {
       const { data } = await nexusaiAPI.agent_builder.user.read();
 
-      user.value = { ...user.value, ...data };
+      Object.assign(user, data);
     } catch (error) {
       console.error(error);
     }

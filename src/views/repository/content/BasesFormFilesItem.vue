@@ -106,6 +106,8 @@ import FilePreview from '@/views/ContentBases/components/FilePreview.vue';
 import ContentItemActions from '@/views/repository/content/ContentItemActions.vue';
 import { createDownloadAnchor } from '@/utils';
 
+import { useProjectStore } from '@/store/Project';
+
 export default {
   components: {
     FilePreview,
@@ -119,6 +121,14 @@ export default {
   },
 
   emits: ['click', 'remove'],
+
+  setup() {
+    const projectStore = useProjectStore();
+
+    return {
+      projectStore,
+    };
+  },
 
   data() {
     return {
@@ -282,7 +292,7 @@ export default {
     async preview() {
       this.modalPreview = {
         type: this.extension === 'site' ? 'site' : 'file',
-        projectUuid: this.$store.state.Auth.connectProjectUuid,
+        projectUuid: projectStore.uuid,
         contentBaseUuid:
           this.$store.state.router.contentBaseUuid ||
           this.$route.params.contentBaseUuid,

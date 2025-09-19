@@ -75,7 +75,7 @@ const getMultiAgentsEnabled = async () => {
   if (projectStore.isMultiAgents !== null) return;
 
   const { data } = await nexusaiAPI.router.tunings.multiAgents.read({
-    projectUuid: store.state.Auth.connectProjectUuid,
+    projectUuid: projectStore.uuid,
   });
 
   useFeatureFlagsStore().editUpgradeToMultiAgents(data.can_view);
