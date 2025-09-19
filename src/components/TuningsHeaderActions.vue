@@ -11,7 +11,7 @@
     <UnnnicButton
       v-if="showProjectDetailsButton"
       type="secondary"
-      :loading="projectStore.projectDetails.status === 'loading'"
+      :loading="projectStore.details.status === 'loading'"
       @click="showModalProjectDetails = true"
     >
       {{ $t('agent_builder.tunings.project_details') }}

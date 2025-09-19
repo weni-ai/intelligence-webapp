@@ -4,13 +4,16 @@ import { ref } from 'vue';
 import nexusaiAPI from '@/api/nexusaiAPI';
 
 export const useUserStore = defineStore('UserStore', () => {
-  const user = ref(null);
+  const user = ref({
+    email: null,
+    token: null,
+  });
 
   async function getUserDetails() {
     try {
       const { data } = await nexusaiAPI.agent_builder.user.read();
 
-      user.value = data;
+      user.value = { ...user.value, ...data };
     } catch (error) {
       console.error(error);
     }
