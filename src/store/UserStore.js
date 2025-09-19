@@ -6,7 +6,7 @@ import nexusaiAPI from '@/api/nexusaiAPI';
 export const useUserStore = defineStore('UserStore', () => {
   const user = reactive({
     email: null,
-    token: null,
+    token: localStorage.getItem('authToken') || null,
   });
 
   async function getUserDetails() {
