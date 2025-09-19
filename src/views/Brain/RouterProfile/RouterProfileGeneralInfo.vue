@@ -60,7 +60,7 @@
         :error="errorRequiredFields.goal ? $t('profile.invalid_field') : null"
         :placeholder="$t('profile.fields.goal.placeholder')"
         :type="errorRequiredFields.goal ? 'error' : 'normal'"
-        :maxLength="200"
+        :maxLength="500"
       />
     </section>
 
