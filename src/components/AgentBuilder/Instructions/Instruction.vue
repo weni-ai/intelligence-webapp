@@ -7,15 +7,8 @@
           class="input__field"
           data-testid="instruction-input"
           size="sm"
-          :maxLength="MAX_INSTRUCTION_LENGTH"
           @keyup.enter="saveEditingInstruction"
         />
-        <p
-          class="input__length"
-          data-testid="instruction-input-length"
-        >
-          {{ editingText.length }} / {{ MAX_INSTRUCTION_LENGTH }}
-        </p>
       </section>
       <UnnnicButton
         :text="$t('agent_builder.instructions.edit_instruction.save')"
