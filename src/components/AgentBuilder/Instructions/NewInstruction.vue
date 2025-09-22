@@ -18,7 +18,6 @@
       :message="
         $t('agent_builder.instructions.new_instruction.textarea.description')
       "
-      :maxLength="200"
     />
     <UnnnicButton
       class="new-instruction__add-instruction-button"
