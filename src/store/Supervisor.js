@@ -28,16 +28,52 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
   let conversationsAbortController = null;
 
+  const defaultFilters = {
+    start: thisMonth,
+    end: today,
+    search: '',
+    status: [],
+    csat: [],
+    topics: [],
+  };
+
   const filters = reactive({
-    start: route?.query.start || thisMonth,
-    end: route?.query.end || today,
-    search: route?.query.search || '',
-    status: route?.query.status || [],
-    csat: route?.query.csat || [],
-    topics: route?.query.topics || [],
+    start: route?.query.start || defaultFilters.start,
+    end: route?.query.end || defaultFilters.end,
+    search: route?.query.search || defaultFilters.search,
+    status: route?.query.status || defaultFilters.status,
+    csat: route?.query.csat || defaultFilters.csat,
+    topics: route?.query.topics || defaultFilters.topics,
+  });
+
+  const temporaryFilters = reactive({
+    start: filters.start,
+    end: filters.end,
+    search: filters.search,
+    status: filters.status,
+    csat: filters.csat,
+    topics: filters.topics,
   });
 
   const queryConversationUuid = ref(route?.query.uuid || '');
+
+  function resetTemporaryFilters() {
+    temporaryFilters.start = defaultFilters.start;
+    temporaryFilters.end = defaultFilters.end;
+    temporaryFilters.search = defaultFilters.search;
+    temporaryFilters.status = defaultFilters.status;
+    temporaryFilters.csat = defaultFilters.csat;
+    temporaryFilters.topics = defaultFilters.topics;
+  }
+
+  function updateFilters() {
+    filters.start = temporaryFilters.start;
+    filters.end = temporaryFilters.end;
+    filters.search = temporaryFilters.search;
+    filters.status = temporaryFilters.status;
+    filters.csat = temporaryFilters.csat;
+    filters.topics = temporaryFilters.topics;
+  }
 
   async function loadConversations(page = 1) {
     if (conversationsAbortController) {
@@ -186,8 +222,11 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     selectConversation,
     selectedConversation,
     filters,
+    temporaryFilters,
     queryConversationUuid,
     getTopics,
     exportSupervisorData,
+    resetTemporaryFilters,
+    updateFilters,
   };
 });
