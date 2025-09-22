@@ -1,6 +1,6 @@
 <template>
   <section class="supervisor-filters">
-    <section class="supervisor-filters__selects">
+    <!-- <section class="supervisor-filters__selects">
       <UnnnicInputDatePicker
         v-model="dateFilter"
         position="left"
@@ -32,9 +32,17 @@
         multipleWithoutSelectsMessage
         autocomplete
       />
-    </section>
+    </section> -->
 
     <FilterText data-testid="filter-text" />
+
+    <UnnnicButton
+      iconLeft="filter_list"
+      type="secondary"
+      data-testid="filter-button"
+    >
+      {{ $t('agent_builder.supervisor.filters.filter_conversations') }}
+    </UnnnicButton>
   </section>
 </template>
 
@@ -175,8 +183,8 @@ async function getTopics() {
 
 <style scoped lang="scss">
 .supervisor-filters {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 8fr 4fr;
   gap: $unnnic-spacing-sm;
 
   &__selects {

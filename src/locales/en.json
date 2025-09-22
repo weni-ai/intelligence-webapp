@@ -135,6 +135,7 @@
         "error": "Error sending export. Try again later."
       },
       "filters": {
+        "filter_conversations": "Filter conversations",
         "status": {
           "conversations": "Conversations",
           "in_progress": "In progress",
