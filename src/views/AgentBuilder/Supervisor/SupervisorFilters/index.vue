@@ -5,7 +5,7 @@
     <UnnnicButton
       iconLeft="filter_list"
       type="secondary"
-      :text="$t('agent_builder.supervisor.filters.filter_conversations')"
+      :text="filterButtonText"
       data-testid="filter-button"
       @click="openFilterDrawer"
     />
@@ -40,6 +40,8 @@
 import { ref, computed, onMounted } from 'vue';
 import { isEqual } from 'lodash';
 
+import i18n from '@/utils/plugins/i18n';
+
 import { useSupervisorStore } from '@/store/Supervisor';
 
 import FilterText from './FilterText.vue';
@@ -58,6 +60,30 @@ const filterDrawerApplyButtonDisabled = computed(() =>
 const filterDrawerClearButtonDisabled = computed(() =>
   isEqual(supervisorStore.temporaryFilters, supervisorStore.defaultFilters),
 );
+
+const countAppliedFilters = computed(() => {
+  const filtersToCount = ['status', 'csat', 'topics'];
+
+  return filtersToCount.reduce((total, filter) => {
+    return total + supervisorStore.filters[filter].length;
+  }, 0);
+});
+
+const filterButtonText = computed(() => {
+  const { t, tc } = i18n.global;
+  const count = countAppliedFilters.value;
+
+  const text = t('agent_builder.supervisor.filters.filter_conversations');
+  const countText = tc(
+    'agent_builder.supervisor.filters.count_applied_filters',
+    count,
+    {
+      count,
+    },
+  );
+
+  return count > 0 ? `${text} ${countText}` : text;
+});
 
 function openFilterDrawer() {
   isFilterDrawerOpen.value = true;
