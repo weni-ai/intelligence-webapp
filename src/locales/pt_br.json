@@ -144,6 +144,9 @@
         "filter_conversations_drawer": "Filtrar conversas",
         "apply_filters": "Aplicar filtros",
         "clear_filters": "Limpar filtros",
+        "period": {
+          "label": "Período"
+        },
         "status": {
           "conversations": "Conversas",
           "in_progress": "Em progresso",

@@ -1,11 +1,15 @@
 <template>
-  <UnnnicInputDatePicker
-    v-model="dateFilter"
-    position="right"
-    class="supervisor-filter-date"
-    :maxDate="today"
-    data-testid="date-picker"
-  />
+  <UnnnicFormElement
+    :label="$t('agent_builder.supervisor.filters.period.label')"
+  >
+    <UnnnicInputDatePicker
+      v-model="dateFilter"
+      position="right"
+      class="supervisor-filter-date"
+      :maxDate="today"
+      data-testid="date-picker"
+    />
+  </UnnnicFormElement>
 </template>
 
 <script setup>
@@ -34,6 +38,8 @@ watch(
 
 <style lang="scss" scoped>
 .supervisor-filter-date {
+  width: 100%;
+
   :deep(.input) {
     width: 100%;
   }
