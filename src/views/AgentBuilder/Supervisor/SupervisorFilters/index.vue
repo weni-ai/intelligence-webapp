@@ -1,193 +1,126 @@
 <template>
   <section class="supervisor-filters">
-    <section class="supervisor-filters__selects">
-      <UnnnicInputDatePicker
-        v-model="dateFilter"
-        position="left"
-        class="selects__date-picker"
-        :maxDate="today"
-        data-testid="date-picker"
-      />
-      <UnnnicSelectSmart
-        v-model:modelValue="statusFilter"
-        :options="statusOptions"
-        orderedByIndex
-        multiple
-        multipleWithoutSelectsMessage
-        autocomplete
-      />
-      <UnnnicSelectSmart
-        v-model:modelValue="csatFilter"
-        :options="csatOptions"
-        orderedByIndex
-        multiple
-        multipleWithoutSelectsMessage
-        autocomplete
-      />
-      <UnnnicSelectSmart
-        v-model:modelValue="topicFilter"
-        :options="topicOptions"
-        orderedByIndex
-        multiple
-        multipleWithoutSelectsMessage
-        autocomplete
-      />
-    </section>
-
     <FilterText data-testid="filter-text" />
+
+    <UnnnicButton
+      iconLeft="filter_list"
+      type="secondary"
+      :text="filterButtonText"
+      data-testid="filter-button"
+      @click="openFilterDrawer"
+    />
+
+    <UnnnicDrawer
+      :modelValue="isFilterDrawerOpen"
+      class="supervisor-filters__drawer"
+      :title="
+        $t('agent_builder.supervisor.filters.filter_conversations_drawer')
+      "
+      :primaryButtonText="$t('agent_builder.supervisor.filters.apply_filters')"
+      :disabledPrimaryButton="filterDrawerApplyButtonDisabled"
+      :secondaryButtonText="
+        $t('agent_builder.supervisor.filters.clear_filters')
+      "
+      :disabledSecondaryButton="filterDrawerClearButtonDisabled"
+      @close="closeFilterDrawer"
+      @primary-button-click="applyFilters"
+      @secondary-button-click="clearFilters"
+    >
+      <template #content>
+        <FilterDate />
+        <FilterStatus />
+        <FilterCsat />
+        <FilterTopics />
+      </template>
+    </UnnnicDrawer>
   </section>
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { isEqual } from 'lodash';
+
+import i18n from '@/utils/plugins/i18n';
+
+import { useSupervisorStore } from '@/store/Supervisor';
 
 import FilterText from './FilterText.vue';
-import { format } from 'date-fns';
-import { useSupervisorStore } from '@/store/Supervisor';
-import i18n from '@/utils/plugins/i18n';
+import FilterDate from './FilterDate.vue';
+import FilterStatus from './FilterStatus.vue';
+import FilterCsat from './FilterCsat.vue';
+import FilterTopics from './FilterTopics.vue';
 
 const supervisorStore = useSupervisorStore();
 
-const today = format(new Date(), 'yyyy-MM-dd');
-function getQueryFilterArray(filter, filterOptions) {
-  if (!supervisorStore.filters[filter]) return [];
-  if (typeof supervisorStore.filters[filter] !== 'string')
-    return supervisorStore.filters[filter];
+const isFilterDrawerOpen = ref(false);
+const filterDrawerApplyButtonDisabled = computed(() =>
+  isEqual(supervisorStore.temporaryFilters, supervisorStore.filters),
+);
 
-  return supervisorStore.filters[filter].split(',').map((item) => {
-    if (item === '') return { label: '', value: '' };
+const filterDrawerClearButtonDisabled = computed(() =>
+  isEqual(supervisorStore.temporaryFilters, supervisorStore.defaultFilters),
+);
 
-    return filterOptions.value.find(
-      (option) => option.value === item || option.label === item,
-    );
-  });
-}
+const countAppliedFilters = computed(() => {
+  const filtersToCount = ['status', 'csat', 'topics'];
 
-const dateFilter = ref({
-  start: supervisorStore.filters.start,
-  end: supervisorStore.filters.end,
+  return filtersToCount.reduce((total, filter) => {
+    return total + supervisorStore.filters[filter].length;
+  }, 0);
 });
 
-watch(
-  () => dateFilter.value,
-  () => {
-    supervisorStore.filters.start = dateFilter.value.start;
-    supervisorStore.filters.end = dateFilter.value.end;
-  },
-  { immediate: true },
-);
+const filterButtonText = computed(() => {
+  const { t, tc } = i18n.global;
+  const count = countAppliedFilters.value;
 
-const getStatusTranslation = (filter) =>
-  i18n.global.t(`agent_builder.supervisor.filters.status.${filter}`);
+  const text = t('agent_builder.supervisor.filters.filter_conversations');
+  const countText = tc(
+    'agent_builder.supervisor.filters.count_applied_filters',
+    count,
+    {
+      count,
+    },
+  );
 
-const statusOptions = computed(() => [
-  { label: getStatusTranslation('conversations'), value: '' },
-  {
-    label: getStatusTranslation('optimized_resolution'),
-    value: 'optimized_resolution',
-  },
-  {
-    label: getStatusTranslation('other_conclusion'),
-    value: 'other_conclusion',
-  },
-  {
-    label: getStatusTranslation('transferred_to_human_support'),
-    value: 'transferred_to_human_support',
-  },
-  { label: getStatusTranslation('in_progress'), value: 'in_progress' },
-  { label: getStatusTranslation('unclassified'), value: 'unclassified' },
-]);
-const statusFilter = ref(getQueryFilterArray('status', statusOptions));
+  return count > 0 ? `${text} ${countText}` : text;
+});
 
-watch(
-  () => statusFilter.value,
-  () => {
-    supervisorStore.filters.status = statusFilter.value.map(
-      (status) => status?.value || '',
-    );
-  },
-  { immediate: true, deep: true },
-);
-
-const getCsatTranslation = (filter) =>
-  i18n.global.t(`agent_builder.supervisor.filters.csat.${filter}`);
-
-const csatOptions = computed(() => [
-  { label: getCsatTranslation('csat'), value: '' },
-  { label: getCsatTranslation('very_satisfied'), value: 'very_satisfied' },
-  { label: getCsatTranslation('satisfied'), value: 'satisfied' },
-  { label: getCsatTranslation('neutral'), value: 'neutral' },
-  { label: getCsatTranslation('dissatisfied'), value: 'dissatisfied' },
-  {
-    label: getCsatTranslation('very_dissatisfied'),
-    value: 'very_dissatisfied',
-  },
-]);
-const csatFilter = ref(getQueryFilterArray('csat', csatOptions));
-
-watch(
-  () => csatFilter.value,
-  () => {
-    supervisorStore.filters.csat = csatFilter.value.map(
-      (csat) => csat?.value || '',
-    );
-  },
-  { immediate: true, deep: true },
-);
-
-const topicOptions = computed(() => [
-  {
-    label: i18n.global.t(`agent_builder.supervisor.filters.topic.topic`),
-    value: '',
-  },
-]);
-const topicFilter = ref([]);
-
-const isRequestedTopics = ref(false);
-
-watch(
-  () => topicFilter.value,
-  async () => {
-    if (!isRequestedTopics.value) {
-      await getTopics();
-      topicFilter.value = getQueryFilterArray('topics', topicOptions);
-      isRequestedTopics.value = true;
-    }
-    supervisorStore.filters.topics = topicFilter.value.map(
-      (subject) => subject?.label || '',
-    );
-  },
-  { immediate: true, deep: true },
-);
-
-async function getTopics() {
-  await supervisorStore.getTopics().then((topics) => {
-    topicOptions.value = [
-      ...topicOptions.value,
-      ...topics.map((topic) => ({
-        label: topic.name,
-        value: topic.uuid,
-      })),
-    ];
-  });
+function openFilterDrawer() {
+  isFilterDrawerOpen.value = true;
 }
+
+function closeFilterDrawer() {
+  isFilterDrawerOpen.value = false;
+}
+
+function clearFilters() {
+  supervisorStore.resetFilters();
+  closeFilterDrawer();
+}
+
+function applyFilters() {
+  supervisorStore.updateFilters();
+  closeFilterDrawer();
+}
+
+onMounted(async () => {
+  await supervisorStore.getTopics();
+});
 </script>
 
 <style scoped lang="scss">
 .supervisor-filters {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 8fr 4fr;
   gap: $unnnic-spacing-sm;
 
-  &__selects {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: $unnnic-spacing-sm;
+  &__drawer {
+    :deep(.unnnic-drawer__container .unnnic-drawer__content) {
+      overflow: visible;
 
-    .selects__date-picker {
-      :deep(.input) {
-        width: 100%;
-      }
+      display: flex;
+      flex-direction: column;
+      gap: $unnnic-spacing-sm;
     }
   }
 }

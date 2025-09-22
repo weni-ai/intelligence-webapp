@@ -135,6 +135,11 @@
         "error": "Error sending export. Try again later."
       },
       "filters": {
+        "filter_conversations": "Filter conversations",
+        "count_applied_filters": "(1 filter applied) | ({count} filters applied)",
+        "filter_conversations_drawer": "Filter conversations",
+        "apply_filters": "Apply filters",
+        "clear_filters": "Clear filters",
         "status": {
           "conversations": "Conversations",
           "in_progress": "In progress",

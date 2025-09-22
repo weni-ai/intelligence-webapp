@@ -139,6 +139,11 @@
         "error": "Error al enviar exportación. Inténtalo de nuevo más tarde."
       },
       "filters": {
+        "filter_conversations": "Filtrar conversaciones",
+        "count_applied_filters": "(1 filtro aplicado) | ({count} filtros aplicados)",
+        "filter_conversations_drawer": "Filtrar conversaciones",
+        "apply_filters": "Aplicar filtros",
+        "clear_filters": "Limpiar filtros",
         "status": {
           "conversations": "Conversaciones",
           "in_progress": "En progreso",

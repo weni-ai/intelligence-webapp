@@ -112,7 +112,7 @@ const statusProps = computed(() => {
       scheme: 'aux-red-500',
     },
     unclassified: {
-      scheme: 'gray-500',
+      scheme: 'neutral-cloudy',
     },
   };
 
