@@ -12,8 +12,7 @@ exports[`Instruction.vue > Component rendering > should match snapshot 1`] = `
 exports[`Instruction.vue > Edit mode > should match snapshot > edit-mode 1`] = `
 "<section data-v-cba3a9e7="" class="instruction">
   <section data-v-cba3a9e7="" class="instruction__input">
-    <unnnic-input-stub data-v-cba3a9e7="" placeholder="" type="normal" modelvalue="Test instruction" nativetype="text" allowtogglepassword="false" hascloudycolor="false" size="sm" mask="" class="input__field" data-testid="instruction-input" maxlength="200"></unnnic-input-stub>
-    <p data-v-cba3a9e7="" class="input__length" data-testid="instruction-input-length">16 / 200</p>
+    <unnnic-input-stub data-v-cba3a9e7="" placeholder="" type="normal" modelvalue="Test instruction" nativetype="text" allowtogglepassword="false" hascloudycolor="false" size="sm" mask="" class="input__field" data-testid="instruction-input"></unnnic-input-stub>
   </section>
   <unnnic-button-stub data-v-cba3a9e7="" size="small" text="Save" type="secondary" float="false" iconleft="" iconright="" iconcenter="" iconsfilled="false" next="false" disabled="false" loading="false" data-testid="instruction-save-button"></unnnic-button-stub>
   <unnnic-button-stub data-v-cba3a9e7="" size="small" text="Cancel" type="tertiary" float="false" iconleft="" iconright="" iconcenter="" iconsfilled="false" next="false" disabled="false" loading="false" data-testid="instruction-cancel-button"></unnnic-button-stub>
