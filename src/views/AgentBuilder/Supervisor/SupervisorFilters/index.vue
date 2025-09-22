@@ -17,12 +17,14 @@
         $t('agent_builder.supervisor.filters.filter_conversations_drawer')
       "
       :primaryButtonText="$t('agent_builder.supervisor.filters.apply_filters')"
+      :disabledPrimaryButton="filterDrawerApplyButtonDisabled"
       :secondaryButtonText="
         $t('agent_builder.supervisor.filters.clear_filters')
       "
-      @close="closeFilterDrawerWithReset"
+      :disabledSecondaryButton="filterDrawerClearButtonDisabled"
+      @close="closeFilterDrawer"
       @primary-button-click="applyFilters"
-      @secondary-button-click="closeFilterDrawerWithReset"
+      @secondary-button-click="clearFilters"
     >
       <template #content>
         <FilterDate />
@@ -35,7 +37,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { isEqual } from 'lodash';
+
+import { useSupervisorStore } from '@/store/Supervisor';
 
 import FilterText from './FilterText.vue';
 import FilterDate from './FilterDate.vue';
@@ -43,19 +48,38 @@ import FilterStatus from './FilterStatus.vue';
 import FilterCsat from './FilterCsat.vue';
 import FilterTopics from './FilterTopics.vue';
 
+const supervisorStore = useSupervisorStore();
+
 const isFilterDrawerOpen = ref(false);
+const filterDrawerApplyButtonDisabled = computed(() =>
+  isEqual(supervisorStore.temporaryFilters, supervisorStore.filters),
+);
+
+const filterDrawerClearButtonDisabled = computed(() =>
+  isEqual(supervisorStore.temporaryFilters, supervisorStore.defaultFilters),
+);
 
 function openFilterDrawer() {
   isFilterDrawerOpen.value = true;
 }
 
-function closeFilterDrawerWithReset() {
+function closeFilterDrawer() {
   isFilterDrawerOpen.value = false;
 }
 
-function applyFilters() {
-  isFilterDrawerOpen.value = false;
+function clearFilters() {
+  supervisorStore.resetFilters();
+  closeFilterDrawer();
 }
+
+function applyFilters() {
+  supervisorStore.updateFilters();
+  closeFilterDrawer();
+}
+
+onMounted(async () => {
+  await supervisorStore.getTopics();
+});
 </script>
 
 <style scoped lang="scss">

@@ -41,9 +41,9 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     start: route?.query.start || defaultFilters.start,
     end: route?.query.end || defaultFilters.end,
     search: route?.query.search || defaultFilters.search,
-    status: route?.query.status || defaultFilters.status,
-    csat: route?.query.csat || defaultFilters.csat,
-    topics: route?.query.topics || defaultFilters.topics,
+    status: route?.query.status?.split(',') || defaultFilters.status,
+    csat: route?.query.csat?.split(',') || defaultFilters.csat,
+    topics: route?.query.topics?.split(',') || defaultFilters.topics,
   });
 
   const temporaryFilters = reactive({
@@ -55,15 +55,20 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     topics: filters.topics,
   });
 
+  const topics = ref([]);
+
   const queryConversationUuid = ref(route?.query.uuid || '');
 
-  function resetTemporaryFilters() {
-    temporaryFilters.start = defaultFilters.start;
-    temporaryFilters.end = defaultFilters.end;
-    temporaryFilters.search = defaultFilters.search;
-    temporaryFilters.status = defaultFilters.status;
-    temporaryFilters.csat = defaultFilters.csat;
-    temporaryFilters.topics = defaultFilters.topics;
+  function resetFilters() {
+    const { start, end, status, csat, topics } = defaultFilters;
+
+    [filters, temporaryFilters].forEach((filter) => {
+      filter.start = start;
+      filter.end = end;
+      filter.status = status;
+      filter.csat = csat;
+      filter.topics = topics;
+    });
   }
 
   function updateFilters() {
@@ -73,6 +78,16 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     filters.status = temporaryFilters.status;
     filters.csat = temporaryFilters.csat;
     filters.topics = temporaryFilters.topics;
+  }
+
+  function getInitialSelectFilter(filter, filterOptions) {
+    return temporaryFilters[filter].map((item) => {
+      if (item === '') return { label: '', value: '' };
+
+      return filterOptions.value.find(
+        (option) => option.value === item || option.label === item,
+      );
+    });
   }
 
   async function loadConversations(page = 1) {
@@ -192,7 +207,11 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     const response = await supervisorApi.conversations.getTopics({
       projectUuid: projectUuid.value,
     });
-    return response;
+
+    topics.value = response.map((topic) => ({
+      label: topic.name,
+      value: topic.uuid,
+    }));
   }
 
   async function exportSupervisorData({ token }) {
@@ -216,17 +235,23 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   }
 
   return {
+    filters,
+    defaultFilters,
+    temporaryFilters,
+    topics,
+    resetFilters,
+    updateFilters,
+    getInitialSelectFilter,
+    getTopics,
+
     conversations,
     loadConversations,
+
+    queryConversationUuid,
+    selectedConversation,
     loadSelectedConversationData,
     selectConversation,
-    selectedConversation,
-    filters,
-    temporaryFilters,
-    queryConversationUuid,
-    getTopics,
+
     exportSupervisorData,
-    resetTemporaryFilters,
-    updateFilters,
   };
 });

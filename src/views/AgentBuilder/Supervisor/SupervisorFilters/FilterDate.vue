@@ -18,15 +18,15 @@ const supervisorStore = useSupervisorStore();
 
 const today = format(new Date(), 'yyyy-MM-dd');
 const dateFilter = ref({
-  start: supervisorStore.filters.start,
-  end: supervisorStore.filters.end,
+  start: supervisorStore.temporaryFilters.start,
+  end: supervisorStore.temporaryFilters.end,
 });
 
 watch(
   () => dateFilter.value,
   () => {
-    supervisorStore.filters.start = dateFilter.value.start;
-    supervisorStore.filters.end = dateFilter.value.end;
+    supervisorStore.temporaryFilters.start = dateFilter.value.start;
+    supervisorStore.temporaryFilters.end = dateFilter.value.end;
   },
   { immediate: true },
 );
