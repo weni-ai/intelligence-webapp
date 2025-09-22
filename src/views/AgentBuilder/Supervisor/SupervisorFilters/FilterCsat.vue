@@ -1,12 +1,14 @@
 <template>
-  <UnnnicSelectSmart
-    v-model:modelValue="csatFilter"
-    :options="csatOptions"
-    orderedByIndex
-    multiple
-    multipleWithoutSelectsMessage
-    autocomplete
-  />
+  <UnnnicFormElement :label="$t('agent_builder.supervisor.filters.csat.csat')">
+    <UnnnicSelectSmart
+      v-model:modelValue="csatFilter"
+      :options="csatOptions"
+      orderedByIndex
+      multiple
+      multipleWithoutSelectsMessage
+      autocomplete
+    />
+  </UnnnicFormElement>
 </template>
 
 <script setup>

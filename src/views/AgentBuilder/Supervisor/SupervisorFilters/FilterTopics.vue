@@ -1,12 +1,16 @@
 <template>
-  <UnnnicSelectSmart
-    v-model:modelValue="topicFilter"
-    :options="topicOptions"
-    orderedByIndex
-    multiple
-    multipleWithoutSelectsMessage
-    autocomplete
-  />
+  <UnnnicFormElement
+    :label="$t('agent_builder.supervisor.filters.topic.topic')"
+  >
+    <UnnnicSelectSmart
+      v-model:modelValue="topicFilter"
+      :options="topicOptions"
+      orderedByIndex
+      multiple
+      multipleWithoutSelectsMessage
+      autocomplete
+    />
+  </UnnnicFormElement>
 </template>
 
 <script setup>

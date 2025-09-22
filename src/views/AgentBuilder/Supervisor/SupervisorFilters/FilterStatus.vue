@@ -1,12 +1,16 @@
 <template>
-  <UnnnicSelectSmart
-    v-model:modelValue="statusFilter"
-    :options="statusOptions"
-    orderedByIndex
-    multiple
-    multipleWithoutSelectsMessage
-    autocomplete
-  />
+  <UnnnicFormElement
+    :label="$t('agent_builder.supervisor.filters.status.conversations')"
+  >
+    <UnnnicSelectSmart
+      v-model:modelValue="statusFilter"
+      :options="statusOptions"
+      orderedByIndex
+      multiple
+      multipleWithoutSelectsMessage
+      autocomplete
+    />
+  </UnnnicFormElement>
 </template>
 
 <script setup>
