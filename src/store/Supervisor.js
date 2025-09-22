@@ -14,6 +14,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const supervisorApi = nexusaiAPI.agent_builder.supervisor;
   const alertStore = useAlertStore();
   const route = useRoute();
+  const { query } = route || {};
   const thisMonth = format(subDays(new Date(), 29), 'yyyy-MM-dd');
   const today = format(new Date(), 'yyyy-MM-dd');
 
@@ -37,13 +38,14 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     topics: [],
   };
 
+  const parseArray = (value) => value?.split(',').filter(Boolean) || null;
   const filters = reactive({
-    start: route?.query.start || defaultFilters.start,
-    end: route?.query.end || defaultFilters.end,
-    search: route?.query.search || defaultFilters.search,
-    status: route?.query.status?.split(',') || defaultFilters.status,
-    csat: route?.query.csat?.split(',') || defaultFilters.csat,
-    topics: route?.query.topics?.split(',') || defaultFilters.topics,
+    start: query?.start ?? defaultFilters.start,
+    end: query?.end ?? defaultFilters.end,
+    search: query?.search ?? defaultFilters.search,
+    status: parseArray(query?.status) || defaultFilters.status,
+    csat: parseArray(query?.csat) || defaultFilters.csat,
+    topics: parseArray(query?.topics) || defaultFilters.topics,
   });
 
   const temporaryFilters = reactive({
@@ -57,7 +59,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
   const topics = ref([]);
 
-  const queryConversationUuid = ref(route?.query.uuid || '');
+  const queryConversationUuid = ref(query?.uuid || '');
 
   function resetFilters() {
     const { start, end, status, csat, topics } = defaultFilters;
