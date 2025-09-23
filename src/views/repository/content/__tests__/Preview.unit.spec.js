@@ -5,6 +5,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { createStore } from 'vuex';
 
 import { useProfileStore } from '@/store/Profile';
+import { useProjectStore } from '@/store/Project';
 import { useFlowPreviewStore } from '@/store/FlowPreview';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
@@ -28,9 +29,6 @@ vi.stubEnv('NEXUS_API_BASE_URL', 'https://nexus.api.url');
 const createMockStore = (initialState = {}, customGetters = {}) => {
   return createStore({
     state: {
-      Auth: {
-        connectProjectUuid: 'test-project-uuid',
-      },
       router: {
         contentBaseUuid: 'test-content-base-uuid',
       },
@@ -47,6 +45,7 @@ const createMockStore = (initialState = {}, customGetters = {}) => {
 describe('Preview.vue', () => {
   let wrapper;
   let profileStore;
+  let projectStore;
   let flowPreviewStore;
   let store;
 
@@ -81,6 +80,7 @@ describe('Preview.vue', () => {
     store = createMockStore(storeState, customGetters);
 
     profileStore = useProfileStore(pinia);
+    projectStore = useProjectStore(pinia);
     flowPreviewStore = useFlowPreviewStore(pinia);
 
     flowPreviewStore.addMessage = vi.fn();
@@ -90,6 +90,8 @@ describe('Preview.vue', () => {
     flowPreviewStore.previewInit = vi.fn();
     flowPreviewStore.previewStart = vi.fn();
     flowPreviewStore.previewResume = vi.fn();
+
+    projectStore.uuid = 'test-project-uuid';
 
     return mount(Preview, {
       global: {
@@ -326,6 +328,8 @@ describe('Preview.vue', () => {
 
     it('calls preview API with correct parameters', async () => {
       await wrapper.vm.answer('Test question');
+
+      console.log('store', projectStore.uuid);
 
       expect(nexusaiAPI.router.preview.create).toHaveBeenCalledWith({
         projectUuid: 'test-project-uuid',

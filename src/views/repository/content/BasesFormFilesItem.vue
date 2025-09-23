@@ -292,7 +292,7 @@ export default {
     async preview() {
       this.modalPreview = {
         type: this.extension === 'site' ? 'site' : 'file',
-        projectUuid: projectStore.uuid,
+        projectUuid: this.projectStore.uuid,
         contentBaseUuid:
           this.$store.state.router.contentBaseUuid ||
           this.$route.params.contentBaseUuid,

@@ -1,6 +1,7 @@
 import nexusaiAPI from '@/api/nexusaiAPI';
 import { defineStore } from 'pinia';
 import { computed, reactive, ref, watch } from 'vue';
+import globalStore from '.';
 import { useProjectStore } from './Project';
 import { cloneDeep, differenceBy, get } from 'lodash';
 import { useFeatureFlagsStore } from './FeatureFlags';
