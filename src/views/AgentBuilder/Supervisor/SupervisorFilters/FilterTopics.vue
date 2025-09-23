@@ -4,6 +4,7 @@
   >
     <UnnnicSelectSmart
       v-model:modelValue="topicFilter"
+      data-testid="topic-select"
       :options="topicOptions"
       orderedByIndex
       multiple
