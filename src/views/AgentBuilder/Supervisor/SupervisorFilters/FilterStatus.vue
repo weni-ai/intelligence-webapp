@@ -4,6 +4,7 @@
   >
     <UnnnicSelectSmart
       v-model:modelValue="statusFilter"
+      data-testid="status-select"
       :options="statusOptions"
       orderedByIndex
       multiple
