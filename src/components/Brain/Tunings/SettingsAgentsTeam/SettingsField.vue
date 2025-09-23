@@ -1,5 +1,14 @@
 <template>
+  <UnnnicSkeletonLoading
+    v-if="loading"
+    tag="div"
+    width="100%"
+    height="57px"
+    data-testid="skeleton-loading"
+  />
+
   <section
+    v-else
     class="form__field"
     data-testid="field"
   >
@@ -30,6 +39,10 @@ defineProps({
   modelValue: {
     type: Boolean,
     required: true,
+  },
+  loading: {
+    type: Boolean,
+    default: false,
   },
   textRight: {
     type: String,

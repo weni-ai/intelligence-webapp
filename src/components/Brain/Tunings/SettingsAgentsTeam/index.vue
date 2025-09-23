@@ -3,15 +3,28 @@
     class="settings-agents-team"
     data-testid="settings-agents-team"
   >
-    <AgentsPreview data-testid="agents-preview" />
+    <AgentsPreview
+      v-if="showAgentsPreview"
+      data-testid="agents-preview"
+    />
 
     <HumanSupport data-testid="human-support" />
   </section>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
+import { useProjectStore } from '@/store/Project';
+
 import AgentsPreview from './AgentsPreview.vue';
 import HumanSupport from './HumanSupport.vue';
+
+const showAgentsPreview = computed(() => {
+  return !useProjectStore()
+    .projectDetails?.backend?.toLowerCase()
+    .includes('openai');
+});
 </script>
 
 <style lang="scss" scoped>
