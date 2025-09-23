@@ -14,6 +14,7 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   const supervisorApi = nexusaiAPI.agent_builder.supervisor;
   const alertStore = useAlertStore();
   const route = useRoute();
+  const { query } = route || {};
   const thisMonth = format(subDays(new Date(), 29), 'yyyy-MM-dd');
   const today = format(new Date(), 'yyyy-MM-dd');
 
@@ -28,16 +29,68 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
 
   let conversationsAbortController = null;
 
+  const defaultFilters = {
+    start: thisMonth,
+    end: today,
+    search: '',
+    status: [],
+    csat: [],
+    topics: [],
+  };
+
+  const parseArray = (value) => value?.split(',').filter(Boolean) || null;
   const filters = reactive({
-    start: route?.query.start || thisMonth,
-    end: route?.query.end || today,
-    search: route?.query.search || '',
-    status: route?.query.status || [],
-    csat: route?.query.csat || [],
-    topics: route?.query.topics || [],
+    start: query?.start ?? defaultFilters.start,
+    end: query?.end ?? defaultFilters.end,
+    search: query?.search ?? defaultFilters.search,
+    status: parseArray(query?.status) || defaultFilters.status,
+    csat: parseArray(query?.csat) || defaultFilters.csat,
+    topics: parseArray(query?.topics) || defaultFilters.topics,
   });
 
-  const queryConversationUuid = ref(route?.query.uuid || '');
+  const temporaryFilters = reactive({
+    start: filters.start,
+    end: filters.end,
+    search: filters.search,
+    status: filters.status,
+    csat: filters.csat,
+    topics: filters.topics,
+  });
+
+  const topics = ref([]);
+
+  const queryConversationUuid = ref(query?.uuid || '');
+
+  function resetFilters() {
+    const { start, end, status, csat, topics } = defaultFilters;
+
+    [filters, temporaryFilters].forEach((filter) => {
+      filter.start = start;
+      filter.end = end;
+      filter.status = status;
+      filter.csat = csat;
+      filter.topics = topics;
+    });
+  }
+
+  function updateFilters() {
+    filters.start = temporaryFilters.start;
+    filters.end = temporaryFilters.end;
+    filters.search = temporaryFilters.search;
+    filters.status = temporaryFilters.status;
+    filters.csat = temporaryFilters.csat;
+    filters.topics = temporaryFilters.topics;
+  }
+
+  function getInitialSelectFilter(filter, filterOptions) {
+    return temporaryFilters[filter].map((item) => {
+      if (item === '') return { label: '', value: '' };
+
+      return filterOptions.value.find(
+        (option) => option.value === item || option.label === item,
+      );
+    });
+  }
 
   async function loadConversations(page = 1) {
     if (conversationsAbortController) {
@@ -156,7 +209,11 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
     const response = await supervisorApi.conversations.getTopics({
       projectUuid: projectUuid.value,
     });
-    return response;
+
+    topics.value = response.map((topic) => ({
+      label: topic.name,
+      value: topic.uuid,
+    }));
   }
 
   async function exportSupervisorData({ token }) {
@@ -180,14 +237,23 @@ export const useSupervisorStore = defineStore('Supervisor', () => {
   }
 
   return {
+    filters,
+    defaultFilters,
+    temporaryFilters,
+    topics,
+    resetFilters,
+    updateFilters,
+    getInitialSelectFilter,
+    getTopics,
+
     conversations,
     loadConversations,
+
+    queryConversationUuid,
+    selectedConversation,
     loadSelectedConversationData,
     selectConversation,
-    selectedConversation,
-    filters,
-    queryConversationUuid,
-    getTopics,
+
     exportSupervisorData,
   };
 });
