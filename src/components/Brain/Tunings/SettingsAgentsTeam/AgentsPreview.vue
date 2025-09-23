@@ -25,6 +25,7 @@
             'router.tunings.settings.agents_preview.agents_progressive_feedback.description',
           )
         "
+        :loading="isLoading"
       />
 
       <SettingsField
@@ -40,16 +41,29 @@
             'router.tunings.settings.agents_preview.multiple_message_format.description',
           )
         "
+        :loading="isLoading"
       />
     </form>
   </section>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 import { useTuningsStore } from '@/store/Tunings';
+import { useProjectStore } from '@/store/Project';
 
 import SettingsField from './SettingsField.vue';
+
 const tuningsStore = useTuningsStore();
+const projectStore = useProjectStore();
+
+const isLoading = computed(() => {
+  return (
+    projectStore.projectDetails.status === 'loading' ||
+    tuningsStore.settings.status === 'loading'
+  );
+});
 </script>
 
 <style lang="scss" scoped>

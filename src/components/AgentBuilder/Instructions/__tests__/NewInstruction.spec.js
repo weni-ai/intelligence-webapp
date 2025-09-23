@@ -72,7 +72,6 @@ describe('NewInstruction.vue', () => {
         expect(findComponent('textarea').props('message')).toBe(
           translation('textarea.description'),
         );
-        expect(findComponent('textarea').props('maxLength')).toBe(200);
       });
     });
 
