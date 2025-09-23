@@ -1,8 +1,12 @@
 import { mount } from '@vue/test-utils';
 import ChangesHistory from '@/components/Brain/Tunings/ChangesHistory.vue';
-import { createStore } from 'vuex';
 import nexusaiAPI from '@/api/nexusaiAPI';
 import { nextTick } from 'vue';
+import { createTestingPinia } from '@pinia/testing';
+
+vi.mock('@/store/Project', () => ({
+  useProjectStore: () => ({ uuid: 'mock-project-uuid' }),
+}));
 
 vi.spyOn(nexusaiAPI.router.tunings.historyChanges, 'read').mockResolvedValue({
   data: {
@@ -27,23 +31,13 @@ vi.spyOn(nexusaiAPI.router.tunings.historyChanges, 'read').mockResolvedValue({
   },
 });
 
-const store = createStore({
-  state() {
-    return {
-      Auth: {
-        connectProjectUuid: 'testProjectUuid',
-      },
-    };
-  },
-});
-
 describe('ChangesHistory.vue', () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = mount(ChangesHistory, {
       global: {
-        plugins: [store],
+        plugins: [createTestingPinia()],
         stubs: {
           UnnnicIntelligenceText: { template: '<p><slot /></p>' },
           UnnnicSelectSmart: true,
@@ -83,7 +77,7 @@ describe('ChangesHistory.vue', () => {
     await nextTick();
 
     expect(nexusaiAPI.router.tunings.historyChanges.read).toHaveBeenCalledWith({
-      projectUuid: 'testProjectUuid',
+      projectUuid: 'mock-project-uuid',
       pageSize: wrapper.vm.paginationInterval,
       page: 2,
       filter: '',

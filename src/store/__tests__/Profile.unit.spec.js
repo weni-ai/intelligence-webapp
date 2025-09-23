@@ -1,15 +1,10 @@
 import nexusaiAPI from '@/api/nexusaiAPI';
 import { useProfileStore } from '@/store/Profile';
-import { flushPromises } from '@vue/test-utils';
 import { createPinia, setActivePinia } from 'pinia';
 import { beforeAll, beforeEach, vi } from 'vitest';
 
-vi.mock('@/store', () => ({
-  default: {
-    state: {
-      Auth: { connectProjectUuid: '1234' },
-    },
-  },
+vi.mock('@/store/Project', () => ({
+  useProjectStore: () => ({ uuid: '1234' }),
 }));
 
 const profileRead = vi

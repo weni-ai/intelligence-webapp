@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import BasesFormFilesItem from '@/views/repository/content/BasesFormFilesItem.vue';
 import nexusaiAPI from '@/api/nexusaiAPI';
+import { createTestingPinia } from '@pinia/testing';
 
 nexusaiAPI.intelligences.contentBases.files.download = vi
   .fn()
@@ -38,12 +39,23 @@ function createFileObject(type, { status } = { status: 'uploaded' }) {
   }[type];
 }
 
+const pinia = createTestingPinia({
+  initialState: {
+    Project: {
+      uuid: 'mock-project-uuid',
+    },
+  },
+});
+
 describe('BasesFormFilesItem.vue', () => {
   let wrapper;
 
   describe('when it is an action', () => {
     beforeEach(() => {
       wrapper = mount(BasesFormFilesItem, {
+        global: {
+          plugins: [pinia],
+        },
         props: {
           file: createFileObject('action'),
           clickable: true,
@@ -87,6 +99,7 @@ describe('BasesFormFilesItem.vue', () => {
         },
 
         global: {
+          plugins: [pinia],
           stubs: ['FilePreview', 'teleport'],
 
           mocks: {
@@ -151,6 +164,7 @@ describe('BasesFormFilesItem.vue', () => {
         },
 
         global: {
+          plugins: [pinia],
           stubs: ['FilePreview', 'teleport'],
 
           mocks: {
@@ -242,6 +256,9 @@ describe('BasesFormFilesItem.vue', () => {
   describe('when it is a file with processing status', () => {
     beforeEach(() => {
       wrapper = mount(BasesFormFilesItem, {
+        global: {
+          plugins: [pinia],
+        },
         props: {
           file: createFileObject('file', { status: 'processing' }),
           clickable: false,
@@ -260,6 +277,9 @@ describe('BasesFormFilesItem.vue', () => {
   describe('when it is a file with fail status', () => {
     beforeEach(() => {
       wrapper = mount(BasesFormFilesItem, {
+        global: {
+          plugins: [pinia],
+        },
         props: {
           file: createFileObject('file', { status: 'fail' }),
           clickable: false,
