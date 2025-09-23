@@ -2,6 +2,7 @@
   <UnnnicFormElement :label="$t('agent_builder.supervisor.filters.csat.csat')">
     <UnnnicSelectSmart
       v-model:modelValue="csatFilter"
+      data-testid="csat-select"
       :options="csatOptions"
       orderedByIndex
       multiple
