@@ -73,6 +73,7 @@ import PreviewMenu from '@/components/Preview/Menu/index.vue';
 
 import { useProfileStore } from '@/store/Profile';
 import { useFlowPreviewStore } from '@/store/FlowPreview';
+import { useProjectStore } from '@/store/Project';
 import { useStore } from 'vuex';
 
 import { getFileType } from '@/utils/medias';
@@ -85,6 +86,7 @@ const emit = defineEmits(['messages']);
 
 const store = useStore();
 const profileStore = useProfileStore();
+const projectStore = useProjectStore();
 const flowPreviewStore = useFlowPreviewStore();
 
 const message = ref('');
@@ -340,7 +342,7 @@ async function answer(question) {
         const {
           data: { file_url },
         } = await nexusaiAPI.router.preview.uploadFile({
-          projectUuid: store.state.Auth.connectProjectUuid,
+          projectUuid: projectStore.uuid,
           file: question,
         });
         questionMediaUrl = file_url;
@@ -353,7 +355,7 @@ async function answer(question) {
 
   try {
     const { data } = await nexusaiAPI.router.preview.create({
-      projectUuid: store.state.Auth.connectProjectUuid,
+      projectUuid: projectStore.uuid,
       text: isQuestionMedia ? '' : question,
       attachments: questionMediaUrl ? [questionMediaUrl] : [],
       contact_urn: flowPreviewStore.preview.contact.urns[0],

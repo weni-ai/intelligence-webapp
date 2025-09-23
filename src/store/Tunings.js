@@ -2,8 +2,8 @@ import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
 import { cloneDeep } from 'lodash';
 
-import globalStore from '.';
 import { useAlertStore } from './Alert';
+import { useProjectStore } from './Project';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
 import i18n from '@/utils/plugins/i18n';
@@ -11,9 +11,7 @@ import i18n from '@/utils/plugins/i18n';
 export const useTuningsStore = defineStore('Tunings', () => {
   const alertStore = useAlertStore();
 
-  const connectProjectUuid = computed(
-    () => globalStore.state.Auth.connectProjectUuid,
-  );
+  const projectUuid = computed(() => useProjectStore().uuid);
 
   const isLoadingTunings = computed(() => {
     return (
@@ -124,7 +122,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
       credentials.value.status = 'loading';
 
       const { data } = await nexusaiAPI.router.tunings.listCredentials({
-        projectUuid: connectProjectUuid.value,
+        projectUuid: projectUuid.value,
       });
 
       const treatedData = {
@@ -158,7 +156,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
       };
 
       await nexusaiAPI.router.tunings.editCredentials({
-        projectUuid: connectProjectUuid.value,
+        projectUuid: projectUuid.value,
         credentials: credentialsToSave,
         requestOptions: {
           hideGenericErrorAlert: true,
@@ -177,17 +175,17 @@ export const useTuningsStore = defineStore('Tunings', () => {
     try {
       const { progressiveFeedback } =
         await nexusaiAPI.router.tunings.getProgressiveFeedback({
-          projectUuid: connectProjectUuid.value,
+          projectUuid: projectUuid.value,
         });
 
       const { components } = await nexusaiAPI.router.tunings.getComponents({
-        projectUuid: connectProjectUuid.value,
+        projectUuid: projectUuid.value,
       });
 
       const { human_support, human_support_prompt } =
         await nexusaiAPI.router.profile
           .read({
-            projectUuid: connectProjectUuid.value,
+            projectUuid: projectUuid.value,
           })
           .then(({ data }) => ({
             human_support: data.team?.human_support || false,
@@ -218,7 +216,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
 
       if (hasProgressiveFeedbackChanges) {
         await nexusaiAPI.router.tunings.editProgressiveFeedback({
-          projectUuid: connectProjectUuid.value,
+          projectUuid: projectUuid.value,
           data: {
             progressiveFeedback: settings.data.progressiveFeedback,
           },
@@ -233,7 +231,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
 
       if (hasComponentsChanges) {
         await nexusaiAPI.router.tunings.editComponents({
-          projectUuid: connectProjectUuid.value,
+          projectUuid: projectUuid.value,
           data: {
             components: settings.data.components,
           },
@@ -250,7 +248,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
 
       if (hasHumanSupportChanges) {
         await nexusaiAPI.router.profile.edit({
-          projectUuid: connectProjectUuid.value,
+          projectUuid: projectUuid.value,
           data: {
             team: {
               human_support: settings.data.humanSupport,
@@ -288,7 +286,7 @@ export const useTuningsStore = defineStore('Tunings', () => {
       credentials.value.status = 'loading';
 
       await nexusaiAPI.router.tunings.createCredentials({
-        projectUuid: connectProjectUuid.value,
+        projectUuid: projectUuid.value,
         credentials: credentialsToCreate,
         agent_uuid: agentUuid,
       });

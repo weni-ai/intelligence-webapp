@@ -53,11 +53,11 @@ import { ref, watch, computed } from 'vue';
 import i18n from '@/utils/plugins/i18n.js';
 import nexusaiAPI from '@/api/nexusaiAPI';
 import HistoryItem from './HistoryItem.vue';
-import { useStore } from 'vuex';
 import HistoryData from './HistoryData.vue';
 import { handleChangeName } from '@/utils/changeNameUtils';
+import { useProjectStore } from '@/store/Project';
 
-const store = useStore();
+const projectUuid = useProjectStore().uuid;
 
 const pagination = ref(1);
 const paginationTotal = ref(0);
@@ -147,7 +147,7 @@ const getChangesHistoryData = async (page = 1, filter = '') => {
   isLoading.value = true;
   try {
     const { data } = await nexusaiAPI.router.tunings.historyChanges.read({
-      projectUuid: store.state.Auth.connectProjectUuid,
+      projectUuid,
       pageSize: paginationInterval.value,
       page,
       filter: filter === 'all' ? '' : filter,

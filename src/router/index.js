@@ -11,6 +11,7 @@ import NotFound from '../views/NotFound.vue';
 import store from '../store';
 import { useFeatureFlagsStore } from '@/store/FeatureFlags';
 import { useProjectStore } from '@/store/Project';
+import { useUserStore } from '@/store/UserStore';
 
 import nexusaiAPI from '../api/nexusaiAPI';
 
@@ -37,18 +38,26 @@ const parseNextPath = (nextPath, to) => {
 
 const handleLogin = async (to, from, next) => {
   const { token, org, project } = to.params;
+  const { org_uuid, project_uuid } = to.query;
+  const authToken = (token || localStorage.getItem('authToken')).replace(
+    '+',
+    ' ',
+  );
 
+  // Agent Builder 2.0
+  useUserStore().user.token = authToken;
+  useProjectStore().uuid = project_uuid;
+
+  // Agent Builder 1.0 and Intelligences
   store.dispatch('externalLogin', {
-    token: (token || localStorage.getItem('authToken')).replace('+', ' '),
+    token: authToken,
   });
   store.dispatch('orgSelected', { org });
   store.dispatch('projectSelected', { project });
-
-  store.state.Auth.connectOrgUuid = to.query?.org_uuid;
-  store.state.Auth.connectProjectUuid = to.query?.project_uuid;
-
-  sessionStorage.setItem('orgUuid', store.state.Auth.connectOrgUuid);
-  sessionStorage.setItem('projectUuid', store.state.Auth.connectProjectUuid);
+  store.state.Auth.connectOrgUuid = org_uuid;
+  store.state.Auth.connectProjectUuid = project_uuid;
+  sessionStorage.setItem('orgUuid', org_uuid);
+  sessionStorage.setItem('projectUuid', project_uuid);
 
   const nextPath = to.query.next || to.query.next_from_redirect;
 
@@ -66,7 +75,7 @@ const getMultiAgentsEnabled = async () => {
   if (projectStore.isMultiAgents !== null) return;
 
   const { data } = await nexusaiAPI.router.tunings.multiAgents.read({
-    projectUuid: store.state.Auth.connectProjectUuid,
+    projectUuid: projectStore.uuid,
   });
 
   useFeatureFlagsStore().editUpgradeToMultiAgents(data.can_view);

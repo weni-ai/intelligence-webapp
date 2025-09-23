@@ -1,12 +1,9 @@
 import { computed } from 'vue';
-
 import request from '@/api/nexusaiRequest';
-import globalStore from '@/store';
+import { useProjectStore } from '@/store/Project';
 import { cleanParams } from '@/utils/http';
 
-const connectProjectUuid = computed(
-  () => globalStore.state.Auth.connectProjectUuid,
-);
+const projectUuid = computed(() => useProjectStore().uuid);
 
 export const AgentsTeam = {
   async listOfficialAgents({ search }) {
@@ -14,7 +11,7 @@ export const AgentsTeam = {
       search,
     });
     const { data } = await request.$http.get(
-      `api/agents/official/${connectProjectUuid.value}`,
+      `api/agents/official/${projectUuid.value}`,
       {
         params,
       },
@@ -50,7 +47,7 @@ export const AgentsTeam = {
       search,
     });
     const { data } = await request.$http.get(
-      `api/agents/my-agents/${connectProjectUuid.value}`,
+      `api/agents/my-agents/${projectUuid.value}`,
       {
         params,
       },
@@ -83,7 +80,7 @@ export const AgentsTeam = {
 
   async listActiveTeam() {
     const { data } = await request.$http.get(
-      `api/agents/teams/${connectProjectUuid.value}`,
+      `api/agents/teams/${projectUuid.value}`,
     );
 
     const { manager, agents } = data;
@@ -118,7 +115,7 @@ export const AgentsTeam = {
 
   async toggleAgentAssignment({ agentUuid, is_assigned }) {
     const { data } = await request.$http.patch(
-      `api/project/${connectProjectUuid.value}/assign/${agentUuid}`,
+      `api/project/${projectUuid.value}/assign/${agentUuid}`,
       {
         assigned: is_assigned,
       },

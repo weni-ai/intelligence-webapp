@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
-import globalStore from '.';
 import nexusaiAPI from '@/api/nexusaiAPI';
 
 export const useProjectStore = defineStore('Project', () => {
-  const uuid = computed(() => globalStore.state.Auth.connectProjectUuid);
+  const uuid = sessionStorage.getItem('projectUuid') || '';
   const isMultiAgents = ref(null);
-  const projectDetails = ref({
+  const details = ref({
     status: null,
   });
 
@@ -16,18 +15,18 @@ export const useProjectStore = defineStore('Project', () => {
   }
 
   async function getProjectDetails() {
-    projectDetails.value.status = 'loading';
+    details.value.status = 'loading';
 
     try {
       const data = await nexusaiAPI.router.tunings.projectDetails.read({
-        projectUuid: uuid.value,
+        projectUuid: uuid,
       });
 
-      projectDetails.value = data;
-      projectDetails.value.status = 'success';
+      details.value = data;
+      details.value.status = 'success';
     } catch (error) {
       console.error(error);
-      projectDetails.value.status = 'error';
+      details.value.status = 'error';
     }
   }
 
@@ -36,6 +35,6 @@ export const useProjectStore = defineStore('Project', () => {
     isMultiAgents,
     updateIsMultiAgents,
     getProjectDetails,
-    projectDetails,
+    details,
   };
 });
