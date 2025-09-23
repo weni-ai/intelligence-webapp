@@ -22,7 +22,7 @@ describe('SettingsAgentsTeam/index.vue', () => {
     pinia = createTestingPinia({
       initialState: {
         Project: {
-          projectDetails: {
+          details: {
             backend: 'bedrock',
           },
         },
@@ -53,7 +53,7 @@ describe('SettingsAgentsTeam/index.vue', () => {
     });
 
     it('not renders the AgentsPreview component when backend is openai', async () => {
-      projectStore.projectDetails.backend = 'openai';
+      projectStore.details.backend = 'openai';
       await wrapper.vm.$nextTick();
       expect(wrapper.vm.showAgentsPreview).toBe(false);
       expect(agentsPreviewComponent().exists()).toBe(false);

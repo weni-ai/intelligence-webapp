@@ -21,9 +21,7 @@ import AgentsPreview from './AgentsPreview.vue';
 import HumanSupport from './HumanSupport.vue';
 
 const showAgentsPreview = computed(() => {
-  return !useProjectStore()
-    .projectDetails?.backend?.toLowerCase()
-    .includes('openai');
+  return !useProjectStore().details?.backend?.toLowerCase().includes('openai');
 });
 </script>
 

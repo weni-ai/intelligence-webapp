@@ -60,7 +60,7 @@ const projectStore = useProjectStore();
 
 const isLoading = computed(() => {
   return (
-    projectStore.projectDetails.status === 'loading' ||
+    projectStore.details.status === 'loading' ||
     tuningsStore.settings.status === 'loading'
   );
 });
