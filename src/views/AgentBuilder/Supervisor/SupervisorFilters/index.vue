@@ -3,14 +3,15 @@
     <FilterText data-testid="filter-text" />
 
     <UnnnicButton
+      data-testid="button-filter"
       iconLeft="filter_list"
       type="secondary"
       :text="filterButtonText"
-      data-testid="filter-button"
       @click="openFilterDrawer"
     />
 
     <UnnnicDrawer
+      data-testid="drawer-filter"
       :modelValue="isFilterDrawerOpen"
       class="supervisor-filters__drawer"
       :title="
@@ -27,10 +28,10 @@
       @secondary-button-click="clearFilters"
     >
       <template #content>
-        <FilterDate />
-        <FilterStatus />
-        <FilterCsat />
-        <FilterTopics />
+        <FilterDate data-testid="filter-date" />
+        <FilterStatus data-testid="filter-status" />
+        <FilterCsat data-testid="filter-csat" />
+        <FilterTopics data-testid="filter-topics" />
       </template>
     </UnnnicDrawer>
   </section>
