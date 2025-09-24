@@ -5,12 +5,11 @@ import { computed, ref } from 'vue';
 import WS from '@/websocket/setup';
 
 import { useAgentsTeamStore } from './AgentsTeam';
-import globalStore from '.';
 import { processLog } from '@/utils/previewLogs';
+import { useProjectStore } from './Project';
+import { useUserStore } from './UserStore';
 
 export const usePreviewStore = defineStore('preview', () => {
-  const auth = computed(() => globalStore.state.Auth);
-
   const ws = ref(null);
   const logs = ref([]);
   const collaboratorInvoked = ref('');
@@ -55,8 +54,8 @@ export const usePreviewStore = defineStore('preview', () => {
     if (ws.value) return;
 
     const newWs = new WS({
-      project: auth.value.connectProjectUuid,
-      token: auth.value.token.replace('Bearer ', ''),
+      project: useProjectStore().uuid,
+      token: useUserStore().user.token.replace('Bearer ', ''),
       endpoint: 'preview',
     });
     newWs.connect();

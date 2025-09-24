@@ -12,14 +12,8 @@ vi.mock('@/api/nexusaiRequest', () => ({
   },
 }));
 
-vi.mock('@/store', () => ({
-  default: {
-    state: {
-      Auth: {
-        connectProjectUuid: 'test-project-uuid',
-      },
-    },
-  },
+vi.mock('@/store/Project', () => ({
+  useProjectStore: () => ({ uuid: 'test-project-uuid' }),
 }));
 
 describe('AgentsTeam API', () => {

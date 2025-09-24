@@ -3,6 +3,8 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 import { usePreviewStore } from '@/store/Preview';
 import { useAgentsTeamStore } from '@/store/AgentsTeam';
+import { useUserStore } from '@/store/UserStore';
+import { useProjectStore } from '@/store/Project';
 import WS from '@/websocket/setup';
 import { processLog } from '@/utils/previewLogs';
 
@@ -10,20 +12,18 @@ vi.mock('@/websocket/setup');
 vi.mock('@/store/AgentsTeam', () => ({
   useAgentsTeamStore: vi.fn(),
 }));
-vi.mock('@/store', () => ({
-  default: {
-    state: {
-      Auth: {
-        connectProjectUuid: 'test-project-uuid',
-        token: 'Bearer test-token',
-      },
-    },
-  },
+vi.mock('@/store/UserStore', () => ({
+  useUserStore: vi.fn(),
+}));
+vi.mock('@/store/Project', () => ({
+  useProjectStore: vi.fn(),
 }));
 
 describe('PreviewStore', () => {
   let store;
   let mockAgentsTeamStore;
+  let mockUserStore;
+  let mockProjectStore;
   let mockWsInstance;
 
   beforeEach(() => {
@@ -41,6 +41,16 @@ describe('PreviewStore', () => {
       },
     };
 
+    mockUserStore = {
+      user: {
+        token: 'test-token',
+      },
+    };
+
+    mockProjectStore = {
+      uuid: 'test-project-uuid',
+    };
+
     mockWsInstance = {
       connect: vi.fn(),
       disconnect: vi.fn(),
@@ -48,7 +58,8 @@ describe('PreviewStore', () => {
 
     WS.mockImplementation(() => mockWsInstance);
     useAgentsTeamStore.mockReturnValue(mockAgentsTeamStore);
-
+    useUserStore.mockReturnValue(mockUserStore);
+    useProjectStore.mockReturnValue(mockProjectStore);
     store = usePreviewStore();
   });
 

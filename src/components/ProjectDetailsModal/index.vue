@@ -65,7 +65,7 @@ defineProps({
 const isAgentsTeamEnabled = useFeatureFlagsStore().flags.agentsTeam;
 const projectStore = useProjectStore();
 
-const projectDetails = computed(() => projectStore.projectDetails);
+const projectDetails = computed(() => projectStore.details);
 const charactersUsage = computed(() => {
   const count = projectDetails.value.charactersCount;
   const maxCount = 20000;

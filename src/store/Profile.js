@@ -2,13 +2,12 @@ import nexusaiAPI from '@/api/nexusaiAPI';
 import { defineStore } from 'pinia';
 import { computed, reactive, ref, watch } from 'vue';
 import globalStore from '.';
+import { useProjectStore } from './Project';
 import { cloneDeep, differenceBy, get } from 'lodash';
 import { useFeatureFlagsStore } from './FeatureFlags';
 
 export const useProfileStore = defineStore('profile', () => {
-  const connectProjectUuid = computed(
-    () => globalStore.state.Auth.connectProjectUuid,
-  );
+  const projectUuid = computed(() => useProjectStore().uuid);
 
   const status = ref(null);
   const isSaving = ref(false);
@@ -86,7 +85,7 @@ export const useProfileStore = defineStore('profile', () => {
       status.value = 'loading';
 
       const { data } = await nexusaiAPI.router.profile.read({
-        projectUuid: connectProjectUuid.value,
+        projectUuid: projectUuid.value,
       });
 
       setInitialValues(data);
@@ -153,7 +152,7 @@ export const useProfileStore = defineStore('profile', () => {
       };
 
       const { data } = await nexusaiAPI.router.profile.edit({
-        projectUuid: connectProjectUuid.value,
+        projectUuid: projectUuid.value,
         data: payload,
       });
 
@@ -184,7 +183,7 @@ export const useProfileStore = defineStore('profile', () => {
 
     if (removeId) {
       await nexusaiAPI.router.profile.delete({
-        projectUuid: connectProjectUuid.value,
+        projectUuid: projectUuid.value,
         id: removeId,
       });
     }

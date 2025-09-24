@@ -26,13 +26,10 @@ vi.mock('@/api/nexusaiAPI', () => ({
   },
 }));
 
-vi.mock('@/store', () => ({
-  default: {
-    state: {
-      Auth: { connectProjectUuid: 'test-project-uuid' },
-    },
-  },
+vi.mock('@/store/Project', () => ({
+  useProjectStore: () => ({ uuid: 'test-project-uuid' }),
 }));
+
 vi.mock('@/utils/plugins/i18n', () => ({
   default: {
     global: {

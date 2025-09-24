@@ -93,7 +93,7 @@ export default {
         if (
           this.$route.name !== undefined &&
           isEmpty(this.$store.state.User.me) &&
-          isEmpty(this.userStore.user)
+          isEmpty(this.userStore.user.email)
         ) {
           this.profileInfo();
 

@@ -1,7 +1,7 @@
-import { reactive, computed, ref } from 'vue';
+import { reactive, ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
-import globalStore from '.';
+import { useProjectStore } from './Project';
 import { useAlertStore } from './Alert';
 
 import nexusaiAPI from '@/api/nexusaiAPI';
@@ -17,9 +17,7 @@ function callAlert(type, alertText) {
 }
 
 export const useInstructionsStore = defineStore('Instructions', () => {
-  const connectProjectUuid = computed(
-    () => globalStore.state.Auth.connectProjectUuid,
-  );
+  const projectUuid = computed(() => useProjectStore().uuid);
 
   const instructions = reactive({
     data: [],
@@ -40,7 +38,7 @@ export const useInstructionsStore = defineStore('Instructions', () => {
     try {
       const instructionResponse =
         await nexusaiAPI.agent_builder.instructions.addInstruction({
-          projectUuid: connectProjectUuid.value,
+          projectUuid: projectUuid.value,
           instruction: newInstruction,
         });
 
@@ -62,7 +60,7 @@ export const useInstructionsStore = defineStore('Instructions', () => {
     instructions.status = 'loading';
     try {
       const response = await nexusaiAPI.agent_builder.instructions.list({
-        projectUuid: connectProjectUuid.value,
+        projectUuid: projectUuid.value,
       });
 
       instructions.data = [...instructions.data, ...response];
@@ -81,7 +79,7 @@ export const useInstructionsStore = defineStore('Instructions', () => {
     try {
       instruction.status = 'loading';
       await nexusaiAPI.agent_builder.instructions.edit({
-        projectUuid: connectProjectUuid.value,
+        projectUuid: projectUuid.value,
         id,
         text,
       });
@@ -106,7 +104,7 @@ export const useInstructionsStore = defineStore('Instructions', () => {
 
     try {
       await nexusaiAPI.agent_builder.instructions.delete({
-        projectUuid: connectProjectUuid.value,
+        projectUuid: projectUuid.value,
         id,
       });
       instructions.data = instructions.data.filter(
