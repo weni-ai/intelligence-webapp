@@ -3,7 +3,6 @@ import { WENIGPT_OPTIONS } from '../../utils';
 import { models } from '@/store/brain/models.js';
 import nexusaiAPI from '@/api/nexusaiAPI.js';
 import i18n from '../../utils/plugins/i18n';
-import { useProjectStore } from '../Project';
 
 export default {
   state: () => ({
@@ -199,8 +198,6 @@ export default {
           multi_agents: true,
           hideGenericErrorAlert: true,
         });
-
-        useProjectStore().updateIsMultiAgents(true);
 
         rootState.alert = {
           type: 'success',
