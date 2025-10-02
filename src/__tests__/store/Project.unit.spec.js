@@ -60,37 +60,4 @@ describe('Project Store', () => {
       expect(projectStore.uuid).toBe('');
     });
   });
-
-  describe('updateIsMultiAgents action', () => {
-    it('should update isMultiAgents to true', async () => {
-      await projectStore.updateIsMultiAgents(true);
-
-      expect(projectStore.isMultiAgents).toBe(true);
-    });
-
-    it('should update isMultiAgents to false', async () => {
-      await projectStore.updateIsMultiAgents(false);
-
-      expect(projectStore.isMultiAgents).toBe(false);
-    });
-
-    it('should update isMultiAgents to null', async () => {
-      await projectStore.updateIsMultiAgents(true);
-      expect(projectStore.isMultiAgents).toBe(true);
-
-      await projectStore.updateIsMultiAgents(null);
-      expect(projectStore.isMultiAgents).toBeNull();
-    });
-
-    it('should handle non-boolean values', async () => {
-      await projectStore.updateIsMultiAgents('true');
-      expect(projectStore.isMultiAgents).toBe('true');
-
-      await projectStore.updateIsMultiAgents(1);
-      expect(projectStore.isMultiAgents).toBe(1);
-
-      await projectStore.updateIsMultiAgents(0);
-      expect(projectStore.isMultiAgents).toBe(0);
-    });
-  });
 });

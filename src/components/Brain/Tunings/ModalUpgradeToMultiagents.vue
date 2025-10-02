@@ -30,10 +30,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
 
 const store = useStore();
-const router = useRouter();
 const isUpgrading = ref(false);
 const emit = defineEmits(['update:modelValue']);
 defineProps({
@@ -55,7 +53,13 @@ async function upgradeToMultiagents() {
   close();
 
   if (status === 'success') {
-    router.replace({ name: 'agents' });
+    window.parent.postMessage(
+      {
+        event: 'upgrade-to-multi-agents',
+        value: JSON.stringify(true),
+      },
+      '*',
+    );
   }
 }
 </script>

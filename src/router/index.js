@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
-import AgentBuilder from '../views/AgentBuilder/index.vue';
 import RepositoryContentBases from '../views/repository/content/Bases.vue';
 import ContentBasesForm from '@/views/ContentBases/Form.vue';
 import Brain from '../views/Brain/Brain.vue';
@@ -9,8 +8,6 @@ import RouterPreviewFullPage from '../views/Brain/RouterPreviewFullPage.vue';
 import NotFound from '../views/NotFound.vue';
 
 import store from '../store';
-import { useFeatureFlagsStore } from '@/store/FeatureFlags';
-import { useProjectStore } from '@/store/Project';
 
 import nexusaiAPI from '../api/nexusaiAPI';
 
@@ -60,19 +57,6 @@ const handleLogin = async (to, from, next) => {
   }
 };
 
-const getMultiAgentsEnabled = async () => {
-  const projectStore = useProjectStore();
-
-  if (projectStore.isMultiAgents !== null) return;
-
-  const { data } = await nexusaiAPI.router.tunings.multiAgents.read({
-    projectUuid: store.state.Auth.connectProjectUuid,
-  });
-
-  useFeatureFlagsStore().editUpgradeToMultiAgents(data.can_view);
-  projectStore.updateIsMultiAgents(data.multi_agents);
-};
-
 const router = createRouter({
   mode: 'history',
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -120,12 +104,6 @@ const router = createRouter({
         return { name: 'router-monitoring' };
       },
       async beforeEnter(_to, _from, next) {
-        await getMultiAgentsEnabled();
-
-        if (useFeatureFlagsStore().flags.agentsTeam) {
-          next({ name: 'agent-builder' });
-        }
-
         const { data } = await nexusaiAPI.router.read({
           projectUuid: store.state.Auth.connectProjectUuid,
           obstructiveErrorProducer: true,
@@ -161,59 +139,6 @@ const router = createRouter({
           path: 'tunings',
           name: 'router-tunings',
           component: () => import('../views/Brain/RouterTunings.vue'),
-        },
-      ],
-    },
-    {
-      path: '/',
-      name: 'agent-builder',
-      component: AgentBuilder,
-      redirect: (to) => {
-        return { name: 'supervisor', query: to.query };
-      },
-      async beforeEnter(_to, _from, next) {
-        await getMultiAgentsEnabled();
-
-        if (!useFeatureFlagsStore().flags.agentsTeam) {
-          next({ name: 'router' });
-        }
-
-        const { data } = await nexusaiAPI.router.read({
-          projectUuid: store.state.Auth.connectProjectUuid,
-          obstructiveErrorProducer: true,
-        });
-
-        store.state.router.contentBaseUuid = data.uuid;
-        store.state.router.intelligenceUuid = data.intelligence;
-
-        next();
-      },
-      children: [
-        {
-          path: 'supervisor',
-          name: 'supervisor',
-          component: () => import('@/views/AgentBuilder/Supervisor/index.vue'),
-        },
-        {
-          path: 'instructions',
-          name: 'instructions',
-          component: () =>
-            import('@/views/AgentBuilder/Instructions/index.vue'),
-        },
-        {
-          path: 'agents',
-          name: 'agents',
-          component: () => import('@/views/AgentBuilder/AgentsTeam/index.vue'),
-        },
-        {
-          path: 'knowledge',
-          name: 'knowledge',
-          component: () => import('@/views/AgentBuilder/Knowledge.vue'),
-        },
-        {
-          path: 'tunings',
-          name: 'tunings',
-          component: () => import('@/views/AgentBuilder/Tunings.vue'),
         },
       ],
     },
