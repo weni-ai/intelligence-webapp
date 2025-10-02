@@ -1,5 +1,10 @@
 <template>
-  <header class="header">
+  <header
+    :class="[
+      'header',
+      { 'header--tunings': currentBrainRoute?.page.includes('tunings') },
+    ]"
+  >
     <section class="header__infos">
       <section class="infos__title">
         <p class="title__text">
@@ -112,6 +117,10 @@ watch(
 
   & > *:only-child {
     grid-column: span 2;
+  }
+
+  &--tunings {
+    grid-template-columns: 6fr 6fr;
   }
 
   &__infos {
