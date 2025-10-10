@@ -67,10 +67,6 @@
         "title": "Supervisor",
         "description": "Analiza y revisa conversaciones entre agentes y clientes."
       },
-      "profile": {
-        "title": "Perfil",
-        "description": "Personaliza la información básica y el comportamiento del agente"
-      },
       "instructions": {
         "title": "Instrucciones",
         "description": "Escribe reglas rápidas para moldear el comportamiento del agente"
@@ -205,7 +201,7 @@
         "safety_topics": [
           "Política",
           "Salud física",
-          "Violencia física o moral", 
+          "Violencia física o moral",
           "Contenido sexual",
           "Prejuicio",
           "Ódio",
@@ -489,7 +485,7 @@
         "temperature_info": "Ajusta la temperatura para controlar la diversidad de las respuestas generadas",
         "top_p": "Top P",
         "top_p_info": "Utilizar la configuración \"top P\" en un modelo de inteligencia artificial influye en la selección de las próximas palabras al generar texto.",
-        "top_k": "Top K",
+        "top_k": "K superior",
         "top_k_info": "Utilizar la configuración \"top K\" en un modelo de inteligencia artificial define la cantidad del conjunto de palabras más probables que el modelo considerará al escoger la próxima palabra al generar texto."
       },
       "advanced": {
@@ -899,7 +895,7 @@
       "error_quick_test": "Se produjo un error. Inténtalo de nuevo más tarde.",
       "intent": "Intención",
       "debug": "Hacer debug",
-      "raw": "Raw",
+      "raw": "Crudo",
       "add_a_sentence": "Agregar frase",
       "entities": "Entidades",
       "login_text": "Inicia sesión o regístrate para hacer la prueba rápida"
@@ -914,7 +910,7 @@
       "debug_subtitle": "Analiza la relevancia de cada palabra de la frase y analiza el resultado de tu prueba rápida."
     },
     "raw": {
-      "raw": "Raw",
+      "raw": "Crudo",
       "raw_subtitle": "Analiza la confianza de cada intención identificada para entender el resultado de la prueba rápida."
     },
     "evaluate": {
@@ -1548,7 +1544,7 @@
       "general": "General",
       "versions": "Versiones",
       "content": {
-        "bases": "Bases",
+        "bases": "Base",
         "adjustments": "Ajustes",
         "api": "API",
         "tests": "Pruebas"
@@ -1676,7 +1672,7 @@
       },
       "confirm_deleting_version": "Eliminar versión",
       "debug": "Hacer debug",
-      "raw": "Raw",
+      "raw": "Crudo",
       "confidence": "Confianza",
       "entities": "Entidad | Entidades",
       "search_label": "Buscar interacciones..."
