@@ -148,7 +148,7 @@ const handleMouseLeave = () => {
     border: 1px solid $unnnic-color-neutral-clean;
   }
 
-  :deep(.material-symbols-rounded.unnnic-icon-size--md) {
+  :deep(.floating-button .material-symbols-rounded.unnnic-icon-size--ant) {
     font-size: 10px;
     color: $unnnic-color-neutral-clean;
   }
