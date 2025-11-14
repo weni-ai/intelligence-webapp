@@ -126,7 +126,7 @@ describe('ModalChangeAction', () => {
   it('should disable name input and description textarea if the action is not editable', async () => {
     wrapper = setup();
 
-    const name = wrapper.find('[data-test="name-input"]');
+    const name = wrapper.findComponent('[data-test="name-input"]');
     const description = wrapper.findComponent(
       '[data-test="description-textarea"]',
     );
@@ -135,7 +135,7 @@ describe('ModalChangeAction', () => {
       action: actionNonEditable,
     });
 
-    expect(name.attributes('disabled')).toBe('true');
+    expect(name.props().disabled).toBe(true);
     expect(description.props().disabled).toBe(true);
   });
 

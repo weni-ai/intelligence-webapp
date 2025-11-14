@@ -5,45 +5,45 @@ exports[`AgentsGalleryModal.vue > Component rendering > should match snapshot 1`
   class="unnnic-modal-dialog agents-gallery-modal"
   data-testid="agents-gallery-modal"
   data-v-02909c7e=""
-  data-v-ab1febba=""
+  data-v-a7e44667=""
 >
   <section
     class="unnnic-modal-dialog__overlay"
     data-testid="modal-overlay"
-    data-v-ab1febba=""
+    data-v-a7e44667=""
   />
   <section
     class="unnnic-modal-dialog__container unnnic-modal-dialog__container--lg"
     data-testid="modal-container"
-    data-v-ab1febba=""
+    data-v-a7e44667=""
   >
     <!---->
     <section
       class="unnnic-modal-dialog__container__body"
-      data-v-ab1febba=""
+      data-v-a7e44667=""
     >
       <header
         class="unnnic-modal-dialog__container__header"
-        data-v-ab1febba=""
+        data-v-a7e44667=""
       >
         <section
           class="unnnic-modal-dialog__container__title-container"
-          data-v-ab1febba=""
+          data-v-a7e44667=""
         >
           <!---->
           <h1
             class="unnnic-modal-dialog__container__title-text"
             data-testid="title-text"
-            data-v-ab1febba=""
+            data-v-a7e44667=""
           >
             Agent gallery
           </h1>
         </section>
         <span
-          class="material-symbols-rounded unnnic-icon-scheme--neutral-darkest unnnic-icon-size--md unnnic--clickable"
+          class="unnnic-icon material-symbols-rounded unnnic-icon-scheme--neutral-cloudy unnnic-icon-size--md unnnic-icon__size--md unnnic--clickable"
           data-testid="close-icon"
-          data-v-9846e6db=""
-          data-v-ab1febba=""
+          data-v-10e3a145=""
+          data-v-a7e44667=""
           translate="no"
         >
           close
@@ -51,7 +51,7 @@ exports[`AgentsGalleryModal.vue > Component rendering > should match snapshot 1`
       </header>
       <section
         class="unnnic-modal-dialog__container__content"
-        data-v-ab1febba=""
+        data-v-a7e44667=""
       >
         
         <section
@@ -102,45 +102,51 @@ exports[`AgentsGalleryModal.vue > Component rendering > should match snapshot 1`
             class="agents-gallery__content"
             data-v-02909c7e=""
           >
-            <div
-              class="unnnic-form md"
+            <section
+              class="unnnic-form-element unnnic-form md"
               data-testid="search-input"
               data-v-02909c7e=""
-              data-v-fefd47bc=""
+              data-v-27c59990=""
+              data-v-363eb089=""
             >
               <!---->
+              
               <div
-                class="text-input size--md text-input--icon-right-size-sm unnnic-form-input"
+                class="text-input size--md unnnic-form-input"
                 data-testid="search-input"
-                data-v-c1401a33=""
-                data-v-fefd47bc=""
+                data-v-27c59990=""
+                data-v-964b1ff1=""
+                hascloudycolor="false"
                 mask=""
               >
                 <input
                   class="unnnic-form-input input-itself input size-md normal input--has-icon-left unnnic-form-input input-itself"
                   data-testid="search-input"
-                  data-v-0caa2ccb=""
-                  data-v-c1401a33=""
+                  data-v-5c6d9ab7=""
+                  data-v-964b1ff1=""
                   hascloudycolor="false"
                   iconleft="search"
-                  iconrightsize="sm"
+                  iconleftclickable="false"
+                  iconright=""
+                  iconrightclickable="false"
                   placeholder="Search agent or skill"
                   type="text"
                   value=""
                 />
                 <span
-                  class="material-symbols-rounded unnnic-icon-scheme--neutral-cloudy unnnic-icon-size--sm icon-left"
+                  class="unnnic-icon material-symbols-rounded unnnic-icon-scheme--fg-base unnnic-icon-size--ant unnnic-icon__size--ant icon-left"
                   data-testid="material-icon"
-                  data-v-9846e6db=""
-                  data-v-c1401a33=""
+                  data-v-10e3a145=""
+                  data-v-964b1ff1=""
                   translate="no"
                 >
                   search
                 </span>
                 <!---->
               </div>
+              
               <!---->
-            </div>
+            </section>
             <!--v-if-->
             <section
               class="content__cards"

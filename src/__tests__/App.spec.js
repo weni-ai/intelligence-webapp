@@ -121,7 +121,7 @@ describe('App.vue', () => {
     const closeSpy = vi.spyOn(alertStore, 'close');
     await nextTick();
     const alertComponent = wrapper.findComponent('[data-testid="alert-pinia"]');
-    await alertComponent.vm.$emit('close');
+    await alertComponent.vm.$emit('destroy');
     expect(closeSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -129,7 +129,7 @@ describe('App.vue', () => {
     store.state.alert = { text: 'Test alert' };
     await nextTick();
     const alertComponent = wrapper.findComponent('[data-testid="alert-vuex"]');
-    await alertComponent.vm.$emit('close');
+    await alertComponent.vm.$emit('destroy');
     expect(store.state.alert).toBe(null);
   });
 
