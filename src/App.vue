@@ -7,23 +7,25 @@
 
     <RouterView v-else />
 
-    <UnnnicAlert
+    <UnnnicToast
       v-if="alertStore.data.text"
       :key="alertStore.id"
       data-testid="alert-pinia"
       class="app-alert"
-      v-bind="alertStore.data"
-      @close="alertStore.close"
-    ></UnnnicAlert>
+      :title="alertStore.data.text"
+      :type="alertStore.data.type"
+      @destroy="alertStore.close"
+    ></UnnnicToast>
 
-    <UnnnicAlert
+    <UnnnicToast
       v-else-if="$store.state.alert"
       :key="$store.state.alert.text"
       data-testid="alert-vuex"
       class="app-alert"
-      v-bind="$store.state.alert"
-      @close="$store.state.alert = null"
-    ></UnnnicAlert>
+      :title="$store.state.alert.text"
+      :type="$store.state.alert.type"
+      @destroy="$store.state.alert = null"
+    ></UnnnicToast>
 
     <ModalWarn
       v-if="$store.state.modalWarn"

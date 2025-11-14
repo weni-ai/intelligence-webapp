@@ -57,7 +57,7 @@
         data-test="textarea"
         :label="$t('profile.fields.goal.title')"
         :message="$t('profile.fields.goal.description')"
-        :error="errorRequiredFields.goal ? $t('profile.invalid_field') : null"
+        :error="errorRequiredFields.goal ? $t('profile.invalid_field') : ''"
         :placeholder="$t('profile.fields.goal.placeholder')"
         :type="errorRequiredFields.goal ? 'error' : 'normal'"
         :maxLength="500"
