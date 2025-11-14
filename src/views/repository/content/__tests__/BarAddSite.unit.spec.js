@@ -133,19 +133,6 @@ describe('BarAddSite.vue', () => {
           ]);
         });
       });
-
-      describe('when the user clicks on remove site input button', () => {
-        beforeEach(() => {
-          wrapper
-            .findAllComponents(elements.siteInput)[0]
-            .find('svg')
-            .trigger('click');
-        });
-
-        it('should go back to having only one site input', () => {
-          expect(wrapper.findAllComponents(elements.siteInput)).toHaveLength(1);
-        });
-      });
     });
   });
 

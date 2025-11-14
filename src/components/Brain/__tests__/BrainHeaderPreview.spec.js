@@ -42,12 +42,13 @@ describe('BrainHeaderPreview.vue', () => {
   });
 
   test('renders UnnnicIcon when brainOn is true', () => {
-    const icon = wrapper.findComponent('[data-test="preview-brain-icon"]');
+    console.log(wrapper.html());
+    const icon = wrapper.find('[data-test="preview-brain-icon"]');
     expect(icon.exists()).toBe(true);
-    expect(icon.props('icon')).toBe('fiber_manual_record');
-    expect(icon.props('filled')).toBe(true);
-    expect(icon.props('size')).toBe('sm');
-    expect(icon.props('scheme')).toBe('aux-green-300');
+    expect(icon.attributes('icon')).toBe('fiber_manual_record');
+    expect(icon.attributes('filled')).toBe('true');
+    expect(icon.attributes('size')).toBe('sm');
+    expect(icon.attributes('scheme')).toBe('aux-green-300');
   });
 
   test('renders UnnnicIntelligenceText when brainOn is true', () => {

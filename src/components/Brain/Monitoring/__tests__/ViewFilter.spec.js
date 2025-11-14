@@ -55,8 +55,8 @@ describe('ViewFilter.vue', () => {
   });
 
   it('updates the view filter when a radio button is clicked', async () => {
-    const radioButtons = wrapper.findAll('[data-testid="radio-button"]');
-    await radioButtons.at(1).trigger('click');
+    const radioButtons = wrapper.findComponent('[data-testid="radio-button"]');
+    await radioButtons.vm.$emit('update:modelValue', 'preview');
     expect(wrapper.vm.viewFilter).toBe('preview');
   });
 

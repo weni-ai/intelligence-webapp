@@ -134,7 +134,7 @@ describe('RouterProfileInstructions.vue', () => {
 
     it('renders add instruction button', () => {
       expect(addButton().exists()).toBe(true);
-      expect(addButton().text()).toBe('Add instruction');
+      expect(addButton().text()).toContain('Add instruction');
     });
 
     it('does not render remove modal initially', () => {

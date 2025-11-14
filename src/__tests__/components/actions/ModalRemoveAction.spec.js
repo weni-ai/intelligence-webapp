@@ -49,20 +49,17 @@ describe('ModalRemoveAction', () => {
 
   test('shows loading state on remove button when removing is true', async () => {
     await wrapper.setProps({ removing: true });
-    const removeButton = wrapper.findAll('.unnnic-button').at(1);
-    // Checks if there are any SVG elements inside the button
-    const svgIcon = removeButton.find('svg');
-    // Checks if it found any SVGs (indicates that loading is active)
-    expect(svgIcon.exists()).toBe(true);
+    const removeButton = wrapper.findComponent('[data-test="btn-complete"]');
+    expect(removeButton.props().loading).toBe(true);
   });
 
   test('removing prop works correctly', async () => {
-    expect(wrapper.findAll('.unnnic-button').at(1).find('svg').exists()).toBe(
-      false,
-    );
+    expect(
+      wrapper.findComponent('[data-test="btn-complete"]').props().loading,
+    ).toBe(false);
     await wrapper.setProps({ removing: true });
-    expect(wrapper.findAll('.unnnic-button').at(1).find('svg').exists()).toBe(
-      true,
-    );
+    expect(
+      wrapper.findComponent('[data-test="btn-complete"]').props().loading,
+    ).toBe(true);
   });
 });
