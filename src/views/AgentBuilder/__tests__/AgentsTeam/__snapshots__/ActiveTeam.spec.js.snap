@@ -11,13 +11,12 @@ exports[`ActiveTeam.vue > Component rendering > should match snapshot 1`] = `
     data-testid="empty-state"
     data-v-1c281086=""
   >
-    <icon-stub
+    <unnnic-icon-stub
       class="empty__icon"
       clickable="false"
       data-v-1c281086=""
       filled="true"
       icon="workspaces"
-      next="false"
       scheme="neutral-soft"
       size="xl"
     />

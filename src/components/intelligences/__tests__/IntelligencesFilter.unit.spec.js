@@ -137,7 +137,9 @@ describe('IntelligencesFilter.vue', () => {
         it(`emits update:type with value ${expectedValue}`, () => {
           wrapper = setup();
 
-          wrapper.find(radio).trigger('click');
+          wrapper
+            .findComponent(radio)
+            .vm.$emit('update:modelValue', expectedValue);
 
           const updateTypeEmit = wrapper.emitted('update:type');
 

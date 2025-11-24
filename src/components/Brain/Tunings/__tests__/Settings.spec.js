@@ -96,7 +96,7 @@ describe('Settings', () => {
 
     const RadioModel = wrapper
       .find('.tunings__form-element__radio')
-      .findAll('.label');
+      .findAll('.unnnic-radio__label');
 
     expect(RadioModel[0].text()).toContain(
       wrapper.vm.$t('router.tunings.model_name'),
