@@ -1,0 +1,2096 @@
+{
+  "and": " și ",
+  "delete": "Ștergere configurare",
+  "cancel": "Anulează",
+  "back": "Înapoi",
+  "next": "Înainte",
+  "finish": "Finalizat",
+  "speed": "Viteză",
+  "new": "New",
+  "save_changes": "Salvează modificările",
+  "announcements": {
+    "new_artificial_intelligence_module_is_here": "Descoperă noul modul de Inteligență Artificială! Află ce este nou și învață cum să creezi chatboți mai inteligenți și mai eficienți."
+  },
+  "unauthorized": "Nu ai permisiunea să efectuezi această acțiune",
+  "internal_server_error": "Eroare internă a serverului",
+  "unexpected_error": "A apărut o eroare neașteptată",
+  "intelligences": {
+    "content_intelligences": "Inteligență de conținut",
+    "classification_intelligences": "Inteligență de clasificare",
+    "own_intelligences": "Inteligență proprie",
+    "public_intelligences": "Inteligență publică",
+    "classification": {
+      "deprecation_notice": "Notă: Inteligența de clasificare va fi întreruptă în curând.",
+      "use_agents_builder": "Pentru a crea agenți inteligenți, folosește {agents_builder_link}. Dacă ai întrebări, contactează Asistența.",
+      "agents_builder": "Agent Builder"
+    },
+    "create_button": "Creează inteligență",
+    "search_intelligence_placeholder": "Căutare inteligență",
+    "categories_placeholder": "Categorii",
+    "filter_label": "Filtru:",
+    "no_intelligence_added": "Nicio inteligență de afișat",
+    "view_bases": "Vizualizare baze",
+    "no_content_base_added": "Nu a fost adăugată nicio bază de conținut",
+    "no_content_base_found": "Nu a fost găsită nicio bază de conținut",
+    "search_content_base_placeholder": "Caută bază de conținut",
+    "sidebar_view_content_bases_title": "Baze de conținut din {name}",
+    "sidebar_view_content_bases_description": "Vizualizează bazele de conținut ale acestui AI",
+    "delete_intelligence": "Șterge inteligență",
+    "delete_intelligence_confirmation_modal_description": "Sigur dorești să ștergi inteligența <b>{name}</b>?<br>Acțiunea nu poate fi anulată.",
+    "filter_type_generative_label": "Inteligențe artificiale generative",
+    "filter_type_classification_label": "Inteligențe artificiale de clasificare"
+  },
+  "bases": {
+    "create": {
+      "title": "Bază nouă de conținut",
+      "form": {
+        "name": {
+          "label": "Denumire bază",
+          "placeholder": "Denumire"
+        },
+        "language": {
+          "label": "Limba principală"
+        },
+        "description": {
+          "label": "Descriere",
+          "placeholder": "Descriere"
+        }
+      }
+    },
+    "actions": {
+      "delete": "Șterge baza"
+    }
+  },
+  "agent_builder": {
+    "tabs": {
+      "supervisor": {
+        "title": "Supervisor",
+        "description": "Revizuiește și analizează conversațiile dintre agenți și clienți."
+      },
+      "profile": {
+        "title": "Profil",
+        "description": "Personalizează informațiile de bază și comportamentul agentului"
+      },
+      "instructions": {
+        "title": "Instrucțiuni",
+        "description": "Scrie reguli rapide pentru a modela comportamentul agentului"
+      },
+      "agents": {
+        "title": "Agenți",
+        "description": "Creează echipa perfectă de agenți"
+      },
+      "knowledge": {
+        "title": "Cunoștințe",
+        "description": "Adaugă cunoștințe prin fișiere, linkuri sau text pentru ca agentul să poată răspunde cu acuratețe"
+      },
+      "tunings": {
+        "title": "Setări",
+        "description": "Gestionează setările și urmărește modificările făcute"
+      }
+    },
+    "supervisor": {
+      "learn_details_conversations": "Află detalii despre o conversație.",
+      "conversation_details": {
+        "title": "Despre conversație",
+        "what_is_a_conversation": "Ce este o conversație?",
+        "what_is_a_conversation_description": "Considerăm că toate mesajele schimbate în decurs de 24 de ore de la primul mesaj al contactului constituie o singură conversație.",
+        "optimized_resolution": "Rezoluții optimizate",
+        "optimized_resolution_description": "Conversația s-a încheiat cu o rezoluție clară și eficientă pentru contact.",
+        "other_conclusion": "Alte rezultate",
+        "other_conclusion_description": "Conversații care s-au încheiat în alte moduri, cum ar fi interacțiuni scurte, salutări, abandonuri sau cazuri care au urmat un flux diferit fără o rezoluție directă.",
+        "transferred_to_human_support": "Transferat la asistență umană",
+        "transferred_to_human_support_description": "Include conversații (rezoluții optimizate și alte rezultate) transferate către un reprezentant uman."
+      },
+      "conversations_count": "{count} conversații găsite",
+      "unnamed_contact": "Contact fără nume",
+      "attended_by_agent": {
+        "title": "Asistat de un agent",
+        "tooltip": "Conversații finalizate de un agent"
+      },
+      "forwarded_human_support": {
+        "title": "Transferat la asistență umană",
+        "tooltip": "Conversații transferate către asistență umană"
+      },
+      "conversation_start_finish": {
+        "start": "Conversație începută: {datetime}",
+        "finish": "Conversație încheiată: {datetime}"
+      },
+      "contact_urn": "URN de contact: {urn}",
+      "view_logs": "Afișează jurnalele",
+      "hide_logs": "Ascunde jurnalele",
+      "search": "Căutare",
+      "conversations_empty": "Nu s-au găsit conversații",
+      "no_messages_found": {
+        "title": "Nu s-au găsit mesaje în această conversație",
+        "description": "Dacă mesajul a fost trimis de asistența umană sau a declanșat o acțiune automată, îl poți găsi în {studio_link}.",
+        "studio_link": "Studio"
+      },
+      "unclassified_status_tooltip": "Conversațiile închise înainte de 8 septembrie 2025 nu pot fi clasificate",
+      "export": {
+        "title": "Exportă pe e-mail",
+        "description": "Vom pregăti fișierul cu informațiile AI și îl vom trimite la următoarele adrese de e-mail:",
+        "token_label": "Token API proiect",
+        "token_placeholder": "86d2ba6397cabd4b22f7da925ef89d78bfb2d90dd",
+        "token_help": "Poți găsi acest token în",
+        "project_settings": "setări proiect",
+        "and_paste": "și lipește-l aici",
+        "send": "Trimite exportul",
+        "success": "Exportul va fi trimis în curând către toate e-mailurile listate",
+        "error": "Eroare la trimiterea exportului. Te rugăm să încerci din nou mai târziu."
+      },
+      "filters": {
+        "filter_conversations": "Filtrează conversațiile",
+        "count_applied_filters": "(1 filtru aplicat) | ({count} filtre aplicate)",
+        "filter_conversations_drawer": "Filtrează conversațiile",
+        "apply_filters": "Aplicare filtre",
+        "clear_filters": "Elimină filtrele",
+        "period": {
+          "label": "Period"
+        },
+        "status": {
+          "conversations": "Conversații",
+          "in_progress": "În curs",
+          "optimized_resolution": "Rezoluții optimizate",
+          "other_conclusion": "Alte rezultate",
+          "unclassified": "Neclasificat",
+          "transferred_to_human_support": "Transferat la asistență umană"
+        },
+        "csat": {
+          "csat": "CSAT",
+          "very_satisfied": "🤩 Foarte mulțumit",
+          "satisfied": "😃 Mulțumit",
+          "neutral": "😐 Neutru",
+          "dissatisfied": "😔 Nemulțumit",
+          "very_dissatisfied": "😡 Foarte nemulțumit"
+        },
+        "topic": {
+          "topic": "Subiect"
+        }
+      },
+      "load_conversations": {
+        "error": "Eroare la încărcarea conversațiilor"
+      }
+    },
+    "instructions": {
+      "new_instruction": {
+        "title": "Instrucțiune personalizată nouă",
+        "textarea": {
+          "placeholder": "Ești amuzant, dar nu face glume",
+          "description": "Menține instrucțiunile clare, directe și la imperativ."
+        },
+        "add_instruction": "Adaugă instrucțiune",
+        "success_alert": "Instrucțiune personalizată adăugată",
+        "error_alert": "Eroare la adăugarea instrucțiunii personalizate"
+      },
+      "instructions_list": {
+        "title": "Listă de instrucțiuni",
+        "tabs": {
+          "default": "Instrucțiuni implicite",
+          "safety_topics": "Subiecte privind siguranța",
+          "custom": "Instrucțiuni personalizate",
+          "default_description": "Reguli de bază definite de sistem. Acestea sunt doar în citire și se aplică tuturor conversațiilor cu acest agent.",
+          "safety_topics_description": "Aceste subiecte nu sunt gestionate de agent. Ele sunt setate automat și nu pot fi editate.",
+          "custom_description": "Instrucțiunile tale personalizate pentru acest agent. Le poți edita sau elimina."
+        },
+        "default_instruction": "Instrucțiune implicită",
+        "default_instructions": [
+          "Dacă este nevoie, cere ajutor de la membrii echipei specializate.",
+          "NU trebuie să discuți NICIODATĂ, ÎN NICIUN CAZ, subiecte care nu țin de aria ta de expertiză.",
+          "Asigură-te că comunicarea este optimizată atunci când contactezi MAI MULȚI agenți simultan, ori de câte ori este posibil.",
+          "Păstrează comunicarea cu ceilalți agenți concisă și obiectivă, fără conversații paralele.",
+          "Comunică doar cu agenții necesari pentru a îndeplini solicitarea utilizatorului.",
+          "Răspunde doar pe baza informațiilor din blocul bazei de cunoștințe. Nu folosi presupuneri, cunoștințe externe sau alte surse.",
+          "Nu deduce detalii care nu au fost menționate, nu generaliza dincolo de ceea ce este scris şi nu completa goluri sau nu specula — chiar dacă subiectul pare evident."
+        ],
+        "safety_topics": [
+          "Politică",
+          "Sănătate fizică",
+          "Violență fizică sau morală",
+          "Conținut sexual",
+          "Părtinire",
+          "Ură",
+          "Religie",
+          "Sinucidere",
+          "Auto-vătămare",
+          "Convingeri",
+          "Identitate de gen",
+          "Relații sexuale"
+        ],
+        "no_custom_instructions": "Nu au fost adăugate instrucțiuni personalizate"
+      },
+      "edit_instruction": {
+        "title": "Editează instrucțiunea",
+        "success_alert": "Instrucțiune personalizată editată",
+        "error_alert": "Eroare la editarea instrucțiunii personalizate",
+        "save": "Salvare configurare",
+        "cancel": "Anulează"
+      },
+      "remove_instruction": {
+        "title": "Șterge instrucțiunea",
+        "modal_description": "Ești sigur că vrei să ștergi această instrucțiune?",
+        "remove": "Ștergere configurare",
+        "cancel": "Anulează",
+        "success_alert": "Instrucțiune personalizată ștearsă",
+        "error_alert": "Eroare la ștergerea instrucțiunii personalizate"
+      }
+    },
+    "traces": {
+      "search_result_received": "Rezultatele căutării primite",
+      "searching_knowledge_base": "Căutarea informațiilor în baza de cunoștințe",
+      "invoking_model": "Declanșarea modelului",
+      "model_response_received": "Răspunsul modelului a fost primit",
+      "thinking": "Se gândește",
+      "delegating_to_agent": "Se atribuie sarcina agentului",
+      "forwarding_to_manager": "Redirecționare către manager",
+      "executing_tool": "Se execută instrumentul {function}",
+      "tool_result_received": "Rezultate ale instrumentului primite",
+      "sending_response_for_manager": "Se trimite răspuns managerului",
+      "sending_final_response": "Se trimite răspunsul final",
+      "applying_safety_rules": "Se aplică regulile de securitate",
+      "processing_message": "Se procesează mesajul",
+      "filter_logs": {
+        "title": "Filtrează jurnalele",
+        "placeholder": "Caută jurnalele",
+        "categories": {
+          "placeholder": "Categories",
+          "knowledge": "Cunoștințe",
+          "thinking": "Se gândește",
+          "delegating_to_agent": "Se atribuie sarcina agentului",
+          "forwarding_to_manager": "Redirecționare către manager",
+          "tool": "Instrument",
+          "sending_response_for_manager": "Se trimite către manager",
+          "sending_final_response": "Se trimite răspunsul final",
+          "applying_guardrails": "Se aplică regulile de securitate"
+        },
+        "no_logs_found": "Nu s-au găsit niciun jurnal"
+      }
+    },
+    "tunings": {
+      "project_details": "Detalii proiect",
+      "agent_backend": "Backend agent: | Backend agenți:",
+      "agent_model": "{agent} model:",
+      "characters_usage": "Utilizarea caracterelor:",
+      "characters_usage_description": "Acesta este numărul mediu de caractere pe care agentul tău îl folosește în toate zonele: instrucțiuni, baza de cunoștințe și orice alte setări."
+    }
+  },
+  "router": {
+    "modal_save_changes_error": {
+      "title": "Eroare la salvarea modificărilor",
+      "description": "A apărut o eroare la salvarea modificărilor în fila {tabs}. Încearcă să salvezi din nou.|A apărut o eroare la salvarea modificărilor în filele {tabs}. Încearcă să salvezi din nou."
+    },
+    "warn": {
+      "brain_is_deactivated": "Agent Builder este inactiv. Activează-l în",
+      "click_here": "Setări"
+    },
+    "tabs": {
+      "monitoring": "Supervisor",
+      "profile": "Profil",
+      "content": "Cunoștințe",
+      "actions": "Acțiuni",
+      "tunings": "Setări"
+    },
+    "monitoring": {
+      "description": "Monitorizează mesajele primite de agentul tău și revizuiește răspunsurile",
+      "performance": "Performanță",
+      "received_messages": "Mesaje primite",
+      "success": {
+        "title": "Răspuns găsit | Răspunsuri găsite",
+        "tooltip": "Procentul mesajelor la care agentul a putut răspunde pe baza cunoștințelor sale"
+      },
+      "failed": {
+        "title": "Răspunsul nu a fost găsit | Răspunsurile nu au fost găsite",
+        "tooltip": "Procentajul mesajelor care erau în afara cunoștințelor agentului și la care acesta nu a putut răspunde"
+      },
+      "action": {
+        "title": "Mesaje care au declanșat acțiuni",
+        "tooltip": "Procentul mesajelor care au declanșat o acțiune a agentului"
+      },
+      "search_message": "Căutare mesaj",
+      "filters": {
+        "all_messages": "Toate mesajele",
+        "answers_found": "Răspunsuri găsite",
+        "answers_not_found": "Răspunsuri negăsite",
+        "messages_that_trigger_actions": "Mesaje care au declanșat acțiuni",
+        "view": {
+          "title": "Vizualizare",
+          "channels": "Mesaje primite prin canale",
+          "preview": "Mesaje din previzualizarea Agent Builder"
+        }
+      },
+      "no_message_received": "Nu s-au primit mesaje",
+      "load_previous_messages": "Încarcă mesajele anterioare",
+      "activated_the_action": "a declanșat acțiunea {action}",
+      "error_loading_messages": "Eroare la încărcarea mesajelor",
+      "error_loading_previous_messages": "Eroare la încărcarea mesajelor anterioare",
+      "inspect_response": {
+        "title": "Inspectează răspunsul",
+        "inspect": "Inspectează",
+        "intelligent_agent_response_details": "Detalii răspuns agent inteligent",
+        "contact_message": "Mesaj de la contact",
+        "agent_response": "Răspuns agent",
+        "rate_the_answer": "Evaluează răspunsul",
+        "i_liked": "Mi-a plăcut",
+        "i_didnt_like": "Nu mi-a plăcut",
+        "confidence_percentage": "{percentage}% încredere",
+        "not_found": "Nu a fost găsit"
+      },
+      "improve_response": {
+        "title": "Îmbunătățește răspunsul",
+        "agent_unable_respond": "Agentul nu a putut răspunde la contact",
+        "add_new_content": "Adaugă conținut nou",
+        "edit_action": "Editează acțiunea {name}",
+        "add_new_action": "Adaugă acțiune nouă"
+      },
+      "modal_add_content": {
+        "description": "Adaugă conținut pentru a îmbunătăți răspunsul agentului",
+        "add_another_site": "Adaugă un alt site",
+        "success_alert": "Conținut adăugat cu succes"
+      },
+      "new_messages_load": "{n} mesaj nou. Apasă pentru a încărca. | {n} mesaje noi. Apasă pentru a încărca.",
+      "show_logs": "Afișează jurnalele",
+      "hide_logs": "Ascunde jurnalele"
+    },
+    "actions": {
+      "title": "Acțiuni",
+      "description": "Când se primește un mesaj, agentul tău va verifica dacă acesta corespunde unei acțiuni create. Dacă da, fluxul va fi pornit, iar toate mesajele următoare vor fi redirecționate către acel flux până când acesta este finalizat.",
+      "create_new_action": "Creează o acțiune nouă și selectează fluxul pe care îl va porni",
+      "create_action": "Creează acțiuni prin atribuirea fluxului pe care îl va porni",
+      "pre_defined_or_customized_actions": "Acțiuni predefinite sau personalizate",
+      "add": "Adaugă acțiune",
+      "router_activated": "Agent Builder a fost activat în {name}",
+      "router_removed": "Agent Builder a fost eliminat din {name}",
+      "router_edited": "Descrierea pentru {name} a fost actualizată"
+    },
+    "agents_team": {
+      "description": "Creează echipa perfectă de agenți",
+      "card": {
+        "assign": "Atribuie echipei",
+        "assigned": "Atribuit",
+        "success_assign_alert": "{agent} a fost atribuit echipei cu succes",
+        "success_unassign_alert": "{agent} a fost eliminat cu succes din echipă",
+        "error_alert": "Eroare la actualizarea echipei",
+        "official": "Oficial",
+        "custom": "Personalizare",
+        "remove_agent": "Elimină agentul"
+      },
+      "drawer": {
+        "title": "Atribuie {name} echipei",
+        "description": "Introdu datele de autentificare pentru a atribui agentul",
+        "use_credentials": "Folosește datele de autentificare configurate în Setări",
+        "assign": "Atribuire",
+        "credentials_used_by_this_agent": "Datele de autentificare utilizate de acest agent",
+        "credentials_shared_with_all_agents": "Aceste date de autentificare vor fi partajate pentru a permite accesul tuturor agenților"
+      },
+      "active_team": {
+        "title": "Echipă activă",
+        "no_team": "Nu există agenți atribuiți echipei tale",
+        "no_team_description": "Accesează {assign_agents} pentru a vizualiza galeria și a atribui agenți echipei tale"
+      },
+      "gallery": {
+        "title": "Galerie agenți",
+        "search_placeholder": "Caută agent sau competență",
+        "official_agents": "Agenți oficiali",
+        "custom_agents": "Agenți personalizați",
+        "no_agent_found": "Nu s-a găsit niciun agent",
+        "custom_agents_description": "Agenții personalizați sunt creați folosind CLI Weni",
+        "weni_cli_documentation": "Documentația Weni CLI",
+        "weni_cli_documentation_description": "Consultă {weni_cli_documentation} pentru instrucțiuni detaliate"
+      },
+      "create_agent": "Creează agent",
+      "preview": "Previzualizează",
+      "assign_agents": "Atribuie agenți"
+    },
+    "content": {
+      "fields": {
+        "search_placeholder": "Căutare"
+      }
+    },
+    "tunings": {
+      "model": "Șablon",
+      "model_name": "Model propriu",
+      "restore_default": "Restabilește pe cel implicit",
+      "save_changes": "Salvează modificările",
+      "changes_saved": "Modificările au fost salvate",
+      "default_restored": "Setările implicite au fost restabilite",
+      "restore_default_modal": {
+        "title": "Restabilește pe cel implicit",
+        "description": "Sigur vrei să restabilești setările implicite? Această acțiune nu poate fi anulată.",
+        "cancel": "Anulează",
+        "restore": "Restabilește"
+      },
+      "description": "Gestionează setările și urmărește modificările făcute",
+      "tabs": {
+        "config": "Setări",
+        "credentials": "Date de autentificare",
+        "history": "Istoricul modificărilor"
+      },
+      "upgrade_to_multi_agents": {
+        "title": "Actualizează proiectul la Agent Builder 2.0",
+        "description": "Actualizează proiectul pentru a utiliza o echipă de agenți inteligenți care colaborează pentru a face asistentul tău mai inteligent cu efort minim.",
+        "button": "Actualizează",
+        "modal": {
+          "title": "Actualizează la Agent Builder 2.0",
+          "description": "Sigur vrei să actualizezi la Agent Builder 2.0? Această modificare este permanentă și nu poate fi anulată.",
+          "cancel": "Anulează",
+          "upgrade": "Actualizează"
+        },
+        "error": "Eroare la actualizarea la Agent Builder 2.0",
+        "success": "Actualizat cu succes la Agent Builder 2.0"
+      },
+      "history": {
+        "no_changes": "Nu s-a făcut nicio modificare în Agent Builder",
+        "description": "Urmărește istoricul modificărilor făcute în Agent Builder",
+        "sub_description": "Vizualizează toate modificările sau aplică un filtru după tip",
+        "fields": {
+          "change": "Schimbă",
+          "date": "Dată",
+          "all-changes": "Toate modificările",
+          "customization-changes": "Modificări personalizate",
+          "content-changes": "Modificări conținut",
+          "actions-changes": "Modificări acțiune",
+          "settings-changes": "Modificări setări",
+          "add-action": "a adăugat o acțiune ({value})",
+          "changes": "a făcut {value} modificări",
+          "update-name-action": "a modificat o acțiune ({value})",
+          "update-prompt-action": "a modificat promptul unei acțiuni ({value})",
+          "remove-action": "a eliminat o acțiune ({value})",
+          "update-personality": "a modificat personalitatea ({value})",
+          "update-goal": "a modificat obiectivul ({value})",
+          "update-name": "a modificat numele ({value})",
+          "update-role": "a modificat rolul ({value})",
+          "add-instruction": "a adăugat o instrucțiune ({value})",
+          "remove-instruction": "a eliminat o instrucțiune ({value})",
+          "update-instruction": "a modificat o instrucțiune ({value})",
+          "add-content": "a adăugat conținut ({value})",
+          "update-content": "a actualizat conținut ({value})",
+          "remove-content": "conținut eliminat ({value})",
+          "update-model": "a modificat modelul",
+          "brain-on": "a activat Agent Builder",
+          "brain-off": "a dezactivat Agent Builder"
+        }
+      },
+      "fields": {
+        "model": "Selectează modelul",
+        "token": "Token",
+        "token_info": "Cod necesar pentru accesarea serviciilor OpenAI. Pentru a obține tokenul, creează un cont pe OpenAI și generează o cheie API în panoul de control.",
+        "version": "Versiune",
+        "select-language": "Limbă",
+        "language": "Selectează limba implicită",
+        "languages": {
+          "pt_br": "Portugheză",
+          "en": "Engleză",
+          "es": "Spaniolă"
+        },
+        "golfinho-1": "Folosește când ai nevoie să combini calitatea cu viteza. Ideal pentru majoritatea aplicațiilor ce solicită răspunsuri rapide și precise.",
+        "shark-1": "Folosește atunci când este esențială acuratețea maximă, chiar dacă reduce viteza.",
+        "version-gpt": "Versiune",
+        "parameter": "Parametri",
+        "temperature": "Temperatură",
+        "temperature_info": "Ajustează temperatura pentru a controla varietatea răspunsurilor generate",
+        "top_p": "Top P",
+        "top_p_info": "Când configurezi „top P” al unui model AI, ajustezi cât de probabil este ca modelul să ia în considerare o gamă de cuvinte posibile următoare în timpul generării textului.",
+        "top_k": "Top K",
+        "top_k_info": "Când configurezi „top K” al unui model AI, definești câte dintre cele mai probabile cuvinte vor fi luate în considerare atunci când se alege următorul cuvânt în timpul generării textului."
+      },
+      "advanced": {
+        "title": "Opțiuni avansate",
+        "description": "Această opțiune poate activa sau dezactiva trigger-uri.",
+        "brain": "Agent Builder",
+        "active_brain_modal": {
+          "title": "Activează Agent Builder",
+          "description": "Sigur vrei să activezi Agent Builder? <br /> Aceasta va înlocui trigger-uri cu acțiuni, ceea ce poate afecta direct modul în care funcționează agentul tău.",
+          "cancel": "Anulează",
+          "action": "Activează"
+        },
+        "deactivate_brain_modal": {
+          "title": "Dezactivează Agent Builder",
+          "description": "Sigur vrei să dezactivezi Agent Builder? <br /> Aceasta va înlocui acțiunile tale cu trigger-uri, ceea ce poate afecta direct modul în care funcționează agentul tău.",
+          "cancel": "Anulează",
+          "action": "Dezactivare"
+        }
+      },
+      "credentials": {
+        "no_credentials": "Nu au fost furnizate date de autentificare",
+        "used_by_official_agents": "Date de autentificare utilizate de agenții oficiali",
+        "used_by_customized_agents": "Date de autentificare utilizate de agenții personalizați",
+        "used_by": "Utilizate de",
+        "no_agents_using": "Niciun agent nu le utilizează",
+        "credentials_updated_successfully": "Date de autentificare actualizate cu succes",
+        "get_error": "Eroare la solicitarea datelor de autentificare",
+        "save_error": "Eroare la salvarea datelor de autentificare"
+      },
+      "settings": {
+        "save_error": "Eroare la salvarea setărilor",
+        "agents_preview": {
+          "title": "Previzualizare agent",
+          "agents_progressive_feedback": {
+            "title": "Feedback progresiv agent",
+            "description": "Agentul poate oferi actualizări sumare în timp ce formulează răspunsul final, ajutând contactul să urmărească procesul în timp real."
+          },
+          "multiple_message_format": {
+            "title": "Format multiplu de mesaj",
+            "description": "Agentul poate trimite mai multe mesaje formatate, cum ar fi răspunsuri rapide, liste, CTA-uri și cataloage."
+          }
+        },
+        "human_support": {
+          "title": "Asistență umană",
+          "description": "Agentul poate transfera conversația către asistența umană."
+        }
+      },
+      "save_success": "Setările au fost salvate cu succes"
+    },
+    "preview": {
+      "title": "Previzualizare agent",
+      "active": "Agent Builder activ",
+      "no_logs_registered": "Nu există înregistrări de jurnale",
+      "see_full_details": "Vizualizează detalii",
+      "manager_task": "Coordonarea sarcinilor echipei",
+      "visual_flow": "Flux vizual",
+      "logs": "Jurnale",
+      "agents_preview": "Previzualizare agent",
+      "options": {
+        "refresh": "Șterge conversațiile",
+        "qr_code": "Deschide pe mobil",
+        "export": "Exportă conversațiile"
+      },
+      "modal_qr_code": {
+        "title": "Testează previzualizarea agentului pe mobil",
+        "description": "Scanează codul QR pentru a accesa previzualizarea agentului pe mobil"
+      },
+      "placeholder": "Începe o conversație cu agentul tău pentru a-l testa",
+      "save_changes_to_test_the_agent": "Salvează modificările pentru a testa agentul",
+      "field_changed_to_value": "Parametru {field} modificat la {value}",
+      "flow_started": "Fluxul {name} a pornit",
+      "flow_finished": "Flux finalizat",
+      "message_forwarded_to_brain": "Mesaj redirecționat către Agent Builder",
+      "media_and_location_unavailable": "Nu au fost adăugate acțiuni privind media și locația",
+      "standby": "Mod standby",
+      "catalog": {
+        "title": "Catalog de produse",
+        "view_cart": "Vizualizează coșul ({quantity} articol) | Vizualizează coșul ({quantity} articole)",
+        "add_to_cart": "Adaugă în coș",
+        "subtotal": "Subtotal",
+        "place_order": "Finalizează comanda",
+        "your_cart": "Coș",
+        "order_summary": "Sumar comandă",
+        "order_details": "Informații privind comanda",
+        "view_order_details": "Vezi detaliile comenzii",
+        "items": "articol | articole",
+        "remove": "Eliminare"
+      }
+    }
+  },
+  "content_bases": {
+    "description": "Adaugă informații prin fișiere, linkuri sau text pentru ca agentul să poată răspunde cu acuratețe",
+    "quick_test": "Test rapid",
+    "sidebar_quick_test_title": "Test rapid al bazei {name}",
+    "sidebar_quick_test_description": "Trimite un mesaj pentru a testa această bază de conținut și a vedea la care întrebări poate răspunde",
+    "write_content": "Scrie conținut",
+    "write_content_placeholder": "Scrie-ți conținutul aici",
+    "write_content_help": "Nu știi cum să adaugi conținut la baza de cunoștințe AI? <a href=\"#\" target=\"_blank\">Vezi documentația</a>",
+    "changes_saved": "Modificările au fost salvate",
+    "time_ago_minutes": "Adăugat acum {minutes} minute",
+    "time_ago_hours": "Adăugat acum {hours} ore",
+    "time_ago_days": "Adăugat acum {days} zile",
+    "tabs": {
+      "files": "Fișiere",
+      "sites": "Site-uri",
+      "text": "Text"
+    },
+    "text": {
+      "description": "Scrie manual conținutul pe care agentul îl va folosi pentru a răspunde la întrebări",
+      "error": "Eroare la încărcarea fișierului"
+    },
+    "file_with_error": "Fișier cu eroare. Șterge-l și adaugă-l din nou.",
+    "site_with_error": "Site cu eroare. Șterge-l și adaugă-l din nou.",
+    "actions": {
+      "see_details": "Vizualizează detalii",
+      "download_file": "Descarcă fișierul",
+      "access_site": "Accesează site-ul",
+      "remove_site": "Șterge site-ul",
+      "remove_file": "Ștergere fișier",
+      "edit_action": "Editează acțiunea",
+      "remove_action": "Elimină acțiunea"
+    },
+    "files": {
+      "upload_content": "Încarcă conținutul din fișiere",
+      "drag_and_drop_your_file_here": "Trage şi fixează fişierul aici pentru a adăuga conținut în baza de cunoștințe AI",
+      "supported_files": "Formate acceptate: {suportedFormats}.<br /> Limită de {limitMB} MB per fișier.",
+      "sup_files": "{suportedFormats}.<br /> Limită de {limitMB} MB per fișier.",
+      "description": "Încarcă documentele și fișierele pe care agentul le va folosi pentru a genera răspunsuri",
+      "file_error": "Fișier cu eroare. Șterge-l și adaugă-l din nou.",
+      "browse_file": "Adaugă fișierul",
+      "uploaded_files": "Fișiere încărcate",
+      "status": {
+        "uploading": "Se încarcă conținutul",
+        "uploaded": "Conținut încărcat",
+        "processing": "Se procesează conținutul"
+      },
+      "content_of_the_files_has_been_added": "Conținutul fișierului a fost adăugat la bază",
+      "file_removed_from_base": "{name} a fost eliminat din baza conținutului",
+      "unsupported_format": "Formatul fișierului nu este acceptat",
+      "exceeds_limit": "Dimensiunea fișierului depășește limita de {limitMB} MB",
+      "delete_file": {
+        "title": "Ștergere fișier",
+        "description": "Sigur vrei să ștergi fișierul <b>{name}</b>?<br /> Conținutul acestui fișier va fi eliminat din baza AI.",
+        "cancel": "Anulează",
+        "delete": "Ștergere configurare"
+      },
+      "preview": {
+        "title": "Informații despre fișier",
+        "name": "Fișier:",
+        "date": "Data conținutului:",
+        "content_added_to_the_agent": "Conținutul fișierului a fost adăugat agentului:",
+        "not_found": {
+          "title": "Nu s-a putut afișa conținutul fișierului",
+          "description": "Nu s-a reușit localizarea conținutului fișierului.<br /> Șterge fișierul și încearcă să-l adaugi din nou."
+        },
+        "bedrock": {
+          "title": "Previzualizarea conținutului nu este disponibilă"
+        }
+      }
+    },
+    "sites": {
+      "title": "Introdu URL-urile site-urilor de pe care agentul poate extrage informații",
+      "description": "Asigură-te că site-urile sunt de încredere și conțin informații relevante",
+      "modal": {
+        "description": "Introdu URL-ul site-ului pentru a extrage conținutul",
+        "fields": {
+          "link": {
+            "label": "URL site"
+          }
+        },
+        "buttons": {
+          "cancel": "Anulează",
+          "finish": "Finalizat"
+        }
+      },
+      "uploaded_sites": "Site-uri încărcate",
+      "content_of_the_sites_has_been_added": "Conținutul site-ului a fost adăugat la bază",
+      "sidebar_add": {
+        "title": "Încarcă conținutul site-ului",
+        "description": "Adaugă conținutul site-ului în baza de cunoștințe AI",
+        "fields": {
+          "link": {
+            "label": "Link site",
+            "placeholder": "www.exemplu.com"
+          }
+        },
+        "button_more_one": "Adaugă un alt site",
+        "button_load_content": "Încarcă conținut"
+      },
+      "add_site": "Adaugă site-ul",
+      "delete_site": {
+        "title": "Șterge site-ul",
+        "description": "Sigur vrei să ștergi site-ul <b>{name}</b>?<br /> Tot conținutul acestui site va fi eliminat din baza AI.",
+        "cancel": "Anulează",
+        "delete": "Ștergere configurare"
+      },
+      "preview": {
+        "title": "Informații site",
+        "name": "Site:",
+        "content_added_to_the_agent": "Conținutul site-ului a fost adăugat agentului:"
+      }
+    },
+    "brain_use_warning": {
+      "title": "Folosește Agent Builder pentru a crea conținut AI",
+      "description": "Agent Builder oferă instrumente avansate pentru a te ajuta să creezi agenți mai inteligenți, care răspund în funcție de conținutul furnizat în diverse formate.",
+      "take_me_there": "Arată mai mult"
+    }
+  },
+  "quick_test": {
+    "send_a_message": "Trimite un mesaj pentru a testa baza de conținut...",
+    "unable_to_find_an_answer": "*Nu am putut găsi un răspuns la această întrebare*",
+    "rate_your_answer": "Evaluează răspunsul",
+    "completely_off_topic": "Complet în afara subiectului",
+    "partially_correct_went_off_base": "Parțial corect, dar în afara bazei de conținut",
+    "partially_correct_provided_information_on_a_different_topic": "Parțial corect, a furnizat informații despre un subiect diferit",
+    "no_answer_but_the_information_is_in_database": "Nu a răspuns, dar informația este în baza de date",
+    "send_feedback": "Trimite feedback",
+    "feedback_sent": "Feedback trimis",
+    "feedback": {
+      "liked": "Răspuns bun",
+      "disliked": "Răspuns slab"
+    },
+    "sources": "Sursă ({len}) | Surse (one, {len})"
+  },
+  "log": {
+    "interaction_received_on": "Interacțiune primită la:",
+    "more_details_of_the_interaction": "Mai multe detalii despre interacțiune:",
+    "version": "Versiune:"
+  },
+  "webapp": {
+    "layout": {
+      "newbot": "Inteligență nouă",
+      "start_you_bot": "Creează-ți inteligența",
+      "logout": "Deconectare",
+      "signin": "Autentificare",
+      "signup": "Înregistrează-te",
+      "orgs": "Organizații",
+      "terms_conditions": "Termeni și condiții",
+      "contact_us": "Contactează-ne",
+      "subscribe": "Abonează-te",
+      "newsletter": "Introdu-ți e-mailul pentru a primi actualizări:",
+      "you_best_email": "Adresa ta principală de e-mail",
+      "footer_license": "Drepturi de autor © 2012-2021 Weni. Toate drepturile rezervate.",
+      "created_by": "Creat de",
+      "read_for_train": "Inteligența ta este pregătită să fie antrenată",
+      "request_authorization": "Solicitare de autorizare",
+      "authorization_requested": "Autorizare solicitată",
+      "authorization_success": "Solicitare trimisă. Așteaptă un răspuns din partea unui admin.",
+      "error_to_retrieve_bot": "Eroare la accesarea inteligenței",
+      "yes": "Da",
+      "no": "Nu",
+      "items_total": "{initialItem}–{lastItem} din {total}",
+      "type_here": "Scrie aici...",
+      "support": "Asistență Bothub",
+      "search_bots": "Căutare inteligență",
+      "copied": "Conținutul a fost copiat în clipboard",
+      "my_intelligence": "Inteligența mea"
+    },
+    "login_form": {
+      "login": "Conectează-te în contul tău",
+      "forgot_password": "Mi-am uitat parola",
+      "signin": "Autentificare",
+      "get_free": "Înregistrează-te",
+      "dont_have_account": "Nu ai încă un cont?"
+    },
+    "recover_form": {
+      "recover": "Recuperează parola",
+      "cancel_button": "Anulează",
+      "confirm_password": "Confirmă parola",
+      "changed_password": "Parolă modificată",
+      "save_password": "Salvează parola"
+    },
+    "intelligences_lib": {
+      "title": "Inteligență artificială",
+      "description": "Află mai multe despre modul de integrare a unei inteligențe în proiectul tău consultând documentația <a href=\"https://docs.weni.ai/l/pt/bothub/integrar-uma-intelig-ncia-ao-projeto-na-plataforma-weni\" target=\"_blank\">Cum să integrezi o IA.</a>",
+      "new_intelligence": "Inteligență nouă",
+      "unused_projects": "Proiectul tău nu folosește încă nici o formă de inteligență. Creează una nouă sau integrează una din organizația ta sau din galeria comunității.",
+      "created_by": "Creat de",
+      "open": "Deschide",
+      "show_intents": "Vizualizează intențiile | Vizualizează intenția | Vizualizează intențiile",
+      "show_languages": "Vizualizează limbile | Vizualizează limba | Vizualizează limbile",
+      "repository_type": {
+        "classifier": "Inteligență de clasificare",
+        "content": "Inteligență de conținut"
+      },
+      "intelligence_tooltip": "Folosește intenții și entități pentru a interpreta și segmenta mesajele utilizatorului",
+      "intelligence_tooltip_content": "Adaugă texte informative pentru ca inteligența să poată răspunde la întrebările utilizatorilor bazându-se pe acestea",
+      "intent": "Intenții | Intenție | Intenții",
+      "knowledge_bases": "Baze de conținut",
+      "language": "Limbi | Limbă | Limbi",
+      "intent_modal_title": "Intențiile lui {nick} | Intenția lui {nick} | Intențiile lui {nick}",
+      "intent_modal_subtitle": "Vezi intențiile incluse în inteligența selectată",
+      "language_modal_title": "Limbi ale lui {nick} | Limba lui {nick} | Limbi ale lui {nick}",
+      "language_modal_subtitle": "Vizualizează limbile acceptate pentru inteligența selectată",
+      "tab_project_title": "Inteligențe în proiect",
+      "tab_project_subtitle": "Acestea sunt inteligențele utilizate în proiect",
+      "tab_org_title": "Inteligențe proprii",
+      "tab_org_subtitle": "Vizualizează și integrează inteligențele din organizație",
+      "tab_community_title": "Inteligențe publice",
+      "tab_community_subtitle": "Inteligențe publice disponibile pentru integrare",
+      "intent_count": "Numărul de propoziții de intenție",
+      "clone": {
+        "success_modal_title": "Inteligență copiată",
+        "success_modal_message": "Inteligența a fost copiată cu succes. O poți găsi în fila Inteligență a organizației.",
+        "error_modal_title": "Eroare la copierea inteligenței",
+        "confirm_modal_title": "Vrei să copiezi inteligența „{intelligence}”?",
+        "confirm_modal_message": "Copiind inteligența, o poți utiliza în organizația ta și poți face modificările dorite.",
+        "copy": "Copiere"
+      },
+      "intelligence_force": "Putere",
+      "intelligence_force_tooltip": "Puterea inteligenței este un indicator al modului în care a fost proiectată. Recomandăm să fie menținută peste 80%.",
+      "integration_success_title": "Inteligență integrată",
+      "integration_success_description": "Inteligență integrată cu succes",
+      "integration_error_title": "Nu s-a putut integra inteligența",
+      "integration_error_description": "Nu s-a putut integra inteligența",
+      "community_description": "Integrează inteligențe gata de utilizare și de înaltă calitate în proiectul tău"
+    },
+    "create_repository": {
+      "intelligence": "Creează inteligență artificială",
+      "definitions": "Definiții de inteligență",
+      "first_indicator": "Inteligență",
+      "second_indicator": "Definiții",
+      "intelligence_name_label": "Denumire",
+      "intelligence_name_placeholder": "Definește numele inteligenței",
+      "description_label": "Descriere",
+      "description_placeholder": "Descrie pe scurt scopul acestei inteligențe",
+      "intelligence_type": "Tipul inteligenței",
+      "intelligence_type_classification_title": "Inteligență de clasificare",
+      "intelligence_type_classification_description": "Antrenează exemple de propoziții prin atribuirea de intenții, iar IA-ul va identifica aceste intenții în propozițiile noi primite",
+      "intelligence_type_content_title": "Inteligență de conținut",
+      "intelligence_type_content_description": "Încarcă texte informative, iar IA-ul va putea răspunde la interogările utilizatorilor bazându-se pe acele texte",
+      "cancel_create_intelligence_button": "Anulează",
+      "navigate_to_next_button": "Înainte",
+      "language_label": "Limba principală",
+      "language_placeholder": "Alege o limbă",
+      "language_placeholder_search": "Căutare...",
+      "category_label": "Categorie",
+      "privacy_label": "Confidențialitate",
+      "privacy_type_public_title": "Public",
+      "privacy_type_public_description": "Orice utilizator Weni poate vedea și integra această inteligență.",
+      "privacy_type_private_title": "Privat",
+      "privacy_type_private_description": "Doar tu sau invitații puteți vedea și integra această inteligență.",
+      "navigate_to_previous_button": "Înapoi",
+      "create_intelligence_button": "Creează inteligență",
+      "repository_created_first": "Inteligența a fost creată și este gata",
+      "repository_created_second": "utilizare",
+      "navigate_to_intelligence_button": "Accesează inteligența",
+      "modal_title": "Anulează crearea IA",
+      "modal_description": "Ești sigur că vrei să anulezi crearea IA-ului? <br> Prin confirmare, IA-ul nu va fi creată.",
+      "modal_exit_button": "Părăsește fără să creezi",
+      "modal_continue_button": "Anulează"
+    },
+    "register_form": {
+      "already_have_account": "Deja ai un cont?",
+      "signin": "Autentificare",
+      "create_account_title": "Creează-ți contul",
+      "get_free": "Înregistrează-te",
+      "policy_service": "Făcând clic pe „Înregistrează-te”, sunt de acord cu politicile de serviciu şi confidențialitate ale Bothub.",
+      "confirm_password_empty": "Completează acest câmp",
+      "password_didnt_match": "Parolele nu coincid. Încearcă din nou.",
+      "confirm_password": "Confirmă parola"
+    },
+    "landing_page": {
+      "signin": "Autentificare",
+      "signup": "Înregistrează-te",
+      "or": "sau",
+      "header_content1": "Inteligență artificială pentru chatbots",
+      "header_content2": "Personalizează inteligența perfectă pentru chatbot-ul tău în câteva minute — fără a fi nevoie de programare.",
+      "join_for_free": "Înregistrează-te gratuit",
+      "grid_text1": "Acces facil la inteligențe multilingve gata de utilizare",
+      "grid_text2": "Folosește, îmbunătățește sau tradu mii de inteligențe publicate de oameni din întreaga lume, acoperind diverse subiecte în mai multe limbi.",
+      "grid_text3": "Integrează cu platforma ta de chatbot",
+      "grid_text4": "Conectează inteligențele la multiple platforme de chatbot folosind API-ul nostru şi fă-ți botul mai eficient.",
+      "grid_text5": "Creează și distribuie propria ta IA",
+      "grid_text6": "Creează o inteligență artificială care să răspundă nevoilor chatbot-ului tău. De asemenea, poți permite altora să o vizualizeze, să contribuie și să o integreze în proiectele lor.",
+      "best_bots": "Cele mai bune inteligențe",
+      "all_bots": "Toate inteligențele",
+      "signup_grid": "Uimește-ți audiența cu chatboți inteligenți și hotărâți",
+      "signup_forfree": "Începe",
+      "reset_password": "Trimite e-mail",
+      "reset_password_success": "Am trimis instrucțiunile de resetare a parolei către e-mail-ul tău.",
+      "forgot_password": "Ți-ai uitat parola?",
+      "register": "Înregistrează-te",
+      "create_bot": "Creează inteligență"
+    },
+    "analyze_text": {
+      "grid1": "Trimite o cerere HTTP către serviciul NLP. Vezi exemplul de mai jos.",
+      "method_send": "Corp POST:",
+      "tooltip_send": "POST cu aplicație/json",
+      "language_code": "cod limbă",
+      "text_to_analyze": "text pentru analiză",
+      "response": "Răspuns:",
+      "code_generator": "Generator de cod",
+      "code_generator_text": "Generează cod pentru limbajul de programare preferat.",
+      "notification_info": "Conectează-te pentru a lucra la această inteligență",
+      "analyze_text": "Analizează textul",
+      "analyze": "Analiză",
+      "no_detected": "Nedetectat",
+      "language": "Limbă",
+      "message": "Mesaj",
+      "message_placeholder": "Scrie un mesaj"
+    },
+    "quick_test": {
+      "quick_test": "Test rapid",
+      "internet_off_quick_test": "Ești offline. Verifică-ți conexiunea la internet.",
+      "without_train_quick_test": "Nu ai adăugat încă propoziții pentru antrenament. Adaugă-le pentru a putea rula un test.",
+      "error_quick_test": "A apărut o eroare. Încearcă din nou mai târziu.",
+      "intent": "Intenție",
+      "debug": "Depanare",
+      "raw": "Raw",
+      "add_a_sentence": "Adaugă o propoziție",
+      "entities": "Entități",
+      "login_text": "Conectează-te sau înregistrează-te pentru a rula un test rapid!"
+    },
+    "debug": {
+      "word": "Cuvânt",
+      "intent": "Intenție",
+      "relevance": "Relevanță",
+      "debug_description": "A apărut ceva neașteptat. Nu am putut depana textul tău.",
+      "reload": "Reîncarcă",
+      "debug": "Depanare",
+      "debug_subtitle": "Analizează relevanța fiecărui cuvânt din propoziție și înțelege rezultatele testului rapid."
+    },
+    "raw": {
+      "raw": "Raw",
+      "raw_subtitle": "Analizează nivelul de încredere al fiecărei intenții identificate pentru a înțelege rezultatul testului rapid."
+    },
+    "evaluate": {
+      "results": "Rezultate",
+      "description": "De fiecare dată când rulezi un test, rezultatele vor fi salvate aici pentru referințe viitoare. <br><br> Poți selecta două teste pentru a compara rezultatele acestora.",
+      "you_can_not_edit": "Nu poți edita această inteligență",
+      "not_have_results": "Nu există rezultate de afișat",
+      "entity_is_group": "<strong>{entity}</strong> aparține <strong>{group}</strong>",
+      "no_sentences": "Nu există propoziții de afișat",
+      "detailed_results": "Rezultate detaliate",
+      "summary_title1": "Procent de acuratețe",
+      "summary_title2": "Propoziții testate",
+      "summary_title3": "Limbi",
+      "tooltip_alert": "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "login": "Conectează-te pentru a edita această inteligență",
+      "all_intents": "Toate intențiile",
+      "all_entities": "Toate entitățile",
+      "all_languages": "Toate limbile",
+      "intent": "Intenție",
+      "no_versions": "Nu există rezultate pentru această versiune",
+      "add_sentences_intent": "Adaugă mai multe propoziții la intenție",
+      "intent_precision": "Raport de precizie",
+      "entity_precision": "Raport de precizie a entității",
+      "precision_description": "Un scor de precizie de 1,0 indică faptul că toate rezultatele testelor au fost pozitive."
+    },
+    "evaluate-manual": {
+      "header_title": "Testează-ți inteligența",
+      "header_title_p": "Cum funcționează modelul tău? Ai suficiente date? Sunt intențiile și entitățile bine definite?",
+      "tips_title": "Sfaturi pentru a rula un test eficient",
+      "tips_description": "Încearcă să adaugi propoziții reale de test care nu au fost incluse în antrenamentul modelului. Acest lucru va ajuta la verificarea dacă IA-ul tău poate recunoaște sensul intențiilor, clasificând corect o propoziție nouă chiar dacă nu a mai văzut-o înainte.",
+      "test_title": "Rulează un nou test manual de propoziții",
+      "test_p": "Rulează un nou test manual adăugând propoziții care simulează introducerea utilizatorului final",
+      "test_button": "Mergi la testarea manuală",
+      "historic_title": "Istoricul testelor manuale",
+      "header_title_p2": "Folosește funcția noastră de test pentru a evalua cu ușurință performanța inteligenței tale",
+      "header_title_lang": "Selectează limba pentru a rula testul",
+      "run_test": "Rulează testul",
+      "login": "Conectează-te pentru a edita această inteligență",
+      "get_examples_test_sentences": "{n} propoziție de test | {n} propoziții de test",
+      "add_new_test_sentence": "Adaugă o propoziție de test nouă",
+      "create_a_bench_of_test": "Creează un set de propoziții de test pentru a măsura acuratețea antrenamentului",
+      "enter_your_sentence_here": "Scrie propoziția ta aici",
+      "submit": "Trimite",
+      "you_need_type_a_text": "Trebuie să scrii o propoziție",
+      "intent_is_required": "Completează intenția",
+      "default_error": "A apărut o eroare. Încearcă din nou mai târziu."
+    },
+    "evaluate-automatic": {
+      "header_title": "Testează inteligența",
+      "header_title_p": "Cum funcționează modelul tău? Ai suficiente date? Sunt intențiile și entitățile bine definite?",
+      "header_title_p2": "Folosește funcția noastră de test pentru a evalua cu ușurință performanța inteligenței tale",
+      "header_title_lang": "Selectează limba pentru a rula testul",
+      "run_test": "Rulează testul"
+    },
+    "evaluate-automatic-new": {
+      "header_title": "Teste automate",
+      "header_title_p": "Fiecare interacțiune declanșează o re-analiză a propozițiilor pentru a verifica acuratețea IA-ului",
+      "quality_title": "Pe baza celor mai recente interacțiuni, calitatea actuală a IA-ului este:",
+      "summary_title1": "Propoziții testate",
+      "summary_title2": "Data testului",
+      "summary_chart_title": "Istoricul analizei",
+      "tips_title": "Sfaturi pentru îmbunătățirea calității IA",
+      "tips_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elite, sed do eiusmod tempor incidente ut labore et dol ore magna aliqua.",
+      "tips_p": "Antrenează mai multe propoziții pentru intenție",
+      "results_title": "Rezultate detaliate",
+      "results_tab_title": "Propoziții",
+      "results_tab_title2": "Diagrame"
+    },
+    "result": {
+      "load_result": "Încarcă rezultate",
+      "download": "Descarcă",
+      "test": "Test",
+      "evaluate_output": "Rezultatele testului",
+      "evaluate_output_text": "Pentru mai multe informații, consultă",
+      "documentation": "documentația",
+      "recall_reports": "Raport de precizie și rechemare",
+      "recall_reports_text": "Un scor de precizie de 1,0 indică faptul că toate rezultatele returnate sunt cu adevărat pozitive (dar nu garantează că toate pozitivele au fost găsite). Un scor de rechemare de 1,0 indică faptul că căutarea a identificat toate rezultatele pozitive (dar nu informează câte falsuri pozitive au fost incluse).",
+      "see_more_in": "Află mai multe în",
+      "intent_report": "Raportul de intenții",
+      "entity": "Entități | Entitate | Entități",
+      "added_entity": "Entități adăugate | Entitate adăugată | Entități adăugate",
+      "intent_confusion_matrix": "Matricea de confuzie a intențiilor",
+      "intent_confusion_matrix_text": "Matricea de confuzie a intențiilor arată care intenții au fost confundate cu altele. Află mai multe în",
+      "intent_confidence_distribution": "Distribuția încrederii intenției",
+      "intent_confidence_distribution_text": "Histograma arată distribuția încrederii tuturor predicțiilor, cu bare verzi care reprezintă predicțiile corecte și bare roșii care reprezintă pe cele incorecte. Îmbunătățirea calității setului de teste va deplasa barele verzi spre dreapta și barele roșii spre stânga în diagramă.",
+      "sentence_details": "Detalii despre propoziție",
+      "sentence_details_text": "Compară rezultatele fiecărei propoziții",
+      "do_not_log": "Nu există propoziții de afișat",
+      "expected_intent": "Intenție estimată",
+      "predicted_intent": "Intenție preconizată",
+      "expected_entity": "Entitate așteptată",
+      "predicted_entity": "Entitate preconizată",
+      "no_expected_intent": "Nu există intenții așteptate",
+      "no_intent_predicted": "Nu există intenții preconizate",
+      "confidence": "încredere",
+      "ok": "OK",
+      "is": "este",
+      "failed": "nereușit",
+      "not_predicted": "nu a fost prezis",
+      "false_positive": "fals pozitiv",
+      "intent": "Intenție",
+      "error": "A apărut o eroare în timpul căutării propozițiilor"
+    },
+    "home": {
+      "description": "Descrierea inteligenței",
+      "no_description": "Această inteligență nu are descriere",
+      "intents_list": "Intenții",
+      "entities_list": "Entități",
+      "entities_label": "Această inteligență are {n} grup de entitate | Această inteligență are {n} grupuri de entitate",
+      "non-grouped_entities": "și {n} entitate negrupată. | și {n} entități negrupate.",
+      "only_non-grouped_entities": "Această inteligență are {n} entitate negrupată. | Această inteligență are {n} entități negrupate.",
+      "bot_has_x_intents": "Această inteligență are <strong>{intents}</strong> intenții",
+      "labeled": "Grup <strong>{label_value}</strong> ({n})",
+      "unlabeled": "Entități negrupate ({n})",
+      "all_categories": "Toate categoriile",
+      "all_languages": "Toate limbile",
+      "no_repo": "Nu a fost găsită nicio arhivă",
+      "default_error": "A apărut o eroare. Încearcă din nou mai târziu.",
+      "edit_groups": "Editează grupurile",
+      "finish_editing": "Finalizează editarea",
+      "enter": "Trimite",
+      "create_new_group": "Creează grup",
+      "drag_new": "Trage entitățile către un alt grup sau în zona gri pentru a crea unul nou",
+      "edit_group_name": "Schimbare nume",
+      "new_group_named": "Grup nou",
+      "delete_entity": "Șterge entitatea",
+      "delete_entity_message": "Sigur vrei să elimini entitatea „{entity}”?",
+      "delete_group": "Șterge grupul",
+      "delete_group_message": "Sigur vrei să ștergi grupul „{group}”? Această acțiune nu poate fi anulată.",
+      "delete": "Ștergere configurare",
+      "cancel": "Anulează",
+      "edit_group_modal_title": "Schimbă numele grupului",
+      "edit_group_modal_subtitle": "Ce nume nou vrei să dai grupului <strong>{group}</strong>?",
+      "edit_group_field_title": "Nume grup",
+      "edit_group_field_label": "Alege un nume nou pentru grup",
+      "edit_group_button_label": "Schimbare nume",
+      "save_changes": "Salvează și închide",
+      "create_group_modal_title": "Definește numele grupului",
+      "create_group_modal_subtitle": "Ai creat un grup nou. Alege un nume pentru acesta.",
+      "create_group_field_label": "Alege numele grupului",
+      "create_group_field_title": "Nume grup",
+      "remove_integrate": "Elimină din proiect",
+      "integrate": "Integrează în proiect",
+      "integrate_modal_title": "Vrei să integrezi inteligența \"{intelligence}\" în proiect?",
+      "integrate_modal_subtitle": "Inteligența va fi adăugată în fluxurile de lucru ale acestui proiect, iar tu poți folosi intențiile sale prin intermediul funcției „Împarte după intenție”.",
+      "confirm_integrate": "Integrare",
+      "remove_integrate_modal_title": "Vrei să elimini inteligența \"{intelligence}\" din proiect?",
+      "remove_integrate_modal_subtitle": "Această inteligență nu va mai fi utilizată în acest proiect. Dacă te răzgândești, trebuie să o integrezi din nou și să ajustezi fluxurile de lucru.",
+      "confirm_with_username": "Scrie <strong>{username}</strong> pentru a confirma ieșirea",
+      "confirm_with_username_placeholder": "Confirmă-ți numele de utilizator pentru a șterge contul",
+      "confirm_remove_integrate": "Elimină integrarea",
+      "bases": {
+        "knowledge_bases": "{n} bază de conținut adăugată | {n} baze de conținut adăugate",
+        "description": "Bazele de cunoștințe sunt sursele de text utilizate de un motor de inteligență a conținutului. Organizează aceste texte în baze, grupând informații similare în fiecare dintre ele. Află mai multe în <a href='https://docs.weni.ai/l/pt/bothub/introdu-o-intelig-ncia-de-conte-do' target='_blank' class='repository-base__description__text--link'>documentația noastră</a>.",
+        "new_knowledge_base": "Creează baza de conținut",
+        "adjustments": "Setări",
+        "adjustments_subtitle": "Gestionează setările de bază ale inteligenței",
+        "adjustments_button": "Salvează modificările",
+        "adjustments_button_back": "Înapoi",
+        "adjustuments_modal_title": "Modificările au fost salvate",
+        "adjustments_modal_description": "Modificările au fost salvate",
+        "adjustuments_modal_alert_title": "Vrei să salvezi modificările înainte de a părăsi pagina?",
+        "adjustments_modal_alert_description": "Ajustările nu vor fi aplicate decât dacă le salvezi.",
+        "adjustments_modal_alert_save": "Salvează modificările",
+        "adjustments_modal_alert_discard": "Renunțați la modificări",
+        "tests": "Testează bazele de cunoștințe",
+        "tests_subtitle": "Testează baza de cunoștințe punând întrebări și observând răspunsurile",
+        "preview_tests_placeholder": "Scrie un mesaj",
+        "preview_tests_attachments": {
+          "photos_or_videos": "Fotografii și video",
+          "photos": "Fotografii",
+          "file": "Fișier",
+          "location": "Locație"
+        },
+        "tests_placeholder": "Mesaj",
+        "api": "Integrează această inteligență",
+        "api_subtitle": "API-ul nostru acceptă mai multe platforme prin integrarea REST API. Pentru a afla mai multe, accesează <a href='https://docs.ilhasoft.mobi/l/pt/inteligencia-conteudo/integrando-uma-intelig-ncia-de-conte-do' target='_blank' class='repository-api__header__subtitle--link'>documentația</a> și <a href='https://api.bothub.it/#tag/repository' target='_blank' class='repository-api__header__subtitle--link'>exploratorul API</a>.",
+        "api_select": "Selectează o bază de cunoștințe:",
+        "api_tabs": "Integrează cu Weni Flows sau RapidPro",
+        "api_tabs_subtitle": "Introdu următoarele informații în platformă:",
+        "api_tabs_intelligence_id": "ID-ul bazei de inteligență",
+        "api_guide": "Cum să integrezi un exemplu de răspuns API",
+        "api_integrate": "Cum să integrezi cu fluxurile Weni sau RapidPro",
+        "api_body": "corp",
+        "api_tabs_post_lang": "cod limbă",
+        "api_tabs_post_text": "Întrebarea ta",
+        "api_response": "Exemplu de răspuns API",
+        "api_integrate_step_one": "Pasul 1",
+        "api_integrate_step_one_text": "În Weni Flows, deschide fluxul dorit sau creează unul nou.",
+        "api_integrate_step_two": "Pasul 2",
+        "api_integrate_step_two_text": "Adaugă o nouă casetă de flux și selectează opțiunea „Apelează webhook”.",
+        "api_integrate_step_three": "Pasul 3",
+        "api_integrate_step_three_text": "Selectează POST și introdu URL-ul furnizat mai sus.",
+        "api_integrate_step_four": "Pasul 4",
+        "api_integrate_step_four_text": "În \"HTTP Headers\", adaugă tokenul de acces furnizat mai sus, incluzând cuvântul Bearer.",
+        "api_integrate_step_five": "Pasul 5",
+        "api_integrate_step_five_text": "Fă clic pe corpul POST și introdu codul corespunzător afișat mai sus. Poți înlocui valorile dintre ghilimele cu variabile.",
+        "api_integrate_step_final": "Gata!",
+        "api_integrate_step_final_text": "După ce urmezi acești pași, inteligența artificială va fi integrată.",
+        "api_integrate_step_final_text_button": "Află mai multe",
+        "edit-base-notitle": "Fără titlu",
+        "edit-base-saved-at": "Ultima salvare pe",
+        "edit-base-saved-time": "la",
+        "edit-base-delete": "Ștergere configurare",
+        "edit-base-save": "Salvare configurare",
+        "edit-base-test": "Test",
+        "edit-base_modal_delete_title": "Șterge baza de conținut",
+        "edit-base_modal_delete_text": "Sigur vrei să ștergi baza de conținut {base}? Această acțiune nu poate fi anulată.",
+        "edit-base_modal_delete_placeholder": "Confirmă numele bazei de cunoștințe pentru a o șterge.",
+        "edit-base_modal_delete_button_confirm": "Ștergere configurare",
+        "edit-base_modal_delete_button_cancel": "Anulează",
+        "see-all_bases": "Vezi toate bazele",
+        "add_base": "+ Adaugă bază",
+        "edit-base_modal_alert_title": "Ieși din baza de conținut",
+        "edit-base_modal_alert_description": "Ești sigur că vrei să ieși din baza de conținut? Orice modificări nesalvate vor fi pierdute.",
+        "edit-base_modal_alert_save": "Ieși",
+        "edit-base_modal_alert_discard": "Anulează"
+      },
+      "copy-intelligence": "Copiază inteligența",
+      "intelligence_filter": {
+        "title": "Filtrează inteligențele comunității",
+        "category": "Categories",
+        "languages": "Limbă",
+        "languages_select": "Alege o limbă",
+        "recommended": "Recomandate",
+        "most_used": "Cele mai utilizate"
+      }
+    },
+    "summary": {
+      "training_information": "Detalii despre antrenament",
+      "information_sentences": "Propoziții | Propoziție | Propoziții",
+      "information_intents": "Intenții | Intenție | Intenții",
+      "information_entities": "Entități | Entitate | Entități",
+      "general_information": "Date generale",
+      "information_language": "Limbi | Limbă | Limbi",
+      "information_contributors": "Contributori | Contribuitor | Contributori",
+      "information_integrations": "Integrări | Integrare | Integrări",
+      "intent_question": "Intenția este scopul pe care inteligența trebuie să îl identifice în mesajul utilizatorului. De exemplu, când utilizatorul trimite \"mulțumesc\", intenția din spatele mesajului este de a exprima recunoștință. În acest caz, intenția ar putea fi clasificată ca \"mulțumire\".",
+      "entity_question": "Entitatea este substantivul legat de obiectivul identificat de inteligență. De exemplu, dacă propoziția utilizatorului este \"generează raport nou\", entitatea poate fi \"raport\" sau \"raport nou\".",
+      "entity_groups_info": "Substantiv legat de scopul detectat de inteligență. De exemplu, dacă propoziția utilizatorului este \"generează un raport nou\", entitatea poate fi \"raport\" sau \"raport nou\".",
+      "intents_list_info": "Scop identificat de inteligență atunci când utilizatorul trimite un mesaj. De exemplu, când utilizatorul trimite \"mulțumesc,\" intenția este de a exprima recunoștință. În acest caz, intenția ar putea fi \"mulțumire.\"",
+      "intelligence_force": "Puterea inteligenței",
+      "intelligence_force_low": "Restrânsă",
+      "intelligence_force_regular": "Generală",
+      "intelligence_force_high": "Puternică",
+      "intelligence_force_info": "Există 3 niveluri de putere: restrânsă, generală și puternică. Cu cât numărul de propoziții pe intenție este mai mare, cu atât este mai echilibrată distribuția între intenții, iar cu cât numărul de propoziții de test este mai mare, cu atât mai puternică este reprezentarea modului în care a fost antrenată inteligența.",
+      "integrate": "Integrează în Fluxuri",
+      "remove_integrate": "Elimină din Fluxuri"
+    },
+    "integration": {
+      "title": "API",
+      "description": "Integrează această inteligență cu Weni Flows cu un singur clic. Vezi <a href='https://docs.weni.ai/l/pt/bothub/integrar-uma-intelig-ncia-ao-projeto-na-plataforma-weni#' target='_blank'>documentația completă</a> despre cum să folosești această funcționalitate. Poți accesa, de asemenea, <a href='https://dash.weni.ai/api/intelligence/index' target='_blank'>API-urile noastre de inteligență artificială</a>.",
+      "http_tab": "Solicitare HTTP",
+      "generator_tab": "Generator de cod",
+      "http_title": "Trimite o solicitare HTTP către serviciul NLP, urmând exemplul de mai jos.",
+      "url_description": "URL-ul de bază este URL-ul rădăcină al API-ului — adresa inițială pentru accesarea funcțiilor și resurselor sale. Este ca punctul de plecare pentru explorarea și interacțiunea cu API-ul.",
+      "headers_description": "Autentificarea este unul dintre cele mai importante antete în solicitările API. Ea furnizează informațiile necesare despre autentificarea utilizatorului şi permite verificarea dacă acesta are permisiunea să efectueze această acţiune.",
+      "post_body_description": "Corpul POST este partea unei solicitări API care conține datele trimise pentru a efectua o anumită sarcină, cum ar fi informațiile mesajului unui utilizator. Trebuie să fie formatat în JSON pentru ca API-ul să poată procesa corect informațiile.",
+      "response_description": "Răspunsul unui API este replica trimisă înapoi către client după o solicitare. Acesta conține informațiile solicitate sau un mesaj de eroare dacă ceva nu a mers bine în timpul procesării.",
+      "token_title": "Token de acces:",
+      "code_button": "Extinde codul",
+      "code_button_short": "Restrânge codul",
+      "copy_label": "Copiere",
+      "copy": "Token copiat",
+      "my_user": "Utilizatorul meu",
+      "new": "Nou!",
+      "news_text": "Integrează această inteligență cu Weni Flows făcând clic pe",
+      "summary": "Pagină rezumat.",
+      "see_more": "Aflați mai multe"
+    },
+    "intent": {
+      "title": "Propoziții de intenție",
+      "description": "Această intenție are <strong>{n}</strong> propoziție | Această intenție are <strong>{n}</strong> propoziții",
+      "edit_button": "Schimbă numele",
+      "save_button": "Salvare configurare",
+      "no_sentences": "Nu există propoziții de afișat",
+      "error_intent": "A apărut o eroare. Încearcă din nou mai târziu.",
+      "error_intent_exists": "Această intenție există deja",
+      "edit_intent_modal_title": "Schimbă numele intenției",
+      "edit_intent_modal_subtitle": "Ce nume nou vrei să dai intenției <strong>{intent}</strong>?",
+      "edit_intent_field_title": "Nume intenție",
+      "edit_intent_field_label": "Alege un nume nou pentru intenție",
+      "edit_intent_button_label": "Schimbă numele",
+      "success_modal_title": "Nume modificat",
+      "success_modal_subtitle": "Numele intenției a fost modificat cu succes",
+      "delete_success_title": "Propoziții șterse",
+      "delete_success_subtitle": "Propozițiile selectate au fost șterse cu succes",
+      "delete_selected": "Șterge selectate ({n})",
+      "sentences_perpage": "Propoziții afișate pe pagină:",
+      "search_sentence": "Caută propoziție...",
+      "table_sentence": "Propoziție",
+      "table_edit": "Editează",
+      "table_delete": "Ștergere configurare"
+    },
+    "settings": {
+      "title_edit_repository": "Setări",
+      "manage_your_team": "Gestionează-ți echipa",
+      "authorization_requests": "Solicitări de autorizare",
+      "request_available": "Ai o solicitare în așteptare. Așteaptă un răspuns din partea unui admin.",
+      "not_can_edit_repository": "Nu poți modifica această inteligență",
+      "login": "Conectează-te pentru a edita această inteligență",
+      "users": "Utilizatori:",
+      "role": "Roluri:",
+      "no_requests": "Nu s-au găsit solicitări",
+      "save": "Salvează modificările",
+      "request": "Trimite solicitare",
+      "invite": "Trimite invitație",
+      "no_users": "Niciun utilizator în echipă",
+      "search_user": "Introdu un nume sau un utilizator",
+      "search_user_org": "Introdu un nume sau un utilizator",
+      "no_locale": "Fără locație",
+      "remove_user_confirm": "Sigur vrei să ștergi <strong>{user}</> ca <strong>{role}</strong>?",
+      "remove": "Ștergere",
+      "cancel": "Anulează",
+      "default_error": "A apărut o eroare. Încearcă din nou mai târziu.",
+      "settings_tab": "Setări",
+      "versions_tab": "Versiuni",
+      "settings_accordion": "Setări avansate",
+      "description": "Gestionează informațiile generale ale inteligenței",
+      "save_success_title": "Inteligență editată",
+      "save_success_message": "Informațiile inteligenței au fost actualizate cu succes"
+    },
+    "example": {
+      "enter_sentence": "Scrie propoziția ta aici",
+      "intent": "Intenție",
+      "entity": "Entitate",
+      "sentence": "Propoziție",
+      "text_is": " <strong> {text} </strong> este",
+      "help_text": "Când bot-ul tău primește un mesaj, poate folosi un instrument de recunoaștere pentru a-l analiza și a identifica intenția.",
+      "delete_text": "Sigur vrei să ștergi acest exemplu? Această acțiune nu poate fi anulată.",
+      "delete": "Șterge",
+      "cancel": "Anulează",
+      "sent_to_training": "Propoziții trimise pentru instruire",
+      "sent_to_training_info": "Propozițiile pe care le-ai selectat au fost trimise cu succes pentru instruire. Pentru a antrena inteligența cu aceste propoziții, accesează meniul Antrenare inteligență.",
+      "sent_to_test": "Propoziții trimise pentru testare",
+      "sent_to_test_info": "Propozițiile pe care le-ai selectat au fost trimise cu succes pentru testare. Pentru a le testa, accesează meniul Test.",
+      "version_name": "Numele versiunii",
+      "principal_version_label": "Vrei să faci din aceasta versiunea principală a inteligenței?",
+      "principal_version_text": "Versiunea principală",
+      "principal_version_info": "Activarea acestei opțiuni va face ca această versiune să devină versiunea implicită a inteligenței"
+    },
+    "trainings": {
+      "export_results": "Exportă rezultatele",
+      "grid_text1": "Antrenează o propoziție nouă",
+      "grid_text2": "Adaugă exemple pentru a îmbunătăți inteligența",
+      "not_can_edit_repository": "Nu poți contribui la această inteligență",
+      "login": "Conectează-te pentru a lucra la această inteligență",
+      "sentences_list": "Listă de propoziții",
+      "run_training": "Rulează instruirea",
+      "submit": "Trimite propoziția pentru instruire",
+      "highlight_word": "Evidențiază cuvintele ca entități",
+      "add_entity": "Adaugă entitate",
+      "add_entity_for": "Adaugă entitate pentru",
+      "select_text": "Selectează partea de text pentru a adăuga o entitate",
+      "add_a_sentence": "Scrie propoziția pe care vrei să o antrenezi",
+      "intent": "Adaugă sau selectează intenția",
+      "train_response_title": "Propoziții antrenate cu succes",
+      "train_response_subtitle": "Propozițiile pe care le-ai trimis au fost antrenate cu succes. Poți vedea toate propozițiile antrenate în Arhivă.",
+      "trained": "Instruite",
+      "processing": "Procesare",
+      "no_changes": "Nicio modificare",
+      "no_sentences": "Nu există propoziții de afișat",
+      "no_sentences_to_train": "Nu au fost adăugate propoziții pentru instruire",
+      "no_train_sentence": "Această propoziție nu a fost încă adăugată la instruire",
+      "failed": "Nereușit",
+      "intention_or_sentence_already_exist": "Această intenție sau propoziție există deja",
+      "delete_title": "Șterge propoziții",
+      "delete_phrase_modal_title": "Șterge propoziții",
+      "delete_phrase_modal": "Sigur vrei să ștergi propozițiile selectate? Această acțiune nu poate fi anulată.",
+      "delete_button": "Șterge",
+      "cancel_button": "Renunțați la modificări",
+      "save_button": "Salvează modificările",
+      "train_progress": "Instruire în desfășurare",
+      "empty_text_error": "Scrie o propoziție",
+      "error_caracter_type": "Propoziția trebuie să conțină litere sau cifre. Include-le pentru a continua.",
+      "intent_error": "Scrie o intenție",
+      "default_error": "A apărut o eroare. Încearcă din nou mai târziu.",
+      "more_than_200_words": "Ai atins limita de 200 de cuvinte per propoziție. Ajustează textul sau împarte-l în propoziții mai scurte.",
+      "entities_info": "Cum se adaugă entități noi din propoziție?",
+      "database": "Arhivă",
+      "database_description": "Listă cu toate propozițiile antrenate de inteligență",
+      "database_untrained": "Această inteligență nu a fost antrenată cu nicio propoziție. Adaugă propoziții și antreneaz-o în meniul Instruire.",
+      "database_modal_title": "Propoziții editate",
+      "database_modal_description": "Propozițiile au fost editate cu succes. Rulează din nou instruirea pentru ca inteligența să proceseze aceste propoziții.",
+      "database_save_button": "Trimite propoziția pentru instruire",
+      "train_title": "Antrenează inteligența",
+      "train_description": "Adaugă propoziții pentru a îmbunătăți inteligența artificială. <a href={link}>Vezi documentația noastră</a> și află cele mai bune practici pentru crearea unei IA de înaltă calitate.",
+      "entities": "Entități (opțional)",
+      "sentences_to_train": "Listă de propoziții gata pentru instruire",
+      "add_entity_info": "Elemente folosite pentru a extrage informații suplimentare dintr-o propoziție trimisă către bot, dincolo de intenția clasificată a acesteia.",
+      "sentence_added": "Propoziții adăugate pentru instruire",
+      "intent_info": "Intențiile definesc contextul inteligenței tale. Atunci când primește o propoziție pentru a o clasifica, inteligența ta va răspunde cu intenția antrenată care se potrivește cel mai bine propoziției.",
+      "add_entity_modal_title": "Adaugă entitate",
+      "add_entity_field_label": "Adaugă sau selectează entitate",
+      "add_entity_checkbox_title": "Selectează cuvintele propoziției legate de această entitate",
+      "add_entity_finish_edit": "Finalizat",
+      "add_entity_cancel": "Anulează",
+      "evaluate_results": "Din {count} propoziții trimise pentru testare, IA a înțeles corect {success}. Vizualizează rezultatele detaliate ale testului sau trimite propozițiile direct pentru instruire.",
+      "see_result": "Vezi rezultatul",
+      "accuracy": "Propoziții testate cu succes! Procentajul de acuratețe a fost de {accuracy}%"
+    },
+    "resumeSentences": {
+      "title": "Rezumatul propozițiilor gata pentru instruire",
+      "description": "Rulează instruirea pentru a îmbunătăți inteligența cu propozițiile furnizate",
+      "sentences": "Propoziții",
+      "intentions": "Intenții",
+      "entities": "Entități",
+      "languages": "Limbi"
+    },
+    "train_modal": {
+      "training_status": "Stare instruire",
+      "status_ok": "Bot-ul tău este pregătit pentru instruire!",
+      "language_warning": "Nu s-a putut rula instruirea",
+      "missing_requirements": "Au fost găsite unele erori și instruirea ta nu a putut fi finalizată. Remediază-le și încearcă din nou.",
+      "ready_for_train_title": "Au fost găsite unele erori",
+      "ready_for_train_subtitle": "Întoarce-te și corectează erorile găsite la rularea instruirii.",
+      "language_available": "Nu există propoziții noi în alte limbi pentru a fi antrenate. Adaugă câteva și încearcă din nou.",
+      "warnings": "Atenționări",
+      "train": "Întoarce-te şi remediază",
+      "cancel": "Anulează",
+      "ok": "OK"
+    },
+    "translate": {
+      "title_status_page": "Traducere",
+      "description_status_page": "Gestionează și tradu propozițiile inteligenței tale",
+      "title_language_card": "Limbi de inteligență",
+      "description_progress_bar": "Propoziții traduse",
+      "new_status_card": "Adaugă limbă",
+      "description_create_modal": "Ce limbă nouă vrei să adaugi inteligenței?",
+      "select_language_label": "Alege o limbă",
+      "button_create_modal": "Continuă",
+      "title_translate": "Tradu propoziția",
+      "title_export": "Importă/exportă traducere",
+      "subtitle_export": "Importă o traducere existentă sau exportă într-un fișier CSV",
+      "not_can_edit_repository": "Nu poți lucra la această inteligență",
+      "login": "Conectează-te pentru a lucra la această inteligență",
+      "submit_translation": "Trimite traducerea",
+      "intent": "Intenție:",
+      "no_examples": "Toate propozițiile în limba principală a inteligenței au fost traduse în {language}.",
+      "show_translated": "Afișează traducerea",
+      "show_original": "Afișează originalul",
+      "translated_from": "Tradus din",
+      "no_translation": "Nicio propoziție din limba principală a inteligenței nu a fost tradusă în {language}.",
+      "click_here": "fă clic aici pentru a traduce",
+      "translate_from": "Traducere din:",
+      "translate_to": "Traducere în:",
+      "to": "în",
+      "no_entities": "Nu există entități de adăugat acestei traduceri",
+      "languages_select": "Alege o limbă",
+      "translate_sentence": "Tradu propoziția",
+      "example_translated": "Exemplu tradus",
+      "import_title": "Importă traducere",
+      "export_title": "Exportă traducerea",
+      "import_button": "Import",
+      "export_button": "Exportare",
+      "import_field_text": "Niciun fișier selectat",
+      "import_select_button": "Fă clic pentru a selecta",
+      "import_select_error": "A apărut o eroare cu fișierul",
+      "import_button_cancel": "Anulează",
+      "export_all_sentences": "Toate propozițiile",
+      "export_only_translated": "Propoziții netraduse",
+      "translators": "Traducători | Traducător | Traducători",
+      "completed": "Traduceri finalizate | Traducere finalizată | Traduceri finalizate",
+      "more_than_half": "Mai mult de 50% tradus",
+      "less_than_half": "Mai puțin de 50% tradus",
+      "all": "Toate limbile",
+      "search": "Căutare",
+      "showing": "Se afișează {count} din {available} limbi disponibile",
+      "no_translated": "Nu s-au găsit limbi",
+      "invalid_entities": "Entitățile de traducere nu corespund propoziției originale",
+      "translation_edited": "Traducere editată",
+      "translation_delete_confirm": "Traducerea în \"{language}\" va fi ștearsă. Sigur că vrei să continui?",
+      "error_load_translation": "Nu s-a putut încărca traducerea",
+      "retry": "Reîncarcă",
+      "sentences": "Propoziții",
+      "translated": "Traduse",
+      "not_translated": "Netraduse",
+      "inconsistent": "Inconsecvente",
+      "delete_all": "Șterge traducerile",
+      "save_all": "Salvează tot pe această pagină",
+      "select_all": "Selectează tot pe această pagină",
+      "auto_translate": "Traducere automată",
+      "auto_translate_progress": "Traducere automată în curs de desfășurare",
+      "auto_translate_confirm": "Vrei să traduci toate propozițiile netraduse în {language}?",
+      "auto_percentage": "{progress}% din traducere a fost finalizată",
+      "unsupported": "Limba nu este disponibilă pentru traducere automată",
+      "share_title": "Trimite către traducători",
+      "share_subtitle": "Partajează acest link cu traducătorul",
+      "create_new_token": "Generează link",
+      "delete_confirm": "Sigur vrei să ștergi traducerea selectată? Această acțiune nu poate fi anulată.",
+      "default_error": "Ceva nu a mers bine",
+      "okay": "OK",
+      "cancel": "Anulează",
+      "send_to_translators": "Trimite către traducători",
+      "tab_translated": "Propoziții traduse",
+      "tab_not_translated": "Propoziții netraduse",
+      "select_sentences_title": "Selectează propozițiile de inteligență pe care vrei să le traduci",
+      "select_sentences_subtitle": "{selected} din {total} selectate",
+      "translate_sentences": "Tradu propoziții",
+      "select_method": "Alege metoda pe care vrei să o utilizezi pentru traducere",
+      "edit_sentence": "Editează traducerea",
+      "delete_sentence": "Șterge traducerea",
+      "translate_progress": "Se traduc propozițiile",
+      "translate_method": "Format de traducere",
+      "export_description": "Ce propoziții vrei să exporți?",
+      "export_method": "Alege propozițiile pe care vrei să le exporți",
+      "exporting": "Fișierul cu traduceri este în curs de descărcare",
+      "examples_untrained": "{n} propoziții traduse nu au fost încă antrenate de inteligență"
+    },
+    "orgs": {
+      "owner": "Proprietar",
+      "my_user": "Utilizatorul meu",
+      "created_by": "Creat de",
+      "created": "Creată",
+      "repositories": "{n} inteligențe | {n} inteligență | {n} inteligențe",
+      "members": "{n} membri | {n} membru | {n} membri",
+      "create_org": "Creează organizație",
+      "create": "Create",
+      "no_orgs": "Încă nu aparții niciunei organizații",
+      "manage_contributors": "Gestionează contribuitorii",
+      "manage_subtitle": "Gestionează cine poate contribui la setul tău de date",
+      "edit": "Editează",
+      "information": "Informații",
+      "org_info": "Informații organizație",
+      "no_repo": "Această organizație nu are încă inteligențe",
+      "add_repo": "Creează inteligență",
+      "from": "Din <strong>{locale}</strong>",
+      "default_error": "Eroare la încărcarea organizației",
+      "activities": {
+        "title": "Activități",
+        "recent": "Activități recente"
+      },
+      "reports": {
+        "title": "Rapoarte",
+        "reports": "Rapoarte organizație"
+      },
+      "payment": {
+        "title": "Payment",
+        "history": "Istoric",
+        "info": "Informații de plată",
+        "payment": "plată {period}",
+        "credit_payment": "Cu card de credit",
+        "coupon_payment": "Cu cod de cupon",
+        "submit": "Trimite",
+        "total": "Total:",
+        "no_payments": "Nicio plată de afișat"
+      },
+      "intelligences": {
+        "title": "Inteligențe",
+        "mine": "Inteligențe organizație",
+        "using": "Inteligențe cu integrare"
+      },
+      "create_org_title": "Hai să creăm o organizație",
+      "create_org_subtitle": "Crește productivitatea echipei tale prin crearea inteligențelor într-un singur loc",
+      "send_email": "Trimite e-mail"
+    },
+    "my_profile": {
+      "edit_your_profile": "Editează profil",
+      "change_password": "Modifică parola",
+      "repositories": "Inteligențe",
+      "modal_edit_your_profile": "Editează profil",
+      "modal_change_password": "Modifică parola",
+      "password_change_success": "Parolă modificată",
+      "edit": "Salvare configurare",
+      "trained_at": "Instruire la {trained} de către {by}",
+      "train_fail": "Instruirea a eșuat la {failed}",
+      "training": "Curs de instruire...",
+      "not_trained": "Nu există instruiri de afișat",
+      "training_log": "Jurnal de instruiri",
+      "personal_info": "Date personale",
+      "free_user": "Utilizator gratuit",
+      "profile": "Profil",
+      "no_repo": "Nu a fost adăugată încă nicio inteligență în profilul tău",
+      "no_repo_filter": "Nicio inteligență de acest tip încă",
+      "add_repo": "Creează inteligență",
+      "activities": {
+        "title": "Activități",
+        "recent": "Activități recente",
+        "activity_complement": "în inteligența <strong>{intelligence}</strong> a organizației <strong>{org}</strong>"
+      },
+      "reports": {
+        "title": "Rapoarte",
+        "predictions": "Fără predicții | {n} predicție | {n} predicții",
+        "created_by": "Creat de",
+        "today": "Astăzi",
+        "this_week": "Săptămâna asta",
+        "this_month": "Luna asta",
+        "last_three_months": "Ultimele 3 luni",
+        "all_time": "De la început",
+        "filter_by": "Filtrare după",
+        "no_reports": "Nu există rapoarte de afișat",
+        "total": "Total predicții:"
+      },
+      "payment": {
+        "title": "Plăți",
+        "history": "Istoricul plăților",
+        "info": "Detalii privind plata",
+        "payment": "Plată pentru {period}",
+        "credit_payment": "Prin card de credit",
+        "coupon_payment": "Cu cupon",
+        "submit": "Trimite",
+        "total": "Total:",
+        "no_payments": "Nicio plată de afișat"
+      },
+      "intelligences": {
+        "title": "Inteligențe",
+        "mine": "Inteligențele mele",
+        "contributing": "Inteligențe cu permisiune",
+        "using": "Inteligențe cu integrare"
+      }
+    },
+    "menu": {
+      "hide": "Ascunde",
+      "expand": "Extindere",
+      "created_by": "Creat de",
+      "back_text": "Înapoi",
+      "summary": "Rezumat",
+      "training": "Instruire",
+      "train": "Antrenează",
+      "suggestion": "Generator de propoziții",
+      "test": "Test",
+      "test-manual": "Propoziții",
+      "test-automatic": "Automatic",
+      "results": "Rezultate",
+      "inbox": "Interacțiuni",
+      "translation": "Traducere",
+      "translation_status": "Stare",
+      "translate": "Traducere",
+      "integration": "API",
+      "settings": "Setări",
+      "general": "General",
+      "versions": "Versiuni",
+      "content": {
+        "bases": "Baze",
+        "adjustments": "Setări",
+        "api": "API",
+        "tests": "Teste"
+      },
+      "database": "Arhivă"
+    },
+    "phrase-suggestion": {
+      "title": "Generator de propoziții",
+      "subtitle": "Generează sute de propoziții noi pornind de la una singură. Acest lucru poate fi foarte util pentru a îmbunătăți inteligența ta artificială.",
+      "empty": "Nu există sugestii de propoziții pentru această intenție",
+      "confirm-edit": "Confirmă modificările",
+      "cancel-edit": "Anulează editarea",
+      "tooltip_alert": "Cuvintele sugerate sunt generate din contexte de pe internet, așa că unele sugestii pot fi dincolo de controlul echipei noastre.",
+      "add_a_sentence": "Scrie propoziția pe care vrei să o folosești",
+      "submit": "Trimite propoziția",
+      "select_words_title": "Selectează cuvintele",
+      "select_method": "Selectează metoda care va fi folosită pentru generarea propozițiilor",
+      "new_sentence": "Adaugă o propoziție",
+      "new_sentence_info": "Adaugă o propoziție nouă pentru a o folosi ca bază în generarea unora noi",
+      "select_method_button": "Alege metoda",
+      "existing_sentence": "Folosește o propoziție existentă",
+      "select_existing": "Selectează o propoziție pentru a o folosi ca bază de generare a unora noi",
+      "add_new": "Adaugă o propoziție",
+      "add_existing": "Folosește o propoziție existentă",
+      "select_intent": "Selectează intenția pentru a vedea propozițiile",
+      "select_words": "Selectează cuvintele pentru care vrei să generezi variații",
+      "finish_selection": "Finalizează selecția",
+      "select_variations": "Selectează variațiile cuvintelor",
+      "select_variations_info": "Selectează variațiile cuvintelor. Variațiile selectate vor fi folosite pentru a crea propoziții noi.",
+      "variations_generated": "{n} variații generate",
+      "variations_selected": "{n} variații selectate",
+      "new_variation": "Adaugă variație",
+      "add": "Adăugare",
+      "generate_sentences": "Generează propoziții",
+      "generated_sentences": "Propoziții generate",
+      "new_sentences_generated": "{n} propoziții noi generate",
+      "generated_from_sentence": "Propoziții generate din propoziția",
+      "to_intent": "pentru intenție",
+      "send_to_training": "Trimite pentru instruire",
+      "go_to_training": "Accesează Instruire",
+      "sent_to_training": "Propoziții trimise pentru instruire",
+      "sent_to_training_info": "Propozițiile generate au fost trimise pentru instruire. Pentru a îmbunătăți inteligența cu aceste propoziții, rulează instruirea în Antrenare inteligență."
+    },
+    "dashboard": {
+      "sentences": "propoziții",
+      "languages": "limbi",
+      "warning": "atenție",
+      "exit_inteligence": "Ieși din inteligență",
+      "all_versions": "Vezi toate versiunile",
+      "created_by": "Creat de",
+      "filter_by": "Show"
+    },
+    "versions": {
+      "edit_choose_version": "Adaugă, editează și alege versiuni pentru inteligența ta",
+      "date_created": "Data creării",
+      "last_modified": "Ultima modificare",
+      "created_by": "Creat de",
+      "main": "Principală",
+      "change_default_version": "Schimbă versiunea implicită",
+      "message_change_default_version": "Sigur vrei să schimbi versiunea implicită în „{name}”?",
+      "confirm_change_default_version": "Schimbă versiunea implicită",
+      "version_has_edited": "Versiunea a fost editată cu succes",
+      "something_wrong": "Ceva nu a mers bine",
+      "version_was_created": "Versiunea a fost creată cu succes",
+      "you_cannot_delete_main_branch": "Nu poți șterge versiunea principală",
+      "deleting_version": "Ștergeți versiunea",
+      "message_deleting_version": "Sigur vrei să ștergi această versiune? Această acțiune nu poate fi anulată.",
+      "confirm_deleting_version": "Ștergeți versiunea",
+      "title": "Titlu",
+      "version": "Versiune",
+      "cancel": "Anulează",
+      "add_new": "Adaugă o versiune nouă",
+      "signin": "Conectează-te pentru a edita această inteligență",
+      "table_edit": "Editează",
+      "table_duplicate": "Duplicați",
+      "table_delete": "Ștergere configurare",
+      "edit_title_modal": "Modifică versiunea",
+      "edit_phrase_modal": "Sigur vrei să modifici versiunea {name}?",
+      "edit_success_title_modal": "Modificările au fost salvate",
+      "edit_success_phrase_modal": "Modificările au fost salvate cu succes",
+      "edit_confirm_button": "Schimbă",
+      "delete_title_modal": "Ștergeți versiunea",
+      "delete_phrase_modal": "Sigur vrei să ștergi versiunea <strong>{name}</strong>? Această acțiune nu poate fi anulată.",
+      "delete_success_title_modal": "Versiune ștearsă",
+      "delete_success_phrase_modal": "Versiunea a fost ștearsă cu succes",
+      "delete_alert_text": "Nu s-a putut șterge versiunea principală",
+      "duplicate_title_modal": "Duplicare versiune {name}",
+      "duplicate_phrase_modal": "Ce nume vrei să dai copiei acestei versiuni?",
+      "duplicate_input_label": "Numele versiunii",
+      "duplicate_input_placeholder": "Nume",
+      "duplicate_confirm_button": "Adaugă nume",
+      "duplicate_success_title_modal": "Copia a fost creată",
+      "duplicate_success_phrase_modal": "Copia versiunii a fost creată cu succes",
+      "duplicate_success_button_modal": "Adaugă name"
+    },
+    "inbox": {
+      "description": "Vizualizează mesajele primite şi modul în care IA le-a interpretat. Aceste interacțiuni te ajută să monitorizezi şi să îmbunătățești IA.",
+      "intent": "Intenție",
+      "language": "Limbă",
+      "version": "Versiune",
+      "cannot_edit_this_repository": "Nu poți modifica această inteligență",
+      "signin_you_account": "Conectează-te pentru a edita această inteligență",
+      "all_versions": "Toate versiunile",
+      "test_sentences": "Testează propozițiile",
+      "training": "Trimite propozițiile pentru instruire",
+      "add_to": "Adaugă la",
+      "list_empty": "Nu există propoziții de afișat",
+      "entry_has_add_to_train": "a fost adăugată la instruire.",
+      "entry_has_add_to_sentence": "a fost adăugată la propozițiile de test.",
+      "entry_error": "Această intenție și propoziție există deja",
+      "add_to_train_error": "Ceva nu a mers bine",
+      "add_to_sentences_error": "Ceva nu a mers bine",
+      "add_to_train_button": "Trimite pentru instruire ({n})",
+      "add_to_sentence_button": "Trimite pentru testare ({n})",
+      "add_to_train": "Trimite pentru instruire",
+      "add_to_sentence": "Trimite pentru testare",
+      "remove_log_button": "Șterge propoziția",
+      "select_phrase": "Selectează o propoziție",
+      "select_all": "Selectați toate",
+      "send_to_evaluate": "Această intenție și propoziție există deja",
+      "error": "Eroare",
+      "add_log": {
+        "add": "Adăugare",
+        "close": "Anulează"
+      },
+      "confirm_deleting_version": "Ștergeți versiunea",
+      "debug": "Depanare",
+      "raw": "Raw",
+      "confidence": "Încredere",
+      "entities": "Entitate | Entități",
+      "search_label": "Caută interacțiunile..."
+    },
+    "entity": {
+      "title": "Propoziții entitate",
+      "description": "Această entitate apare în <strong>{n}</strong> propoziție. | Această entitate apare în <strong>{n}</strong> propoziții.",
+      "edit_button": "Schimbă numele",
+      "save_button": "Salvare configurare",
+      "no_sentences": "Nu există propoziții antrenate",
+      "error_entity": "A apărut o eroare. Încearcă din nou mai târziu.",
+      "error_entity_exists": "Această entitate există deja",
+      "edit_entity_modal_title": "Schimbă numele entității",
+      "edit_entity_modal_subtitle": "Ce nume nou vrei să dai entității <strong>{entity}</strong>?",
+      "edit_entity_field_title": "Denumire entitate",
+      "edit_entity_field_label": "Alege un nume nou pentru entitate",
+      "edit_entity_button_label": "Schimbă numele",
+      "success_modal_title": "Nume modificat",
+      "success_modal_subtitle": "Numele entității a fost modificat cu succes"
+    },
+    "payment": {
+      "options": {
+        "title": "Planuri Bothub",
+        "slogan": "Bothub găzduiește inteligențe care lucrează pentru tine",
+        "free": "Gratuit",
+        "professional": "Profesional",
+        "custom": "Plan personalizat",
+        "contact_us": "Contactează-ne",
+        "contact": "Contactează-ne",
+        "free_text": "Obține acces la comunitatea noastră de depozite de informații, creează informații și invită alți utilizatori să colaboreze la proiectul tău. Acest plan include <strong>1.000 de predicții gratuite</strong>.",
+        "professional_text": "Obține acces la comunitatea noastră de depozite de informații, creează informații şi invită alți utilizatori să colaboreze la proiectul tău. Acest plan devine plătit <strong>după ce ai realizat 1.000 de predicții.</strong>",
+        "custom_text": "Deblochează superputerile IA și ridică inteligența la următorul nivel cu soluții personalizate, asistență dedicată și un volum mare de predicții.",
+        "per_prediction": "per predicție",
+        "get_free": "Începe gratuit",
+        "get_started": "Începe"
+      },
+      "info": {
+        "title": "Informații de plată",
+        "subtitle": "Introdu informațiile cardului tău de credit sau de debit",
+        "back": "Înapoi",
+        "save": "Salvare configurare",
+        "card_name": "Nume deținător"
+      }
+    },
+    "tutorial": {
+      "title": "Bine ai venit la Bothub!",
+      "description": "Bothub este o platformă open-source pentru prezicerea, antrenarea şi partajarea seturilor de date NLP în mai multe limbi. <br> <br> Urmează instrucțiunile pentru a te alătura comunității noastre.",
+      "skip": "Omite",
+      "previous_step": "Anterior",
+      "next_step": "Înainte",
+      "finish_step": "Finalizează",
+      "confirm_step": "Confirm",
+      "finish_tutorial": "Finalizează",
+      "alert_message": "Trebuie să finalizezi toți pașii",
+      "training_wait": "Inteligența ta este în curs de antrenare!",
+      "training_error": "A apărut o eroare în timpul antrenării inteligenței",
+      "training_success": "Inteligență antrenată cu succes",
+      "items": {
+        "create_account": "Creează cont",
+        "create_intelligence": "Creează-ți prima inteligență",
+        "training": "Antrenează inteligența",
+        "quick_test": "Rulează un test rapid",
+        "evaluate": "Testează inteligența",
+        "inbox": "Adaugă propoziția în inbox",
+        "translate": "Tradu în altă limbă",
+        "integrate": "Integrează-ți inteligența într-o platformă"
+      },
+      "create_intelligence": {
+        "step_0": "Alege și dă clic pe o inteligență din depozit pentru a o folosi.",
+        "step_1": "Sau fă clic aici pentru a-ți crea propria inteligență."
+      },
+      "create_intelligence_forms": {
+        "step_0": "Completează formularul cu detaliile tale de inteligență, cum ar fi numele, descrierea și limba.",
+        "step_1": "Alege categoriile pentru inteligența ta în funcție de subiectul pe care îl acoperă și trimite."
+      },
+      "training": {
+        "step_0": "<strong> E timpul pentru instruire. </strong> <br> Adaugă propoziții și clasifică cuvintele pentru a-ți antrena inteligența.",
+        "step_1": "Adaugă propoziția pe care vrei ca inteligența să o înțeleagă. <br> Apoi, selectează unul dintre cuvintele de clasificare. <br> De exemplu, \"Vreau o <mark style='background-color: #1E30EF; color: #fff; padding:2px'>pizza</mark>\"",
+        "step_2": "Acum, fă clic aici și clasifică cuvântul pe care l-ai selectat.",
+        "step_3": "Scrie clasificarea. De exemplu, dacă ai selectat \"pizza\", clasificarea ar putea fi \"mâncare\".",
+        "step_4": "Identifică intenția propoziției pe care ai tastat-o. De exemplu, \"comandă\".",
+        "step_5": "În final, trimite propoziția.",
+        "step_6": "După adăugarea propozițiilor, fă clic aici. <br> <strong>Sugestie</strong>: Pentru a o antrena, trebuie să adaugi cel puțin două intenții cu câte două propoziții fiecare.",
+        "step_7": "Verifică dacă inteligența ta este pregătită pentru antrenament și dă clic pe \"Continuă\". <br> <br> <strong>Sfat</strong>: Dacă nu este îndeplinită niciuna dintre cerințe, dă clic pe \"Anulează\" pentru a repeta."
+      },
+      "evaluate": {
+        "step_0": "<strong> Este timpul să testezi propozițiile. </strong> <br> Aceasta îți va permite să evaluezi cu ușurință performanța inteligenței.",
+        "step_1": "Selectează o limbă pentru testare.",
+        "step_2": "Scrie aici o propoziție pe care vrei să o testezi. <br> De exemplu, \"Vreau o pizza\".",
+        "step_3": "Aici, alege intenția care se potrivește cel mai bine cu propoziția pe care ai tastat-o. De exemplu, \"afirmativ\".",
+        "step_4": "În final, trimite propoziția.",
+        "step_5": "Fă clic aici pentru a rula testul. <br> <strong>Sfat</strong>: Pentru a testa, trebuie să adaugi cel puțin două intenții cu câte două propoziții fiecare."
+      },
+      "evaluate_result": {
+        "step_0": "Aici, poți vedea rezultatul testului de inteligență."
+      },
+      "quick_test": {
+        "step_0": "<strong> Acesta este testul rapid. </strong> <br> Aici poți testa rapid propozițiile adăugate la instruire.",
+        "step_1": "Introdu o propoziție de test și confirmă.",
+        "step_2": "Fă clic aici pentru a descoperi relevanța fiecărui cuvânt din propoziție în cadrul intenției alese.",
+        "step_3": "Fă clic aici pentru a vedea Raw."
+      },
+      "inbox": {
+        "step_0": "<strong> Acesta este inboxul. </strong> <br> Aici, poți adăuga propoziții din interacțiunile utilizatorilor cu inteligența care este antrenată sau testată.",
+        "step_1": "Selectează propozițiile pe care vrei să le adaugi.",
+        "step_2": "Adaugă la instruire.",
+        "step_3": "Adaugă propozițiile de test.",
+        "step_4": "Selectează intenția pe care vrei să o atribui propoziției, apoi adaug-o."
+      },
+      "translate": {
+        "step_0": "<strong> Este timpul să traduci! </strong> <br> Apasă aici pentru a traduce propozițiile inteligenței tale în altă limbă.",
+        "step_1": "Selectează limba antrenată. <br> <strong>Sfat</strong>: Adaugă propoziții în această limbă pentru a putea fi antrenată.",
+        "step_2": "Selectează limba în care să traduci.",
+        "step_3": "Selectează o propoziție și fă clic pe \"Traducere\".",
+        "step_4": "Scrie aici traducerea.",
+        "step_5": "În final, trimite propoziția ta pentru traducere.",
+        "step_6": "De asemenea, poți exporta și importa propoziții din Excel pentru traducere făcând clic aici."
+      },
+      "integrate": {
+        "step_0": "<strong> Aceasta este integrarea. </strong> <br> Cu această funcționalitate, îți poți integra inteligența într-o platformă.",
+        "step_1": "Copiază acest șablon în format CURL, Python sau JavaScript pentru a-l folosi în integrare."
+      },
+      "tutorial_button": {
+        "step_0": "<strong> Proces finalizat! </strong> <br> Poți accesa tutorialul din nou făcând clic aici."
+      }
+    },
+    "word_suggestion": {
+      "title": "Sugestie de variație",
+      "subtitle": "Generează propoziții noi prin modificarea propozițiilor de instruire",
+      "cancel": "Anulează",
+      "add_training": "Adaugă la instruire",
+      "phrase_added": "Propoziție adăugată în coada de instruire | Propoziții adăugate în coada de instruire",
+      "tooltip_alert": "Cuvintele sugerate sunt generate din contexte de pe internet, așa că unele sugestii pot fi dincolo de controlul echipei noastre."
+    },
+    "import_and_export_intelligence": {
+      "title": "Importă inteligență",
+      "subtitle": "Pentru a importa sau migra, selectează fișierul compatibil cu Rasa sau introdu tokenul de acces Wit.AI. Detaliile vor fi detectate automat.",
+      "import_rasa": "Importă din Rasa",
+      "migrate_wit": "Migrare din Wit.AI"
+    },
+    "migrate_intelligence": {
+      "title": "Migrează inteligența Wit.AI",
+      "token_input": "Introdu tokenul de acces al serverului",
+      "language": "Alege o limbă",
+      "cancel": "Anulează",
+      "migrate": "Confirmă",
+      "migrate_success": "Migrarea a fost realizată cu succes"
+    },
+    "import_dataset": {
+      "title": "Importă set de date",
+      "empty_file": "Niciun fișier selectat",
+      "cancel": "Anulează",
+      "importar": "Importă fișier",
+      "import_success": "Import finalizat cu succes",
+      "import_error": "A apărut o eroare. Încearcă din nou mai târziu.",
+      "import_sentences_success_title": "Propoziții importate cu succes",
+      "import_sentences_success_message": "Propozițiile importate au fost adăugate pentru instruire",
+      "import_sentences_error_title": "Eroare la importarea propozițiilor",
+      "import_sentences_error_message": "A apărut o eroare. Încearcă din nou mai târziu."
+    },
+    "weni_notification": {
+      "title": "Bothub este acum Inteligența Artificială Weni",
+      "subtitle": "Un modul nou care va veni în curând pe platforma noastră unificată.",
+      "button": "Aflați mai multe",
+      "link": "https://www.ilhasoft.com.br/somos-weni"
+    },
+    "infinite_scroll": {
+      "title": "Se încarcă"
+    }
+  },
+  "upload_area": {
+    "title": {
+      "text": "Trage fișierul aici sau",
+      "highlight": "fă clic pentru a selecta"
+    },
+    "subtitle": "Formate acceptate: ",
+    "invalid": {
+      "subtitle": "Fișier invalid"
+    }
+  },
+  "import_card": {
+    "importing": "Se importă..."
+  },
+  "action_type_selector": {
+    "title": "Selectează tipul acțiunii",
+    "types": {
+      "interactions": {
+        "title": "Interacțiuni generale",
+        "description": "Acțiuni pentru a saluta, a spune la revedere și a naviga sistemul"
+      },
+      "shopping": {
+        "title": "Comenzi și produse",
+        "description": "Acțiuni pentru a cumpăra, urmări comenzile și accesa beneficiile"
+      },
+      "support": {
+        "title": "Servicii de asistență",
+        "description": "Acțiuni pentru ajustări în asistența clienților și comunicare"
+      },
+      "media": {
+        "title": "Media și locație",
+        "description": "Acțiuni activate din imagine, video, audio şi locația utilizatorului"
+      },
+      "custom": {
+        "title": "Personalizare",
+        "description": "Acțiuni pentru a satisface nevoi specifice"
+      }
+    }
+  },
+  "modals": {
+    "actions": {
+      "add": {
+        "title": "Adaugă acțiune particularizată",
+        "description": "Creează o acțiune nouă și setează când ar trebui să fie declanșată",
+        "custom_title": "Adaugă acțiune {name}",
+        "custom_description": "Selectează acțiunea și fluxul care va porni",
+        "messages": {
+          "success": "Acțiunea {name} a fost adăugată cu succes"
+        },
+        "steps": {
+          "select_action_type": {
+            "inputs": {
+              "select_action_type": {
+                "label": "Selectează acțiunea"
+              },
+              "description": {
+                "label": "Descriere acțiune:"
+              }
+            },
+            "send_response_to_flow": {
+              "title": "Trimite răspunsul model către fluxul de lucru",
+              "tooltip": "Folosește {'@'}trigger.params.answer pentru a adăuga răspunsul modelului în fluxul de procesare"
+            }
+          },
+          "describe": {
+            "title": "Configurează acțiunea",
+            "explanation": "Descrie acțiunea şi când ar trebui utilizatorul să participe. Acțiunea va începe pe baza acestei descrieri.",
+            "inputs": {
+              "description": {
+                "label": "Această acțiune va fi activată când...",
+                "placeholder": "utilizatorul spune că dorește asistență umană",
+                "help": "Fii obiectiv. Acțiunea va începe pe baza descrierii.",
+                "aux_text_whatsapp_cart": "Când utilizatorul trimite un produs prin WhatsApp"
+              }
+            }
+          },
+          "select_flow": {
+            "title": "Selectează fluxul",
+            "explanation": "Selectează fluxul pe care această acțiune îl va porni",
+            "filters": {
+              "flow_name": {
+                "placeholder": "Caută flux"
+              }
+            },
+            "flow_assigned_actions": "Acest flux este deja atribuit la {count} acțiune:\n{actions} | Acest flux este deja atribuit la {count} acțiuni:\n{actions}"
+          },
+          "nominate_action": {
+            "title": "Nume acțiune",
+            "explanation": "Numele acțiunii este generat automat din descrierea adăugată și ajută la clasificarea acțiunii",
+            "inputs": {
+              "name": {
+                "label": "Numele acțiunii",
+                "placeholder": "",
+                "help": "Dacă numele generat nu este potrivit, îl poți edita."
+              }
+            }
+          },
+          "generate_action_name": {
+            "chatbot_goal": "Chatbotul sugerează nume pentru acțiuni pe baza descrierii furnizate",
+            "context": "Descriere: {description}",
+            "whatsapp_cart": "Căruț pentru cumpărături"
+          }
+        }
+      },
+      "edit": {
+        "messages": {
+          "success": "Acțiunea {name} a fost editată cu succes"
+        },
+        "assigned_flow": "Flux atribuit",
+        "flow_name_unavailable": "Numele fluxului este indisponibil",
+        "go_to_flow": "Accesează fluxul"
+      },
+      "btn_back": "Înapoi",
+      "btn_next": "Înainte",
+      "btn_create": "Adăugare",
+      "btn_cancel": "Anulează",
+      "btn_complete": "Finalizat",
+      "btn_remove": "Elimină",
+      "flow": {
+        "title": "Selectează fluxul",
+        "fill_name": "Selectează fluxul",
+        "sub_title": "Selectează fluxul pe care vrei să îl adaugi la acțiune",
+        "placeholder": "Caută flux",
+        "not_found_message": "Fluxul nu a fost găsit"
+      },
+      "descriptions": {
+        "title": "Configurează acțiunea",
+        "fill_name": "Adaugă acțiune",
+        "sub_title": "Explică fluxul și indică când trebuie să participe utilizatorul. Fii obiectiv.",
+        "label": "Descriere",
+        "change_title": "Modifică descrierea acțiunii",
+        "change_sub_title": "Descrierea ajută Agent Builder să lucreze mai eficient"
+      },
+      "remove": {
+        "title": "Șterge acțiunea",
+        "description": "Sigur vrei să ștergi acțiunea <strong>{name}</strong>?<br/> Această acțiune nu poate fi anulată."
+      }
+    },
+    "cant_access": {
+      "title": "Nu poți utiliza acest modul încă",
+      "description": "Pentru a integra inteligența artificială în proiectul tău, ai nevoie de un flux de conversație existent.<br /> Creează mai întâi un flux.",
+      "button_primary_label": "Accesează modulul Flows"
+    },
+    "how_to_integrate": {
+      "title": "Cum să integrezi inteligența artificială",
+      "first_step": {
+        "description": "1. În fila \"Galeria inteligenței comunității\", alege opțiunea care se potrivește cel mai bine proiectului tău.<br />2. fă clic pe butonul \"+\" pentru a integra inteligența artificială în proiectul tău.<br />3. Gata! Inteligența este acum disponibilă în modulul Weni Flows.<br />4. Accesează modulul Flows pe platforma Weni.",
+        "next_step": "Înainte"
+      },
+      "second_step": {
+        "description": "5. Alege fluxul preferat și folosește cardul \"Împarte după intenție\".<br />6. Selectează inteligența pe care ai integrat-o anterior și criteriul de intenție pe care chatbotul trebuie să-l utilizeze.<br />7. Grozav! Chatbotul tău este acum gata să poarte conversații mai inteligente și mai eficiente utilizând noua inteligență.",
+        "back_button": "Înapoi",
+        "close_button": "Începe"
+      }
+    }
+  },
+  "profile": {
+    "edit_manager_profile": "Modifică rolul managerului",
+    "description": "Personalizează informațiile de bază și comportamentul agentului",
+    "save_btn": "Salvează modificările",
+    "save_success": "Modificări salvate cu succes",
+    "save_error": "Eroare la salvarea modificărilor",
+    "invalid_field": "Câmp obligatoriu",
+    "invalid_get_data": "Eroare la încercarea de a prelua datele",
+    "fields": {
+      "name": {
+        "title": "Ce nume folosește agentul pentru a se prezenta?",
+        "description": "Acesta este numele afișat în timpul interacțiunilor cu utilizatorii",
+        "placeholder": "Taylor"
+      },
+      "occupation": {
+        "title": "Care este rolul principal al agentului?",
+        "placeholder": "Asistent asistență clienți",
+        "description": "Definește rolul principal al agentului astfel încât utilizatorii să știe cum îi poate ajuta"
+      },
+      "goal": {
+        "title": "Care este obiectivul principal al agentului?",
+        "placeholder": "Să răspundă la întrebările clientului",
+        "description": "Acest lucru ajută la definirea obiectivului pe care agentul intenționează să îl atingă în timpul interacțiunilor"
+      },
+      "personality": {
+        "title": "Care este tonul vocii agentului?",
+        "description": "Alege cum comunică agentul cu utilizatorii"
+      },
+      "personalities": {
+        "friendly": "Prietenos",
+        "extrovert": "Extrovertit",
+        "cooperative": "Cooperant",
+        "generous": "Generos",
+        "relaxed": "Relaxat",
+        "organized": "Organizat",
+        "systematic": "Sistematic",
+        "innovative": "Inovativ",
+        "creative": "Creativ",
+        "intellectual": "Intelectual"
+      }
+    },
+    "instructions": {
+      "title": "Instrucțiuni generale",
+      "sub_title": "Definește modul în care dorești să se comporte agentul",
+      "add_instruction_btn": "Adaugă instrucțiune",
+      "instruction": {
+        "title": "Instrucțiune",
+        "placeholder": "Ești amuzant, dar nu face glume"
+      },
+      "modals": {
+        "title": "Șterge instrucțiunea",
+        "description": "Ești sigur că vrei să ștergi instrucțiunea?",
+        "success_message": "Instrucțiune ștearsă",
+        "error_message": "Eroare la ștergerea instrucțiunii",
+        "back_btn": "Anulează",
+        "remove_btn": "Elimină"
+      }
+    },
+    "human_support": {
+      "title": "Asistență umană",
+      "switch": {
+        "enabled": "Activat",
+        "disabled": "Dezactivat"
+      },
+      "fields": {
+        "rules": {
+          "title": "Când ar trebui ca agentul să transfere conversația către un operator uman?",
+          "placeholder": "Dacă utilizatorul solicită asistență umană, agentul ar trebui să-l transfere către asistența umană."
+        }
+      }
+    }
+  },
+  "obstructive_error": {
+    "default": {
+      "title": "Întâmpinăm o problemă",
+      "description": "Lucrăm pentru a rezolva problema cât mai repede posibil"
+    },
+    "unauthorized": {
+      "title": "Nu ai permisiunea pentru a accesa acest modul",
+      "description": "Pentru a accesa acest modul, contactează administratorul organizației"
+    }
+  },
+  "time": {
+    "time_ago_minutes": "acum {count} minut | acum {count} minute",
+    "time_ago_hours": "acum {count} oră | acum {count} ore",
+    "time_ago_days": "acum {count} zi | acum {count} zile",
+    "time_ago_months": "acum {count} lună | acum {count} luni"
+  },
+  "audio_recorder": {
+    "discard_button": "Renunță"
+  }
+}
