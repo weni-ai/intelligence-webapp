@@ -11,9 +11,10 @@ const i18n = createI18n({
       router: {
         tunings: {
           upgrade_to_multi_agents: {
-            title: 'Upgrade to Multi-Agents',
-            description: 'Upgrade your intelligence to use multiple agents',
-            button: 'Upgrade Now',
+            title: 'Upgrade project to Agent Builder 2.0',
+            description:
+              'Upgrade your project to use a team of intelligent agents collaborating to make your assistant smarter with minimal effort.',
+            button: 'Upgrade',
           },
         },
       },
@@ -48,12 +49,12 @@ describe('SettingsUpgradeToMultiagents.vue', () => {
 
     it('displays the correct texts', () => {
       expect(upgradeToMultiagentsTitle().text()).toBe(
-        'Upgrade to Multi-Agents',
+        'Upgrade project to Agent Builder 2.0',
       );
       expect(upgradeToMultiagentsDescription().text()).toBe(
-        'Upgrade your intelligence to use multiple agents',
+        'Upgrade your project to use a team of intelligent agents collaborating to make your assistant smarter with minimal effort.',
       );
-      expect(upgradeToMultiagentsButton().text()).toBe('Upgrade Now');
+      expect(upgradeToMultiagentsButton().text()).toBe('Upgrade');
     });
   });
 
