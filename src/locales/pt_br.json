@@ -67,10 +67,6 @@
         "title": "Supervisor",
         "description": "Analise e revise conversas entre agentes e clientes."
       },
-      "profile": {
-        "title": "Perfil",
-        "description": "Personalize as informações básicas e o comportamento do agente"
-      },
       "instructions": {
         "title": "Instruções",
         "description": "Escreva regras rápidas para moldar o comportamento do agente"
@@ -205,7 +201,7 @@
         "safety_topics": [
           "Política",
           "Saúde física",
-          "Violência física ou moral", 
+          "Violência física ou moral",
           "Conteúdo sexual",
           "Preconceito",
           "Ódio",
