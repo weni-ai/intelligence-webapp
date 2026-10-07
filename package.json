@@ -10,7 +10,8 @@
     "build": "cross-env NODE_ENV=production rspack build",
     "preview": "rspack preview",
     "test:unit": "vitest --environment jsdom",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "@growthbook/growthbook": "^1.4.1",
@@ -59,7 +60,9 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.27.0",
     "immutability-helper": "^3.1.1",
+    "js-yaml": "^4.1.0",
     "jsdom": "^24.1.0",
+    "micromatch": "^4.0.5",
     "prettier": "^3.3.2",
     "sass": "^1.75.0",
     "terser": "^5.14.2",
